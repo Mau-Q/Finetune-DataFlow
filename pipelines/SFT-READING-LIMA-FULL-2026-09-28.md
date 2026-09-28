@@ -34,3 +34,13 @@
 - 可直接查看的 34 行导出：`outputs/sft-reading-13/lima-full-paper-2026-09-28/accepted-qa.jsonl`，SHA-256 `3ac82867efe8d6c75ad0fa3ecd89b2330712d3b79c98977728bf548ccde19899`。每行含 `instruction/input/output`、原件哈希、页码和字符区间、生成的推理步骤与支撑事实，以及五项分数。
 - 机器可读摘要和每步 SHA-256：同目录 `run-summary.json`。13 个原始步骤缓存位于 `repos/dataflow-webui/backend/cache_local/653343528759_output/`；其中保留评分原始回复与解析状态。配置、登记信息分别为同目录的 `pipeline.webui.json` 和 `registration.json`。
 - 这次证明一篇 15 页论文能够从 PDF 起点完成现有 13 算子并导出结果。34 条是**按现有模型评分规则通过**的数量，不代表人工事实审核、多跳要求或训练收益已通过。供应商权威账单和 token 用量未取得，不报告精确费用。
+
+## 来源核验修正与重新评分
+
+首次运行的可核验性评价只接收 `question` 和 `answer`，实际判断的是答案脱离上下文后是否容易核查，不能判断答案是否受论文支持。现已将该维度改为同时接收 `raw_chunk` 和 `QA_pairs.supporting_facts`；候选 supporting facts 被视为不可信模型输出，评分模型必须回到原文核对，并检查问题前提、答案中的全部实质性主张、跨表格列或跨参考文献合并。其他三个 Text2QA 评分维度的提示保持不变。
+
+修正后的任务 `998d8c5e54eb` 复用原任务评分前保存的同一批 66 条 QA，没有重新解析、清洗或生成。5 个后半链算子全部 `completed`，四维评分和整体评分的解析状态均为 `parsed`。可核验性分布由原来的 `1:3、2:12、3:11、4:10、5:30` 变为 `1:7、4:2、5:57`，达到 4 分的数量从 40/66（60.6%）变为 59/66（89.4%）。按五项均至少 4 分的原规则，最终导出从 34/66（51.5%）变为 43/66（65.2%）：31 条保留、3 条移除、12 条新增。
+
+新机制正确拦截了已确认的 weight decay `0`/`0.1` 冲突、把特定基线错误绑定到 GPT-4 替代实验、Shakshuka 与 Benadryl 表格列串接、把 Stanford Alpaca 作者误当作自对齐论文第一作者，以及不完整的 arXiv 编号；同义的 Figure 13 截断说明不再出现一条 5 分、一条 1 分的矛盾。仍有一个已知漏判：关于 Jason Wei 思维链论文的样本把前一条参考文献的 ICLR 会议信息接到后一条 NeurIPS 论文上，新可核验性仍给 5 分并进入最终结果。原因是 `raw_chunk` 在相邻参考文献之间缺少显式块边界；本次修正提高了来源核验能力，但尚不能替代人工审核或结构化 block 级证据。
+
+重新评分缓存位于 `repos/dataflow-webui/backend/cache_local/998d8c5e54eb_output/`。最终 43 行缓存为 `dataflow_cache_step_step5.jsonl`，SHA-256 `993e7d4e63623f74006edb7b477a5c2c5b6229cbaaae7d79d3dfccc89b1b6477`。
