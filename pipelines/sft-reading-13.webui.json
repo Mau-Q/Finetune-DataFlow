@@ -263,6 +263,14 @@
               "value": "answer"
             },
             {
+              "name": "input_context_key",
+              "value": "raw_chunk"
+            },
+            {
+              "name": "input_supporting_facts_key",
+              "value": "QA_pairs"
+            },
+            {
               "name": "output_question_quality_key",
               "value": "question_quality_grades"
             },
