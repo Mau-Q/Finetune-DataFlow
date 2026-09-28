@@ -4,10 +4,10 @@
 
 | 目录 | 当前分支 | 基线提交 | 远端 |
 | --- | --- | --- | --- |
-| `repos/dataflow` | `local/reusable-sft-operator-fixes` | `0d08eb357a633b92543d8fa5b73b94a2c2830541` | `Mau-Q/DataFlow` |
-| `repos/dataflow-webui` | `local/reusable-sft-webui-fixes` | `a12118c749118c26e30edce43badc61eb4667b4f` | `Mau-Q/DataFlow-WebUI` |
+| `repos/dataflow` | `local/reusable-sft-operator-fixes` | `660d0e96d021086c9f542858460c91cf9ea785b2` | `Mau-Q/DataFlow` |
+| `repos/dataflow-webui` | `local/reusable-sft-webui-fixes` | `200e5ec7cf826c8643913dadc1a93b1d46866862` | `Mau-Q/DataFlow-WebUI` |
 
-WebUI 的 `a12118c` 是本机集成改动的独立本地提交；此前的 `06a5a0a` 已推送至 fork。根目录基线也只在本机提交，不代表这三个仓库已有同一发布版本。
+DataFlow 的 `660d0e9` 与 WebUI 的 `200e5ec` 是本次本地测试和评分解析修复提交，尚未推送。WebUI 的 `a12118c` 是此前本机集成改动的独立本地提交；此前的 `06a5a0a` 已推送至 fork。根目录基线也只在本机提交，不代表这三个仓库已有同一发布版本。
 
 ## 纳入与排除
 
@@ -21,3 +21,5 @@ WebUI 的 `a12118c` 是本机集成改动的独立本地提交；此前的 `06a5
 修改前后分别执行 `git status --short --branch`，在本目录和两个 `repos/` 仓库各检查一次。提交时按仓库分别暂存目标文件、检查暂存 diff；不要从本目录运行 `git add -A` 来代替对三个仓库的检查。
 
 本机运行使用 editable 安装的 DataFlow，修改源码后应确认 WebUI/Ray 进程加载了目标版本。`repos/dataflow-webui/backend/app/core/config.py` 当前启用 `paper_dataflow`，新环境需先安装 `extensions/paper-dataflow`。
+
+离线本地回归入口为 `./scripts/test-local.sh`；测试环境缺 Flask 时，按 `locks/dataflow-test.txt` 安装测试依赖。该入口排除 DataFlow 的 `gpu` 标记测试，不调用真实评分服务；它验证代码与本地契约，不替代运行进程重载后的 Pipeline 试跑。

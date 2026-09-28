@@ -54,4 +54,13 @@ MinerU 与 DataFlow 的 Python 分别为 `.venvs/mineru/bin/python` 和 `.venvs/
 NO_PROXY=localhost,127.0.0.1 .venvs/dataflow/bin/python scripts/smoke-mcp.py
 ```
 
+本地回归测试使用同一 DataFlow 环境。首次运行先安装测试依赖，然后执行：
+
+```sh
+uv pip install --python .venvs/dataflow/bin/python -r locks/dataflow-test.txt
+./scripts/test-local.sh
+```
+
+脚本依次运行 DataFlow CPU 测试、WebUI 后端测试和本地扩展测试。DataFlow 阶段排除 `gpu` 标记的测试（其中包括需要远端模型仓库的加载测试）；这些结果不代表上游完整测试或真实模型运行已经通过。
+
 依赖冻结清单和安装日志分别在 `locks/`、`logs/`。首次重建 `fasttext-wheel` 在此 Mac 上使用 `CC=/usr/bin/clang CXX=/usr/bin/clang++`；安装 uv 包使用 `UV_SYSTEM_CERTS=true`。
