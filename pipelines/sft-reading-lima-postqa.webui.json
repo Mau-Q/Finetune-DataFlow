@@ -1,0 +1,79 @@
+{
+  "name": "SFT 阅读论文 QA 转换验证 · LIMA #22",
+  "config": {
+    "file_path": "/Users/rui/Documents/DataFlow/pipelines/sft-reading-lima-postqa.webui.json",
+    "input_dataset": {
+      "id": "e66dc8046d",
+      "location": [
+        30,
+        160
+      ]
+    },
+    "operators": [
+      {
+        "name": "PandasOperator",
+        "location": [
+          340,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "process_fn",
+              "value": "lambda df: df.explode('QA_pairs', ignore_index=True).assign(question=lambda d: d['QA_pairs'].map(lambda q: q.get('question', '') if isinstance(q, dict) else ''))"
+            }
+          ],
+          "run": [
+            {
+              "name": "output_key",
+              "value": "question"
+            }
+          ]
+        }
+      },
+      {
+        "name": "PandasOperator",
+        "location": [
+          650,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "process_fn",
+              "value": "lambda df: df.assign(answer=lambda d: d['QA_pairs'].map(lambda q: q.get('answer', '') if isinstance(q, dict) else ''))"
+            }
+          ],
+          "run": [
+            {
+              "name": "output_key",
+              "value": "answer"
+            }
+          ]
+        }
+      },
+      {
+        "name": "GeneralFilter",
+        "location": [
+          960,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "filter_rules",
+              "value": "lambda df: df['question'].fillna('').astype(str).str.strip().ne('') & df['answer'].fillna('').astype(str).str.strip().ne('')"
+            }
+          ],
+          "run": []
+        }
+      }
+    ]
+  },
+  "tags": [
+    "paper",
+    "sft",
+    "checkpoint",
+    "no-model"
+  ]
+}

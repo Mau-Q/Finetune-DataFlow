@@ -1,0 +1,406 @@
+{
+  "name": "SFT 阅读论文 13 篇 · PDF → 多跳 QA → 评价筛选",
+  "config": {
+    "file_path": "/Users/rui/Documents/DataFlow/pipelines/sft-reading-13.webui.json",
+    "input_dataset": {
+      "id": "a5f3dd5c5d",
+      "location": [
+        30,
+        160
+      ]
+    },
+    "operators": [
+      {
+        "name": "MinerU4PDFParser",
+        "location": [
+          340,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "mineru_script",
+              "value": "/Users/rui/Documents/DataFlow/scripts/mineru.sh"
+            },
+            {
+              "name": "output_dir",
+              "value": "/Users/rui/Documents/DataFlow/outputs/sft-reading-13/parsing"
+            },
+            {
+              "name": "tier",
+              "value": "standard"
+            },
+            {
+              "name": "timeout_seconds",
+              "value": 900
+            }
+          ],
+          "run": [
+            {
+              "name": "input_key",
+              "value": "source"
+            },
+            {
+              "name": "output_key",
+              "value": "parsed_document"
+            }
+          ]
+        }
+      },
+      {
+        "name": "MinerU4PageExtractor",
+        "location": [
+          650,
+          160
+        ],
+        "params": {
+          "init": [],
+          "run": [
+            {
+              "name": "input_key",
+              "value": "parsed_document"
+            },
+            {
+              "name": "output_key",
+              "value": "source_page"
+            }
+          ]
+        }
+      },
+      {
+        "name": "PaperEvidenceChunker",
+        "location": [
+          960,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "tokenizer_path",
+              "value": "/Users/rui/Documents/DataFlow/models/tokenizers/Qwen2.5-7B-Instruct"
+            },
+            {
+              "name": "chunk_size",
+              "value": 512
+            },
+            {
+              "name": "chunk_overlap",
+              "value": 64
+            }
+          ],
+          "run": [
+            {
+              "name": "input_key",
+              "value": "source_page"
+            },
+            {
+              "name": "output_key",
+              "value": "raw_chunk"
+            },
+            {
+              "name": "output_meta_key",
+              "value": "chunk_metadata"
+            }
+          ]
+        }
+      },
+      {
+        "name": "KBCTextCleaner",
+        "location": [
+          1270,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "llm_serving",
+              "value": "a29527e6e76592f1"
+            },
+            {
+              "name": "lang",
+              "value": "en"
+            }
+          ],
+          "run": [
+            {
+              "name": "input_key",
+              "value": "raw_chunk"
+            },
+            {
+              "name": "output_key",
+              "value": "cleaned_chunk"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Text2MultiHopQAGenerator",
+        "location": [
+          1580,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "llm_serving",
+              "value": "a29527e6e76592f1"
+            },
+            {
+              "name": "lang",
+              "value": "en"
+            },
+            {
+              "name": "num_q",
+              "value": 2
+            },
+            {
+              "name": "prompt_template",
+              "value": {
+                "cls_name": "Text2MultiHopQAGeneratorPrompt",
+                "params": [
+                  {
+                    "name": "lang",
+                    "value": "zh"
+                  }
+                ]
+              }
+            }
+          ],
+          "run": [
+            {
+              "name": "input_key",
+              "value": "cleaned_chunk"
+            },
+            {
+              "name": "output_key",
+              "value": "QA_pairs"
+            },
+            {
+              "name": "output_meta_key",
+              "value": "QA_metadata"
+            }
+          ]
+        }
+      },
+      {
+        "name": "PandasOperator",
+        "location": [
+          1890,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "process_fn",
+              "value": "lambda df: df.explode('QA_pairs', ignore_index=True).assign(question=lambda d: d['QA_pairs'].map(lambda q: q.get('question', '') if isinstance(q, dict) else ''))"
+            }
+          ],
+          "run": [
+            {
+              "name": "output_key",
+              "value": "question"
+            }
+          ]
+        }
+      },
+      {
+        "name": "PandasOperator",
+        "location": [
+          2200,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "process_fn",
+              "value": "lambda df: df.assign(answer=lambda d: d['QA_pairs'].map(lambda q: q.get('answer', '') if isinstance(q, dict) else ''))"
+            }
+          ],
+          "run": [
+            {
+              "name": "output_key",
+              "value": "answer"
+            }
+          ]
+        }
+      },
+      {
+        "name": "GeneralFilter",
+        "location": [
+          2510,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "filter_rules",
+              "value": "lambda df: df['question'].fillna('').astype(str).str.strip().ne('') & df['answer'].fillna('').astype(str).str.strip().ne('')"
+            }
+          ],
+          "run": []
+        }
+      },
+      {
+        "name": "Text2QASampleEvaluator",
+        "location": [
+          2820,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "llm_serving",
+              "value": "9fb9ebf1ed9ee33e"
+            }
+          ],
+          "run": [
+            {
+              "name": "input_question_key",
+              "value": "question"
+            },
+            {
+              "name": "input_answer_key",
+              "value": "answer"
+            },
+            {
+              "name": "output_question_quality_key",
+              "value": "question_quality_grades"
+            },
+            {
+              "name": "output_question_quality_feedback_key",
+              "value": "question_quality_feedbacks"
+            },
+            {
+              "name": "output_answer_alignment_key",
+              "value": "answer_alignment_grades"
+            },
+            {
+              "name": "output_answer_alignment_feedback_key",
+              "value": "answer_alignment_feedbacks"
+            },
+            {
+              "name": "output_answer_verifiability_key",
+              "value": "answer_verifiability_grades"
+            },
+            {
+              "name": "output_answer_verifiability_feedback_key",
+              "value": "answer_verifiability_feedbacks"
+            },
+            {
+              "name": "output_downstream_value_key",
+              "value": "downstream_value_grades"
+            },
+            {
+              "name": "output_downstream_value_feedback_key",
+              "value": "downstream_value_feedbacks"
+            }
+          ]
+        }
+      },
+      {
+        "name": "AlpagasusSampleEvaluator",
+        "location": [
+          3130,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "llm_serving",
+              "value": "9fb9ebf1ed9ee33e"
+            },
+            {
+              "name": "dimension",
+              "value": "quality"
+            }
+          ],
+          "run": [
+            {
+              "name": "input_instruction_key",
+              "value": "question"
+            },
+            {
+              "name": "input_input_key",
+              "value": "raw_chunk"
+            },
+            {
+              "name": "input_output_key",
+              "value": "answer"
+            },
+            {
+              "name": "output_key",
+              "value": "AlpagasusScore"
+            }
+          ]
+        }
+      },
+      {
+        "name": "GeneralFilter",
+        "location": [
+          3440,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "filter_rules",
+              "value": "lambda df: (df['question_quality_grades'] >= 4) & (df['answer_alignment_grades'] >= 4) & (df['answer_verifiability_grades'] >= 4) & (df['downstream_value_grades'] >= 4) & (df['AlpagasusScore'] >= 4)"
+            }
+          ],
+          "run": []
+        }
+      },
+      {
+        "name": "HashDeduplicateFilter",
+        "location": [
+          3750,
+          160
+        ],
+        "params": {
+          "init": [],
+          "run": [
+            {
+              "name": "input_keys",
+              "value": [
+                "question",
+                "answer"
+              ]
+            },
+            {
+              "name": "output_key",
+              "value": "hash_deduplicated_label"
+            }
+          ]
+        }
+      },
+      {
+        "name": "PandasOperator",
+        "location": [
+          4060,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "process_fn",
+              "value": "lambda df: df.assign(instruction=lambda d: d.get('question', ''), input=lambda d: d.get('raw_chunk', ''), output=lambda d: d.get('answer', ''))"
+            }
+          ],
+          "run": [
+            {
+              "name": "output_key",
+              "value": "instruction"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "tags": [
+    "paper",
+    "sft",
+    "13-pdf",
+    "candidate",
+    "not-executed"
+  ]
+}

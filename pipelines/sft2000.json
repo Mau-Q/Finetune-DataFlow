@@ -1,0 +1,116 @@
+{
+  "name": "旧 2000 基线 · Qwen 生成 → DeepSeek 审核 → SFT 导出（3 条联调）",
+  "tags": [
+    "paper",
+    "baseline",
+    "sft2000",
+    "bounded-integration"
+  ],
+  "config": {
+    "file_path": "/Users/rui/Documents/DataFlow/extensions/paper-dataflow/paper_dataflow/pipelines/sft2000.py",
+    "input_dataset": {
+      "id": "e66329e1ff",
+      "location": [
+        30,
+        160
+      ]
+    },
+    "operators": [
+      {
+        "name": "SFT2000Generator",
+        "location": [
+          350,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "llm_serving",
+              "value": "a9885c5b9907017b"
+            },
+            {
+              "name": "tokenizer_path",
+              "value": "/Users/rui/Documents/DataFlow/models/tokenizers/Qwen3.6-27B-6a9e13bd"
+            },
+            {
+              "name": "output_dir",
+              "value": "/Users/rui/Documents/DataFlow/outputs/sft2000-runs"
+            },
+            {
+              "name": "max_records",
+              "value": 3
+            }
+          ],
+          "run": [
+            {
+              "name": "input_key",
+              "value": "evidence_record"
+            },
+            {
+              "name": "output_key",
+              "value": "generation_result"
+            }
+          ]
+        }
+      },
+      {
+        "name": "SFT2000Verifier",
+        "location": [
+          670,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "llm_serving",
+              "value": "99e05909b12873c2"
+            }
+          ],
+          "run": [
+            {
+              "name": "input_key",
+              "value": "generation_result"
+            },
+            {
+              "name": "input_evidence_key",
+              "value": "evidence_record"
+            },
+            {
+              "name": "output_key",
+              "value": "verification_result"
+            }
+          ]
+        }
+      },
+      {
+        "name": "SFT2000Exporter",
+        "location": [
+          990,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "output_dir",
+              "value": "/Users/rui/Documents/DataFlow/outputs/sft2000-exports"
+            }
+          ],
+          "run": [
+            {
+              "name": "input_key",
+              "value": "verification_result"
+            },
+            {
+              "name": "input_evidence_key",
+              "value": "evidence_record"
+            },
+            {
+              "name": "output_key",
+              "value": "export_status"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

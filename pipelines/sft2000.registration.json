@@ -1,0 +1,25 @@
+{
+  "pipeline_id": "0227d585-4994-4418-a100-5e3850bac333",
+  "datasets": {
+    "evidence-smoke3.jsonl": "e66329e1ff",
+    "evidence-2000.jsonl": "6b8a5f182f",
+    "txt1199-source-catalog.jsonl": "22bc4c1c35"
+  },
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "dataset_id": "e66329e1ff",
+    "available_input_fields": [
+      "evidence_record"
+    ],
+    "final_available_fields": [
+      "evidence_record",
+      "generation_result",
+      "verification_result",
+      "export_status"
+    ]
+  },
+  "generator_serving_id": "a9885c5b9907017b",
+  "verifier_serving_id": "99e05909b12873c2"
+}

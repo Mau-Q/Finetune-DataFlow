@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "paper_dataflow"
+version = "0.0.1"
+license = { text = "Apache-2.0" }
+description = "Local paper data processing extensions for DataFlow"
+authors = [{name="rui"}]
+requires-python = ">=3.12"
+
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["paper_dataflow*"]
+
+[tool.setuptools.dynamic]
+version = {attr = "paper_dataflow.version.__version__"}
+dependencies = {file = "requirements.txt"}

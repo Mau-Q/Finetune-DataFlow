@@ -1,0 +1,115 @@
+{
+  "name": "论文 PDF → 证据分块（演示，无 LLM）",
+  "config": {
+    "file_path": "/Users/rui/Documents/DataFlow/extensions/paper-dataflow/paper_dataflow/pipelines/paper_prepare.py",
+    "input_dataset": {
+      "id": "c93dc69c86",
+      "location": [
+        30,
+        160
+      ]
+    },
+    "operators": [
+      {
+        "name": "MinerU4PDFParser",
+        "location": [
+          350,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "mineru_script",
+              "value": "/Users/rui/Documents/DataFlow/scripts/mineru.sh"
+            },
+            {
+              "name": "output_dir",
+              "value": "/Users/rui/Documents/DataFlow/outputs/paper-parsing"
+            },
+            {
+              "name": "tier",
+              "value": "standard"
+            },
+            {
+              "name": "timeout_seconds",
+              "value": 900
+            }
+          ],
+          "run": [
+            {
+              "name": "input_key",
+              "value": "source_path"
+            },
+            {
+              "name": "output_key",
+              "value": "parsed_document"
+            }
+          ]
+        }
+      },
+      {
+        "name": "MinerU4PageExtractor",
+        "location": [
+          670,
+          160
+        ],
+        "params": {
+          "init": [],
+          "run": [
+            {
+              "name": "input_key",
+              "value": "parsed_document"
+            },
+            {
+              "name": "output_key",
+              "value": "source_page"
+            }
+          ]
+        }
+      },
+      {
+        "name": "PaperEvidenceChunker",
+        "location": [
+          990,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "tokenizer_path",
+              "value": "/Users/rui/Documents/DataFlow/models/tokenizers/Qwen2.5-7B-Instruct"
+            },
+            {
+              "name": "chunk_size",
+              "value": 512
+            },
+            {
+              "name": "chunk_overlap",
+              "value": 64
+            }
+          ],
+          "run": [
+            {
+              "name": "input_key",
+              "value": "source_page"
+            },
+            {
+              "name": "output_key",
+              "value": "raw_chunk"
+            },
+            {
+              "name": "output_meta_key",
+              "value": "chunk_metadata"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "tags": [
+    "paper",
+    "local",
+    "demo",
+    "preparation"
+  ]
+}

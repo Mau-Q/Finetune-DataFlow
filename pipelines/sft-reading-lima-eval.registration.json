@@ -1,0 +1,83 @@
+{
+  "pipeline_id": "3f377f99-0757-4df8-9294-1813ccf87560",
+  "dataset_id": "fa73c50593",
+  "source_task_id": "b5f5508a6c18",
+  "source_sha256": "a18133e1b830e7e74cbb81fcab32cb0cbd4d80487f518a1e00323d3c78dc922a",
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "warnings": [
+      {
+        "level": "warning",
+        "code": "output_field_overwrite",
+        "message": "算子 'AlpagasusSampleEvaluator' 的参数 'input_output_key' 将写回已存在字段 'answer'。 这会覆盖原始列或上游结果，容易让字段流失真。",
+        "operator_index": 1,
+        "operator_name": "AlpagasusSampleEvaluator",
+        "param_name": "input_output_key",
+        "field_name": "answer",
+        "available_fields": [
+          "source",
+          "source_name",
+          "parsed_document",
+          "source_page",
+          "raw_chunk",
+          "chunk_metadata",
+          "cleaned_chunk",
+          "QA_pairs",
+          "QA_metadata",
+          "question",
+          "answer",
+          "question_quality_grades",
+          "question_quality_feedbacks",
+          "answer_alignment_grades",
+          "answer_alignment_feedbacks",
+          "answer_verifiability_grades",
+          "answer_verifiability_feedbacks",
+          "downstream_value_grades",
+          "downstream_value_feedbacks"
+        ],
+        "suggested_fields": [],
+        "repair_hint": null
+      }
+    ],
+    "dataset_id": "fa73c50593",
+    "available_input_fields": [
+      "source",
+      "source_name",
+      "parsed_document",
+      "source_page",
+      "raw_chunk",
+      "chunk_metadata",
+      "cleaned_chunk",
+      "QA_pairs",
+      "QA_metadata",
+      "question",
+      "answer"
+    ],
+    "final_available_fields": [
+      "source",
+      "source_name",
+      "parsed_document",
+      "source_page",
+      "raw_chunk",
+      "chunk_metadata",
+      "cleaned_chunk",
+      "QA_pairs",
+      "QA_metadata",
+      "question",
+      "answer",
+      "question_quality_grades",
+      "question_quality_feedbacks",
+      "answer_alignment_grades",
+      "answer_alignment_feedbacks",
+      "answer_verifiability_grades",
+      "answer_verifiability_feedbacks",
+      "downstream_value_grades",
+      "downstream_value_feedbacks",
+      "AlpagasusScore",
+      "hash_deduplicated_label",
+      "instruction"
+    ]
+  },
+  "status": "registered_not_executed"
+}

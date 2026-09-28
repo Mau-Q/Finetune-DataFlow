@@ -1,0 +1,175 @@
+{
+  "name": "SFT 阅读论文评分接续 · LIMA #14",
+  "config": {
+    "file_path": "/Users/rui/Documents/DataFlow/pipelines/sft-reading-lima-block14-eval.webui.json",
+    "input_dataset": {
+      "id": "3d07cf8de4",
+      "location": [
+        30,
+        160
+      ]
+    },
+    "operators": [
+      {
+        "name": "Text2QASampleEvaluator",
+        "location": [
+          340,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "llm_serving",
+              "value": "9fb9ebf1ed9ee33e"
+            }
+          ],
+          "run": [
+            {
+              "name": "input_question_key",
+              "value": "question"
+            },
+            {
+              "name": "input_answer_key",
+              "value": "answer"
+            },
+            {
+              "name": "output_question_quality_key",
+              "value": "question_quality_grades"
+            },
+            {
+              "name": "output_question_quality_feedback_key",
+              "value": "question_quality_feedbacks"
+            },
+            {
+              "name": "output_answer_alignment_key",
+              "value": "answer_alignment_grades"
+            },
+            {
+              "name": "output_answer_alignment_feedback_key",
+              "value": "answer_alignment_feedbacks"
+            },
+            {
+              "name": "output_answer_verifiability_key",
+              "value": "answer_verifiability_grades"
+            },
+            {
+              "name": "output_answer_verifiability_feedback_key",
+              "value": "answer_verifiability_feedbacks"
+            },
+            {
+              "name": "output_downstream_value_key",
+              "value": "downstream_value_grades"
+            },
+            {
+              "name": "output_downstream_value_feedback_key",
+              "value": "downstream_value_feedbacks"
+            }
+          ]
+        }
+      },
+      {
+        "name": "AlpagasusSampleEvaluator",
+        "location": [
+          650,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "llm_serving",
+              "value": "9fb9ebf1ed9ee33e"
+            },
+            {
+              "name": "dimension",
+              "value": "quality"
+            }
+          ],
+          "run": [
+            {
+              "name": "input_instruction_key",
+              "value": "question"
+            },
+            {
+              "name": "input_input_key",
+              "value": "raw_chunk"
+            },
+            {
+              "name": "input_output_key",
+              "value": "answer"
+            },
+            {
+              "name": "output_key",
+              "value": "AlpagasusScore"
+            }
+          ]
+        }
+      },
+      {
+        "name": "GeneralFilter",
+        "location": [
+          960,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "filter_rules",
+              "value": "lambda df: (df['question_quality_grades'] >= 4) & (df['answer_alignment_grades'] >= 4) & (df['answer_verifiability_grades'] >= 4) & (df['downstream_value_grades'] >= 4) & (df['AlpagasusScore'] >= 4)"
+            }
+          ],
+          "run": []
+        }
+      },
+      {
+        "name": "HashDeduplicateFilter",
+        "location": [
+          1270,
+          160
+        ],
+        "params": {
+          "init": [],
+          "run": [
+            {
+              "name": "input_keys",
+              "value": [
+                "question",
+                "answer"
+              ]
+            },
+            {
+              "name": "output_key",
+              "value": "hash_deduplicated_label"
+            }
+          ]
+        }
+      },
+      {
+        "name": "PandasOperator",
+        "location": [
+          1580,
+          160
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "process_fn",
+              "value": "lambda df: df.assign(instruction=lambda d: d.get('question', ''), input=lambda d: d.get('raw_chunk', ''), output=lambda d: d.get('answer', ''))"
+            }
+          ],
+          "run": [
+            {
+              "name": "output_key",
+              "value": "instruction"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "tags": [
+    "paper",
+    "sft",
+    "checkpoint",
+    "parser-activation-check"
+  ]
+}

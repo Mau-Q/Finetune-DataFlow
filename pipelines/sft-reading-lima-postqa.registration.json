@@ -1,0 +1,37 @@
+{
+  "pipeline_id": "4fac04fa-992e-4a93-8b68-11c4df03be60",
+  "dataset_id": "e66dc8046d",
+  "source_task_id": "382eb1ca7fad",
+  "source_sha256": "a7fcc784d4cfec1a87481fa2ee840884ba488a6852e377754da3c29114444763",
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "dataset_id": "e66dc8046d",
+    "available_input_fields": [
+      "source",
+      "source_name",
+      "parsed_document",
+      "source_page",
+      "raw_chunk",
+      "chunk_metadata",
+      "cleaned_chunk",
+      "QA_pairs",
+      "QA_metadata"
+    ],
+    "final_available_fields": [
+      "source",
+      "source_name",
+      "parsed_document",
+      "source_page",
+      "raw_chunk",
+      "chunk_metadata",
+      "cleaned_chunk",
+      "QA_pairs",
+      "QA_metadata",
+      "question",
+      "answer"
+    ]
+  },
+  "status": "registered_not_executed"
+}

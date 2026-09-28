@@ -1,0 +1,16 @@
+.venvs/
+repos/
+models/
+logs/
+outputs/
+data/
+.DS_Store
+.env
+.env.*
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.agents/
+.codex/
+locks/*.patch

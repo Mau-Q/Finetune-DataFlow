@@ -1,0 +1,24 @@
+{
+  "pipeline_id": "c881629a-2481-4c99-b144-6a2ef251d14b",
+  "dataset_id": "c93dc69c86",
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "dataset_id": "c93dc69c86",
+    "available_input_fields": [
+      "source_path",
+      "is_demo",
+      "dataset_note"
+    ],
+    "final_available_fields": [
+      "source_path",
+      "is_demo",
+      "dataset_note",
+      "parsed_document",
+      "source_page",
+      "raw_chunk",
+      "chunk_metadata"
+    ]
+  }
+}
