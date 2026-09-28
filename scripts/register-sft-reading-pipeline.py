@@ -137,6 +137,8 @@ def build_config(dataset_id, qwen_plain, deepseek_plain):
         operator("Text2QASampleEvaluator", 2820,
                  {"llm_serving": deepseek_plain},
                  {"input_question_key": "question", "input_answer_key": "answer",
+                  "input_context_key": "raw_chunk",
+                  "input_supporting_facts_key": "QA_pairs",
                   "output_question_quality_key": "question_quality_grades",
                   "output_question_quality_feedback_key": "question_quality_feedbacks",
                   "output_answer_alignment_key": "answer_alignment_grades",
