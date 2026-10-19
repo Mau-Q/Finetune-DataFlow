@@ -65,3 +65,9 @@ WebUI 实现提交：`6cfc51d`，分支 `codex/platform-m1`。工作区文档使
 验证：`./scripts/test-local.sh` 通过（核心 158 项、当时后端 99 项、扩展 30 项）；最终补充 Parquet 空值与批内重复文件测试后，全后端 101 项通过，另 7 个 subtests 通过；最终前端生产构建通过。日志为 `outputs/dataset-ui-regression.log`、`outputs/dataset-ui-backend.log`、`outputs/dataset-ui-build.log`。
 
 浏览器实际验证：原画布入口上传图片、新记录出现；独立原始数据集入口上传 PDF；13 篇论文列表及 PDF 原件可预览；图文草稿创建、图片下拉绑定、导入、图片真实加载、刷新保留；ID 与 JSON 默认折叠。验收截图位于 `output/playwright/dataset-ui-sources.png`、`dataset-ui-canvas-upload.png` 和 `dataset-ui-generated.png`。验收数据只是 UI 夹具，没有真实生成或质量结论。
+
+## 2026-10-19 缩放与预览修正
+
+数据管理页改为按内容面板实际宽度的容器查询布局；面板变窄时将数据集选择移到上方，进一步变窄时将文件列表移到预览上方。标题按钮允许换行，预览高度跟随可用视口。PDF 默认按预览宽度适配，并收起浏览器内置的缩略图侧栏。
+
+前端生产构建通过；浏览器在 1600、1470、1280、1024、768、430 CSS 像素宽度下检查内容区、右侧按钮与页面边界，均无横向溢出；另以根元素 CSS zoom 125% / 150% 检查布局边界。这是布局缩放模拟，没有修改用户浏览器的缩放设置。1470 像素下实际截图确认 PDF 按宽度展示且缩略图收起。截图为 `output/playwright/dataset-scale-1470.png` 与 `dataset-scale-150-percent.png`。本次只改前端，没有重跑后端或模型流程。
