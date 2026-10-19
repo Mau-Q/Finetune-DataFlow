@@ -6,7 +6,19 @@
 
 面向其他使用者交付可独立部署的数据生成平台，先完成基本功能。首版跑通：导入原始材料 → 准备生成输入 → 配置 Prompt、Schema 和模型服务 → 执行 Pipeline → 查看成功与失败结果 → 整理数据集草稿 → 发布固定版本 → 导出训练数据。
 
-文本 SFT 与视觉语言 SFT 均需有可验证的最小流程。优先复用当前 WebUI、DataFlow 算子、本地扩展和已有持久化方式，不以本轮设计为由重建整个平台或引入复杂基础设施。未来共享部署、DPO 和训练反馈只作为扩展方向，不实现空壳功能冒充支持。
+文本 SFT 与视觉语言 SFT 均为首版目标，但视觉语言全流程尚未在当前环境验证可用，不能视为已有适配能力。需先完成下述能力核查与最小联调，再确定复用路径和接入工作。优先复用当前 WebUI、DataFlow 算子、本地扩展和已有持久化方式，不以本轮设计为由重建整个平台或引入复杂基础设施。未来共享部署、DPO 和训练反馈只作为扩展方向，不实现空壳功能冒充支持。
+
+## 视觉语言能力核查（2026-10-19）
+
+- 本地 `open-dataflow 1.0.10` 含 `core_vision.PromptedVQAGenerator`、`APIVLMServing_openai`、`pdf2vqa.VQAFormatter`，已验证可导入，尚未完成真实视觉模型调用与端到端试跑。
+- 本地 `PromptedVQAGenerator` 传入 `raw_content`，现有 VLM 客户端将每个值作为图片路径，以同一提示词调用模型；并非已适配任意逐样本问题、多图对话与结构化 QA 输出。
+- WebUI 当前 Serving 注册表仅开放 `APILLMServing_request`，视觉客户端尚未接入。核心类存在不等于平台可配置并执行。
+- 本地 PDF2VQA 示例是从题目与解答材料抽取问答的专用流程，不能直接视为任意资料的 VQA 合成。其转换器读取 `*_content_list.json`，本地 MinerU 4 扩展读取 ZIP 中的 `structured_content.json`，两者尚无已验证的直接连接。
+- `VQAFormatter` 提供 `messages` 与 `images` 格式转换，但未等同于媒体打包和完整性检查；当前实现按文件名索引工作目录中的图片，复用前需限定图片来源和验证引用，避免同名文件误配。
+- 官方 [DataFlow-MM](https://github.com/OpenDCAI/DataFlow-MM) 有更完整的视觉对话生成能力，已查阅其 [VQA 生成源码](https://github.com/OpenDCAI/DataFlow-MM/blob/main/dataflow/operators/core_vision/generate/prompted_vqa_generator.py)，接口与本地同名算子不同；当前环境未安装 `open-dataflow-mm`。
+- DataFlow-MM 的 [打包配置](https://github.com/OpenDCAI/DataFlow-MM/blob/main/pyproject.toml) 同样声明顶层包 `dataflow`，不能假定与当前核心同环境安装后无冲突。当前建议部分复用，经隔离验证后决定适配方式，不直接替换现有运行环境。
+
+最小联调应分别验证“已有图片 → 视觉生成 → 结构化样本 → 图片可定位的导出”和“PDF → 页面或区域图片 → 同一视觉流程”。前者不必依赖 PDF 解析；后者的页面渲染或图片提取适配仍待核实。若核心能力不足，再选取 DataFlow-MM 的具体算子或服务适配，不能因完整框架目标而默认全部已接通。
 
 ## 已确定的模块边界
 
@@ -48,7 +60,7 @@
 
 ## 实施顺序
 
-1. 核对现有解析、管理、执行和导出代码及相关测试，选定可复用入口；先修通 Prompt/Schema 引用和校验。
+1. 先验证视觉语言的图片最小链路与 PDF 接入路径，确定 DataFlow 核心或 DataFlow-MM 的具体复用范围；核对现有解析、管理、执行和导出代码及相关测试，再修通 Prompt/Schema 引用和校验。
 2. 补齐材料管理与生成数据集管理的基本模型、接口和页面；保持两个管理边界清晰。
 3. 串通文本 SFT 最小流程，再串通视觉语言 SFT；向导与画布使用同一配置。
 4. 补齐按输入记录恢复、失败重跑、固定版本发布和文件导出，完成端到端验证。
