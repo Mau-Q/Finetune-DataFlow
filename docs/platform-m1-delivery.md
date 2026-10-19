@@ -51,3 +51,17 @@ WebUI 实现提交：`6cfc51d`，分支 `codex/platform-m1`。工作区文档使
 启动服务会按旧逻辑重扫注册数据。与备份比较：71 个旧数据集、36 条 Pipeline 注册记录的 ID 和配置均保留；变化仅为部分 `added_at` / `updated_at` 时间戳，以及自动重建的 `ops.zh.json` / `ops.en.json` 缓存。Serving、任务记录与 Prompt/Schema 原始元数据未发生变化。
 
 工作区原有 `pipelines/SFT-PIPELINE-OPERATORS.md` 删除保持未提交，不属于本次变更。
+
+## 2026-10-19 后续 UI 调整
+
+根据用户确认，当前默认只显示「SFT 阅读论文 13 篇 · PDF 原件」（`a5f3dd5c5d`）；原有另 70 条输入记录及 2 个 M1 验收草稿改为隐藏，全部原记录保留。新添加数据默认可见。为浏览器验证新增的 2 条输入记录和 1 个图文草稿在验证后也隐藏，因此最终显示 1 个原始数据集，生成数据集列表暂为空。
+
+原画布「数据集 → 添加」和原始数据集页的添加按钮接入共用表单，支持 PDF / 图片批量导入以及已有结构化文件。PDF / 图片形成兼容现有 Pipeline 的输入清单；没有启动 Pipeline 或调用模型。两个管理页面改为列表优先：原始数据集以文件列表和 PDF / 图片预览为主，生成数据集直接展示问答和图片；创建、导入、技术元数据与原始 JSON 均按需展开。图文导入可通过下拉框选择图片，减少手工 ID 输入。
+
+发现论文清单的 13 条 `source` 仍指向已失效的 Downloads 路径。备份后改为当前确实存在的 `/Users/rui/Documents/论文资料/SFT-data-composition-reading/`；保留数据集 ID、论文顺序与文件名，并更新当前登记的文件哈希及来源目录。历史任务和缓存未改动。
+
+备份为 `outputs/backups/dataset-ui-20261019-141655/`，包含原注册表、原清单、原草稿、SHA-256 清单及最终显示偏好。显示设置位于 WebUI 的 `backend/data/dataset_visibility.json`；清除对应隐藏 ID 可恢复显示。源码不写死本机的数据集 ID。
+
+验证：`./scripts/test-local.sh` 通过（核心 158 项、当时后端 99 项、扩展 30 项）；最终补充 Parquet 空值与批内重复文件测试后，全后端 101 项通过，另 7 个 subtests 通过；最终前端生产构建通过。日志为 `outputs/dataset-ui-regression.log`、`outputs/dataset-ui-backend.log`、`outputs/dataset-ui-build.log`。
+
+浏览器实际验证：原画布入口上传图片、新记录出现；独立原始数据集入口上传 PDF；13 篇论文列表及 PDF 原件可预览；图文草稿创建、图片下拉绑定、导入、图片真实加载、刷新保留；ID 与 JSON 默认折叠。验收截图位于 `output/playwright/dataset-ui-sources.png`、`dataset-ui-canvas-upload.png` 和 `dataset-ui-generated.png`。验收数据只是 UI 夹具，没有真实生成或质量结论。
