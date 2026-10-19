@@ -21,6 +21,10 @@
 
 服务日志在 `repos/dataflow-webui/.backend.log`。服务仅监听本机，不自动设置开机启动。
 
+## 数据生成平台（M1–M6）
+
+本地框架集成回归与交付已完成，覆盖材料、资源、文本任务、草稿、发布导出和图片 VQA 配置。入口与备份说明见 [使用手册](repos/dataflow-webui/docs/local-data-platform.md)，验收证据和真实运行待验项见 [M6 交付记录](docs/platform-m6-delivery.md)。本轮未执行真实模型调用。
+
 ## 本地解析 PDF
 
 ```sh
