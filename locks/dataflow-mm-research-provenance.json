@@ -1,0 +1,121 @@
+{
+  "purpose": "Research provenance, not a complete dependency lock or deployment acceptance",
+  "date": "2026-10-19",
+  "decision": "PARTIAL_REUSE",
+  "sources": {
+    "core": {
+      "path": "repos/dataflow",
+      "revision": "769a99e0563a7ad63b451dc0f3a9854cd9c1a182"
+    },
+    "mm": {
+      "path": "repos/dataflow-mm",
+      "revision": "155253460f6f2e50705a3e779f259b382a382822"
+    },
+    "webui": {
+      "path": "repos/dataflow-webui",
+      "revision": "717c38a211dc547726f086b1388ef13ff2eded04"
+    }
+  },
+  "mm_upstream": {
+    "archived": false,
+    "default_branch": "main",
+    "license": "Apache-2.0",
+    "pushed_at": "2026-04-13T09:12:34Z"
+  },
+  "runtime": {
+    "python": "3.12.15",
+    "core_package": "1.0.10",
+    "torch": "2.14.0",
+    "openai": "3.17.0",
+    "pandas": "3.0.6",
+    "mm_environment": ".venvs/dataflow-mm-research",
+    "mm_dependency_mode": "source PYTHONPATH plus .pth borrowing existing core dependency packages; full requirements not installed"
+  },
+  "validation": {
+    "core": {
+      "engine": "core",
+      "source": "/Users/rui/Documents/DataFlow/repos/dataflow/dataflow/__init__.py",
+      "validation": "real upstream operators + deterministic loopback HTTP, no real VLM",
+      "checks": [
+        "core_real_operator_http_and_jsonl",
+        "core_transmitted_exact_image_bytes",
+        "core_serving_schema_forwarding",
+        "core_empty_row_alignment_gap_reproduced",
+        "real_mineru4_archive_to_existing_page_extractor",
+        "pdf_text_to_real_core_generator_schema_http"
+      ],
+      "observations": {
+        "empty_input_row": "Length of values (1) does not match length of index (2)",
+        "core_retry_parameter": "max_retries counts attempts, used 1 for one request; 0 would send no requests"
+      },
+      "row_count": 3
+    },
+    "mm": {
+      "engine": "mm",
+      "source": "/Users/rui/Documents/DataFlow/repos/dataflow-mm/dataflow/__init__.py",
+      "validation": "real upstream operators + deterministic loopback HTTP, no real VLM",
+      "checks": [
+        "mm_official_two_stage_image_vqa_pipeline_http_and_jsonl",
+        "mm_exact_image_bytes_and_question_forwarding",
+        "mm_multi_image_dynamic_template",
+        "mm_one_image_many_questions",
+        "mm_missing_image_fallback_gap_reproduced",
+        "mm_error_string_gap_reproduced",
+        "mm_optional_vision_filter_api_mismatch_reproduced"
+      ],
+      "observations": {
+        "mm_messages_schema_parameter": false,
+        "missing_image_column": "silently falls back to text-only",
+        "http_failure": "written as ordinary Error: string, no structured failure status",
+        "vision_dependency_filter_api": "'APIVLMServing_openai' object has no attribute 'generate_from_input_with_message'",
+        "upstream_pipeline_constructor": "ignores llm_serving argument; module overwrites DF_API_KEY with placeholder; fixture overrides both"
+      },
+      "row_count": 3
+    },
+    "export": {
+      "rows": 3,
+      "checks": [
+        "mm_to_core_json_file_boundary",
+        "real_core_vqa_formatter",
+        "all_exported_media_exist",
+        "image_token_count_matches",
+        "portable_relative_paths",
+        "formatter_missing_image_gap_reproduced"
+      ],
+      "adapter_scope": "research-only explicit field mapping and media copy, not platform integration"
+    },
+    "prepare": {
+      "pages": 1,
+      "members": [
+        "images/page_0_image_1.jpg",
+        "markdown.md",
+        "middle_json.json",
+        "model_output.json",
+        "structured_content.json"
+      ],
+      "image_sources": [
+        "images/page_0_image_1.jpg"
+      ],
+      "old_content_list_present": false
+    }
+  },
+  "not_validated": [
+    "real VLM inference and QA quality",
+    "full MM dependency installation",
+    "WebUI and Ray MM execution",
+    "Linux/CUDA",
+    "long-run recovery and throughput"
+  ],
+  "artifacts": {
+    "inventory.json": "6466a1515048e34b6d92c60317206dac4912ee174d28cc15ada453d977606eba",
+    "wheel-inspection.json": "0afbd343fbbb83e9d3d8e3fb29843d840cda5068685917e31126a2eb3046c58a",
+    "namespace-probe.json": "3a1d9475f27e72c75d5a0bb2f59363e6672186e539ba19e295d34eb2ba573500",
+    "import-audit.json": "458096d1c451733fd626c60108f71e69e6f68a47ea6e2307ca88e57942dbd7ca",
+    "reproduction/training-package.zip": "04121c02da8eccfd14cd9d80820db02c9814b52dfaf698c3e83abd29f62a477e",
+    "evidence-manifest.json": "a1b33fbad13220cde368420a7c72ecbf5a935df37391c46dab492d39a8f7732c"
+  },
+  "scripts": {
+    "scripts/research/vision_compatibility_probe.py": "3fd4a45fb019455a9292bd66e4dd69a3e652df32b0f7d49773c0c4d099138093",
+    "scripts/research/inventory_dataflow_vision.py": "1aa81f0a9fc6cd60c51e5962d6189d110eac5b841947568f3aa331a7db270832"
+  }
+}
