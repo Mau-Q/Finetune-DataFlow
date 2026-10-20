@@ -13,6 +13,8 @@
 
 ## 设计与历史证据
 
+[DataFlex 接入设计](dataflex-integration-design.md) 与 [分批实施计划](dataflex-implementation-plan.md) 记录模型训练、五类策略配置、固定主机 SSH 及结果展示的新增范围；B1–B6 已完成离线/隔离实现与验证，真实 SSH/GPU 训练待 G1 资源就绪后验收。详见 [交付记录](dataflex-delivery.md)。
+
 [公开源码整理验证](publication-verification.md) 记录本次回归与安装验证范围。
 
 [全局交互与数据集筛选](interaction-and-dataset-filters.md) 记录编辑保护、公共控件、导入、筛选与统计修复的行为和验收边界。
