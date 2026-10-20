@@ -15,6 +15,8 @@
 
 [公开源码整理验证](publication-verification.md) 记录本次回归与安装验证范围。
 
+[全局交互与数据集筛选](interaction-and-dataset-filters.md) 记录编辑保护、公共控件、导入、筛选与统计修复的行为和验收边界。
+
 [WebUI 性能与原生组件布局](performance-and-ui.md) 记录后续首屏精简、请求合并、工具栏与参数面板优化。
 
 [领域术语](../CONTEXT.md)、[v1 范围](finetuning-platform-v1.md)、[实施计划](platform-implementation-plan.md) 和 [ADR](adr/) 保留设计依据。

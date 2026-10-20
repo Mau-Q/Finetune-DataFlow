@@ -36,7 +36,7 @@ jobs:
         run: npm ci --no-audit --no-fund
       - name: Frontend contract tests
         working-directory: repos/dataflow-webui/frontend
-        run: node --test src/hooks/dataflow/*.test.mjs
+        run: npm test
       - name: Build
         working-directory: repos/dataflow-webui/frontend
         run: npm run build
