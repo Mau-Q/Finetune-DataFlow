@@ -1,25 +1,25 @@
-# DataFlow 工作区基线
+# 工作区与公开源码基线
 
-本目录管理本项目的脚本、Pipeline 配置、文档、依赖清单和 `paper-dataflow` 扩展。`repos/dataflow` 与 `repos/dataflow-webui` 是两个独立 Git 仓库，不嵌入本仓库；各自的修复保存在 `Mau-Q` fork 的分支中。
+2026-10-20：统一公开入口为 `Mau-Q/Finetune-DataFlow`。根仓库管理集成脚本、文档、Pipeline、依赖记录及论文扩展；三个组件以固定提交的 Git 子模块引用，各自保留独立历史。
 
-| 目录 | 当前分支 | 基线提交 | 远端 |
-| --- | --- | --- | --- |
-| `repos/dataflow` | `local/reusable-sft-operator-fixes` | `660d0e96d021086c9f542858460c91cf9ea785b2` | `Mau-Q/DataFlow` |
-| `repos/dataflow-webui` | `local/reusable-sft-webui-fixes` | `200e5ec7cf826c8643913dadc1a93b1d46866862` | `Mau-Q/DataFlow-WebUI` |
+| 目录 | 固定提交 | 远端 |
+| --- | --- | --- |
+| `repos/dataflow` | `e40fdf576bf7f1379d6ba430a2c4d57d5691d19b` | https://github.com/Mau-Q/DataFlow.git |
+| `repos/dataflow-webui` | `8e89be819631c91782510de4044653aaf569bade` | https://github.com/Mau-Q/DataFlow-WebUI.git |
+| `repos/dataflow-mm` | `155253460f6f2e50705a3e779f259b382a382822` | https://github.com/OpenDCAI/DataFlow-MM.git |
 
-DataFlow 的 `660d0e9` 与 WebUI 的 `200e5ec` 是本次本地测试和评分解析修复提交，尚未推送。WebUI 的 `a12118c` 是此前本机集成改动的独立本地提交；此前的 `06a5a0a` 已推送至 fork。根目录基线也只在本机提交，不代表这三个仓库已有同一发布版本。
+权威版本清单为 [locks/components.json](locks/components.json)，`python3 scripts/check-workspace.py` 检查清单、gitlink、当前 checkout 与 URL 是否一致。安装不会重置现有开发 checkout。
 
-## 纳入与排除
+## 跟踪边界
 
-- 跟踪：项目脚本、Pipeline 配置与执行说明、扩展源码、安装与依赖清单。
-- 不跟踪：两个嵌套仓库、虚拟环境、模型、原始数据、运行缓存、输出、日志、密钥、本机 Codex 配置和历史补丁。排除规则见 `.gitignore`。
-- `pipelines/` 中的部分注册记录含本机绝对路径与任务 ID，是本地运行快照；克隆到其他机器后必须重新绑定输入、Serving 和输出路径。
-- `data/`、`logs/`、`outputs/` 未纳入 Git。Git 提交不能单独复现历史实验结果；对应原始材料与运行证据应另行归档。
+- 跟踪：源码、文档、脚本、配置模板、合成测试材料和组件版本。
+- 排除：环境、模型、日志、缓存、原始材料、运行输出、数据库、密钥及本机编辑器/Agent 配置。
+- 旧 `pipelines/*.registration.json`、论文实验脚本和环境冻结文件保留历史用途，可能包含本机路径与任务 ID，不能直接当作可移植配置。当前使用入口见 [README](README.md)。
 
-## 开发检查
+## 提交与验证
 
-修改前后分别执行 `git status --short --branch`，在本目录和两个 `repos/` 仓库各检查一次。提交时按仓库分别暂存目标文件、检查暂存 diff；不要从本目录运行 `git add -A` 来代替对三个仓库的检查。
+先检查涉及仓库的 Git 状态，各仓库分别提交，推送组件提交后再发布根仓库引用。不要使用全仓 `git add -A` 顺带提交其他任务的改动。
 
-本机运行使用 editable 安装的 DataFlow，修改源码后应确认 WebUI/Ray 进程加载了目标版本。`repos/dataflow-webui/backend/app/core/config.py` 当前启用 `paper_dataflow`，新环境需先安装 `extensions/paper-dataflow`。
+完整本地回归运行 `./scripts/test-local.sh`，前端另执行 Node 契约测试与构建。安装与端口可访问不证明模型/API、MinerU 或 MM 的真实运行能力。
 
-离线本地回归入口为 `./scripts/test-local.sh`；测试环境缺 Flask 时，按 `locks/dataflow-test.txt` 安装测试依赖。该入口排除 DataFlow 的 `gpu` 标记测试，不调用真实评分服务；它验证代码与本地契约，不替代运行进程重载后的 Pipeline 试跑。
+历史安装记录已移至 [docs/archive](docs/archive/INSTALLATION_STATUS.md)；阶段交付见 [文档索引](docs/README.md)。

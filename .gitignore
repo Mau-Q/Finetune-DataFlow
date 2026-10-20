@@ -3,6 +3,17 @@ repos/
 models/
 logs/
 outputs/
+output/
+.playwright-cli/
+node_modules/
+.venv/
+dist/
+*.sqlite3
+*.sqlite3-*
+*.db
+*.log
+*.pem
+*.key
 data/
 .DS_Store
 .env

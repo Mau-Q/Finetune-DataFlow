@@ -1,0 +1,8 @@
+[extend]
+useDefault = true
+
+# SHA-256 of tokenizer_config.json, not an API credential.
+[[allowlists]]
+description = "Pinned public tokenizer file checksum"
+regexTarget = "secret"
+regexes = ['''^5186f0defcd7f232382c7f0aebcd2252d073bb921ab240e407b7ae8745d2b29b$''']

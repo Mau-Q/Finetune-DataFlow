@@ -1,0 +1,42 @@
+name: Repository checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  workspace:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate component pins and public files
+        run: python scripts/check-workspace.py
+      - name: Check shell syntax
+        run: bash -n scripts/setup.sh && sh -n scripts/webui.sh scripts/test-local.sh
+      - name: Check whitespace
+        run: git diff --check
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: repos/dataflow-webui/frontend/package-lock.json
+      - name: Install frontend dependencies
+        working-directory: repos/dataflow-webui/frontend
+        run: npm ci --no-audit --no-fund
+      - name: Frontend contract tests
+        working-directory: repos/dataflow-webui/frontend
+        run: node --test src/hooks/dataflow/*.test.mjs
+      - name: Build
+        working-directory: repos/dataflow-webui/frontend
+        run: npm run build
