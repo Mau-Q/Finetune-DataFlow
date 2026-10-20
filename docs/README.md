@@ -15,6 +15,8 @@
 
 [公开源码整理验证](publication-verification.md) 记录本次回归与安装验证范围。
 
+[WebUI 性能与原生组件布局](performance-and-ui.md) 记录后续首屏精简、请求合并、工具栏与参数面板优化。
+
 [领域术语](../CONTEXT.md)、[v1 范围](finetuning-platform-v1.md)、[实施计划](platform-implementation-plan.md) 和 [ADR](adr/) 保留设计依据。
 
 [M1](platform-m1-delivery.md)、[M2](platform-m2-delivery.md)、[M3–M4](platform-m3-m4-delivery.md)、[M5](platform-m5-delivery.md)、[M6](platform-m6-delivery.md) 与 [数据存储交付](platform-dataset-storage-delivery.md) 是对应阶段的验收记录。它们不代表后来四类代表流程的最新行为；例如 M5 的独立 MM 模板运行拦截与当前 API 图片流程是不同路径，旧的评分/手动收录说明也不能套用到新模板。
