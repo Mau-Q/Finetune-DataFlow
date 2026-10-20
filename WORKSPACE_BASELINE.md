@@ -5,7 +5,7 @@
 | 目录 | 固定提交 | 远端 |
 | --- | --- | --- |
 | `repos/dataflow` | `e40fdf576bf7f1379d6ba430a2c4d57d5691d19b` | https://github.com/Mau-Q/DataFlow.git |
-| `repos/dataflow-webui` | `563255ca1896f3520db1b74761bb101558ddccb2` | https://github.com/Mau-Q/DataFlow-WebUI.git |
+| `repos/dataflow-webui` | `197327051efd5dc50a49473e88838cc762c947c9` | https://github.com/Mau-Q/DataFlow-WebUI.git |
 | `repos/dataflow-mm` | `155253460f6f2e50705a3e779f259b382a382822` | https://github.com/OpenDCAI/DataFlow-MM.git |
 
 权威版本清单为 [locks/components.json](locks/components.json)，`python3 scripts/check-workspace.py` 检查清单、gitlink、当前 checkout 与 URL 是否一致。安装不会重置现有开发 checkout。
