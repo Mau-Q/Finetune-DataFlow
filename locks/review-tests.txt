@@ -1,31 +1,29 @@
-# CPU-only import/runtime dependencies for isolated failure and persistence regressions.
-# No model downloads, LightRAG dependency, external API calls or Ray cluster required.
-pytest
-flask
-requests
-tqdm
-colorlog
-rich
-transformers>=4.57,<5
-librosa
-openai
-fsspec
-pandas
-fastapi
-ray
-pydantic-settings
-loguru
-pyyaml
-Pillow
-pypdf
-jsonschema
-pymysql
-filelock
-google-api-python-client
-# Imported by dataflow.serving's Vertex module even for local-only tests.
-google-cloud-aiplatform>=1.55
-google-cloud-bigquery
-google-genai
-# Match the product's declared PDF/image compatibility bounds.
-Pillow<13
-pypdf>=5,<7
+# CPU-only regression import dependencies selected from the existing local locks.
+# No model downloads, LightRAG installation, external API calls or Ray cluster.
+colorlog==6.12.0
+fastapi==0.141.1
+filelock==4.0.1
+flask==3.1.3
+fsspec==2026.9.0
+google-api-python-client==2.200.0
+google-cloud-aiplatform==2.1.3
+google-cloud-bigquery==3.45.2
+google-genai==2.24.0
+httpx==0.28.1
+jsonschema==4.26.0
+librosa==0.11.0
+loguru==0.7.3
+openai==3.17.0
+pandas==3.0.6
+pillow==12.3.0
+pydantic==2.13.5
+pydantic-settings==2.15.0
+pymysql==1.2.3
+pypdf==6.19.0
+pytest==9.1.1
+pyyaml==6.0.3
+ray==2.58.0
+requests==2.34.2
+rich==15.0.0
+tqdm==4.70.1
+transformers==4.57.6
