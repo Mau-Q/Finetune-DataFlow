@@ -22,3 +22,10 @@ jsonschema
 pymysql
 filelock
 google-api-python-client
+# Imported by dataflow.serving's Vertex module even for local-only tests.
+google-cloud-aiplatform>=1.55
+google-cloud-bigquery
+google-genai
+# Match the product's declared PDF/image compatibility bounds.
+Pillow<13
+pypdf>=5,<7
