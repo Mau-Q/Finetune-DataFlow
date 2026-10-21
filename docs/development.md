@@ -33,3 +33,5 @@ npm run build
 发布前审查暂存 diff、组件 outgoing commits、文档链接与密钥扫描。公开源码包含历史实验脚本与快照，不能携带密钥、原始材料、运行数据库、模型权重、缓存或个人输出。`.gitignore` 不会移除已经跟踪的文件；`scripts/check-workspace.py` 对关键运行目录执行额外跟踪边界检查。
 
 根仓库 `.gitleaks.toml` 只为一个固定 tokenizer SHA-256 设置精确误报豁免，不豁免任意 `api_key` 字段或整个源码目录。子模块沿用上游历史；本次发布应重点审查新增或待推送内容，不改写上游历史。
+
+团队路由变更后，在 WebUI backend 运行 `python scripts/audit_team_routes.py`，核对生成清单及网关权限策略。产品 Agent/MCP 已移除；相关源码维护技能不属于产品运行功能。

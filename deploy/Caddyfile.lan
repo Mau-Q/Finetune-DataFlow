@@ -1,0 +1,12 @@
+# Requires Caddy installed separately. Bind only a private LAN interface.
+# Set DATAFLOW_LAN_HOST to a name your LAN clients resolve to DATAFLOW_LAN_IP.
+{$DATAFLOW_LAN_HOST} {
+    bind {$DATAFLOW_LAN_IP}
+    tls internal
+    reverse_proxy 127.0.0.1:8001
+    header {
+        X-Content-Type-Options nosniff
+        Referrer-Policy same-origin
+        X-Frame-Options DENY
+    }
+}

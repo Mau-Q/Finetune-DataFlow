@@ -30,3 +30,8 @@
 [历史安装状态](archive/INSTALLATION_STATUS.md)、[安装调研](archive/INSTALLATION_RESEARCH.md) 和 [论文实验目录](../pipelines/README.md) 保留原始证据，可能含本机路径、旧版本、任务 ID 和旧环境快照。新部署以当前指南及 `locks/components.json` 为准。
 
 DataFlex 与最新主线的关系和验证边界见 [整合记录](dataflex-main-integration.md)。
+
+## 局域网协作交付
+
+- [局域网团队使用](lan-usage.md)：主机初始化、内网 HTTPS、项目与评测。
+- [实施与验收](lan-implementation.md)：P0–P5、21 项验收与证据边界。

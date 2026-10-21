@@ -2,7 +2,7 @@
 
 基于 [OpenDCAI DataFlow](https://github.com/OpenDCAI/DataFlow) 与 [DataFlow-WebUI](https://github.com/OpenDCAI/DataFlow-WebUI) 的本地微调数据生成平台。通过可视化 Pipeline，将文本或图片材料转换成 SFT / DPO 训练样本，并管理来源、运行记录、数据集草稿和发布版本。
 
-面向个人在本机独立使用，默认仅监听 `127.0.0.1`。当前主要验证环境是 macOS Apple Silicon；Linux / Windows 尚未完成同等本地验收。
+支持个人在本机使用，以及管理员维护的局域网小团队共享；默认仅监听 `127.0.0.1`。团队模式采用独立账号、项目隔离、单人人工评测和固定导出，不提供产品内 Agent/MCP 入口。当前主要验证环境是 macOS Apple Silicon；Linux / Windows 尚未完成同等本地验收。
 
 ## 能做什么
 
@@ -13,8 +13,12 @@
 - 逐条隔离无效样本，保留 `invalid_samples.jsonl`；相同 DPO 回答最多额外生成负例 2 次。
 - 保存任务输入与资源快照，查看步骤、模型响应、产物，导出 JSONL 或含图片的 ZIP。
 - 使用 SQLite 保存数据集元数据，并提供备份、恢复和版本化发布。
+- 查看来源的生成情况，创建固定评测批次，领取、评分、修订并通过。
+- 从草稿或发布版本导出 JSONL、Alpaca、对话、DPO 与图文 ZIP，并单独导出评测明细。
 
 当前代表流程不调用模型评分。DPO 使用合成正例和负例，`chosen/rejected` 来自生成角色，仍需对照来源人工核验。代码检查、任务成功和结构合规均不代表数据质量或训练收益得到证明。
+
+局域网团队部署请使用 [团队使用与 HTTPS 配置](docs/lan-usage.md)。完整规格和本轮验证见 [Spec](docs/lan-collaboration-data-review-spec.md) 与 [实施验收记录](docs/lan-implementation.md)。
 
 ## 快速开始
 
