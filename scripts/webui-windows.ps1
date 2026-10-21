@@ -5,6 +5,7 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+. (Join-Path $PSScriptRoot "windows-common.ps1")
 $Root = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 $Python = Join-Path $Root ".venv\Scripts\python.exe"
 $Activate = Join-Path $Root ".venv\Scripts\Activate.ps1"
@@ -14,14 +15,6 @@ $PidFile = Join-Path $Root "repos\dataflow-webui\.backend.pid"
 $LogFile = Join-Path $Root "repos\dataflow-webui\.backend.log"
 $ErrorLogFile = Join-Path $Root "repos\dataflow-webui\.backend.error.log"
 
-if (-not (Test-Path $Python)) {
-    throw "Python environment not found: $Python. Run .\scripts\setup-windows.ps1 first."
-}
-
-if (-not (Test-Path $Activate)) {
-    throw "Virtual environment activation script not found: $Activate. Run .\scripts\setup-windows.ps1 first."
-}
-
 $BindHost = if ($env:DATAFLOW_HOST) { $env:DATAFLOW_HOST } else { "127.0.0.1" }
 $Port = if ($env:DATAFLOW_PORT) { [int]$env:DATAFLOW_PORT } else { 8000 }
 $env:DATAFLOW_HOST = $BindHost
@@ -30,8 +23,28 @@ $env:HF_HOME = Join-Path $Root "models\huggingface-cache"
 
 function Get-BackendProcess {
     if (-not (Test-Path $PidFile)) { return $null }
-    $processId = [int](Get-Content -Raw $PidFile)
-    return Get-Process -Id $processId -ErrorAction SilentlyContinue
+    $processId = 0
+    if (-not [int]::TryParse((Get-Content -Raw $PidFile).Trim(), [ref]$processId) -or $processId -le 0) {
+        throw "Invalid backend PID file: $PidFile"
+    }
+    $process = Get-Process -Id $processId -ErrorAction SilentlyContinue
+    if ($null -eq $process) { return $null }
+    # A stale PID may have been reused by another application. Refuse to stop it.
+    $details = Get-CimInstance Win32_Process -Filter "ProcessId = $processId" -ErrorAction Stop
+    if ($null -eq $details -or $details.ExecutablePath -ine $Python -or
+        $details.CommandLine -notmatch [regex]::Escape($Server)) {
+        throw "PID $processId does not identify this backend. Inspect and remove stale PID file: $PidFile"
+    }
+    return $process
+}
+
+if ($Action -in @("Foreground", "Daemon")) {
+    if (-not (Test-Path $Python)) {
+        throw "Python environment not found: $Python. Run .\scripts\setup-windows.ps1 first."
+    }
+    if (-not (Test-Path $Activate)) {
+        throw "Virtual environment activation script not found: $Activate. Run .\scripts\setup-windows.ps1 first."
+    }
 }
 
 switch ($Action) {
@@ -69,7 +82,7 @@ switch ($Action) {
             break
         }
         $process = Start-Process -FilePath $Python `
-            -ArgumentList @($Server) `
+            -ArgumentList @('"' + $Server + '"') `
             -WorkingDirectory $Backend `
             -RedirectStandardOutput $LogFile `
             -RedirectStandardError $ErrorLogFile `
@@ -93,7 +106,7 @@ switch ($Action) {
             Write-Host "Backend ready at http://$BindHost`:$Port."
         }
         else {
-            Write-Warning "Backend did not become ready within 60 seconds. Check $LogFile and $ErrorLogFile."
+            throw "Backend did not become ready. Check $LogFile and $ErrorLogFile."
         }
         break
     }
@@ -106,7 +119,7 @@ switch ($Action) {
         Write-Host "WebUI logs are shown below. Press Ctrl+C to stop."
         Push-Location $Backend
         try {
-            & python $Server
+            Invoke-CheckedNative $Python @($Server)
         }
         finally {
             Pop-Location

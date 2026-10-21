@@ -63,6 +63,19 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 .\scripts\webui-windows.ps1 -Action Stop
 ```
 
+安装脚本会检查每个外部命令的退出码；子模块检查、依赖安装或前端构建失败时会立即停止。后台服务未就绪时也会返回失败；`Stop` 会核验进程路径和启动参数，发现旧 PID 被其他程序占用时会拒绝停止并提示检查 PID 文件。
+
+可用以下命令运行隔离的 Windows 回归测试（包含超过 10 秒的锁等待，不会调用模型服务）：
+
+```powershell
+.\scripts\test-windows.ps1 -Python .\.venv\Scripts\python.exe
+Push-Location repos\dataflow-webui\backend
+try { & ..\..\..\.venv\Scripts\python.exe -m unittest discover -s platform_tests -v }
+finally { Pop-Location }
+```
+
+GitHub Actions 同时运行 Windows 持久化测试、Windows PowerShell 5.1 和 PowerShell 7 脚本测试。
+
 Windows 安装路径不安装可选的 Langkit 评估依赖，因此不需要编译 `whylogs-sketching` 或安装 Visual Studio C++ 工具；LangkitFilter 和 LangkitSampleEvaluator 在该环境中不可用，其余 WebUI 流程保持不变。
 
 这些 Windows 兼容性修复涉及 `repos/dataflow` 和 `repos/dataflow-webui` 子模块。向 GitHub 提交时，需要先分别在对应子模块提交并推送，再在根仓库提交更新后的子模块指针。

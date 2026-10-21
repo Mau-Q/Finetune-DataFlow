@@ -4,6 +4,7 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+. (Join-Path $PSScriptRoot "windows-common.ps1")
 $Root = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 Set-Location $Root
 
@@ -13,20 +14,22 @@ function Require-Command([string]$Name) {
     }
 }
 
-foreach ($tool in @("git", "uv", "node", "npm")) {
+$Tools = @("git", "uv")
+if (-not $SkipFrontend) { $Tools += @("node", "npm") }
+foreach ($tool in $Tools) {
     Require-Command $tool
 }
 
 Write-Host "Initializing required submodules..."
-& git submodule update --init -- repos/dataflow repos/dataflow-webui
+Invoke-CheckedNative git @("submodule", "update", "--init", "--", "repos/dataflow", "repos/dataflow-webui")
 
 $Python = Join-Path $Root ".venv\Scripts\python.exe"
 if (-not (Test-Path $Python)) {
     Write-Host "Creating .venv with Python 3.12..."
-    & uv venv --python 3.12 --seed (Join-Path $Root ".venv")
+    Invoke-CheckedNative uv @("venv", "--python", "3.12", "--seed", (Join-Path $Root ".venv"))
 }
 
-& $Python (Join-Path $Root "scripts\check-workspace.py")
+Invoke-CheckedNative $Python @((Join-Path $Root "scripts\check-workspace.py"))
 
 $TempRoot = Join-Path ([IO.Path]::GetTempPath()) ("finetune-dataflow-" + [guid]::NewGuid().ToString("N"))
 New-Item -ItemType Directory -Path $TempRoot | Out-Null
@@ -50,15 +53,15 @@ try {
         Set-Content -Encoding utf8 $WebuiRequirements
 
     Write-Host "Installing the local DataFlow package without dependency re-resolution..."
-    & uv pip install --python $Python --no-deps -e (Join-Path $Root "repos\dataflow")
-    & uv pip install --python $Python -r $CoreRequirements -r $WebuiRequirements -r (Join-Path $Root "locks\dataflow-test.txt")
-    & uv pip install --python $Python --no-deps -e (Join-Path $Root "extensions\paper-dataflow")
+    Invoke-CheckedNative uv @("pip", "install", "--python", $Python, "--no-deps", "-e", (Join-Path $Root "repos\dataflow"))
+    Invoke-CheckedNative uv @("pip", "install", "--python", $Python, "-r", $CoreRequirements, "-r", $WebuiRequirements, "-r", (Join-Path $Root "locks\dataflow-test.txt"))
+    Invoke-CheckedNative uv @("pip", "install", "--python", $Python, "--no-deps", "-e", (Join-Path $Root "extensions\paper-dataflow"))
 
     if (-not $SkipFrontend) {
         Push-Location (Join-Path $Root "repos\dataflow-webui\frontend")
         try {
-            & npm ci --no-audit --no-fund
-            & npm run build
+            Invoke-CheckedNative npm @("ci", "--no-audit", "--no-fund")
+            Invoke-CheckedNative npm @("run", "build")
         }
         finally {
             Pop-Location

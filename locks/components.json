@@ -4,13 +4,13 @@
     {
       "path": "repos/dataflow",
       "url": "https://github.com/Mau-Q/DataFlow.git",
-      "commit": "e40fdf576bf7f1379d6ba430a2c4d57d5691d19b",
+      "commit": "255dccb61e289265d4f87a7d20dc9925d6763134",
       "optional": false
     },
     {
       "path": "repos/dataflow-webui",
       "url": "https://github.com/Mau-Q/DataFlow-WebUI.git",
-      "commit": "991e9001f43e9cf9f6c4825678a9410d11fc7086",
+      "commit": "9eef52d8688a618452c9d5f2a1901a659454f846",
       "optional": false
     },
     {
