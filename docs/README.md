@@ -13,6 +13,8 @@
 
 ## 设计与历史证据
 
+[局域网团队协作与数据质检 Spec](lan-collaboration-data-review-spec.md) 记录下一阶段确定的范围：原始数据集生成关联、项目与账号、单人样本评测及生成数据导出；这是待实施规格，不代表当前已经具备多用户能力。
+
 [DataFlex 接入设计](dataflex-integration-design.md) 与 [分批实施计划](dataflex-implementation-plan.md) 记录模型训练、五类策略配置、固定主机 SSH 及结果展示的新增范围；B1–B6 已完成离线/隔离实现与验证，真实 SSH/GPU 训练待 G1 资源就绪后验收。详见 [交付记录](dataflex-delivery.md)。
 
 [公开源码整理验证](publication-verification.md) 记录本次回归与安装验证范围。
