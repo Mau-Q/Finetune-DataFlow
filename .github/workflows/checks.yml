@@ -83,4 +83,4 @@ jobs:
       - name: Run backend failure, competition and storage regressions
         env:
           PYTHONPATH: ${{ github.workspace }}/repos/dataflow-webui/backend:${{ github.workspace }}/repos/dataflow
-        run: python -m pytest repos/dataflow-webui/backend/tests/test_review_repairs.py repos/dataflow-webui/backend/tests/test_dataset_database.py repos/dataflow-webui/backend/tests/test_training_lifecycle.py -q
+        run: python -m pytest repos/dataflow-webui/backend/tests/test_review_repairs.py repos/dataflow-webui/backend/tests/test_dataset_database.py repos/dataflow-webui/backend/tests/test_training_lifecycle.py repos/dataflow-webui/backend/tests/test_model_training.py repos/dataflow-webui/backend/tests/test_training_ssh.py -q
