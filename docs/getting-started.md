@@ -26,6 +26,60 @@ cd Finetune-DataFlow
 
 更新前端后，进入 `repos/dataflow-webui/frontend` 执行 `npm run build` 并刷新页面；后台模式更新 Python 后，在没有任务写入时停止并重新启动。
 
+## Windows PowerShell
+
+Windows 原生环境使用根目录 `.venv` 时，不要执行默认的 `scripts/setup.sh` 和 `scripts/webui.sh`：它们面向 Unix 环境并固定使用 `.venvs/dataflow/bin/python`。请在 PowerShell 中执行：
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\scripts\setup-windows.ps1
+.\scripts\webui-windows.ps1 -Action Foreground
+```
+
+启动后会在当前 PowerShell 中打印：
+
+- `.venv` 激活状态和实际 Python 路径
+- 后端启动日志
+- `http://127.0.0.1:8000` 的服务地址
+
+保持这个窗口打开即可使用 WebUI；停止时按 `Ctrl+C`。
+
+如果已经完成安装，只需再次运行：
+
+```powershell
+.\scripts\webui-windows.ps1 -Action Foreground
+```
+
+后台模式仍然可用，但日志会写入文件：
+
+```powershell
+.\scripts\webui-windows.ps1 -Action Daemon
+.\scripts\webui-windows.ps1 -Action Status
+```
+
+停止后台服务：
+
+```powershell
+.\scripts\webui-windows.ps1 -Action Stop
+```
+
+安装脚本会检查每个外部命令的退出码；子模块检查、依赖安装或前端构建失败时会立即停止。后台服务未就绪时也会返回失败；`Stop` 会核验进程路径和启动参数，发现旧 PID 被其他程序占用时会拒绝停止并提示检查 PID 文件。
+
+可用以下命令运行隔离的 Windows 回归测试（包含超过 10 秒的锁等待，不会调用模型服务）：
+
+```powershell
+.\scripts\test-windows.ps1 -Python .\.venv\Scripts\python.exe
+Push-Location repos\dataflow-webui\backend
+try { & ..\..\..\.venv\Scripts\python.exe -m unittest discover -s platform_tests -v }
+finally { Pop-Location }
+```
+
+GitHub Actions 同时运行 Windows 持久化测试、Windows PowerShell 5.1 和 PowerShell 7 脚本测试。
+
+Windows 安装路径不安装可选的 Langkit 评估依赖，因此不需要编译 `whylogs-sketching` 或安装 Visual Studio C++ 工具；LangkitFilter 和 LangkitSampleEvaluator 在该环境中不可用，其余 WebUI 流程保持不变。
+
+这些 Windows 兼容性修复涉及 `repos/dataflow` 和 `repos/dataflow-webui` 子模块。向 GitHub 提交时，需要先分别在对应子模块提交并推送，再在根仓库提交更新后的子模块指针。
+
 ## 第一次生成
 
 1. 按 [API 配置](model-api.md) 新建模型服务。
