@@ -1,0 +1,24 @@
+# CPU-only import/runtime dependencies for isolated failure and persistence regressions.
+# No model downloads, LightRAG dependency, external API calls or Ray cluster required.
+pytest
+flask
+requests
+tqdm
+colorlog
+rich
+transformers>=4.57,<5
+librosa
+openai
+fsspec
+pandas
+fastapi
+ray
+pydantic-settings
+loguru
+pyyaml
+Pillow
+pypdf
+jsonschema
+pymysql
+filelock
+google-api-python-client

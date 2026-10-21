@@ -60,3 +60,27 @@ jobs:
       - name: Test PowerShell 7 scripts
         shell: pwsh
         run: .\scripts\test-windows.ps1
+
+  regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: locks/review-tests.txt
+      - name: Install CPU regression dependencies
+        run: |
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -r locks/review-tests.txt
+      - name: Run Core optional dependency regressions
+        env:
+          PYTHONPATH: ${{ github.workspace }}/repos/dataflow
+        run: python -m pytest repos/dataflow/test/cpu_only/test_lightrag_optional.py -q
+      - name: Run backend failure, competition and storage regressions
+        env:
+          PYTHONPATH: ${{ github.workspace }}/repos/dataflow-webui/backend:${{ github.workspace }}/repos/dataflow
+        run: python -m pytest repos/dataflow-webui/backend/tests/test_review_repairs.py repos/dataflow-webui/backend/tests/test_dataset_database.py repos/dataflow-webui/backend/tests/test_training_lifecycle.py -q
