@@ -1,11 +1,11 @@
 # 工作区与公开源码基线
 
-2026-10-20：统一公开入口为 `Mau-Q/Finetune-DataFlow`。根仓库管理集成脚本、文档、Pipeline、依赖记录及论文扩展；三个组件以固定提交的 Git 子模块引用，各自保留独立历史。
+2026-10-20：统一公开入口为 `Mau-Q/Finetune-DataFlow`。根仓库管理集成脚本、文档、Pipeline、依赖记录及论文扩展；三个组件以固定提交的 Git 子模块引用，各自保留独立历史。下表已于 2026-10-21 同步至 Windows/review 修复与 DataFlex 整合后的版本。
 
 | 目录 | 固定提交 | 远端 |
 | --- | --- | --- |
-| `repos/dataflow` | `e40fdf576bf7f1379d6ba430a2c4d57d5691d19b` | https://github.com/Mau-Q/DataFlow.git |
-| `repos/dataflow-webui` | `d8920ba0bfe102e54de9e03d071ec12d01f8b911` | https://github.com/Mau-Q/DataFlow-WebUI.git |
+| `repos/dataflow` | `b5b69c144617abf24005bb61db5ab7e2cef865e7` | https://github.com/Mau-Q/DataFlow.git |
+| `repos/dataflow-webui` | `566ff32e1cd35c640b161fd2f1b5dae9ae3412db` | https://github.com/Mau-Q/DataFlow-WebUI.git |
 | `repos/dataflow-mm` | `155253460f6f2e50705a3e779f259b382a382822` | https://github.com/OpenDCAI/DataFlow-MM.git |
 
 权威版本清单为 [locks/components.json](locks/components.json)，`python3 scripts/check-workspace.py` 检查清单、gitlink、当前 checkout 与 URL 是否一致。安装不会重置现有开发 checkout。
