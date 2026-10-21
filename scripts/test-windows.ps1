@@ -85,3 +85,6 @@ finally {
     Remove-Item $Fixture -Recurse -Force
 }
 Write-Host "Windows daemon regression tests passed."
+# Expected native failures above leave LASTEXITCODE nonzero. GitHub's Windows
+# PowerShell wrapper propagates it unless the test runner reports success.
+exit 0
