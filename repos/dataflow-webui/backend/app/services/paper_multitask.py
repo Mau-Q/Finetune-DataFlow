@@ -48,6 +48,8 @@ def definition():
 
 
 def install(c):
+    from app.services.paper_standard import install as install_standard
+    install_standard(c)
     data = c.pipeline_registry._read()
     if ID in data.get('pipelines', {}):
         return

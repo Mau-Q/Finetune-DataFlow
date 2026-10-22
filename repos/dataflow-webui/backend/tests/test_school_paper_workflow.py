@@ -39,7 +39,7 @@ def test_portable_template_and_idempotent_install(tmp_path, monkeypatch):
     data['pipelines'][ID]['name'] = 'User edit'
     install(c)
     assert data['pipelines'][ID]['name'] == 'User edit'
-    assert len(c.user_prompt_registry.list_all()) == 2
+    assert len(c.user_prompt_registry.list_all()) == 5
 
 
 def test_parser_bridge_bytes_only_authenticated_protocol(tmp_path):
@@ -138,3 +138,16 @@ def test_warm_parser_reuses_owned_model_for_multiple_pdfs(tmp_path, monkeypatch)
     parser.owner = 'different-owner'
     with pytest.raises(RuntimeError, match='different owner'):
         parser.running('owned-model')
+
+
+def test_standard_profile_reuses_native_operators_and_has_separate_resources(tmp_path, monkeypatch):
+    from app.core.config import settings
+    from app.services.paper_standard import definition as standard
+    monkeypatch.setattr(settings, 'BASE_DIR', str(tmp_path))
+    config=standard()['config']
+    assert len(config['operators'])==14
+    assert config['execution_options']['paper_multitask_low_cost']['profile']=='standard'
+    assert pipeline_contract(config)==dict(modality='text',training_type='sft')
+    assert [op['name'] for op in standard(reuse=True)['config']['operators']]==['FormatStrPromptedGenerator','PandasOperator','PandasOperator']
+    refs=[p['value'] for op in config['operators'] for p in op['params']['init'] if p['name']=='prompt_template']
+    assert refs==['user_prompt:paper-standard-plan-v1','user_prompt:paper-standard-generate-v1','user_prompt:paper-standard-review-v1']

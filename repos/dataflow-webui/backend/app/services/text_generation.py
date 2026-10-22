@@ -77,7 +77,12 @@ class TextGeneration:
                     if simple else [op['name'] for op in template()['config']['operators']])
         if config.get('execution_options', {}).get('paper_multitask_low_cost'):
             from app.services.paper_multitask import definition
-            expected = [op['name'] for op in definition()['config']['operators']]
+            profile = config['execution_options']['paper_multitask_low_cost'].get('profile')
+            if profile in {'standard', 'standard-reuse'}:
+                from app.services.paper_standard import definition as standard_definition
+                expected = [op['name'] for op in standard_definition(reuse=profile == 'standard-reuse')['config']['operators']]
+            else:
+                expected = [op['name'] for op in definition()['config']['operators']]
         if representative and simple:
             from app.services.representative_training import definitions
             definition = next((d for d in definitions() if d['config']['execution_options']['simple_training'] == simple), None)
