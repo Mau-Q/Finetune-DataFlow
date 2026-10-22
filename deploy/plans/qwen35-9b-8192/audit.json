@@ -9,57 +9,57 @@
     "task": "text_sft",
     "finetuning": "nf4_qlora"
   },
-  "status": "PLAN_ONLY_WITH_DATAFLEX_DEPENDENCY_AND_CONTAINER_EXECUTOR_GAPS",
+  "status": "ENVIRONMENT_READY_MODEL_TRANSFER_IN_PROGRESS",
   "model_weights_downloaded": false,
-  "installation_performed": false,
-  "container_created": false,
+  "installation_performed": true,
+  "container_created": true,
   "training_performed": false,
   "model_runtime_checked": false,
   "core_direct_metadata": {
-    "scope": "direct metadata constraints for selected core pins only; not a complete transitive resolver or runtime validation",
+    "scope": "58 selected-core direct constraints; revised sources are pinned release metadata. Full Linux-target dependency resolution was also generated separately; GPU execution is pending.",
     "pins": {
-      "torch": "2.7.1+cu128",
-      "torchvision": "0.22.1+cu128",
-      "torchaudio": "2.7.1+cu128",
+      "torch": "2.6.0",
+      "torchvision": "0.21.0",
+      "torchaudio": "2.6.0",
+      "triton": "3.2.0",
       "transformers": "5.5.4",
-      "accelerate": "1.11.0",
       "peft": "0.18.1",
-      "trl": "0.24.0",
+      "accelerate": "1.11.0",
       "datasets": "4.0.0",
+      "trl": "0.24.0",
       "torchdata": "0.11.0",
       "bitsandbytes": "0.49.2",
-      "triton": "3.3.1",
-      "flash-linear-attention": "0.5.0",
-      "fla-core": "0.5.0",
+      "flash-linear-attention": "0.4.2",
+      "fla-core": "0.4.2",
       "causal-conv1d": "1.6.0",
+      "ninja": "1.11.1.4",
+      "tokenizers": "0.22.2",
+      "huggingface-hub": "1.5.0",
+      "safetensors": "0.6.2",
       "numpy": "2.2.6",
       "pandas": "2.2.3",
       "scipy": "1.15.3",
       "tyro": "0.8.14",
       "omegaconf": "2.3.0",
-      "tokenizers": "0.22.2",
-      "huggingface-hub": "1.5.0",
-      "safetensors": "0.6.2",
-      "ninja": "1.11.1.4",
       "llamafactory": "0.9.6.dev0"
     },
     "checked": [
       {
         "source": "LLaMA-Factory@c683e59",
         "requirement": "torch>=2.4.0",
-        "selected": "2.7.1+cu128",
+        "selected": "2.6.0",
         "compatible": true
       },
       {
         "source": "LLaMA-Factory@c683e59",
         "requirement": "torchvision>=0.19.0",
-        "selected": "0.22.1+cu128",
+        "selected": "0.21.0",
         "compatible": true
       },
       {
         "source": "LLaMA-Factory@c683e59",
         "requirement": "torchaudio>=2.4.0",
-        "selected": "2.7.1+cu128",
+        "selected": "2.6.0",
         "compatible": true
       },
       {
@@ -137,20 +137,20 @@
       {
         "source": "DataFlex@2e2a74d",
         "requirement": "torch<=2.10.0,>=2.4.0",
-        "selected": "2.7.1+cu128",
+        "selected": "2.6.0",
         "compatible": true
       },
       {
         "source": "DataFlex@2e2a74d",
         "requirement": "torchvision<=0.21.0,>=0.19.0",
-        "selected": "0.22.1+cu128",
-        "compatible": false
+        "selected": "0.21.0",
+        "compatible": true
       },
       {
         "source": "DataFlex@2e2a74d",
         "requirement": "torchaudio<=2.6.0,>=2.4.0",
-        "selected": "2.7.1+cu128",
-        "compatible": false
+        "selected": "2.6.0",
+        "compatible": true
       },
       {
         "source": "DataFlex@2e2a74d",
@@ -207,27 +207,27 @@
         "compatible": true
       },
       {
-        "source": "torch==2.7.1+cu128",
-        "requirement": "triton==3.3.1; platform_system == \"Linux\" and platform_machine == \"x86_64\"",
-        "selected": "3.3.1",
+        "source": "torch==2.6.0 (CUDA12.4 metadata)",
+        "requirement": "triton==3.2.0; platform_system == \"Linux\" and platform_machine == \"x86_64\"",
+        "selected": "3.2.0",
         "compatible": true
       },
       {
-        "source": "torchvision==0.22.1+cu128",
+        "source": "torchvision==0.21.0 (CUDA12.4 metadata)",
         "requirement": "numpy",
         "selected": "2.2.6",
         "compatible": true
       },
       {
-        "source": "torchvision==0.22.1+cu128",
-        "requirement": "torch==2.7.1",
-        "selected": "2.7.1+cu128",
+        "source": "torchvision==0.21.0 (CUDA12.4 metadata)",
+        "requirement": "torch==2.6.0",
+        "selected": "2.6.0",
         "compatible": true
       },
       {
-        "source": "torchaudio==2.7.1+cu128",
-        "requirement": "torch==2.7.1",
-        "selected": "2.7.1+cu128",
+        "source": "torchaudio==2.6.0 (CUDA12.4 metadata)",
+        "requirement": "torch==2.6.0",
+        "selected": "2.6.0",
         "compatible": true
       },
       {
@@ -263,7 +263,7 @@
       {
         "source": "accelerate==1.11.0",
         "requirement": "torch>=2.0.0",
-        "selected": "2.7.1+cu128",
+        "selected": "2.6.0",
         "compatible": true
       },
       {
@@ -281,7 +281,7 @@
       {
         "source": "peft==0.18.1",
         "requirement": "torch>=1.13.0",
-        "selected": "2.7.1+cu128",
+        "selected": "2.6.0",
         "compatible": true
       },
       {
@@ -341,31 +341,31 @@
       {
         "source": "torchdata==0.11.0",
         "requirement": "torch>=2",
-        "selected": "2.7.1+cu128",
+        "selected": "2.6.0",
         "compatible": true
       },
       {
-        "source": "flash-linear-attention==0.5.0",
-        "requirement": "fla-core==0.5.0",
-        "selected": "0.5.0",
+        "source": "flash-linear-attention==0.4.2",
+        "requirement": "fla-core==0.4.2",
+        "selected": "0.4.2",
         "compatible": true
       },
       {
-        "source": "flash-linear-attention==0.5.0",
+        "source": "flash-linear-attention==0.4.2",
         "requirement": "transformers",
         "selected": "5.5.4",
         "compatible": true
       },
       {
-        "source": "fla-core==0.5.0",
-        "requirement": "torch>=2.7.0",
-        "selected": "2.7.1+cu128",
+        "source": "fla-core==0.4.2",
+        "requirement": "torch",
+        "selected": "2.6.0",
         "compatible": true
       },
       {
         "source": "causal-conv1d==1.6.0",
         "requirement": "torch",
-        "selected": "2.7.1+cu128",
+        "selected": "2.6.0",
         "compatible": true
       },
       {
@@ -393,20 +393,7 @@
         "compatible": true
       }
     ],
-    "incompatibilities": [
-      {
-        "source": "DataFlex@2e2a74d",
-        "requirement": "torchvision<=0.21.0,>=0.19.0",
-        "selected": "0.22.1+cu128",
-        "compatible": false
-      },
-      {
-        "source": "DataFlex@2e2a74d",
-        "requirement": "torchaudio<=2.6.0,>=2.4.0",
-        "selected": "2.7.1+cu128",
-        "compatible": false
-      }
-    ],
+    "incompatibilities": [],
     "runtime_tested": false
   },
   "source_pins": {
@@ -416,7 +403,8 @@
       "version_authority": "root repository commit plus source_identity_sha256 and per-file hashes",
       "snapshot_changed_from_import": false,
       "exported_file_count": 81,
-      "source_identity_sha256": "6f147a4a6a1ddb6bf3a3b062c35c27e13e025d1afded3cc9669dc6a3721a9d90"
+      "source_identity_sha256": "6f147a4a6a1ddb6bf3a3b062c35c27e13e025d1afded3cc9669dc6a3721a9d90",
+      "adaptation_required_for_selected_core_versions": false
     },
     "LLaMA-Factory": "c683e59edd8f893abc5e1403184a1d0644817d2a",
     "LLaMA-Factory_version": "0.9.6.dev0"
@@ -608,28 +596,49 @@
       "local_evidence": "causal-conv1d-wheel-lookup.json",
       "url": "https://api.github.com/repos/Dao-AILab/causal-conv1d/releases/tags/v1.6.0",
       "sha256": "a160c5f3dd05afb439ac461e4f2a27e1b934e56f8ad4d3705c0909416bf3199d"
+    },
+    {
+      "local_evidence": "torch26-route/fla-core-0.4.2.json",
+      "url": "https://pypi.org/pypi/fla-core/0.4.2/json",
+      "sha256": "82eb1acfd17fbcf6cd6e4c155eeb499afb1468d11c5d4c6255ae6361c09850a8"
+    },
+    {
+      "local_evidence": "torch26-route/flash-linear-attention-0.4.2.json",
+      "url": "https://pypi.org/pypi/flash-linear-attention/0.4.2/json",
+      "sha256": "01ac79d0081cab9a7f704e5f4a4a731880e379b1ab3d96b08adcecee562f2a2c"
+    },
+    {
+      "local_evidence": "torch26-route/conv-release-160.json",
+      "url": "https://api.github.com/repos/Dao-AILab/causal-conv1d/releases/tags/v1.6.0",
+      "sha256": "75c71ca0c779e02391af3df750ac6dcf7b10a6b09a90815055568eee9004bf7c"
+    },
+    {
+      "local_evidence": "torch26-route/conv-interface-160.py",
+      "url": "https://raw.githubusercontent.com/Dao-AILab/causal-conv1d/v1.6.0/causal_conv1d/causal_conv1d_interface.py",
+      "sha256": "221f41aa963a8f84683d9c6b2b4bf448692feb963fefcd778fa1b4ed2688c859"
+    },
+    {
+      "local_evidence": "torch26-route/tf-import-utils-554.py",
+      "url": "https://raw.githubusercontent.com/huggingface/transformers/v5.5.4/src/transformers/utils/import_utils.py",
+      "sha256": "c05e6063736902b07d0b48e4a326ae7985b75430bacbee48014c954fd4e6cb05"
     }
   ],
   "limitations": [
-    "Not a full transitive dependency resolution",
-    "DataFlex requirements and pyproject optional torch caps require scoped adaptation",
-    "No new-model GPU/driver/ABI/FLA execution",
-    "No real-content 8192-token forward/backward/optimizer or stability test",
-    "No platform-to-node01 training execution integration test",
-    "Base image digest and full Linux wheel hashes not yet locked",
-    "Integrated source layout does not imply a unified Python environment",
-    "source.commit is the upstream import identity; source.dirty compares against the import, not root worktree cleanliness",
-    "Current platform SSH executor assumes consistent Python/filesystem/process visibility; dedicated training container integration remains unresolved",
-    "Platform GPU configuration accepts numeric indices only; UUID allocation must be mapped and verified",
-    "The local candidate plan compiles without checking placeholder data, upstream runtime compatibility or GPU capacity"
+    "Qwen3.5 full weights are still transferring; full model loading, optimizer updates, adapter reload and 8192 capacity remain NOT_RUN",
+    "FLA/causal-conv1d forward/backward kernel checks passed on the designated L40; this is separate from full-model training",
+    "The platform SSH executor still needs consistent container filesystem/process handling; this does not block direct DataFlex training",
+    "Server platform deployment does not imply local generation API access; generation remains on Mac",
+    "MinerU advanced one-page parser passed with reused assets; remote platform-to-parser invocation has not been integrated"
   ],
   "causal_conv1d_release_asset": {
-    "name": "causal_conv1d-1.6.0+cu12torch2.7cxx11abiTRUE-cp312-cp312-linux_x86_64.whl",
-    "size": 287396328,
-    "digest": "sha256:799609028a53cac05ec63a78133ef7dc637dd521366b76964156d69d1523deed",
-    "browser_download_url": "https://github.com/Dao-AILab/causal-conv1d/releases/download/v1.6.0/causal_conv1d-1.6.0%2Bcu12torch2.7cxx11abiTRUE-cp312-cp312-linux_x86_64.whl",
-    "downloaded": false,
-    "binary_content_verified": false
+    "name": "causal_conv1d-1.6.0+cu12torch2.6cxx11abiFALSE-cp312-cp312-linux_x86_64.whl",
+    "size": 287345440,
+    "digest": "sha256:dde2948663960287609fdefa602378bcd737c20f23a1bef6a35ffe9d6e559f87",
+    "browser_download_url": "https://github.com/Dao-AILab/causal-conv1d/releases/download/v1.6.0/causal_conv1d-1.6.0%2Bcu12torch2.6cxx11abiFALSE-cp312-cp312-linux_x86_64.whl",
+    "downloaded": true,
+    "binary_content_verified": true,
+    "runtime_tested": true,
+    "runtime_result": "FAILED_UNDEFINED_CXX11_SYMBOL_REPLACED_WITH_SOURCE_BUILD"
   },
   "integrated_repository_review": {
     "date": "2026-10-22",
@@ -744,34 +753,35 @@
   ],
   "next_steps": [
     {
-      "id": "P0",
-      "status": "NOT_IMPLEMENTED",
-      "deliverable": "Root-repository DataFlex dependency adaptation and fixed LLaMA-Factory internal API compatibility checks"
+      "id": "offline-transfer",
+      "status": "RUNNING",
+      "deliverable": "Mac downloads for Linux, upload verification and local temporary cleanup"
     },
     {
-      "id": "P1",
+      "id": "offline-install",
+      "status": "PASSED",
+      "deliverable": "Install in isolated container with no network; pip check and real imports"
+    },
+    {
+      "id": "short-smoke",
       "status": "NOT_RUN",
-      "deliverable": "Linux amd64 build environment, image digest, complete runtime/build dependency and wheel hash lock"
+      "deliverable": "Constructed-data SFT save/reload"
     },
     {
-      "id": "P2",
-      "status": "NOT_MATERIALIZED",
-      "deliverable": "Pinned model/tokenizer/processor files, data manifests, paper-level splits, real sequence lengths and supervision masks"
-    },
-    {
-      "id": "P3",
-      "status": "NOT_RESERVED_OR_REFRESHED",
-      "deliverable": "Allocated GPU UUID/time window, local storage and mounts, refreshed read-only host/network evidence"
-    },
-    {
-      "id": "P4",
+      "id": "capacity-smoke",
       "status": "NOT_RUN",
-      "deliverable": "Independent container ABI/kernel/QLoRA/4096/8192 capacity, stability, save and resume acceptance"
+      "deliverable": "Constructed effective-length 4096/8192 capacity"
     },
     {
-      "id": "P5",
-      "status": "NOT_RUN",
-      "deliverable": "Container-aware platform submit/sync/stop/reconnect/artifact acceptance"
+      "id": "optional-platform",
+      "status": "PASSED_HTTP_DEPLOYMENT_SMOKE",
+      "deliverable": "Deploy if straightforward; keep its blockers independent of training"
+    },
+    {
+      "id": "mineru-advanced",
+      "status": "PASSED_ADVANCED_ONE_PAGE_PARSE",
+      "deliverable": "Reuse existing image and /sharedata/home/huruiqian/MinerU-EasyRead/models with advanced tier",
+      "boundary": "Existing image/model reused in new network-none container; platform-to-parser integration not exercised"
     }
   ],
   "formal_training_contract": {
@@ -785,6 +795,348 @@
     "capacity_candidate_optimizer_updates": 2
   },
   "local_verification": {
+    "date": "2026-10-22",
+    "status": "FOCUSED_CHECKS_PASSED",
+    "commands": [
+      {
+        "command": ".venvs/dataflow/bin/python -m pytest -q extensions/paper-dataflow/test/test_paper_preparation.py",
+        "result": "7 passed"
+      },
+      {
+        "command": "bash -n deploy/plans/qwen35-9b-8192/install-offline.sh deploy/school/*.sh",
+        "result": "passed"
+      },
+      {
+        "command": "python3 -m py_compile smoke.py kernel-smoke.py deploy/school/*.py",
+        "result": "passed"
+      },
+      {
+        "command": "git diff --check",
+        "result": "passed"
+      }
+    ],
+    "full_regression_rerun": false,
+    "scope": "MinerU advanced passthrough and offline deployment scripts; runtime receipts recorded separately"
+  },
+  "previous_candidate": {
+    "status": "SUPERSEDED_TO_KEEP_DATAFLEX_UNMODIFIED",
+    "pins": {
+      "torch": "2.7.1+cu128",
+      "torchvision": "0.22.1+cu128",
+      "torchaudio": "2.7.1+cu128",
+      "transformers": "5.5.4",
+      "accelerate": "1.11.0",
+      "peft": "0.18.1",
+      "trl": "0.24.0",
+      "datasets": "4.0.0",
+      "torchdata": "0.11.0",
+      "bitsandbytes": "0.49.2",
+      "triton": "3.3.1",
+      "flash-linear-attention": "0.5.0",
+      "fla-core": "0.5.0",
+      "causal-conv1d": "1.6.0",
+      "numpy": "2.2.6",
+      "pandas": "2.2.3",
+      "scipy": "1.15.3",
+      "tyro": "0.8.14",
+      "omegaconf": "2.3.0",
+      "tokenizers": "0.22.2",
+      "huggingface-hub": "1.5.0",
+      "safetensors": "0.6.2",
+      "ninja": "1.11.1.4",
+      "llamafactory": "0.9.6.dev0"
+    },
+    "incompatibilities": [
+      {
+        "source": "DataFlex@2e2a74d",
+        "requirement": "torchvision<=0.21.0,>=0.19.0",
+        "selected": "0.22.1+cu128",
+        "compatible": false
+      },
+      {
+        "source": "DataFlex@2e2a74d",
+        "requirement": "torchaudio<=2.6.0,>=2.4.0",
+        "selected": "2.7.1+cu128",
+        "compatible": false
+      }
+    ],
+    "reason": "Select torch2.6/CUDA12.4/Triton3.2/FLA0.4.2 rather than relaxing DataFlex declarations"
+  },
+  "installation_attempted": true,
+  "offline_installation_status": {
+    "python_dependencies": "INSTALLED_PIP_CHECK_PASSED",
+    "causal_conv1d": "SOURCE_BUILT_IMPORT_PASSED",
+    "full_imports": "PASSED",
+    "training": "NOT_RUN"
+  },
+  "execution_target": {
+    "hostname": "node01",
+    "account": "huruiqian",
+    "root": "/sharedata/home/huruiqian/DataFlow",
+    "container": "rui-qwen35-9b-smoke-20261022",
+    "base_image_id": "sha256:020db949d8ab1065f2a95afb30bcf8743c296cc158069ed6c99d8a8d881a8058",
+    "verified_base": {
+      "python": "3.12.10",
+      "torch": "2.6.0",
+      "torchvision": "0.21.0",
+      "torchaudio": "2.6.0",
+      "triton": "3.2.0",
+      "cuda_runtime": "12.4",
+      "cxx11_abi": false,
+      "visible_gpu_count": 1,
+      "gpu_name": "NVIDIA L40"
+    },
+    "gpu_uuid": "GPU-ff8b5640-bfd0-97ff-2bfc-7486717f66a0",
+    "gpu_index_at_probe": 3,
+    "gpu_was_shared": true,
+    "other_workloads_stopped": false
+  },
+  "network_policy": {
+    "server": "offline",
+    "download_location": "Mac",
+    "remote_internet_forwarding": "temporary test stopped; no forward remains",
+    "cleanup": "Delete only newly downloaded Mac temporary files after verified server upload; keep manifests/scripts/logs",
+    "global_instructions": "/Users/rui/.codex/AGENTS.md"
+  },
+  "data_policy": {
+    "generation": "existing Mac DataFlow platform",
+    "synthetic_capacity_data_allowed": true,
+    "campus_generation_service_setup": false,
+    "formal_training_dataset": "to be exported from Mac platform later"
+  },
+  "acceptance": {
+    "required": [
+      "dependency/import and designated GPU checks",
+      "two short SFT optimizer updates with finite loss and nonzero adapter update",
+      "adapter save and reload generation"
+    ],
+    "capacity": "synthetic effective-length 4096/8192 tests, success/OOM/errors separately recorded",
+    "not_preconditions": [
+      "real-paper train/test split",
+      "50 optimizer-step stability gate",
+      "complete server platform deployment",
+      "semantic evaluation of synthetic data"
+    ]
+  },
+  "historical_causal_conv1d_asset": {
+    "name": "causal_conv1d-1.6.0+cu12torch2.7cxx11abiTRUE-cp312-cp312-linux_x86_64.whl",
+    "size": 287396328,
+    "digest": "sha256:799609028a53cac05ec63a78133ef7dc637dd521366b76964156d69d1523deed",
+    "browser_download_url": "https://github.com/Dao-AILab/causal-conv1d/releases/download/v1.6.0/causal_conv1d-1.6.0%2Bcu12torch2.7cxx11abiTRUE-cp312-cp312-linux_x86_64.whl",
+    "downloaded": false,
+    "binary_content_verified": false
+  },
+  "torch26_route_review": {
+    "dataflex_source_files": 81,
+    "dataflex_unchanged": true,
+    "selected_core_constraint_checks": 58,
+    "conflicts": 0,
+    "fla_versions_compared": [
+      {
+        "version": "0.3.2",
+        "requires_dist": [
+          "torch>=2.5",
+          "einops"
+        ],
+        "README_minimums": {
+          "torch": "2.5",
+          "triton": "3.0"
+        },
+        "core_wheel_sha256": "e751d5a41e33eee721a6fb6588bd857f6f36e0d14719a23b1ebdbd617d307209",
+        "core_wheel_hash_verified": true,
+        "selected": false,
+        "runtime_tested": false
+      },
+      {
+        "version": "0.4.0",
+        "requires_dist": [
+          "torch>=2.5",
+          "einops"
+        ],
+        "README_minimums": {
+          "torch": "2.5",
+          "triton": "3.0"
+        },
+        "core_wheel_sha256": "5396f36a9838c99f9e45c70e88e2e0b26688f719d07d2ddd61be16d29327f4ea",
+        "core_wheel_hash_verified": true,
+        "selected": false,
+        "runtime_tested": false
+      },
+      {
+        "version": "0.4.1",
+        "requires_dist": [
+          "torch",
+          "einops"
+        ],
+        "README_minimums": {
+          "torch": "2.5",
+          "triton": "3.0"
+        },
+        "core_wheel_sha256": "93c6afe4c80fc7bc705fa8aeea6a46d2cf2d77383f9619a41863c7114c801bab",
+        "core_wheel_hash_verified": true,
+        "selected": false,
+        "runtime_tested": false
+      },
+      {
+        "version": "0.4.2",
+        "requires_dist": [
+          "torch",
+          "einops"
+        ],
+        "README_minimums": {
+          "torch": "2.5",
+          "triton": "3.0"
+        },
+        "core_wheel_sha256": "cba3db29380002da3cbfc0db94d6efac19aaf528900d19c05c2765e8f3cc485b",
+        "core_wheel_hash_verified": true,
+        "selected": true,
+        "runtime_tested": false
+      }
+    ],
+    "qwen_call_signature_checks": [
+      {
+        "function": "chunk_gated_delta_rule",
+        "source": "torch26-route/fla-core-0.4.2-source/fla/ops/gated_delta_rule/chunk.py",
+        "source_sha256": "80e1f544c2a19c321e1e24e810ce080368c7ac5ae5c13f013b79a31b3d9e23f2",
+        "signature": "(q, k, v, g, beta, scale=None, initial_state=None, output_final_state=None, use_qk_l2norm_in_kernel=None, cu_seqlens=None, cu_seqlens_cpu=None, cp_context=None, transpose_state_layout=None, **kwargs)",
+        "qwen_call_bind": "PASS"
+      },
+      {
+        "function": "fused_recurrent_gated_delta_rule",
+        "source": "torch26-route/fla-core-0.4.2-source/fla/ops/gated_delta_rule/fused_recurrent.py",
+        "source_sha256": "752c117ade918d009b7669cb9b64b1dbda039d029e1c416163da1dca7e5b6fb1",
+        "signature": "(q, k, v, g=None, gk=None, gv=None, beta=None, scale=None, initial_state=None, output_final_state=None, use_qk_l2norm_in_kernel=None, cu_seqlens=None, transpose_state_layout=None)",
+        "qwen_call_bind": "PASS"
+      },
+      {
+        "function": "FusedRMSNormGated.__init__",
+        "source": "torch26-route/fla-core-0.4.2-source/fla/modules/fused_norm_gate.py",
+        "source_sha256": "e620731d73fd069944b37d5b4a76cf00adcaba2b6745f5600351751cec85afe1",
+        "signature": "(hidden_size, elementwise_affine=None, eps=None, activation=None, device=None, dtype=None)",
+        "qwen_call_bind": "PASS"
+      },
+      {
+        "function": "FusedRMSNormGated.forward",
+        "source": "torch26-route/fla-core-0.4.2-source/fla/modules/fused_norm_gate.py",
+        "source_sha256": "e620731d73fd069944b37d5b4a76cf00adcaba2b6745f5600351751cec85afe1",
+        "signature": "(x, g, residual=None, prenorm=None, residual_in_fp32=None)",
+        "qwen_call_bind": "PASS"
+      },
+      {
+        "function": "causal_conv1d_fn",
+        "source": "torch26-route/conv-interface-160.py",
+        "source_sha256": "221f41aa963a8f84683d9c6b2b4bf448692feb963fefcd778fa1b4ed2688c859",
+        "signature": "(x, weight, bias=None, seq_idx=None, initial_states=None, return_final_states=None, final_states_out=None, activation=None)",
+        "qwen_call_bind": "PASS"
+      },
+      {
+        "function": "causal_conv1d_update",
+        "source": "torch26-route/conv-interface-160.py",
+        "source_sha256": "221f41aa963a8f84683d9c6b2b4bf448692feb963fefcd778fa1b4ed2688c859",
+        "signature": "(x, conv_state, weight, bias=None, activation=None, cache_seqlens=None, conv_state_indices=None)",
+        "qwen_call_bind": "PASS"
+      }
+    ],
+    "recurrent_backward": "NotImplementedError; use chunk backward for training with use_cache=false",
+    "fla_recommended_triton": "3.2.0",
+    "linux_target_resolved_package_count": 146,
+    "resolver": "uv pip compile --python-platform x86_64-manylinux_2_35 --python-version 3.12; no target installation",
+    "offline_dependency_installation_passed": true,
+    "raw_evidence_directory": "outputs/qwen35-9b-8192-env-audit/torch26-route"
+  },
+  "runtime_findings": {
+    "inherited_extras": "15 incompatible inference/cloud extras removed in dedicated training container only; resolved training closure unchanged",
+    "causal_conv1d_release_failure": "undefined symbol with std::__cxx11 string; installed Torch verified ABI false",
+    "causal_conv1d_source_sha256": "4eae3220d08e1e88238f3a0a88783147cbdf47f612cc610add75127c7a37ca3e",
+    "mineru_advanced": {
+      "mineru": "4.0.12",
+      "torch": "2.11.0+cu130",
+      "gpu": "NVIDIA L40",
+      "tier": "advanced",
+      "synthetic_training_data": false,
+      "parse_pages": 1,
+      "model_reused": "/models/MinerU2.5-Pro-2605-1.2B",
+      "status": "PASSED_ADVANCED_ONE_PAGE_PARSE",
+      "parsed_pages": 1,
+      "seconds": 128.8884220123291,
+      "full_document": true
+    },
+    "causal_conv1d_built_wheel": {
+      "filename": "causal_conv1d-1.6.0-cp312-cp312-linux_x86_64.whl",
+      "bytes": 192903621,
+      "sha256": "f145cc1728b3368d51d9295a78d3ec6b572224ca6ddb93d63a287102508468ed"
+    },
+    "cuda_kernel_smoke": {
+      "status": "PASSED_CUDA_KERNEL_FORWARD_BACKWARD",
+      "causal_conv1d_reference_close": true,
+      "chunk_gated_delta_gradients_finite": true,
+      "seconds": 20.1527898311615,
+      "gpu": "NVIDIA L40",
+      "full_model_training": false
+    },
+    "torchinductor_compile_threads": 1
+  },
+  "runtime_environment": {
+    "versions": {
+      "torch": "2.6.0",
+      "torchvision": "0.21.0",
+      "torchaudio": "2.6.0",
+      "triton": "3.2.0",
+      "transformers": "5.5.4",
+      "peft": "0.18.1",
+      "accelerate": "1.11.0",
+      "datasets": "4.0.0",
+      "trl": "0.24.0",
+      "bitsandbytes": "0.49.2",
+      "flash-linear-attention": "0.4.2",
+      "fla-core": "0.4.2",
+      "causal-conv1d": "1.6.0",
+      "dataflex": "1.1.0",
+      "llamafactory": "0.9.6.dev0"
+    },
+    "python_executable": "/usr/local/bin/python",
+    "gpu": "NVIDIA L40",
+    "cuda": "12.4",
+    "cxx11_abi": false,
+    "entrypoint_imports": "passed",
+    "training": "NOT_RUN"
+  },
+  "synthetic_data": {
+    "prepared": true,
+    "rows_per_bucket": 2,
+    "effective_tokens": [
+      512,
+      4096,
+      8192
+    ],
+    "supervised_tokens": 5,
+    "source": "constructed locally in server container using actual Qwen tokenizer and qwen3_5_nothink template",
+    "full_model_training": "NOT_RUN"
+  },
+  "platform_deployment": {
+    "container": "rui-dataflow-platform-20261022",
+    "bind": "127.0.0.1:18001",
+    "pip_check": "PASSED",
+    "entrypoint_imports": "PASSED",
+    "state_volume": "rui-dataflow-platform-state-20261022",
+    "live_sqlite_on_nfs": false,
+    "generation_model_configured": false,
+    "http_smoke": {
+      "status": "PASSED_PLATFORM_HTTP_SMOKE",
+      "authenticated": true,
+      "api_lists": true,
+      "save_fresh_login_read": true,
+      "generation_model_called": false,
+      "training_started": false,
+      "seconds": 71.96196126937866
+    },
+    "legacy_resource_volume": "rui-dataflow-platform-legacy-data-20261022",
+    "image_id": "sha256:ac5388987fbc98f92ad2ee0a51aedb2ba3aaf0b759e6787dfbcb99abedaf2b88",
+    "access": "node01 loopback 127.0.0.1:18001 via SSH local forwarding",
+    "credential_location": "container-local /state/admin-bootstrap.json mode 0600; credential not logged",
+    "consistent_sqlite_backups": 3
+  },
+  "previous_local_verification": {
     "date": "2026-10-22",
     "status": "PASSED_LOCAL_ONLY",
     "commands": [

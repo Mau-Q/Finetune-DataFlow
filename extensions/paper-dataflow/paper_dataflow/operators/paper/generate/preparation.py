@@ -36,8 +36,8 @@ class MinerU4PDFParser(OperatorABC):
         super().__init__()
         self.script = Path(mineru_script).expanduser().resolve(strict=True)
         self.output_dir = Path(output_dir).expanduser().resolve()
-        if tier not in {"basic", "standard"}:
-            raise ValueError("This local adapter supports basic or standard tier")
+        if tier not in {"basic", "standard", "advanced"}:
+            raise ValueError("MinerU tier must be basic, standard or advanced")
         if timeout_seconds <= 0:
             raise ValueError("timeout_seconds must be positive")
         self.tier, self.timeout_seconds = tier, timeout_seconds

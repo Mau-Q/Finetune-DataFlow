@@ -1,12 +1,12 @@
-# CANDIDATE ONLY — NOT a complete lock or an installation-ready environment.
-# Current DataFlex requirements conflict with torchvision/torchaudio below.
-# Resolve source declarations first; do not bypass dependencies with --no-deps.
-# Linux x86_64, CPython 3.12.9, container glibc >=2.28.
-# torch/vision/audio must come from the official cu128 index, with hashes locked later.
-torch==2.7.1+cu128
-torchvision==0.22.1+cu128
-torchaudio==2.7.1+cu128
-triton==3.3.1
+# CANDIDATE: retain unmodified repos/dataflex; Linux x86_64 / CPython 3.12.
+# Existing isolated base: torch 2.6.0, CUDA runtime 12.4, CXX11 ABI FALSE.
+# Exact public torch/vision/audio versions also accept official +cu124 local-version wheels.
+# Download on Mac for Linux; upload, verify, then remove only local temporary copies.
+# A complete resolved package list is produced during offline preparation; this is the core subset.
+torch==2.6.0
+torchvision==0.21.0
+torchaudio==2.6.0
+triton==3.2.0
 transformers==5.5.4
 peft==0.18.1
 accelerate==1.11.0
@@ -14,10 +14,8 @@ datasets==4.0.0
 trl==0.24.0
 torchdata==0.11.0
 bitsandbytes==0.49.2
-flash-linear-attention==0.5.0
-fla-core==0.5.0
-# Official cp312/cu12/torch2.7/CXX11 ABI TRUE release wheel identified (not downloaded).
-# Publisher SHA256: 799609028a53cac05ec63a78133ef7dc637dd521366b76964156d69d1523deed
+flash-linear-attention==0.4.2
+fla-core==0.4.2
 causal-conv1d==1.6.0
 ninja==1.11.1.4
 tokenizers==0.22.2
@@ -28,8 +26,8 @@ pandas==2.2.3
 scipy==1.15.3
 tyro==0.8.14
 omegaconf==2.3.0
-# LLaMA-Factory source commit: c683e59edd8f893abc5e1403184a1d0644817d2a (0.9.6.dev0).
-# DataFlex source: repos/dataflex in this root repository; requires scoped adaptation.
-# Upstream IMPORT commit (not the current root HEAD): 2e2a74dbe90f8b6a1394bdee37518980f1d5958d.
-# Local review input: root main@76e9d4c; actual files and source identity are recorded in audit.json.
-# No external /Users/rui/Documents/DataFlex checkout is used.
+# Fixed LLaMA-Factory source: c683e59edd8f893abc5e1403184a1d0644817d2a (0.9.6.dev0).
+# Unmodified DataFlex source: repos/dataflex; upstream import 2e2a74dbe90f8b6a1394bdee37518980f1d5958d.
+# causal-conv1d asset: cu12torch2.6cxx11abiFALSE / cp312 / linux_x86_64.
+# Publisher SHA256: dde2948663960287609fdefa602378bcd737c20f23a1bef6a35ffe9d6e559f87.
+# Full runtime compatibility and 8192 capacity are established only by recorded execution.

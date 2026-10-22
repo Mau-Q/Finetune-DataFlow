@@ -5,9 +5,10 @@ import tempfile
 import unittest
 import zipfile
 from pathlib import Path
+from unittest.mock import patch
 
 import pandas as pd
-from paper_dataflow.operators.paper.generate.preparation import MinerU4PageExtractor, PaperEvidenceChunker, sha256
+from paper_dataflow.operators.paper.generate.preparation import MinerU4PDFParser, MinerU4PageExtractor, PaperEvidenceChunker, sha256
 
 ROOT = Path(__file__).resolve().parents[3]
 
@@ -21,6 +22,34 @@ class MemoryStorage:
 
     def write(self, frame):
         self.frame = frame
+
+
+class AdvancedParserTests(unittest.TestCase):
+    def test_advanced_command_and_archive_provenance(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            script = root / 'mineru.sh'
+            script.write_text('#!/bin/sh\n')
+            source = root / 'source.pdf'
+            source.write_bytes(b'%PDF-1.4 synthetic parser transport fixture')
+            storage = MemoryStorage([{'source_path': str(source)}])
+            def parse(command, **kwargs):
+                self.assertEqual(command[command.index('--tier') + 1], 'advanced')
+                archive = Path(command[command.index('-o') + 1])
+                with zipfile.ZipFile(archive, 'w') as bundle:
+                    bundle.writestr('structured_content.json', json.dumps({
+                        'metadata': {'producer': {'version': '4.0.12'}},
+                        'is_full_document': True,
+                        'pages': [{'page_idx': 0, 'blocks': []}],
+                    }))
+            parser = MinerU4PDFParser(str(script), str(root / 'parsed'), tier='advanced')
+            with patch('paper_dataflow.operators.paper.generate.preparation.subprocess.run', side_effect=parse):
+                parser.run(storage)
+            record = storage.frame.iloc[0]['parsed_document']
+            self.assertEqual(record['tier'], 'advanced')
+            self.assertEqual(record['document_id'], sha256(source))
+            self.assertEqual(record['archive_sha256'], sha256(record['archive_path']))
+            self.assertEqual(json.loads((Path(record['archive_path']).parent / 'manifest.json').read_text()), record)
 
 
 @unittest.skipUnless((ROOT / 'models/tokenizers/Qwen2.5-7B-Instruct/tokenizer.json').is_file(),
