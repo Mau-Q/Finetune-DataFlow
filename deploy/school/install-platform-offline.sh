@@ -3,6 +3,9 @@
 set -euo pipefail
 export PIP_NO_INDEX=1 PIP_DISABLE_PIP_VERSION_CHECK=1 PIP_NO_CACHE_DIR=1
 python -m pip install --no-index --find-links /wheelhouse -r /work/platform-resolved.txt
+# The image's old optional Mistral tokenizer breaks Transformers 5 processor
+# class validation even for Qwen; this deployment does not need that extra.
+python -m pip uninstall -y mistral-common
 python /work/prune-inherited-extras.py /work/platform-resolved.txt
 python -m pip check
 python - <<'PY'

@@ -1,0 +1,16 @@
+{
+    admin off
+    auto_https disable_redirects
+    skip_install_trust
+}
+
+https://192.168.247.162:18443 {
+    bind 192.168.247.162
+    tls internal
+    reverse_proxy 127.0.0.1:18001
+    header {
+        X-Content-Type-Options nosniff
+        Referrer-Policy same-origin
+        X-Frame-Options DENY
+    }
+}

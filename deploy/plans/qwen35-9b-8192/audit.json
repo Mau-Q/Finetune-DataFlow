@@ -889,7 +889,11 @@
     "gpu_uuid": "GPU-ff8b5640-bfd0-97ff-2bfc-7486717f66a0",
     "gpu_index_at_probe": 3,
     "gpu_was_shared": true,
-    "other_workloads_stopped": false
+    "other_workloads_stopped": false,
+    "installed_snapshot_image": {
+      "name": "rui/qwen35-training:20261022",
+      "id": "sha256:9283219ac77ed3a5aed73fa78f1ab47865780576c2c0ab0f34a6f7bddcedc244"
+    }
   },
   "network_policy": {
     "server": "offline",
@@ -1045,7 +1049,7 @@
     "raw_evidence_directory": "outputs/qwen35-9b-8192-env-audit/torch26-route"
   },
   "runtime_findings": {
-    "inherited_extras": "15 incompatible inference/cloud extras removed in dedicated training container only; resolved training closure unchanged",
+    "inherited_extras": "Incompatible inference/cloud extras and obsolete optional Mistral tokenizer removed only in dedicated containers; resolved training closure unchanged",
     "causal_conv1d_release_failure": "undefined symbol with std::__cxx11 string; installed Torch verified ABI false",
     "causal_conv1d_source_sha256": "4eae3220d08e1e88238f3a0a88783147cbdf47f612cc610add75127c7a37ca3e",
     "mineru_advanced": {
@@ -1074,7 +1078,8 @@
       "gpu": "NVIDIA L40",
       "full_model_training": false
     },
-    "torchinductor_compile_threads": 1
+    "torchinductor_compile_threads": 1,
+    "mistral_common": "Inherited optional mistral_common 1.5.4 broke Qwen AutoProcessor through missing ReasoningEffort; removed from dedicated containers, pip check passed"
   },
   "runtime_environment": {
     "versions": {
@@ -1111,7 +1116,42 @@
     ],
     "supervised_tokens": 5,
     "source": "constructed locally in server container using actual Qwen tokenizer and qwen3_5_nothink template",
-    "full_model_training": "NOT_RUN"
+    "full_model_training": "NOT_RUN",
+    "actual_preprocessing": [
+      {
+        "cutoff_len": 512,
+        "actual_preprocessed_tokens": [
+          512,
+          512
+        ],
+        "supervised_tokens": [
+          5,
+          5
+        ]
+      },
+      {
+        "cutoff_len": 4096,
+        "actual_preprocessed_tokens": [
+          4096,
+          4096
+        ],
+        "supervised_tokens": [
+          5,
+          5
+        ]
+      },
+      {
+        "cutoff_len": 8192,
+        "actual_preprocessed_tokens": [
+          8192,
+          8192
+        ],
+        "supervised_tokens": [
+          5,
+          5
+        ]
+      }
+    ]
   },
   "platform_deployment": {
     "container": "rui-dataflow-platform-20261022",
@@ -1124,17 +1164,35 @@
     "http_smoke": {
       "status": "PASSED_PLATFORM_HTTP_SMOKE",
       "authenticated": true,
+      "base_url": "https://192.168.247.162:18443",
+      "tls_verified": true,
       "api_lists": true,
       "save_fresh_login_read": true,
       "generation_model_called": false,
       "training_started": false,
-      "seconds": 71.96196126937866
+      "seconds": 69.43096327781677
     },
     "legacy_resource_volume": "rui-dataflow-platform-legacy-data-20261022",
-    "image_id": "sha256:ac5388987fbc98f92ad2ee0a51aedb2ba3aaf0b759e6787dfbcb99abedaf2b88",
-    "access": "node01 loopback 127.0.0.1:18001 via SSH local forwarding",
+    "image_id": "sha256:9d8ef5f6f6c5217fd1fe5d584fd441f6505bbcb256c8ceda10c1c8c57eca621e",
+    "access": "https://192.168.247.162:18443/ on reachable campus network; client trusts supplied internal root CA",
     "credential_location": "container-local /state/admin-bootstrap.json mode 0600; credential not logged",
-    "consistent_sqlite_backups": 3
+    "consistent_sqlite_backups": 3,
+    "backend_bind": "127.0.0.1:18001",
+    "proxy": "rui-dataflow-https-20261022",
+    "secure_cookie": true,
+    "development_auto_login": false,
+    "caddy": {
+      "version": "2.11.7",
+      "archive_sha256": "727b91701a392de6ebc5027509f548bf39979e5216340d0faed8fa5e69c84f8b",
+      "binary_sha256": "678ade3bfc088749c81a681adc603333ee0bb023b6a6cfe3c0f58bef8ff854e9",
+      "server_verified": true,
+      "local_temporary_archive_deleted": true
+    },
+    "ca_public_certificate": "deploy/school/node01-dataflow-root-ca.crt",
+    "ca_sha256_fingerprint": "95:DE:19:30:E8:46:50:D3:6F:AB:0A:CC:9E:D6:57:D3:6C:CF:65:7B:D4:B9:4D:0B:83:D1:8C:15:57:D8:68:89",
+    "mac_direct_tls_status_probe": "PASSED",
+    "container_restart_policy": "unless-stopped",
+    "host_reboot_test": "NOT_RUN"
   },
   "previous_local_verification": {
     "date": "2026-10-22",

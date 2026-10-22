@@ -6,7 +6,7 @@ export HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 HF_HUB_DISABLE_TELEMETRY=1
 # This container is dedicated to training. The reused image includes an older
 # vLLM serving stack; remove its incompatible, unused extras inside this
 # container only. None belongs to the resolved training dependency closure.
-python -m pip uninstall -y vllm sentence-transformers gguf boto3 botocore \
+python -m pip uninstall -y vllm mistral-common sentence-transformers gguf boto3 botocore \
   s3transfer runai-model-streamer-s3 googleapis-common-protos \
   opentelemetry-exporter-otlp opentelemetry-exporter-otlp-proto-common \
   opentelemetry-exporter-otlp-proto-grpc opentelemetry-exporter-otlp-proto-http \
