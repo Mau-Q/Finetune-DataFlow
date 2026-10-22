@@ -17,6 +17,7 @@ from app.schemas.serving import (
 )
 from app.services.serving_registry import SERVING_CLS_REGISTRY
 from app.services.serving_params import expand_serving_configs
+from app.services.personal_execution import identity, personal, attach, authorize
 
 router = APIRouter(tags=["serving"])
 
@@ -39,6 +40,8 @@ def list_serving_instances():
         else:
             result = []
             for k, v in serving_list.items():
+                if personal(v) and v.get("owner") != identity.get():
+                    continue
                 v_copy = copy.deepcopy(v)
                 v_copy['id'] = k
                 if v_copy.get('cls_name') == 'APILLMServing_request':
@@ -92,6 +95,8 @@ def list_serving_classes():
             api_key_param = {"name": "api_key", "type": "str", "default_value": "", "required": True}
             idx = next((i for i, p in enumerate(item['params']) if p['name'] == 'model_name'), len(item['params']))
             item['params'].insert(idx, api_key_param)
+            item['params'].insert(0, {'name': 'personal_api_mode', 'type': 'str', 'default_value': 'mock', 'required': False})
+            item['params'].insert(0, {'name': 'execution_location', 'type': 'str', 'default_value': 'server', 'required': False})
         return ok(api_llm_info)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -113,6 +118,7 @@ def get_serving_detail(id: str):
         if not serving_data:
             raise HTTPException(status_code=404, detail=f"Serving instance with id {id} not found")
         
+        authorize(serving_data, identity.get())
         resp_data = copy.deepcopy(serving_data)
         if resp_data.get('cls_name') == 'APILLMServing_request':
             resp_data['params'] = [p for p in resp_data.get('params', []) if p['name'] != 'key_name_of_api_key']
@@ -248,6 +254,7 @@ def test_serving_instance(id: str, body: ServingTestSchema):
     try:
         prompt: str = body.prompt or "Hello, which model are you?"
         serving_info = container.serving_registry._get(id)
+        authorize(serving_info, identity.get())
         params_dict = {}
         
         ## This part of code is only for APILLMServing_request
@@ -280,7 +287,7 @@ def test_serving_instance(id: str, body: ServingTestSchema):
         params_dict = expand_serving_configs(params_dict)
         if (params_dict.get("response_format") or {}).get("type") == "json_object":
             prompt += '\n请只返回一个 JSON 对象，例如 {"ok": true}。'
-        serving_instance = SERVING_CLS_REGISTRY[serving_info['cls_name']](**params_dict)
+        serving_instance = attach(SERVING_CLS_REGISTRY[serving_info['cls_name']](**params_dict), serving_info, identity.get())
         responses = serving_instance.generate_from_input([prompt])
         if not serving_instance:
             raise HTTPException(status_code=404, detail=f"Serving instance with id {id} not found")

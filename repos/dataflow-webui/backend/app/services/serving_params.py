@@ -5,6 +5,8 @@ import json
 
 def expand_serving_configs(params: dict) -> dict:
     result = dict(params)
+    result.pop("execution_location", None)
+    result.pop("personal_api_mode", None)
     extra = result.pop("configs", None)
     if extra is None or extra == "":
         return result
@@ -16,7 +18,7 @@ def expand_serving_configs(params: dict) -> dict:
     if not isinstance(extra, dict):
         raise ValueError("Serving configs must be a JSON object")
     # The dedicated fields remain authoritative for transport and credentials.
-    reserved = {"configs", "api_key", "api_url", "key_name_of_api_key", "model_name",
+    reserved = {"personal_api_mode", "execution_location", "configs", "api_key", "api_url", "key_name_of_api_key", "model_name",
                 "temperature", "max_workers", "max_retries", "connect_timeout", "read_timeout"}
     if set(extra) & (reserved | set(result)):
         raise ValueError("Serving configs cannot override dedicated serving fields")

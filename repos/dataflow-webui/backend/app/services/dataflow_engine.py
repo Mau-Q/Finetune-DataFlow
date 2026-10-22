@@ -181,7 +181,7 @@ class DataFlowEngine:
     def __init__(self):
         self.execution_map : Dict[str, ExecutionStatus] = {}
         
-    def init_serving_instance(self, serving_id: Any, is_embedding: bool = False, max_retries: int | None = None, snapshot: dict | None = None) -> APILLMServing_request:
+    def init_serving_instance(self, serving_id: Any, is_embedding: bool = False, max_retries: int | None = None, snapshot: dict | None = None, personal_actor: str | None = None, task_id: str | None = None) -> APILLMServing_request:
         """初始化 Serving 实例"""
         try:
             params_dict = {}
@@ -233,6 +233,11 @@ class DataFlowEngine:
                         params_dict[params['name']] = params.get('value') if params.get('value') is not None else params.get('default_value')
                 
                 if snapshot:
+                    from app.services.personal_execution import values
+                    current = values(serving_info)
+                    for field, default in [('execution_location', 'server'), ('personal_api_mode', 'mock')]:
+                        if snapshot['parameters'].get(field, default) != current.get(field, default):
+                            raise ValueError('Serving 执行位置或模式已变化，请重新提交任务')
                     key_name = params_dict.get('key_name_of_api_key')
                     params_dict = dict(snapshot['parameters'])
                     if key_name:
@@ -243,7 +248,8 @@ class DataFlowEngine:
                 params_dict['key_name_of_api_key'] = key_name_var
                 logger.info(f"Initializing serving: {actual_serving_id}")
                 os.environ[key_name_var] = api_key_val or os.environ.get(key_name_var, "")
-                serving_instance = SERVING_CLS_REGISTRY[serving_info['cls_name']](**params_dict)
+                from app.services.personal_execution import attach
+                serving_instance = attach(SERVING_CLS_REGISTRY[serving_info['cls_name']](**params_dict), serving_info, personal_actor, task_id)
                 
             return serving_instance
             
@@ -377,6 +383,8 @@ class DataFlowEngine:
                                     )
                             else:
                                 serving_info = container.serving_registry._get(serving_id)
+                            from app.services.personal_execution import authorize
+                            authorize(serving_info, pipeline_config.get("execution_options", {}).get("personal_actor"))
                             dataflow_runtime["serving_map"][serving_id] = serving_info
 
                     elif param_name == "embedding_serving":
@@ -403,6 +411,8 @@ class DataFlowEngine:
                             else:
                                 serving_info = container.serving_registry._get(serving_id)
 
+                            from app.services.personal_execution import authorize
+                            authorize(serving_info, pipeline_config.get("execution_options", {}).get("personal_actor"))
                             dataflow_runtime["embedding_serving_map"][serving_id] = serving_info
 
                     elif param_name == "database_manager":
@@ -611,7 +621,7 @@ class DataFlowEngine:
                                 logger.info(f"Operator {op_name}: initializing serving {serving_id}")
                                 add_log("init", f"[{datetime.now().isoformat()}]   - Initializing LLM serving: {serving_id}", op_key)
                                 if serving_id not in serving_instance_map:
-                                    serving_instance_map[serving_id] = capture_responses(self.init_serving_instance(serving_id, max_retries=pipeline_config.get("execution_options", {}).get("max_attempts"), snapshot=pipeline_config.get("execution_options", {}).get("serving_snapshots", {}).get(serving_id)), pipeline_config, task_id)
+                                    serving_instance_map[serving_id] = capture_responses(self.init_serving_instance(serving_id, max_retries=pipeline_config.get("execution_options", {}).get("max_attempts"), snapshot=pipeline_config.get("execution_options", {}).get("serving_snapshots", {}).get(serving_id), personal_actor=pipeline_config.get("execution_options", {}).get("personal_actor"), task_id=task_id), pipeline_config, task_id)
                                 param_value = serving_instance_map[serving_id]
 
                             elif param_name == "embedding_serving":
@@ -621,7 +631,7 @@ class DataFlowEngine:
                                 logger.info(f"Operator {op_name}: initializing embedding serving {serving_id}")
                                 add_log("init", f"[{datetime.now().isoformat()}]   - Initializing embedding serving: {serving_id}", op_key)
                                 if serving_id not in embedding_serving_instance_map:
-                                    embedding_serving_instance_map[serving_id] = self.init_serving_instance(serving_id, is_embedding=True)
+                                    embedding_serving_instance_map[serving_id] = self.init_serving_instance(serving_id, is_embedding=True, personal_actor=pipeline_config.get("execution_options", {}).get("personal_actor"), task_id=task_id)
                                 param_value = embedding_serving_instance_map[serving_id]
 
                             elif param_name == "database_manager":

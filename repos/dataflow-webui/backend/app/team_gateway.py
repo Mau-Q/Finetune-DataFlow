@@ -53,7 +53,7 @@ def policy(path, method, roles, *, local=False):
         raise LibraryError('请使用上传，团队模式不开放任意主机路径',403)
     if route in {'text2sql_database','text2sql_database_manager'}:
         raise LibraryError('团队模式未开放主机数据库入口',403)
-    if (route=='serving' and method!='GET') or path.startswith('/api/v1/training/host'):
+    if path.startswith('/api/v1/training/host'):
         if 'manage' not in roles:raise LibraryError('需要项目管理权限',403)
 
 
@@ -109,6 +109,64 @@ def create_gateway(state=None, workers=None, secure=None, development=None, work
         except ValueError as exc:raise LibraryError('JSON 无效',400) from exc
         if not isinstance(value,dict):raise LibraryError('请求必须为 JSON 对象',400)
         return value
+
+    def personal_project(request):
+        user = actor(request)
+        project = store.access(user['id'], request.headers.get('x-project-id') or user['project'])
+        if not set(project['roles']) & {'manage', 'develop'}:
+            raise LibraryError('需要项目开发权限', 403)
+        return user, project
+
+    @app.post('/team/personal/claim')
+    async def claim_personal(request: Request):
+        import yaml
+        from app.services.personal_execution import PersonalQueue, values
+        user, project = personal_project(request)
+        queue = PersonalQueue(project['root'])
+        body = await object_body(request)
+        mode = body.get('mode', 'mock')
+        if mode not in {'mock', 'real'}:
+            raise LibraryError('执行模式无效', 400)
+        job = queue.claim(user['id'], mode)
+        if job:
+            task_id = job.get('task_id')
+            if task_id:
+                task_file = Path(project['root']) / 'data/task_registry.json'
+                tasks = json.loads(task_file.read_text('utf-8')).get('tasks', {}) if task_file.exists() else {}
+                task = tasks.get(task_id, {})
+                if task.get('status') not in {'queued', 'running'}:
+                    queue.complete(user['id'], job['id'], job['lease'], {'error': True})
+                    return {'job': None}
+            # Credentials are delivered only to their owner over the existing login.
+            registry = Path(project['root']) / 'data/serving_registry.yaml'
+            records = yaml.safe_load(registry.read_text('utf-8')) or {}
+            info = records.get(job['serving'], {})
+            if info.get('owner') != user['id'] or values(info).get('execution_location') != 'personal':
+                queue.complete(user['id'], job['id'], job['lease'], {'error': True})
+                raise LibraryError('个人 Serving 已删除或执行位置已变更', 409)
+            config = values(info)
+            key = config.get('api_key') or os.environ.get(config.get('key_name_of_api_key') or '', '')
+            import hashlib
+            fingerprint = hashlib.sha256(('Bearer '+key).encode()).hexdigest()
+            if (config.get('personal_api_mode', 'mock') != mode
+                    or config.get('api_url') != job.get('url')
+                    or (mode == 'real' and not secrets.compare_digest(fingerprint, job.get('credential_fingerprint', '')))):
+                queue.complete(user['id'], job['id'], job['lease'], {'error': True})
+                raise LibraryError('Serving 已变更，请重新提交任务', 409)
+            job.pop('credential_fingerprint', None)
+            job['api_key'] = key if mode == 'real' else ''
+        return {'job': job}
+
+    @app.post('/team/personal/result')
+    async def finish_personal(request: Request):
+        from app.services.personal_execution import PersonalQueue
+        user, project = personal_project(request)
+        body = await object_body(request)
+        try:
+            PersonalQueue(project['root']).complete(user['id'], body.get('id'), str(body.get('lease', '')), body.get('result', {}))
+        except (ValueError, TypeError) as exc:
+            raise LibraryError(str(exc), 409) from exc
+        return {'ok': True}
 
     @app.get('/team/status')
     def status():
@@ -254,6 +312,7 @@ def create_gateway(state=None, workers=None, secure=None, development=None, work
         project=store.access(user['id'],pid)
         policy(request.url.path,request.method,project['roles'],local=development)
         body=await request.body()
+        payload = {}
         # Host paths may only be referenced if they are managed by this project.
         if body and 'application/json' in request.headers.get('content-type',''):
             try:payload=json.loads(body)
@@ -273,6 +332,21 @@ def create_gateway(state=None, workers=None, secure=None, development=None, work
         if request.url.path=='/api/v1/team-data/reviews' and request.method=='POST':
             for reviewer in payload.get('reviewers',[]):
                 if 'review' not in store.access(reviewer,pid)['roles']:raise LibraryError('评测成员未获当前项目评测权限',400)
+        if request.url.path.startswith('/api/v1/serving') and request.method not in {'GET', 'HEAD'} and 'manage' not in project['roles']:
+            import yaml
+            from app.services.personal_execution import values, personal
+            registry_path = Path(project['root']) / 'data/serving_registry.yaml'
+            records = yaml.safe_load(registry_path.read_text('utf-8')) or {} if registry_path.exists() else {}
+            sid = request.url.path.removeprefix('/api/v1/serving/').split('/')[0]
+            existing = records.get(sid)
+            if existing and (not personal(existing) or existing.get('owner') != user['id']):
+                raise LibraryError('只能修改或测试自己的个人 Serving', 403)
+            proposed = values(existing or {})
+            submitted = payload if isinstance(payload, list) else payload.get('params', [])
+            if isinstance(submitted, list):
+                proposed.update({p['name']: p.get('value') for p in submitted if isinstance(p, dict) and 'name' in p})
+            if proposed.get('execution_location') != 'personal':
+                raise LibraryError('服务器 Serving 需要项目管理权限', 403)
         headers={k:v for k,v in request.headers.items() if k.lower() in {'content-type','accept','if-match'}}
         headers.update({'x-team-user':user['id'],'x-team-roles':','.join(project['roles'])})
         # Serialize gateway writes per project; workers retain their own file/DB locks.

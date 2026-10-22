@@ -3,6 +3,7 @@
         <div class="major-container">
             <div class="title-block">
                 <p class="main-title">{{ local('Serving') }}</p>
+                <p>选择“我的电脑”后，由登录同一账号的 Mac / Windows 执行器调用 API。地址、模型与 Key 沿用此处配置；未运行执行器时不会改由服务器调用。执行器默认模拟，真实调用须显式启用。</p>
             </div>
             <div class="content-block">
                 <fv-Collapse :theme="theme" v-model="show.add" class="serving-item" icon="Marquee"
@@ -37,8 +38,14 @@
                         <div v-if="choosenClsItem && choosenClsItem.params"
                             v-for="(param, p_index) in choosenClsItem.params">
                             <div class="serving-item-row column">
-                                <p class="serving-item-light-title">{{ param.name }}</p>
-                                <fv-text-box :theme="theme" v-model="param.value" :type="/key|token|secret|password/i.test(param.name) ? 'password' : 'text'" :placeholder="local(param.name)"
+                                <p class="serving-item-light-title">{{ param.name === 'execution_location' ? 'API 执行位置' : param.name === 'personal_api_mode' ? '个人执行模式' : param.name }}</p>
+                                <select v-if="param.name === 'execution_location'" v-model="param.value" >
+                                    <option value="server">服务器</option><option value="personal">我的电脑</option>
+                                </select>
+                                <select v-else-if="param.name === 'personal_api_mode'" v-model="param.value">
+                                    <option value="mock">模拟验证（不调用 API）</option><option value="real">真实调用</option>
+                                </select>
+                                <fv-text-box v-else :theme="theme" v-model="param.value" :type="/key|token|secret|password/i.test(param.name) ? 'password' : 'text'" :placeholder="local(param.name)"
                                     border-radius="6" :reveal-border="true" :is-box-shadow="true"></fv-text-box>
                             </div>
                             <hr />
@@ -80,8 +87,14 @@
                         <hr />
                         <div v-for="(param, p_index) in item.params">
                             <div class="serving-item-row column">
-                                <p class="serving-item-light-title">{{ param.name }}</p>
-                                <fv-text-box :theme="theme" v-model="param.value" :type="/key|token|secret|password/i.test(param.name) ? 'password' : 'text'" border-radius="6"
+                                <p class="serving-item-light-title">{{ param.name === 'execution_location' ? 'API 执行位置' : param.name === 'personal_api_mode' ? '个人执行模式' : param.name }}</p>
+                                <select v-if="param.name === 'execution_location'" v-model="param.value" :disabled="!item.edit">
+                                    <option value="server">服务器</option><option value="personal">我的电脑</option>
+                                </select>
+                                <select v-else-if="param.name === 'personal_api_mode'" v-model="param.value" :disabled="!item.edit">
+                                    <option value="mock">模拟验证（不调用 API）</option><option value="real">真实调用</option>
+                                </select>
+                                <fv-text-box v-else :theme="theme" v-model="param.value" :type="/key|token|secret|password/i.test(param.name) ? 'password' : 'text'" border-radius="6"
                                     :disabled="!item.edit" :reveal-border="true"
                                     :is-box-shadow="item.edit"></fv-text-box>
                             </div>
@@ -195,6 +208,8 @@ export default {
             if (res.data) {
                 let servingList = res.data
                 servingList.forEach((item) => {
+                    if (!item.params.some(p => p.name === 'execution_location')) item.params.unshift({ name: 'execution_location', type: 'str', value: 'server', default_value: 'server', required: false })
+                    if (!item.params.some(p => p.name === 'personal_api_mode')) item.params.unshift({ name: 'personal_api_mode', type: 'str', value: 'mock', default_value: 'mock', required: false })
                     this.resetEditParams(item, true)
                 })
                 this.servingList = servingList

@@ -118,6 +118,8 @@ class TextGeneration:
                         errors.append(f'{op["name"]}: 服务类型、端点或模型未配置')
                     if not params.get('api_key') and not os.environ.get(params.get('key_name_of_api_key') or ''):
                         errors.append(f'{op["name"]}: 服务密钥未配置')
+                    from app.services.personal_execution import authorize, identity
+                    authorize(info, identity.get())
                     safe = {k: v for k, v in params.items() if k not in {'api_key', 'key_name_of_api_key'}}
                     serving_snapshots[value] = {'id': value, 'cls_name': info['cls_name'], 'parameters': safe, 'sha256': _hash(_json_bytes(safe))}
                 if name in {'mineru_script', 'tokenizer_path'} and (not value or not Path(value).exists()):
@@ -210,6 +212,8 @@ class TextGeneration:
         if config.get('execution_options', {}).get('representative_training'):
             from app.services.representative_training import isolate_rows
             config = isolate_rows(config)
+        from app.services.personal_execution import bind
+        bind(config)
         check = self.preflight(config)
         if not check['ready']:
             raise LibraryError('；'.join(check['errors']), 422)

@@ -189,9 +189,12 @@ class TaskRegistry:
             pipeline_config = config
             logger.info("Executing pipeline with provided config")
         
-        from app.services.resource_resolution import resolve_pipeline_resources
+        from app.services.personal_execution import bind
         import copy
+        pipeline_config = copy.deepcopy(pipeline_config)
+        from app.services.resource_resolution import resolve_pipeline_resources
         pipeline_source_config = copy.deepcopy(pipeline_config)
+        bind(pipeline_config)
         pipeline_config, resource_snapshots = resolve_pipeline_resources(pipeline_config)
         from app.services.auto_collection import freeze_collection_target
         if container.data_library is not None:

@@ -34,6 +34,17 @@ def create_app() -> FastAPI:
     if worker_token:
         from app.services.worker_auth import install_worker_auth
         install_worker_auth(app, worker_token)
+    @app.middleware('http')
+    async def personal_identity(request, call_next):
+        from app.services.personal_execution import identity
+        # Only the authenticated loopback gateway may supply a team identity.
+        actor = request.headers.get('x-team-user') if worker_token else None
+        token = identity.set(actor)
+        try:
+            return await call_next(request)
+        finally:
+            identity.reset(token)
+
     app.state.dataset_backups = backups
     app.router.add_event_handler('startup', backups.start)
     app.router.add_event_handler('shutdown', backups.stop)

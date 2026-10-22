@@ -2,6 +2,7 @@ import yaml, os
 import importlib
 import inspect
 from typing import Dict, List, Any
+from app.services.personal_execution import identity, values, personal, authorize
 from app.core.config import settings
 from app.services.dataset_persistence import locked_registry, atomic_write
 """
@@ -59,6 +60,15 @@ class ServingRegistry:
             "cls_name": cls_name,
             "params": params
         }
+        location = values(data[id]).get('execution_location', 'server')
+        if values(data[id]).get('personal_api_mode', 'mock') not in {'mock', 'real'}:
+            raise ValueError('个人执行模式必须为 mock 或 real')
+        if location not in {'server', 'personal'}:
+            raise ValueError('执行位置必须为 server 或 personal')
+        if location == 'personal':
+            if not identity.get():
+                raise ValueError('个人执行需要登录平台账号')
+            data[id]['owner'] = identity.get()
         atomic_write(self.path, yaml.safe_dump(data, allow_unicode=True).encode('utf-8'))
         return id
 
@@ -68,6 +78,7 @@ class ServingRegistry:
         if id not in data:
             return False
         
+        authorize(data[id], identity.get())
         if name:
             data[id]["name"] = name
         if cls_name:
@@ -88,6 +99,15 @@ class ServingRegistry:
                      
             data[id]["params"] = list(current_params_map.values())
             
+        location = values(data[id]).get('execution_location', 'server')
+        if values(data[id]).get('personal_api_mode', 'mock') not in {'mock', 'real'}:
+            raise ValueError('个人执行模式必须为 mock 或 real')
+        if location not in {'server', 'personal'}:
+            raise ValueError('执行位置必须为 server 或 personal')
+        if location == 'personal':
+            if not identity.get():
+                raise ValueError('个人执行需要登录平台账号')
+            data[id]['owner'] = identity.get()
         atomic_write(self.path, yaml.safe_dump(data, allow_unicode=True).encode('utf-8'))
         return True
 
@@ -96,6 +116,7 @@ class ServingRegistry:
         data = self._get_all()
         if id not in data:
             return False
+        authorize(data[id], identity.get())
         del data[id]
         atomic_write(self.path, yaml.safe_dump(data, allow_unicode=True).encode('utf-8'))
         return True

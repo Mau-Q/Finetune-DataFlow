@@ -352,7 +352,8 @@ def dataflow_pipeline_execute(pipeline_config: Dict[str, Any], dataflow_runtime:
                                     params_dict['key_name_of_api_key'] = key_name_var
                                     logger.info(f"Initializing serving: {actual_serving_id}")
                                     os.environ[key_name_var] = api_key_val or os.environ.get(key_name_var, "")
-                                    serving_instance = APILLMServing_request(**params_dict)
+                                    from app.services.personal_execution import attach
+                                    serving_instance = attach(APILLMServing_request(**params_dict), serving_info, pipeline_config.get("execution_options", {}).get("personal_actor"), task_id)
                                 else:
                                     raise DataFlowEngineError(f"Unsupported serving class: {serving_info['cls_name']}")
                                 serving_instance_map[serving_id] = capture_responses(serving_instance, pipeline_config, task_id)
@@ -392,7 +393,8 @@ def dataflow_pipeline_execute(pipeline_config: Dict[str, Any], dataflow_runtime:
                                     params_dict = expand_serving_configs(params_dict)
                                     logger.info(f"Initializing serving: {actual_serving_id}")
                                     os.environ[key_name_var] = api_key_val or os.environ.get(key_name_var, "")
-                                    serving_instance = APILLMServing_request(**params_dict)
+                                    from app.services.personal_execution import attach
+                                    serving_instance = attach(APILLMServing_request(**params_dict), serving_info, pipeline_config.get("execution_options", {}).get("personal_actor"), task_id)
                                 else:
                                     raise DataFlowEngineError(f"Unsupported serving class: {serving_info['cls_name']}")
                                 embedding_serving_instance_map[serving_id] = serving_instance
