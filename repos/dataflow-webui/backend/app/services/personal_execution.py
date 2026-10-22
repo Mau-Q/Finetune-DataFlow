@@ -146,10 +146,13 @@ def attach(instance, info, actor, task_id=None):
     if not personal(info):
         return instance
     authorize(info, actor)
+    workers = values(info).get('max_workers', 1)
+    if type(workers) is not int or not 1 <= workers <= 48:
+        raise ValueError('个人 Serving 并发必须为 1–48 的整数')
     from app.core.config import settings
     instance.session.close()
     instance.session = PersonalSession(settings.BASE_DIR, actor, info['id'], values(info).get('personal_api_mode', 'mock'), task_id)
     # An uncertain commercial request must never be automatically repeated.
     instance.max_retries = 1
-    instance.max_workers = 1
+    instance.max_workers = workers
     return instance

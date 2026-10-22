@@ -10,6 +10,7 @@ import time
 from urllib.parse import urlsplit
 from urllib.request import Request, build_opener, HTTPCookieProcessor, HTTPSHandler, HTTPRedirectHandler
 import http.cookiejar
+from concurrent.futures import ThreadPoolExecutor
 
 
 class NoRedirect(HTTPRedirectHandler):
@@ -73,14 +74,14 @@ def execute(job, real=False, opener=None):
     return {'response': json.loads(raw)}
 
 
-def run_one(platform, spool, real=False):
-    # Upload acknowledged results before accepting another billable request.
+def flush_results(platform, spool):
+    # Only the coordinator uses the authenticated platform session.
     for path in sorted(spool.glob('*.json')):
         platform.request('/team/personal/result', json.loads(path.read_text('utf-8')))
         path.unlink()
-    job = platform.request('/team/personal/claim', {'mode': 'real' if real else 'mock'})['job']
-    if not job:
-        return False
+
+
+def execute_and_spool(job, spool, real=False):
     try:
         result = execute(job, real)
     except Exception:
@@ -95,10 +96,64 @@ def run_one(platform, spool, real=False):
     except OSError:
         pass
     temp.replace(path)
-    platform.request('/team/personal/result', record)
-    path.unlink()
+    return job['id']
+
+
+def run_one(platform, spool, real=False):
+    flush_results(platform, spool)
+    job = platform.request('/team/personal/claim', {'mode': 'real' if real else 'mock'})['job']
+    if not job:
+        return False
+    execute_and_spool(job, spool, real)
+    flush_results(platform, spool)
     print('已回传任务 '+job['id']+('（真实调用）' if real else '（模拟）'))
     return True
+
+
+class ConcurrentExecutor:
+    """Bounded upstream workers; durable results, serialized claims and ACKs.
+
+    Only already-claimed requests run in threads. An uncertain upstream outcome
+    is never re-claimed or retried. A failed ACK leaves the original result on
+    disk, and prevents this coordinator from accepting further requests.
+    """
+    def __init__(self, platform, spool, real=False, concurrency=1):
+        if type(concurrency) is not int or not 1 <= concurrency <= 48:
+            raise ValueError('执行器并发必须为 1–48 的整数')
+        self.platform, self.spool, self.real = platform, spool, real
+        self.concurrency = concurrency
+        self.pool = ThreadPoolExecutor(max_workers=concurrency)
+        self.pending = {}
+        self.closed = False
+
+    def step(self):
+        if self.closed:
+            raise RuntimeError('执行器已经关闭')
+        flush_results(self.platform, self.spool)
+        for call_id, future in list(self.pending.items()):
+            if future.done():
+                future.result()
+                del self.pending[call_id]
+        flush_results(self.platform, self.spool)
+        dispatched = False
+        while len(self.pending) < self.concurrency:
+            job = self.platform.request('/team/personal/claim', {'mode': 'real' if self.real else 'mock'})['job']
+            if not job:
+                break
+            if job['id'] in self.pending or (self.spool/(job['id']+'.json')).exists():
+                raise RuntimeError('平台重复下发已领取请求；停止新增调用')
+            self.pending[job['id']] = self.pool.submit(execute_and_spool, job, self.spool, self.real)
+            dispatched = True
+        return dispatched or bool(self.pending)
+
+    def close(self):
+        if self.closed:
+            return
+        self.closed = True
+        # Do not interrupt billable calls. Workers persist their responses even
+        # if the coordinator can no longer reach the school platform.
+        self.pool.shutdown(wait=True)
+        flush_results(self.platform, self.spool)
 
 
 def main():
@@ -109,6 +164,8 @@ def main():
     parser.add_argument('--ca-file')
     parser.add_argument('--execute', action='store_true', help='明确启用真实商业 API 调用；默认模拟')
     parser.add_argument('--once', action='store_true')
+    parser.add_argument('--concurrency', type=int, choices=range(1, 49), default=1,
+                        metavar='1..48', help='同时执行的商业 HTTP 请求上限，默认 1')
     args = parser.parse_args()
     platform = Platform(args.url, args.ca_file)
     user = platform.login(args.user, getpass.getpass('平台密码: '), args.project)
@@ -117,14 +174,18 @@ def main():
     spool = Path.home()/'.dataflow-personal'/scope
     spool.mkdir(parents=True, exist_ok=True, mode=0o700)
     print('已登录；'+('真实执行模式' if args.execute else '模拟模式，不调用商业 API'))
+    executor = ConcurrentExecutor(platform, spool, args.execute, args.concurrency)
     try:
         while True:
-            run_one(platform, spool, args.execute)
+            executor.step()
             if args.once:
                 break
-            time.sleep(2)
+            time.sleep(.2 if executor.pending else 1)
     finally:
-        platform.request('/team/logout', {})
+        try:
+            executor.close()
+        finally:
+            platform.request('/team/logout', {})
 
 
 if __name__ == '__main__':

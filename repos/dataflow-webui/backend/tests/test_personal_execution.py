@@ -172,6 +172,77 @@ def test_runner_spools_before_upload_and_never_reexecutes(tmp_path, monkeypatch)
         runner.validate_endpoint('http://127.0.0.1/private')
 
 
+def test_48_concurrent_calls_are_unique_and_ack_recovery_never_rebills(tmp_path, monkeypatch):
+    """All 48 must enter upstream before release; ACK failures cannot re-execute."""
+    jobs = [{'id': str(i), 'lease': 'fixture-lease', 'api_key': 'fixture-secret',
+             'body': {'model': 'fixture'}} for i in range(48)]
+    barrier = threading.Barrier(49)
+    release = threading.Event()
+    executed, acknowledged = [], set()
+    lock = threading.Lock()
+    coordinator = threading.get_ident()
+
+    def execute(job, real=False):
+        with lock:
+            executed.append(job['id'])
+        barrier.wait(timeout=10)
+        assert release.wait(10)
+        if job['id'] == '0':
+            raise TimeoutError('fixture unknown outcome')
+        return {'response': {'choices': [], 'model': 'fixture'}}
+
+    class Platform:
+        fail_ack = True
+        claims = 0
+        def request(self, path, body):
+            assert threading.get_ident() == coordinator
+            if path.endswith('/claim'):
+                self.claims += 1
+                return {'job': jobs.pop(0) if jobs else None}
+            if self.fail_ack:
+                raise ConnectionError('fixture ACK unavailable')
+            acknowledged.add(body['id'])
+            return {'ok': True}
+
+    monkeypatch.setattr(runner, 'execute', execute)
+    platform = Platform()
+    executor = runner.ConcurrentExecutor(platform, tmp_path, real=True, concurrency=48)
+    try:
+        assert executor.step()
+        barrier.wait(timeout=10)
+        assert len(executed) == len(set(executed)) == 48
+        release.set()
+        for future in executor.pending.values():
+            future.result(timeout=10)
+        assert len(list(tmp_path.glob('*.json'))) == 48
+        assert all('fixture-secret' not in p.read_text() for p in tmp_path.glob('*.json'))
+        with pytest.raises(ConnectionError):
+            executor.step()
+        assert platform.claims == 48
+        platform.fail_ack = False
+        assert executor.step() is False
+        assert len(acknowledged) == 48 and len(executed) == 48
+        assert not list(tmp_path.glob('*.json'))
+    finally:
+        release.set()
+        platform.fail_ack = False
+        executor.close()
+
+
+def test_personal_transport_honors_48_workers_but_disables_retries(tmp_path, monkeypatch):
+    from app.core.config import settings
+    monkeypatch.setattr(settings, 'BASE_DIR', str(tmp_path))
+    info = {'id': 'fixture', 'owner': 'owner', 'params': [
+        {'name': 'execution_location', 'value': 'personal'},
+        {'name': 'max_workers', 'value': 48}]}
+    instance = SimpleNamespace(session=SimpleNamespace(close=lambda: None), max_workers=1, max_retries=5)
+    assert attach(instance, info, 'owner').max_workers == 48
+    assert instance.max_retries == 1
+    info['params'][-1]['value'] = 49
+    with pytest.raises(ValueError):
+        attach(instance, info, 'owner')
+
+
 @pytest.mark.parametrize('path', ['sync', 'ray'])
 def test_pipeline_loops_use_personal_transport(tmp_path, monkeypatch, path):
     from app.core.container import container

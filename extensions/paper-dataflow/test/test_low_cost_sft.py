@@ -7,7 +7,7 @@ import pytest
 
 from paper_dataflow.low_cost_sft import (
     prepare_sources, parse_candidates, parse_reviews, export_results,
-    build_contexts, strict_json,
+    build_contexts, strict_json, select_paper_contexts,
 )
 
 
@@ -30,6 +30,25 @@ def reviewed(reviews):
 
 def verdict(sid='u1:c1', **changes):
     return dict(sample_id=sid, grounded='PASS', task_fit='PASS', usefulness='PASS', reason='') | changes
+
+
+def test_paper_budget_preserves_all_evidence_but_admits_at_most_eight_candidates():
+    original = pd.DataFrame([dict(document_id=doc, unit_id=f'{doc}-{i}', context_valid=True,
+                                  context=f'exact original {doc}-{i}', preparation_reason='')
+                             for doc in ('a', 'b') for i in range(10)])
+    selected = {'a': ['a-1', 'a-3', 'a-6', 'a-8'], 'b': ['b-2', 'b-5']}
+    result = select_paper_contexts(original, selected)
+    assert result['context'].tolist() == original['context'].tolist()
+    assert len(result) == 20
+    assert result.loc[result.context_valid].groupby('document_id').size().to_dict() == {'a': 4, 'b': 2}
+    assert original.context_valid.all()
+    with pytest.raises(ValueError):
+        select_paper_contexts(original, {'a': [f'a-{i}' for i in range(5)], 'b': ['b-0']})
+    with pytest.raises(ValueError):
+        select_paper_contexts(original, {'a': ['b-0'], 'b': ['b-1']})
+    original.loc[original.unit_id == 'a-1', 'context_valid'] = False
+    with pytest.raises(ValueError):
+        select_paper_contexts(original, selected)
 
 
 def test_duplicate_pdf_aliases_and_split_isolation(tmp_path):
