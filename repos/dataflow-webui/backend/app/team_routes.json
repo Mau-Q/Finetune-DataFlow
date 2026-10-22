@@ -1,0 +1,950 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/v1/datasets/",
+    "source": "app/api/v1/endpoints/datasets.py",
+    "function": "list_datasets"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/datasets/",
+    "source": "app/api/v1/endpoints/datasets.py",
+    "function": "register_dataset"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/datasets/columns/{ds_id}",
+    "source": "app/api/v1/endpoints/datasets.py",
+    "function": "get_dataset_columns"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/datasets/file_type_sample/{ds_id}",
+    "source": "app/api/v1/endpoints/datasets.py",
+    "function": "get_file_type_data"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/datasets/list_dir",
+    "source": "app/api/v1/endpoints/datasets.py",
+    "function": "list_dir"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/datasets/pandas_type_sample/{ds_id}",
+    "source": "app/api/v1/endpoints/datasets.py",
+    "function": "get_pandas_data"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/datasets/preview/{ds_id}",
+    "source": "app/api/v1/endpoints/datasets.py",
+    "function": "get_dataset_preview"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/datasets/upload",
+    "source": "app/api/v1/endpoints/datasets.py",
+    "function": "upload_dataset"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/datasets/{ds_id}",
+    "source": "app/api/v1/endpoints/datasets.py",
+    "function": "delete_dataset"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/datasets/{ds_id}",
+    "source": "app/api/v1/endpoints/datasets.py",
+    "function": "get_dataset"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/generation/configs",
+    "source": "app/api/v1/endpoints/generation.py",
+    "function": "save_config"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/generation/configs/{pipeline_id}/check",
+    "source": "app/api/v1/endpoints/generation.py",
+    "function": "check_config"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/generation/configs/{pipeline_id}/submit",
+    "source": "app/api/v1/endpoints/generation.py",
+    "function": "submit"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/generation/drafts/{draft_id}/map-fields",
+    "source": "app/api/v1/endpoints/generation.py",
+    "function": "map_fields"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/generation/drafts/{draft_id}/publish",
+    "source": "app/api/v1/endpoints/generation.py",
+    "function": "publish"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/generation/drafts/{draft_id}/releases",
+    "source": "app/api/v1/endpoints/generation.py",
+    "function": "list_releases"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/generation/drafts/{draft_id}/samples/{sample_id}",
+    "source": "app/api/v1/endpoints/generation.py",
+    "function": "delete_sample"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/generation/drafts/{draft_id}/samples/{sample_id}",
+    "source": "app/api/v1/endpoints/generation.py",
+    "function": "edit_sample"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/generation/releases/{release_id}/download",
+    "source": "app/api/v1/endpoints/generation.py",
+    "function": "download_release"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/generation/releases/{release_id}/fork",
+    "source": "app/api/v1/endpoints/generation.py",
+    "function": "fork_release"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/generation/tasks",
+    "source": "app/api/v1/endpoints/generation.py",
+    "function": "tasks"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/generation/tasks/{task_id}",
+    "source": "app/api/v1/endpoints/generation.py",
+    "function": "detail"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/generation/tasks/{task_id}/artifacts/{artifact_id}",
+    "source": "app/api/v1/endpoints/generation.py",
+    "function": "download_artifact"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/generation/tasks/{task_id}/collect",
+    "source": "app/api/v1/endpoints/generation.py",
+    "function": "collect"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/generation/tasks/{task_id}/retry",
+    "source": "app/api/v1/endpoints/generation.py",
+    "function": "retry"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/generation/template",
+    "source": "app/api/v1/endpoints/generation.py",
+    "function": "get_template"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/json_schemas",
+    "source": "app/api/v1/endpoints/json_schemas.py",
+    "function": "list_schemas"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/json_schemas",
+    "source": "app/api/v1/endpoints/json_schemas.py",
+    "function": "create_schema"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/json_schemas/",
+    "source": "app/api/v1/endpoints/json_schemas.py",
+    "function": "list_schemas"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/json_schemas/",
+    "source": "app/api/v1/endpoints/json_schemas.py",
+    "function": "create_schema"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/json_schemas/catalog",
+    "source": "app/api/v1/endpoints/json_schemas.py",
+    "function": "schema_catalog"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/json_schemas/validate",
+    "source": "app/api/v1/endpoints/json_schemas.py",
+    "function": "validate_schema_preview"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/json_schemas/{schema_id}",
+    "source": "app/api/v1/endpoints/json_schemas.py",
+    "function": "delete_schema"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/json_schemas/{schema_id}",
+    "source": "app/api/v1/endpoints/json_schemas.py",
+    "function": "get_schema"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/json_schemas/{schema_id}",
+    "source": "app/api/v1/endpoints/json_schemas.py",
+    "function": "update_schema"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/library/drafts",
+    "source": "app/api/v1/endpoints/data_library.py",
+    "function": "list_drafts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/library/drafts",
+    "source": "app/api/v1/endpoints/data_library.py",
+    "function": "create_draft"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/library/drafts/{draft_id}",
+    "source": "app/api/v1/endpoints/data_library.py",
+    "function": "get_draft"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/library/drafts/{draft_id}/import",
+    "source": "app/api/v1/endpoints/data_library.py",
+    "function": "import_draft"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/library/inputs/choose-local",
+    "source": "app/api/v1/endpoints/data_library.py",
+    "function": "choose_local_source"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/library/inputs/import-local",
+    "source": "app/api/v1/endpoints/data_library.py",
+    "function": "import_local_source"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/library/inputs/upload",
+    "source": "app/api/v1/endpoints/data_library.py",
+    "function": "upload_source_dataset"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/library/inputs/upload-folder",
+    "source": "app/api/v1/endpoints/data_library.py",
+    "function": "upload_source_folder"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/library/inputs/{dataset_id}/file",
+    "source": "app/api/v1/endpoints/data_library.py",
+    "function": "source_dataset_file"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/library/inputs/{dataset_id}/member-preview",
+    "source": "app/api/v1/endpoints/data_library.py",
+    "function": "source_member_preview"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/library/inputs/{dataset_id}/preview",
+    "source": "app/api/v1/endpoints/data_library.py",
+    "function": "source_dataset_preview"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/library/materials",
+    "source": "app/api/v1/endpoints/data_library.py",
+    "function": "list_materials"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/library/materials/register",
+    "source": "app/api/v1/endpoints/data_library.py",
+    "function": "register_material"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/library/materials/upload",
+    "source": "app/api/v1/endpoints/data_library.py",
+    "function": "upload_material"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/library/materials/{material_id}",
+    "source": "app/api/v1/endpoints/data_library.py",
+    "function": "get_material"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/library/materials/{material_id}",
+    "source": "app/api/v1/endpoints/data_library.py",
+    "function": "update_material"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/library/materials/{material_id}/file",
+    "source": "app/api/v1/endpoints/data_library.py",
+    "function": "material_file"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/library/storage/status",
+    "source": "app/api/v1/endpoints/data_library.py",
+    "function": "storage_status"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/multimodal/configs",
+    "source": "app/api/v1/endpoints/multimodal.py",
+    "function": "list_configs"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/multimodal/configs",
+    "source": "app/api/v1/endpoints/multimodal.py",
+    "function": "save"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/multimodal/configs/{config_id}",
+    "source": "app/api/v1/endpoints/multimodal.py",
+    "function": "get"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/multimodal/configs/{config_id}/check",
+    "source": "app/api/v1/endpoints/multimodal.py",
+    "function": "check"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/multimodal/configs/{config_id}/submit",
+    "source": "app/api/v1/endpoints/multimodal.py",
+    "function": "submit"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/multimodal/template",
+    "source": "app/api/v1/endpoints/multimodal.py",
+    "function": "get_template"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/operators/",
+    "source": "app/api/v1/endpoints/operators.py",
+    "function": "list_operators_all"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/operators/by_category",
+    "source": "app/api/v1/endpoints/operators.py",
+    "function": "list_operators"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/operators/categories",
+    "source": "app/api/v1/endpoints/operators.py",
+    "function": "list_operator_categories"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/operators/details",
+    "source": "app/api/v1/endpoints/operators.py",
+    "function": "list_operators_details"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/operators/details/{op_name}",
+    "source": "app/api/v1/endpoints/operators.py",
+    "function": "get_operator_detail_by_name"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/operators/recommend_categories",
+    "source": "app/api/v1/endpoints/operators.py",
+    "function": "recommend_operator_categories"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/pipelines/",
+    "source": "app/api/v1/endpoints/pipelines.py",
+    "function": "list_pipelines"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/pipelines/",
+    "source": "app/api/v1/endpoints/pipelines.py",
+    "function": "create_pipeline"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/pipelines/templates",
+    "source": "app/api/v1/endpoints/pipelines.py",
+    "function": "list_template_pipelines"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/pipelines/validate",
+    "source": "app/api/v1/endpoints/pipelines.py",
+    "function": "validate_pipeline_config"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/pipelines/{pipeline_id}",
+    "source": "app/api/v1/endpoints/pipelines.py",
+    "function": "delete_pipeline"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/pipelines/{pipeline_id}",
+    "source": "app/api/v1/endpoints/pipelines.py",
+    "function": "get_pipeline"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/pipelines/{pipeline_id}",
+    "source": "app/api/v1/endpoints/pipelines.py",
+    "function": "update_pipeline"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/preferences/",
+    "source": "app/api/v1/endpoints/preferences.py",
+    "function": "get_preferences"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/preferences/",
+    "source": "app/api/v1/endpoints/preferences.py",
+    "function": "set_preferences"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/prompts/builtin-preview",
+    "source": "app/api/v1/endpoints/prompts.py",
+    "function": "builtin_prompt_preview"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/prompts/catalog",
+    "source": "app/api/v1/endpoints/prompts.py",
+    "function": "prompt_catalog"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/prompts/contracts",
+    "source": "app/api/v1/endpoints/prompts.py",
+    "function": "managed_prompt_contracts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/prompts/operator-mapping",
+    "source": "app/api/v1/endpoints/prompts.py",
+    "function": "get_operator_prompt_mapping"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/prompts/prompt-info",
+    "source": "app/api/v1/endpoints/prompts.py",
+    "function": "get_prompt_info"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/prompts/prompt-info/{prompt_name}",
+    "source": "app/api/v1/endpoints/prompts.py",
+    "function": "get_prompt_info_by_name"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/prompts/source/{prompt_name}",
+    "source": "app/api/v1/endpoints/prompts.py",
+    "function": "get_prompt_source"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/prompts/user",
+    "source": "app/api/v1/endpoints/prompts.py",
+    "function": "list_user_prompts"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/prompts/user",
+    "source": "app/api/v1/endpoints/prompts.py",
+    "function": "create_user_prompt"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/prompts/user/preview",
+    "source": "app/api/v1/endpoints/prompts.py",
+    "function": "preview_user_prompt"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/prompts/user/{tpl_id}",
+    "source": "app/api/v1/endpoints/prompts.py",
+    "function": "delete_user_prompt"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/prompts/user/{tpl_id}",
+    "source": "app/api/v1/endpoints/prompts.py",
+    "function": "get_user_prompt"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/prompts/user/{tpl_id}",
+    "source": "app/api/v1/endpoints/prompts.py",
+    "function": "update_user_prompt"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/prompts/{operator_name}",
+    "source": "app/api/v1/endpoints/prompts.py",
+    "function": "get_prompts"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/serving/",
+    "source": "app/api/v1/endpoints/serving.py",
+    "function": "list_serving_instances"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/serving/",
+    "source": "app/api/v1/endpoints/serving.py",
+    "function": "create_serving_instance"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/serving/classes",
+    "source": "app/api/v1/endpoints/serving.py",
+    "function": "list_serving_classes"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/serving/plural_alias",
+    "source": "app/api/v1/endpoints/serving.py",
+    "function": "list_servings_alias"
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/serving/{id}",
+    "source": "app/api/v1/endpoints/serving.py",
+    "function": "delete_serving_instance"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/serving/{id}",
+    "source": "app/api/v1/endpoints/serving.py",
+    "function": "get_serving_detail"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/serving/{id}",
+    "source": "app/api/v1/endpoints/serving.py",
+    "function": "update_serving_instance"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/serving/{id}/test",
+    "source": "app/api/v1/endpoints/serving.py",
+    "function": "test_serving_instance"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/tasks/collection-target",
+    "source": "app/api/v1/endpoints/tasks.py",
+    "function": "collection_target_preferences"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/tasks/execute",
+    "source": "app/api/v1/endpoints/tasks.py",
+    "function": "execute_pipeline"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/tasks/execute-async",
+    "source": "app/api/v1/endpoints/tasks.py",
+    "function": "execute_pipeline_async"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/tasks/execution/{task_id}/download",
+    "source": "app/api/v1/endpoints/tasks.py",
+    "function": "download_task_result"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/tasks/execution/{task_id}/final-result",
+    "source": "app/api/v1/endpoints/tasks.py",
+    "function": "final_result"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/tasks/execution/{task_id}/final-result/collect",
+    "source": "app/api/v1/endpoints/tasks.py",
+    "function": "collect_final_result"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/tasks/execution/{task_id}/final-result/download",
+    "source": "app/api/v1/endpoints/tasks.py",
+    "function": "download_final_result"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/tasks/execution/{task_id}/kill",
+    "source": "app/api/v1/endpoints/tasks.py",
+    "function": "kill_execution"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/tasks/execution/{task_id}/log",
+    "source": "app/api/v1/endpoints/tasks.py",
+    "function": "get_execution_log"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/tasks/execution/{task_id}/result",
+    "source": "app/api/v1/endpoints/tasks.py",
+    "function": "get_task_result"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/tasks/execution/{task_id}/status",
+    "source": "app/api/v1/endpoints/tasks.py",
+    "function": "get_execution_status"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/tasks/executions",
+    "source": "app/api/v1/endpoints/tasks.py",
+    "function": "list_executions"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/tasks/result-storage",
+    "source": "app/api/v1/endpoints/tasks.py",
+    "function": "get_result_storage"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/tasks/result-storage",
+    "source": "app/api/v1/endpoints/tasks.py",
+    "function": "update_result_storage"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/tasks/result-storage/check",
+    "source": "app/api/v1/endpoints/tasks.py",
+    "function": "check_result_storage"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/tasks/result-storage/choose",
+    "source": "app/api/v1/endpoints/tasks.py",
+    "function": "choose_result_storage"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/tasks/stats",
+    "source": "app/api/v1/endpoints/tasks.py",
+    "function": "get_task_stats"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/team-data/drafts/{draft_id}/review-status",
+    "source": "app/api/v1/endpoints/team_data.py",
+    "function": "current_review_status"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/team-data/exports",
+    "source": "app/api/v1/endpoints/team_data.py",
+    "function": "list_exports"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/team-data/exports",
+    "source": "app/api/v1/endpoints/team_data.py",
+    "function": "create_export"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/team-data/exports/preview",
+    "source": "app/api/v1/endpoints/team_data.py",
+    "function": "preview_export"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/team-data/exports/{eid}/download",
+    "source": "app/api/v1/endpoints/team_data.py",
+    "function": "download_export"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/team-data/exports/{eid}/expire",
+    "source": "app/api/v1/endpoints/team_data.py",
+    "function": "expire_export"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/team-data/reviews",
+    "source": "app/api/v1/endpoints/team_data.py",
+    "function": "list_reviews"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/team-data/reviews",
+    "source": "app/api/v1/endpoints/team_data.py",
+    "function": "create_review"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/team-data/reviews/{bid}",
+    "source": "app/api/v1/endpoints/team_data.py",
+    "function": "review_detail"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/team-data/reviews/{bid}/close",
+    "source": "app/api/v1/endpoints/team_data.py",
+    "function": "close_review"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/team-data/reviews/{bid}/derive",
+    "source": "app/api/v1/endpoints/team_data.py",
+    "function": "derive_review"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/team-data/reviews/{bid}/items/{iid}/context/{cid}",
+    "source": "app/api/v1/endpoints/team_data.py",
+    "function": "review_context"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/team-data/reviews/{bid}/items/{iid}/media/{mid}",
+    "source": "app/api/v1/endpoints/team_data.py",
+    "function": "review_media"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/team-data/reviews/{bid}/items/{iid}/{operation}",
+    "source": "app/api/v1/endpoints/team_data.py",
+    "function": "review_action"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/team-data/sources",
+    "source": "app/api/v1/endpoints/team_data.py",
+    "function": "sources"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/training/backups",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "backup"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/training/backups/{key}/download",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "download_backup"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/training/bundles",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "bundles"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/training/bundles/import",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "upload_bundle"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/training/bundles/{key}/download",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "bundle_download"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/training/catalog",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "components"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/training/compare",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "comparison"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/training/components",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "component"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/training/controls",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "controls"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/training/controls/{attempt}/stop",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "stop"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/training/controls/{attempt}/sync",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "sync"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/training/evaluations",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "evaluation"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/training/groups",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "groups"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/training/groups",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "group"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/training/host",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "host"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/training/host",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "host_save"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/training/host/probe",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "probe_host"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/training/plans",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "plans"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/training/plans",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "create"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/training/plans/{key}",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "get"
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/training/plans/{key}",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "save"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/training/plans/{key}/bundles",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "bundle"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/training/plans/{key}/check",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "check"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/training/plans/{key}/compile",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "compile"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/training/plans/{key}/copy",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "copy"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/training/releases",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "releases"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/training/results/import",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "import_result"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/training/runs",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "runs"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/training/runs/{attempt}",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "run_detail"
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/training/start",
+    "source": "app/api/v1/endpoints/model_training.py",
+    "function": "start"
+  }
+]

@@ -1,0 +1,2977 @@
+{
+  "schema_version": 1,
+  "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+  "source_config_sha256": "af70d83669b88cd9737207ec1e02f3d7d64fc5f2ae354147b2fdffe6cdf00b93",
+  "components": [
+    {
+      "id": "selection:adapt_inf",
+      "family": "selection",
+      "bucket": "selectors",
+      "name": "adapt_inf",
+      "implementation_name": "adapt_inf",
+      "fields": {
+        "cache_dir": {
+          "type": "string",
+          "default": "../dataflex_saves/adapt_inf"
+        },
+        "num_clusters": {
+          "type": "integer",
+          "default": 10
+        },
+        "cluster_grid": {
+          "type": "array",
+          "default": [
+            5,
+            10,
+            15,
+            20,
+            25,
+            30,
+            35,
+            40,
+            45,
+            50
+          ]
+        },
+        "proj_dim": {
+          "type": "integer",
+          "default": 8192
+        },
+        "projection_seed": {
+          "type": "integer",
+          "default": 0
+        },
+        "parameter_pattern": {
+          "type": "string",
+          "default": "\\.layers\\.16\\..*lora_"
+        },
+        "seed": {
+          "type": "integer",
+          "default": 42
+        },
+        "histogram_bins": {
+          "type": "integer",
+          "default": 50
+        },
+        "dataset_revision": {
+          "type": "any",
+          "default": null
+        }
+      },
+      "defaults": {
+        "cache_dir": "../dataflex_saves/adapt_inf",
+        "num_clusters": 10,
+        "cluster_grid": [
+          5,
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45,
+          50
+        ],
+        "proj_dim": 8192,
+        "projection_seed": 0,
+        "parameter_pattern": "\\.layers\\.16\\..*lora_",
+        "seed": 42,
+        "histogram_bins": 50,
+        "dataset_revision": null
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [
+        "梯度投影/聚类依赖与额外显存"
+      ],
+      "source": [
+        "src/dataflex/train/selector/adapt_inf_selector.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "cache_dir",
+        "cluster_grid",
+        "data_collator",
+        "dataset",
+        "dataset_revision",
+        "histogram_bins",
+        "num_clusters",
+        "parameter_pattern",
+        "proj_dim",
+        "projection_seed",
+        "seed"
+      ],
+      "imports": [
+        "from .base_selector import Selector",
+        "from dataflex.core.registry import register_selector",
+        "from dataflex.utils.multimodal_scoring import answer_statistics, move_to_device, scoring_state",
+        "from dataflex.utils.multimodal_selection import fingerprint, write_json",
+        "from importlib.metadata import version",
+        "from pathlib import Path",
+        "from tqdm import tqdm",
+        "from types import SimpleNamespace",
+        "import contextlib",
+        "import hashlib",
+        "import io",
+        "import math",
+        "import numpy as np",
+        "import random",
+        "import re",
+        "import time",
+        "import torch",
+        "import torch.distributed as dist",
+        "import traceback"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "selection:nice",
+      "family": "selection",
+      "bucket": "selectors",
+      "name": "nice",
+      "implementation_name": "nice",
+      "fields": {
+        "cache_dir": {
+          "type": "string",
+          "default": "../dataflex_saves/nice_output"
+        },
+        "gradient_type": {
+          "type": "string",
+          "default": "adam"
+        },
+        "proj_dim": {
+          "type": "integer",
+          "default": 4096
+        },
+        "seed": {
+          "type": "integer",
+          "default": 123
+        },
+        "save_interval": {
+          "type": "integer",
+          "default": 16
+        },
+        "reward_model_backend": {
+          "type": "string",
+          "default": "local_vllm"
+        },
+        "reward_backend_params": {
+          "type": "object",
+          "default": {
+            "local_vllm": {
+              "hf_model_name_or_path": "meta-llama/Llama-3.1-8B",
+              "vllm_tensor_parallel_size": 1,
+              "vllm_temperature": 0.0,
+              "vllm_top_p": 0.9,
+              "vllm_max_tokens": 512,
+              "vllm_top_k": 40,
+              "vllm_seed": 42,
+              "vllm_max_model_len": null,
+              "vllm_gpu_memory_utilization": 0.9
+            },
+            "api": {
+              "api_url": "https://api.openai.com/v1/chat/completions",
+              "api_key": "DF_API_KEY",
+              "model_name": "gpt-4o",
+              "temperature": 0.0
+            }
+          }
+        },
+        "mc_samples": {
+          "type": "integer",
+          "default": 4
+        },
+        "max_new_tokens": {
+          "type": "integer",
+          "default": 512
+        },
+        "generation_temperature": {
+          "type": "number",
+          "default": 0.7
+        },
+        "max_prompt_length": {
+          "type": "integer",
+          "default": 4096
+        }
+      },
+      "defaults": {
+        "cache_dir": "../dataflex_saves/nice_output",
+        "gradient_type": "adam",
+        "proj_dim": 4096,
+        "seed": 123,
+        "save_interval": 16,
+        "reward_model_backend": "local_vllm",
+        "reward_backend_params": {
+          "local_vllm": {
+            "hf_model_name_or_path": "meta-llama/Llama-3.1-8B",
+            "vllm_tensor_parallel_size": 1,
+            "vllm_temperature": 0.0,
+            "vllm_top_p": 0.9,
+            "vllm_max_tokens": 512,
+            "vllm_top_k": 40,
+            "vllm_seed": 42,
+            "vllm_max_model_len": null,
+            "vllm_gpu_memory_utilization": 0.9
+          },
+          "api": {
+            "api_url": "https://api.openai.com/v1/chat/completions",
+            "api_key": "DF_API_KEY",
+            "model_name": "gpt-4o",
+            "temperature": 0.0
+          }
+        },
+        "mc_samples": 4,
+        "max_new_tokens": 512,
+        "generation_temperature": 0.7,
+        "max_prompt_length": 4096
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": true,
+      "prerequisites": [
+        "奖励模型或 API 环境，需额外准备"
+      ],
+      "source": [
+        "src/dataflex/train/selector/nice_selector.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "cache_dir",
+        "data_collator",
+        "dataset",
+        "eval_dataset",
+        "generation_temperature",
+        "gradient_type",
+        "max_new_tokens",
+        "max_prompt_length",
+        "mc_samples",
+        "policy_model_path",
+        "proj_dim",
+        "prompt_template",
+        "reward_model_path",
+        "reward_prompt_with_ref",
+        "reward_prompt_without_ref",
+        "seed"
+      ],
+      "imports": [
+        "from .base_selector import Selector",
+        "from .less_selector import _trak_projectors",
+        "from dataflex.core.registry import register_selector",
+        "from dataflex.utils.logging import logger",
+        "from dataflex.utils.selector_io import load_cached_selection, save_selection",
+        "from torch.utils.data import DataLoader, Dataset",
+        "from tqdm import tqdm",
+        "from transformers import AutoTokenizer, AutoModelForCausalLM, AutoModelForSequenceClassification",
+        "from typing import List, Dict, Optional",
+        "import glob",
+        "import os",
+        "import torch",
+        "import torch.distributed as dist",
+        "import torch.nn.functional as F"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "selection:less",
+      "family": "selection",
+      "bucket": "selectors",
+      "name": "less",
+      "implementation_name": "less",
+      "fields": {
+        "cache_dir": {
+          "type": "string",
+          "default": "../dataflex_saves/less_output"
+        },
+        "gradient_type": {
+          "type": "string",
+          "default": "adam"
+        },
+        "proj_dim": {
+          "type": "integer",
+          "default": 4096
+        },
+        "seed": {
+          "type": "integer",
+          "default": 123
+        },
+        "save_interval": {
+          "type": "integer",
+          "default": 16
+        }
+      },
+      "defaults": {
+        "cache_dir": "../dataflex_saves/less_output",
+        "gradient_type": "adam",
+        "proj_dim": 4096,
+        "seed": 123,
+        "save_interval": 16
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": true,
+      "prerequisites": [
+        "梯度投影/聚类依赖与额外显存"
+      ],
+      "source": [
+        "src/dataflex/train/selector/less_selector.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "cache_dir",
+        "data_collator",
+        "dataset",
+        "eval_dataset",
+        "gradient_type",
+        "proj_dim",
+        "save_interval",
+        "seed"
+      ],
+      "imports": [
+        "from .base_selector import Selector",
+        "from dataflex.core.registry import register_selector",
+        "from dataflex.utils.logging import logger",
+        "from dataflex.utils.selector_io import load_cached_selection, save_selection",
+        "from torch.utils.data import DataLoader, Dataset",
+        "from tqdm import tqdm",
+        "from typing import List, Dict, Optional",
+        "import glob",
+        "import json",
+        "import os",
+        "import torch",
+        "import torch.distributed as dist"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "selection:icons",
+      "family": "selection",
+      "bucket": "selectors",
+      "name": "icons",
+      "implementation_name": "icons",
+      "fields": {
+        "cache_dir": {
+          "type": "string",
+          "default": "../dataflex_saves/icons_output"
+        },
+        "gradient_type": {
+          "type": "string",
+          "default": "adam"
+        },
+        "proj_dim": {
+          "type": "integer",
+          "default": 5120
+        },
+        "seed": {
+          "type": "integer",
+          "default": 0
+        },
+        "save_interval": {
+          "type": "integer",
+          "default": 16
+        },
+        "task_boundaries": {
+          "type": "any",
+          "default": null
+        },
+        "pool_groups": {
+          "type": "any",
+          "default": null
+        },
+        "vote_percentile": {
+          "type": "any",
+          "default": null
+        }
+      },
+      "defaults": {
+        "cache_dir": "../dataflex_saves/icons_output",
+        "gradient_type": "adam",
+        "proj_dim": 5120,
+        "seed": 0,
+        "save_interval": 16,
+        "task_boundaries": null,
+        "pool_groups": null,
+        "vote_percentile": null
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": true,
+      "prerequisites": [
+        "梯度投影/聚类依赖与额外显存"
+      ],
+      "source": [
+        "src/dataflex/train/selector/icons_selector.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "cache_dir",
+        "data_collator",
+        "dataset",
+        "eval_dataset",
+        "gradient_type",
+        "pool_groups",
+        "proj_dim",
+        "save_interval",
+        "seed",
+        "task_boundaries",
+        "vote_percentile"
+      ],
+      "imports": [
+        "from .base_selector import Selector",
+        "from .less_selector import _trak_projectors",
+        "from dataflex.core.registry import register_selector",
+        "from dataflex.utils.logging import logger",
+        "from dataflex.utils.selector_io import load_cached_selection, save_selection",
+        "from torch.utils.data import DataLoader, Dataset",
+        "from tqdm import tqdm",
+        "from typing import Dict, List, Optional, Sequence",
+        "import glob",
+        "import os",
+        "import torch",
+        "import torch.distributed as dist"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "selection:cluster_less",
+      "family": "selection",
+      "bucket": "selectors",
+      "name": "cluster_less",
+      "implementation_name": "cluster_less",
+      "fields": {
+        "cache_dir": {
+          "type": "string",
+          "default": "../dataflex_saves/cluster_less_output"
+        },
+        "gradient_type": {
+          "type": "string",
+          "default": "adam"
+        },
+        "proj_dim": {
+          "type": "integer",
+          "default": 4096
+        },
+        "seed": {
+          "type": "integer",
+          "default": 42
+        },
+        "save_interval": {
+          "type": "integer",
+          "default": 16
+        },
+        "cluster_size": {
+          "type": "integer",
+          "default": 64
+        },
+        "samples_per_cluster": {
+          "type": "integer",
+          "default": 4
+        },
+        "clustering_batch_size": {
+          "type": "integer",
+          "default": 8
+        },
+        "clustering_max_iter": {
+          "type": "integer",
+          "default": 10
+        },
+        "clustering_method": {
+          "type": "string",
+          "default": "kmeans"
+        },
+        "representative_strategy": {
+          "type": "string",
+          "default": "random"
+        },
+        "embedding_model_name_or_path": {
+          "type": "any",
+          "default": null
+        },
+        "embedding_model_dtype": {
+          "type": "string",
+          "default": "auto"
+        },
+        "embedding_layer": {
+          "type": "integer",
+          "default": -1
+        }
+      },
+      "defaults": {
+        "cache_dir": "../dataflex_saves/cluster_less_output",
+        "gradient_type": "adam",
+        "proj_dim": 4096,
+        "seed": 42,
+        "save_interval": 16,
+        "cluster_size": 64,
+        "samples_per_cluster": 4,
+        "clustering_batch_size": 8,
+        "clustering_max_iter": 10,
+        "clustering_method": "kmeans",
+        "representative_strategy": "random",
+        "embedding_model_name_or_path": null,
+        "embedding_model_dtype": "auto",
+        "embedding_layer": -1
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": true,
+      "prerequisites": [
+        "梯度投影/聚类依赖与额外显存"
+      ],
+      "source": [
+        "src/dataflex/train/selector/cluster_less_selector.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "assignment_chunk_size",
+        "cache_dir",
+        "cluster_size",
+        "clustering_batch_size",
+        "clustering_max_iter",
+        "clustering_method",
+        "data_collator",
+        "dataset",
+        "embedding_layer",
+        "embedding_model_dtype",
+        "embedding_model_name_or_path",
+        "eval_dataset",
+        "gradient_type",
+        "lsh_num_bits",
+        "num_clusters",
+        "proj_dim",
+        "representative_strategy",
+        "samples_per_cluster",
+        "save_interval",
+        "seed"
+      ],
+      "imports": [
+        "from .less_selector import LessSelector",
+        "from dataflex.core.registry import register_selector",
+        "from dataflex.utils.logging import logger",
+        "from dataflex.utils.selector_io import load_cached_selection, save_selection",
+        "from torch.utils.data import DataLoader, Subset",
+        "from tqdm import tqdm",
+        "from transformers import AutoModelForCausalLM",
+        "from typing import List, Optional",
+        "import hashlib",
+        "import math",
+        "import os",
+        "import shutil",
+        "import time",
+        "import torch",
+        "import torch.distributed as dist"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "selection:coincide",
+      "family": "selection",
+      "bucket": "selectors",
+      "name": "coincide",
+      "implementation_name": "coincide",
+      "fields": {
+        "cache_dir": {
+          "type": "string",
+          "default": "../dataflex_saves/coincide_output"
+        },
+        "seed": {
+          "type": "integer",
+          "default": 42
+        },
+        "embedding_model_name_or_path": {
+          "type": "any",
+          "default": null
+        },
+        "embedding_model_dtype": {
+          "type": "string",
+          "default": "auto"
+        },
+        "embedding_layers": {
+          "type": "any",
+          "default": null
+        },
+        "num_clusters": {
+          "type": "integer",
+          "default": 10000
+        },
+        "clustering_batch_size": {
+          "type": "integer",
+          "default": 8
+        },
+        "clustering_num_workers": {
+          "type": "integer",
+          "default": 4
+        },
+        "clustering_device": {
+          "type": "string",
+          "default": "auto"
+        },
+        "clustering_max_iter": {
+          "type": "integer",
+          "default": 10
+        },
+        "assignment_chunk_size": {
+          "type": "integer",
+          "default": 4096
+        },
+        "temperature": {
+          "type": "number",
+          "default": 1.0
+        },
+        "density_chunk_size": {
+          "type": "integer",
+          "default": 2048
+        },
+        "single_member_density": {
+          "type": "number",
+          "default": 1.0
+        }
+      },
+      "defaults": {
+        "cache_dir": "../dataflex_saves/coincide_output",
+        "seed": 42,
+        "embedding_model_name_or_path": null,
+        "embedding_model_dtype": "auto",
+        "embedding_layers": null,
+        "num_clusters": 10000,
+        "clustering_batch_size": 8,
+        "clustering_num_workers": 4,
+        "clustering_device": "auto",
+        "clustering_max_iter": 10,
+        "assignment_chunk_size": 4096,
+        "temperature": 1.0,
+        "density_chunk_size": 2048,
+        "single_member_density": 1.0
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [
+        "多模态模型内部表示与图像处理环境"
+      ],
+      "source": [
+        "src/dataflex/train/selector/coincide_selector.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "assignment_chunk_size",
+        "cache_dir",
+        "clustering_batch_size",
+        "clustering_device",
+        "clustering_max_iter",
+        "clustering_num_workers",
+        "data_collator",
+        "dataset",
+        "density_chunk_size",
+        "embedding_layers",
+        "embedding_model_dtype",
+        "embedding_model_name_or_path",
+        "num_clusters",
+        "seed",
+        "single_member_density",
+        "temperature"
+      ],
+      "imports": [
+        "from .base_selector import Selector",
+        "from dataflex.core.registry import register_selector",
+        "from dataflex.utils.logging import logger",
+        "from dataflex.utils.selector_io import load_cached_selection, save_selection",
+        "from torch.utils.data import DataLoader",
+        "from tqdm import tqdm",
+        "from transformers import AutoModelForImageTextToText",
+        "from transformers.integrations.deepspeed import is_deepspeed_zero3_enabled, set_hf_deepspeed_config, unset_hf_deepspeed_config",
+        "from typing import List, Optional",
+        "import hashlib",
+        "import inspect",
+        "import math",
+        "import os",
+        "import shutil",
+        "import time",
+        "import torch",
+        "import torch.distributed as dist"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "selection:loss",
+      "family": "selection",
+      "bucket": "selectors",
+      "name": "loss",
+      "implementation_name": "loss",
+      "fields": {
+        "cache_dir": {
+          "type": "string",
+          "default": "../dataflex_saves/loss_output"
+        },
+        "focus": {
+          "type": "string",
+          "default": "medium"
+        },
+        "score_batch_size": {
+          "type": "integer",
+          "default": 8
+        }
+      },
+      "defaults": {
+        "cache_dir": "../dataflex_saves/loss_output",
+        "focus": "medium",
+        "score_batch_size": 8
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [
+        "src/dataflex/train/selector/loss_selector.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "cache_dir",
+        "data_collator",
+        "dataset",
+        "focus",
+        "focus_weight",
+        "quantiles",
+        "replacement",
+        "score_batch_size",
+        "score_num_workers",
+        "temperature"
+      ],
+      "imports": [
+        "from .base_selector import Selector",
+        "from dataflex.core.registry import register_selector",
+        "from dataflex.utils.logging import logger",
+        "from dataflex.utils.loss_utils import UNSCORED, per_sample_loss_from_outputs",
+        "from dataflex.utils.selector_io import load_cached_selection, save_selection",
+        "from torch.utils.data import Dataset, DataLoader",
+        "from tqdm import tqdm",
+        "import json",
+        "import math",
+        "import os",
+        "import torch",
+        "import torch.distributed as dist"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "selection:delta_loss",
+      "family": "selection",
+      "bucket": "selectors",
+      "name": "delta_loss",
+      "implementation_name": "delta_loss",
+      "fields": {
+        "cache_dir": {
+          "type": "string",
+          "default": "../dataflex_saves/delta_loss_output"
+        },
+        "window_size": {
+          "type": "number",
+          "default": 0.2
+        },
+        "score_batch_size": {
+          "type": "integer",
+          "default": 8
+        }
+      },
+      "defaults": {
+        "cache_dir": "../dataflex_saves/delta_loss_output",
+        "window_size": 0.2,
+        "score_batch_size": 8
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [
+        "src/dataflex/train/selector/delta_loss_selector.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "cache_dir",
+        "data_collator",
+        "dataset",
+        "score_batch_size",
+        "score_num_workers",
+        "window_size"
+      ],
+      "imports": [
+        "from .base_selector import Selector",
+        "from dataflex.core.registry import register_selector",
+        "from dataflex.utils.logging import logger",
+        "from dataflex.utils.loss_utils import UNSCORED, per_sample_loss_from_outputs",
+        "from dataflex.utils.selector_io import load_cached_selection, save_selection",
+        "from torch.utils.data import Dataset, DataLoader",
+        "from tqdm import tqdm",
+        "import json",
+        "import math",
+        "import numpy as np",
+        "import os",
+        "import torch",
+        "import torch.distributed as dist"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "selection:tsds",
+      "family": "selection",
+      "bucket": "selectors",
+      "name": "tsds",
+      "implementation_name": "tsds",
+      "fields": {
+        "probs_path": {
+          "type": "string",
+          "default": "./src/dataflex/offline_selector/tsds_probs.npy"
+        },
+        "cache_dir": {
+          "type": "string",
+          "default": "../dataflex_saves/tsds_output"
+        }
+      },
+      "defaults": {
+        "probs_path": "./src/dataflex/offline_selector/tsds_probs.npy",
+        "cache_dir": "../dataflex_saves/tsds_output"
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [
+        "离线索引/概率文件，需要显式快照"
+      ],
+      "source": [
+        "src/dataflex/train/selector/tsds_selector.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "cache_dir",
+        "data_collator",
+        "dataset",
+        "probs_path"
+      ],
+      "imports": [
+        "from .base_selector import Selector",
+        "from dataflex.core.registry import register_selector",
+        "from dataflex.utils.logging import logger",
+        "import numpy as np",
+        "import os"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "selection:near",
+      "family": "selection",
+      "bucket": "selectors",
+      "name": "near",
+      "implementation_name": "near",
+      "fields": {
+        "indices_path": {
+          "type": "string",
+          "default": "./src/dataflex/offline_selector/top_indices.npy"
+        },
+        "cache_dir": {
+          "type": "string",
+          "default": "../dataflex_saves/near_output"
+        }
+      },
+      "defaults": {
+        "indices_path": "./src/dataflex/offline_selector/top_indices.npy",
+        "cache_dir": "../dataflex_saves/near_output"
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [
+        "离线索引/概率文件，需要显式快照"
+      ],
+      "source": [
+        "src/dataflex/train/selector/near_selector.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "cache_dir",
+        "data_collator",
+        "dataset",
+        "indices_path"
+      ],
+      "imports": [
+        "from .base_selector import Selector",
+        "from dataflex.core.registry import register_selector",
+        "from dataflex.utils.logging import logger",
+        "import numpy as np",
+        "import os"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "selection:random",
+      "family": "selection",
+      "bucket": "selectors",
+      "name": "random",
+      "implementation_name": "random",
+      "fields": {
+        "cache_dir": {
+          "type": "string",
+          "default": "../dataflex_saves/random_output"
+        },
+        "seed": {
+          "type": "integer",
+          "default": 42
+        },
+        "replacement": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "defaults": {
+        "cache_dir": "../dataflex_saves/random_output",
+        "seed": 42,
+        "replacement": false
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [
+        "src/dataflex/train/selector/random_selector.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "cache_dir",
+        "data_collator",
+        "dataset",
+        "replacement",
+        "seed"
+      ],
+      "imports": [
+        "from .base_selector import Selector",
+        "from dataflex.core.registry import register_selector",
+        "from dataflex.utils.logging import logger",
+        "import torch",
+        "import torch.distributed as dist"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "selection:custom",
+      "family": "selection",
+      "bucket": "selectors",
+      "name": "custom",
+      "implementation_name": "custom",
+      "fields": {
+        "cache_dir": {
+          "type": "string",
+          "default": "../dataflex_saves/custom_output"
+        }
+      },
+      "defaults": {
+        "cache_dir": "../dataflex_saves/custom_output"
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [
+        "src/dataflex/train/selector/custom_selector.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "cache_dir",
+        "data_collator",
+        "dataset"
+      ],
+      "imports": [
+        "from .base_selector import Selector",
+        "from dataflex.core.registry import register_selector",
+        "from dataflex.utils.logging import logger"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "mixture:random",
+      "family": "mixture",
+      "bucket": "mixers",
+      "name": "random",
+      "implementation_name": "random",
+      "fields": {
+        "seed": {
+          "type": "integer",
+          "default": 42
+        }
+      },
+      "defaults": {
+        "seed": 42
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [
+        "src/dataflex/train/mixer/random_mixer.py"
+      ],
+      "constructor_args": [
+        "mixture_manager",
+        "seed"
+      ],
+      "imports": [
+        "from .base_mixer import Mixer",
+        "from dataflex.core.registry import register_mixer",
+        "from dataflex.utils.logging import logger",
+        "import numpy as np"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "mixture:doremi",
+      "family": "mixture",
+      "bucket": "mixers",
+      "name": "doremi",
+      "implementation_name": "doremi",
+      "fields": {
+        "reference_model_path": {
+          "type": "string",
+          "default": "/path/to/dataflex_saves/Qwen2.5-0.5B/doremi_step1_static_qwen_pt_full_result/checkpoint-xxx"
+        },
+        "reweight_eta": {
+          "type": "number",
+          "default": 0.1
+        },
+        "reweight_eps": {
+          "type": "number",
+          "default": 0.01
+        }
+      },
+      "defaults": {
+        "reference_model_path": "/path/to/dataflex_saves/Qwen2.5-0.5B/doremi_step1_static_qwen_pt_full_result/checkpoint-xxx",
+        "reweight_eta": 0.1,
+        "reweight_eps": 0.01
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [
+        "独立参考模型 checkpoint；三阶段训练需分别建立方案"
+      ],
+      "source": [
+        "src/dataflex/train/mixer/doremi_mixer.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "data_collator",
+        "dataset",
+        "mixture_manager",
+        "output_dir",
+        "reference_model_path",
+        "reweight_eps",
+        "reweight_eta"
+      ],
+      "imports": [
+        "from .base_mixer import Mixer",
+        "from contextlib import nullcontext",
+        "from dataflex.core.registry import register_mixer",
+        "from dataflex.utils.logging import logger",
+        "import numpy as np",
+        "import os",
+        "import torch"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "mixture:static",
+      "family": "mixture",
+      "bucket": "mixers",
+      "name": "static",
+      "implementation_name": "static",
+      "fields": {
+        "proportions": {
+          "type": "array",
+          "default": [
+            0.5,
+            0.5
+          ]
+        }
+      },
+      "defaults": {
+        "proportions": [
+          0.5,
+          0.5
+        ]
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [
+        "src/dataflex/train/mixer/static_mixer.py"
+      ],
+      "constructor_args": [
+        "mixture_manager",
+        "proportions"
+      ],
+      "imports": [
+        "from .base_mixer import Mixer",
+        "from dataflex.core.registry import register_mixer",
+        "from dataflex.utils.logging import logger",
+        "import numpy as np"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "mixture:odm",
+      "family": "mixture",
+      "bucket": "mixers",
+      "name": "odm",
+      "implementation_name": "odm",
+      "fields": {
+        "alpha": {
+          "type": "number",
+          "default": 0.9
+        },
+        "warmup_steps": {
+          "type": "integer",
+          "default": 2000
+        },
+        "reward_scale": {
+          "type": "number",
+          "default": 15.0
+        },
+        "min_exploration_rate": {
+          "type": "number",
+          "default": 0.03
+        },
+        "initial_proportions": {
+          "type": "array",
+          "default": [
+            0.5,
+            0.5
+          ]
+        }
+      },
+      "defaults": {
+        "alpha": 0.9,
+        "warmup_steps": 2000,
+        "reward_scale": 15.0,
+        "min_exploration_rate": 0.03,
+        "initial_proportions": [
+          0.5,
+          0.5
+        ]
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [
+        "src/dataflex/train/mixer/odm_mixer.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "alpha",
+        "initial_proportions",
+        "mixture_manager",
+        "output_dir",
+        "warmup_steps"
+      ],
+      "imports": [
+        "from .base_mixer import Mixer",
+        "from dataflex.core.registry import register_mixer",
+        "from dataflex.utils.logging import logger",
+        "import numpy as np",
+        "import os",
+        "import torch"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "mixture:dynamic_moe",
+      "family": "mixture",
+      "bucket": "mixers",
+      "name": "dynamic_moe",
+      "implementation_name": "dynamic_moe",
+      "fields": {
+        "eta": {
+          "type": "number",
+          "default": 10.0
+        },
+        "c": {
+          "type": "number",
+          "default": 0.05
+        },
+        "collect_steps": {
+          "type": "integer",
+          "default": 5
+        },
+        "eval_samples": {
+          "type": "integer",
+          "default": 1000
+        },
+        "eval_batch_size": {
+          "type": "integer",
+          "default": 32
+        }
+      },
+      "defaults": {
+        "eta": 10.0,
+        "c": 0.05,
+        "collect_steps": 5,
+        "eval_samples": 1000,
+        "eval_batch_size": 32
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": true,
+      "prerequisites": [
+        "MoE 模型与 gate 指标"
+      ],
+      "source": [
+        "src/dataflex/train/mixer/dynamic_moe_mixer.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "c",
+        "collect_steps",
+        "eta",
+        "eval_batch_size",
+        "eval_samples",
+        "mixture_manager",
+        "output_dir"
+      ],
+      "imports": [
+        "from .base_mixer import Mixer",
+        "from dataflex.core.registry import register_mixer",
+        "from dataflex.utils.logging import logger",
+        "from transformers.trainer_pt_utils import nested_detach",
+        "import json",
+        "import numpy as np",
+        "import os",
+        "import time",
+        "import torch",
+        "import torch.distributed as dist"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "reweighting:loss",
+      "family": "reweighting",
+      "bucket": "weighters",
+      "name": "loss",
+      "implementation_name": "loss",
+      "fields": {
+        "strategy": {
+          "type": "string",
+          "default": "linupper"
+        },
+        "delta": {
+          "type": "number",
+          "default": 1.0
+        }
+      },
+      "defaults": {
+        "strategy": "linupper",
+        "delta": 1.0
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [
+        "src/dataflex/train/weighter/loss_weighter.py"
+      ],
+      "constructor_args": [
+        "delta",
+        "strategy"
+      ],
+      "imports": [
+        "from .base_weighter import Weighter",
+        "from accelerate.utils import DistributedType",
+        "from dataflex.core.registry import register_weighter",
+        "from dataflex.utils.logging import logger",
+        "from torch import nn",
+        "from transformers.training_args import OptimizerNames",
+        "from transformers.utils import is_apex_available",
+        "from typing import Any, Union",
+        "import torch",
+        "import torch.distributed as dist"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "reweighting:adapt",
+      "family": "reweighting",
+      "bucket": "weighters",
+      "name": "adapt",
+      "implementation_name": "adapt",
+      "fields": {
+        "tau": {
+          "type": "number",
+          "default": 1.0
+        },
+        "refresh_interval": {
+          "type": "integer",
+          "default": 50
+        },
+        "anchor_batch_size": {
+          "type": "integer",
+          "default": 8
+        },
+        "clip": {
+          "type": "any",
+          "default": null
+        }
+      },
+      "defaults": {
+        "tau": 1.0,
+        "refresh_interval": 50,
+        "anchor_batch_size": 8,
+        "clip": null
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": true,
+      "prerequisites": [],
+      "source": [
+        "src/dataflex/train/weighter/adapt_weighter.py"
+      ],
+      "constructor_args": [
+        "anchor_batch_size",
+        "clip",
+        "data_collator",
+        "eps",
+        "eval_dataset",
+        "refresh_interval",
+        "tau"
+      ],
+      "imports": [
+        "from .base_weighter import Weighter",
+        "from dataflex.core.registry import register_weighter",
+        "from dataflex.utils.logging import logger",
+        "from torch import nn",
+        "from torch.utils.data import DataLoader",
+        "from typing import Any, Optional, Union",
+        "import torch"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "reweighting:joint_update_aware",
+      "family": "reweighting",
+      "bucket": "weighters",
+      "name": "joint_update_aware",
+      "implementation_name": "joint_update_aware",
+      "fields": {
+        "beta": {
+          "type": "number",
+          "default": 0.1
+        },
+        "tau": {
+          "type": "number",
+          "default": 0.05
+        },
+        "fixed_point_iters": {
+          "type": "integer",
+          "default": 5
+        },
+        "damping": {
+          "type": "number",
+          "default": 1.0
+        },
+        "target_update_step": {
+          "type": "integer",
+          "default": 50
+        },
+        "target_batch_size": {
+          "type": "integer",
+          "default": 1
+        },
+        "target_num_batches": {
+          "type": "integer",
+          "default": 1
+        },
+        "embed_normalize": {
+          "type": "boolean",
+          "default": true
+        },
+        "pooling": {
+          "type": "string",
+          "default": "last_token"
+        },
+        "embed_layer": {
+          "type": "integer",
+          "default": -1
+        },
+        "objective_mode": {
+          "type": "string",
+          "default": "full"
+        }
+      },
+      "defaults": {
+        "beta": 0.1,
+        "tau": 0.05,
+        "fixed_point_iters": 5,
+        "damping": 1.0,
+        "target_update_step": 50,
+        "target_batch_size": 1,
+        "target_num_batches": 1,
+        "embed_normalize": true,
+        "pooling": "last_token",
+        "embed_layer": -1,
+        "objective_mode": "full"
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": true,
+      "prerequisites": [],
+      "source": [
+        "src/dataflex/train/weighter/joint_update_aware_weighter.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "beta",
+        "damping",
+        "data_collator",
+        "dataset",
+        "embed_layer",
+        "embed_normalize",
+        "eval_dataset",
+        "fixed_point_iters",
+        "objective_mode",
+        "pooling",
+        "target_batch_size",
+        "target_num_batches",
+        "target_update_step",
+        "tau"
+      ],
+      "imports": [
+        "from .base_weighter import Weighter",
+        "from dataflex.core.registry import register_weighter",
+        "from dataflex.utils.logging import logger",
+        "from torch import nn",
+        "from torch.utils.data import DataLoader",
+        "from typing import Any, Union",
+        "import torch",
+        "import torch.distributed as dist",
+        "import torch.nn.functional as F"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "reweighting:custom",
+      "family": "reweighting",
+      "bucket": "weighters",
+      "name": "custom",
+      "implementation_name": "custom",
+      "fields": {
+        "strategy": {
+          "type": "string",
+          "default": "uniform"
+        }
+      },
+      "defaults": {
+        "strategy": "uniform"
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [
+        "src/dataflex/train/weighter/custom_weighter.py"
+      ],
+      "constructor_args": [
+        "strategy"
+      ],
+      "imports": [
+        "from .base_weighter import Weighter",
+        "from dataflex.core.registry import register_weighter",
+        "from dataflex.utils.logging import logger",
+        "from torch import nn",
+        "from typing import Any, Union",
+        "import torch"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "reorder:sorting",
+      "family": "reorder",
+      "bucket": "reorders",
+      "name": "sorting",
+      "implementation_name": "sorting",
+      "fields": {
+        "kind": {
+          "type": "string",
+          "default": "static"
+        },
+        "pattern": {
+          "type": "string",
+          "default": "sorting"
+        },
+        "apply_at": {
+          "type": "string",
+          "default": "raw"
+        },
+        "polarity": {
+          "type": "string",
+          "default": "higher_later"
+        },
+        "ascending": {
+          "type": "boolean",
+          "default": true
+        },
+        "window_size": {
+          "type": "integer",
+          "default": 0
+        },
+        "seed": {
+          "type": "integer",
+          "default": 42
+        },
+        "score_source": {
+          "type": "string",
+          "default": "precomputed"
+        },
+        "score_params": {
+          "type": "object",
+          "default": {
+            "score_field": "score"
+          }
+        }
+      },
+      "defaults": {
+        "kind": "static",
+        "pattern": "sorting",
+        "apply_at": "raw",
+        "polarity": "higher_later",
+        "ascending": true,
+        "window_size": 0,
+        "seed": 42,
+        "score_source": "precomputed",
+        "score_params": {
+          "score_field": "score"
+        }
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [
+        "src/dataflex/train/reorder/static_reorder.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "apply_at",
+        "ascending",
+        "data_collator",
+        "dataset",
+        "pattern",
+        "pattern_params",
+        "polarity",
+        "score_params",
+        "score_source",
+        "seed",
+        "window_size"
+      ],
+      "imports": [
+        "from .base_reorder import Reorder",
+        "from .score_provider import build_score_provider",
+        "from dataflex.core.registry import register_reorder",
+        "from dataflex.utils.logging import logger",
+        "from typing import List, Optional, Sequence"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "reorder:shuffle",
+      "family": "reorder",
+      "bucket": "reorders",
+      "name": "shuffle",
+      "implementation_name": "shuffle",
+      "fields": {
+        "kind": {
+          "type": "string",
+          "default": "static"
+        },
+        "pattern": {
+          "type": "string",
+          "default": "shuffle"
+        },
+        "apply_at": {
+          "type": "string",
+          "default": "raw"
+        },
+        "seed": {
+          "type": "integer",
+          "default": 42
+        },
+        "score_source": {
+          "type": "string",
+          "default": "precomputed"
+        },
+        "score_params": {
+          "type": "object",
+          "default": {
+            "score_field": "score"
+          }
+        }
+      },
+      "defaults": {
+        "kind": "static",
+        "pattern": "shuffle",
+        "apply_at": "raw",
+        "seed": 42,
+        "score_source": "precomputed",
+        "score_params": {
+          "score_field": "score"
+        }
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [
+        "src/dataflex/train/reorder/static_reorder.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "apply_at",
+        "ascending",
+        "data_collator",
+        "dataset",
+        "pattern",
+        "pattern_params",
+        "polarity",
+        "score_params",
+        "score_source",
+        "seed",
+        "window_size"
+      ],
+      "imports": [
+        "from .base_reorder import Reorder",
+        "from .score_provider import build_score_provider",
+        "from dataflex.core.registry import register_reorder",
+        "from dataflex.utils.logging import logger",
+        "from typing import List, Optional, Sequence"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "reorder:segment",
+      "family": "reorder",
+      "bucket": "reorders",
+      "name": "segment",
+      "implementation_name": "segment",
+      "fields": {
+        "kind": {
+          "type": "string",
+          "default": "static"
+        },
+        "pattern": {
+          "type": "string",
+          "default": "segment"
+        },
+        "apply_at": {
+          "type": "string",
+          "default": "raw"
+        },
+        "polarity": {
+          "type": "string",
+          "default": "higher_later"
+        },
+        "seed": {
+          "type": "integer",
+          "default": 42
+        },
+        "pattern_params": {
+          "type": "object",
+          "default": {
+            "x_pct": 10,
+            "y_pct": 10,
+            "front_is_high": false,
+            "back_is_high": true
+          }
+        },
+        "score_source": {
+          "type": "string",
+          "default": "precomputed"
+        },
+        "score_params": {
+          "type": "object",
+          "default": {
+            "score_field": "score"
+          }
+        }
+      },
+      "defaults": {
+        "kind": "static",
+        "pattern": "segment",
+        "apply_at": "raw",
+        "polarity": "higher_later",
+        "seed": 42,
+        "pattern_params": {
+          "x_pct": 10,
+          "y_pct": 10,
+          "front_is_high": false,
+          "back_is_high": true
+        },
+        "score_source": "precomputed",
+        "score_params": {
+          "score_field": "score"
+        }
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [
+        "src/dataflex/train/reorder/static_reorder.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "apply_at",
+        "ascending",
+        "data_collator",
+        "dataset",
+        "pattern",
+        "pattern_params",
+        "polarity",
+        "score_params",
+        "score_source",
+        "seed",
+        "window_size"
+      ],
+      "imports": [
+        "from .base_reorder import Reorder",
+        "from .score_provider import build_score_provider",
+        "from dataflex.core.registry import register_reorder",
+        "from dataflex.utils.logging import logger",
+        "from typing import List, Optional, Sequence"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "reorder:folding",
+      "family": "reorder",
+      "bucket": "reorders",
+      "name": "folding",
+      "implementation_name": "folding",
+      "fields": {
+        "kind": {
+          "type": "string",
+          "default": "static"
+        },
+        "pattern": {
+          "type": "string",
+          "default": "folding"
+        },
+        "apply_at": {
+          "type": "string",
+          "default": "raw"
+        },
+        "polarity": {
+          "type": "string",
+          "default": "higher_later"
+        },
+        "ascending": {
+          "type": "boolean",
+          "default": true
+        },
+        "window_size": {
+          "type": "integer",
+          "default": 0
+        },
+        "seed": {
+          "type": "integer",
+          "default": 42
+        },
+        "pattern_params": {
+          "type": "object",
+          "default": {
+            "layers": 3
+          }
+        },
+        "score_source": {
+          "type": "string",
+          "default": "precomputed"
+        },
+        "score_params": {
+          "type": "object",
+          "default": {
+            "score_field": "score"
+          }
+        }
+      },
+      "defaults": {
+        "kind": "static",
+        "pattern": "folding",
+        "apply_at": "raw",
+        "polarity": "higher_later",
+        "ascending": true,
+        "window_size": 0,
+        "seed": 42,
+        "pattern_params": {
+          "layers": 3
+        },
+        "score_source": "precomputed",
+        "score_params": {
+          "score_field": "score"
+        }
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [
+        "src/dataflex/train/reorder/static_reorder.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "apply_at",
+        "ascending",
+        "data_collator",
+        "dataset",
+        "pattern",
+        "pattern_params",
+        "polarity",
+        "score_params",
+        "score_source",
+        "seed",
+        "window_size"
+      ],
+      "imports": [
+        "from .base_reorder import Reorder",
+        "from .score_provider import build_score_provider",
+        "from dataflex.core.registry import register_reorder",
+        "from dataflex.utils.logging import logger",
+        "from typing import List, Optional, Sequence"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "reorder:zigzag",
+      "family": "reorder",
+      "bucket": "reorders",
+      "name": "zigzag",
+      "implementation_name": "zigzag",
+      "fields": {
+        "kind": {
+          "type": "string",
+          "default": "static"
+        },
+        "pattern": {
+          "type": "string",
+          "default": "zigzag"
+        },
+        "apply_at": {
+          "type": "string",
+          "default": "raw"
+        },
+        "polarity": {
+          "type": "string",
+          "default": "higher_later"
+        },
+        "ascending": {
+          "type": "boolean",
+          "default": true
+        },
+        "window_size": {
+          "type": "integer",
+          "default": 0
+        },
+        "seed": {
+          "type": "integer",
+          "default": 42
+        },
+        "pattern_params": {
+          "type": "object",
+          "default": {
+            "layers": 3
+          }
+        },
+        "score_source": {
+          "type": "string",
+          "default": "precomputed"
+        },
+        "score_params": {
+          "type": "object",
+          "default": {
+            "score_field": "score"
+          }
+        }
+      },
+      "defaults": {
+        "kind": "static",
+        "pattern": "zigzag",
+        "apply_at": "raw",
+        "polarity": "higher_later",
+        "ascending": true,
+        "window_size": 0,
+        "seed": 42,
+        "pattern_params": {
+          "layers": 3
+        },
+        "score_source": "precomputed",
+        "score_params": {
+          "score_field": "score"
+        }
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [
+        "src/dataflex/train/reorder/static_reorder.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "apply_at",
+        "ascending",
+        "data_collator",
+        "dataset",
+        "pattern",
+        "pattern_params",
+        "polarity",
+        "score_params",
+        "score_source",
+        "seed",
+        "window_size"
+      ],
+      "imports": [
+        "from .base_reorder import Reorder",
+        "from .score_provider import build_score_provider",
+        "from dataflex.core.registry import register_reorder",
+        "from dataflex.utils.logging import logger",
+        "from typing import List, Optional, Sequence"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "reorder:stair",
+      "family": "reorder",
+      "bucket": "reorders",
+      "name": "stair",
+      "implementation_name": "stair",
+      "fields": {
+        "kind": {
+          "type": "string",
+          "default": "static"
+        },
+        "pattern": {
+          "type": "string",
+          "default": "stair"
+        },
+        "apply_at": {
+          "type": "string",
+          "default": "raw"
+        },
+        "polarity": {
+          "type": "string",
+          "default": "higher_later"
+        },
+        "ascending": {
+          "type": "boolean",
+          "default": true
+        },
+        "window_size": {
+          "type": "integer",
+          "default": 0
+        },
+        "seed": {
+          "type": "integer",
+          "default": 42
+        },
+        "pattern_params": {
+          "type": "object",
+          "default": {
+            "num_sections": 2,
+            "folding_ratio": 0.225,
+            "layers": 3
+          }
+        },
+        "score_source": {
+          "type": "string",
+          "default": "precomputed"
+        },
+        "score_params": {
+          "type": "object",
+          "default": {
+            "score_field": "score"
+          }
+        }
+      },
+      "defaults": {
+        "kind": "static",
+        "pattern": "stair",
+        "apply_at": "raw",
+        "polarity": "higher_later",
+        "ascending": true,
+        "window_size": 0,
+        "seed": 42,
+        "pattern_params": {
+          "num_sections": 2,
+          "folding_ratio": 0.225,
+          "layers": 3
+        },
+        "score_source": "precomputed",
+        "score_params": {
+          "score_field": "score"
+        }
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [
+        "src/dataflex/train/reorder/static_reorder.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "apply_at",
+        "ascending",
+        "data_collator",
+        "dataset",
+        "pattern",
+        "pattern_params",
+        "polarity",
+        "score_params",
+        "score_source",
+        "seed",
+        "window_size"
+      ],
+      "imports": [
+        "from .base_reorder import Reorder",
+        "from .score_provider import build_score_provider",
+        "from dataflex.core.registry import register_reorder",
+        "from dataflex.utils.logging import logger",
+        "from typing import List, Optional, Sequence"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "reorder:saw",
+      "family": "reorder",
+      "bucket": "reorders",
+      "name": "saw",
+      "implementation_name": "saw",
+      "fields": {
+        "kind": {
+          "type": "string",
+          "default": "static"
+        },
+        "pattern": {
+          "type": "string",
+          "default": "saw"
+        },
+        "apply_at": {
+          "type": "string",
+          "default": "raw"
+        },
+        "polarity": {
+          "type": "string",
+          "default": "higher_later"
+        },
+        "ascending": {
+          "type": "boolean",
+          "default": true
+        },
+        "window_size": {
+          "type": "integer",
+          "default": 0
+        },
+        "seed": {
+          "type": "integer",
+          "default": 42
+        },
+        "pattern_params": {
+          "type": "object",
+          "default": {
+            "num_sections": 3,
+            "folding_ratio": 0.075,
+            "layers": 2
+          }
+        },
+        "score_source": {
+          "type": "string",
+          "default": "precomputed"
+        },
+        "score_params": {
+          "type": "object",
+          "default": {
+            "score_field": "score"
+          }
+        }
+      },
+      "defaults": {
+        "kind": "static",
+        "pattern": "saw",
+        "apply_at": "raw",
+        "polarity": "higher_later",
+        "ascending": true,
+        "window_size": 0,
+        "seed": 42,
+        "pattern_params": {
+          "num_sections": 3,
+          "folding_ratio": 0.075,
+          "layers": 2
+        },
+        "score_source": "precomputed",
+        "score_params": {
+          "score_field": "score"
+        }
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [
+        "src/dataflex/train/reorder/static_reorder.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "apply_at",
+        "ascending",
+        "data_collator",
+        "dataset",
+        "pattern",
+        "pattern_params",
+        "polarity",
+        "score_params",
+        "score_source",
+        "seed",
+        "window_size"
+      ],
+      "imports": [
+        "from .base_reorder import Reorder",
+        "from .score_provider import build_score_provider",
+        "from dataflex.core.registry import register_reorder",
+        "from dataflex.utils.logging import logger",
+        "from typing import List, Optional, Sequence"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "reorder:dynamic_saw",
+      "family": "reorder",
+      "bucket": "reorders",
+      "name": "dynamic_saw",
+      "implementation_name": "dynamic_saw",
+      "fields": {
+        "kind": {
+          "type": "string",
+          "default": "dynamic"
+        },
+        "pattern": {
+          "type": "string",
+          "default": "saw"
+        },
+        "polarity": {
+          "type": "string",
+          "default": "higher_later"
+        },
+        "ascending": {
+          "type": "boolean",
+          "default": true
+        },
+        "window_size": {
+          "type": "integer",
+          "default": 0
+        },
+        "seed": {
+          "type": "integer",
+          "default": 42
+        },
+        "pattern_params": {
+          "type": "object",
+          "default": {
+            "num_sections": 3,
+            "folding_ratio": 0.075,
+            "layers": 2
+          }
+        },
+        "score_source": {
+          "type": "string",
+          "default": "model_loss"
+        },
+        "score_params": {
+          "type": "object",
+          "default": {
+            "batch_size": 8,
+            "num_workers": 2,
+            "max_samples": 20000
+          }
+        },
+        "reorder_every": {
+          "type": "integer",
+          "default": 1
+        },
+        "consume_once": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "defaults": {
+        "kind": "dynamic",
+        "pattern": "saw",
+        "polarity": "higher_later",
+        "ascending": true,
+        "window_size": 0,
+        "seed": 42,
+        "pattern_params": {
+          "num_sections": 3,
+          "folding_ratio": 0.075,
+          "layers": 2
+        },
+        "score_source": "model_loss",
+        "score_params": {
+          "batch_size": 8,
+          "num_workers": 2,
+          "max_samples": 20000
+        },
+        "reorder_every": 1,
+        "consume_once": true
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [
+        "src/dataflex/train/reorder/dynamic_reorder.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "ascending",
+        "consume_once",
+        "data_collator",
+        "dataset",
+        "pattern",
+        "pattern_params",
+        "polarity",
+        "reorder_every",
+        "score_params",
+        "score_source",
+        "seed",
+        "window_size"
+      ],
+      "imports": [
+        "from .base_reorder import Reorder",
+        "from .score_provider import build_score_provider",
+        "from dataflex.core.registry import register_reorder",
+        "from dataflex.utils.logging import logger",
+        "from typing import List, Optional, Sequence",
+        "import numpy as np",
+        "import torch.distributed as dist"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "reorder:dynamic_folding",
+      "family": "reorder",
+      "bucket": "reorders",
+      "name": "dynamic_folding",
+      "implementation_name": "dynamic_folding",
+      "fields": {
+        "kind": {
+          "type": "string",
+          "default": "dynamic"
+        },
+        "pattern": {
+          "type": "string",
+          "default": "folding"
+        },
+        "polarity": {
+          "type": "string",
+          "default": "higher_later"
+        },
+        "ascending": {
+          "type": "boolean",
+          "default": true
+        },
+        "seed": {
+          "type": "integer",
+          "default": 42
+        },
+        "pattern_params": {
+          "type": "object",
+          "default": {
+            "layers": 3
+          }
+        },
+        "score_source": {
+          "type": "string",
+          "default": "model_loss"
+        },
+        "score_params": {
+          "type": "object",
+          "default": {
+            "batch_size": 8,
+            "max_samples": 20000
+          }
+        },
+        "reorder_every": {
+          "type": "integer",
+          "default": 1
+        },
+        "consume_once": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "defaults": {
+        "kind": "dynamic",
+        "pattern": "folding",
+        "polarity": "higher_later",
+        "ascending": true,
+        "seed": 42,
+        "pattern_params": {
+          "layers": 3
+        },
+        "score_source": "model_loss",
+        "score_params": {
+          "batch_size": 8,
+          "max_samples": 20000
+        },
+        "reorder_every": 1,
+        "consume_once": true
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [
+        "src/dataflex/train/reorder/dynamic_reorder.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "ascending",
+        "consume_once",
+        "data_collator",
+        "dataset",
+        "pattern",
+        "pattern_params",
+        "polarity",
+        "reorder_every",
+        "score_params",
+        "score_source",
+        "seed",
+        "window_size"
+      ],
+      "imports": [
+        "from .base_reorder import Reorder",
+        "from .score_provider import build_score_provider",
+        "from dataflex.core.registry import register_reorder",
+        "from dataflex.utils.logging import logger",
+        "from typing import List, Optional, Sequence",
+        "import numpy as np",
+        "import torch.distributed as dist"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "reorder:reuse_selector_scores",
+      "family": "reorder",
+      "bucket": "reorders",
+      "name": "reuse_selector_scores",
+      "implementation_name": "reuse_selector_scores",
+      "fields": {
+        "kind": {
+          "type": "string",
+          "default": "dynamic"
+        },
+        "pattern": {
+          "type": "string",
+          "default": "saw"
+        },
+        "polarity": {
+          "type": "string",
+          "default": "higher_later"
+        },
+        "seed": {
+          "type": "integer",
+          "default": 42
+        },
+        "pattern_params": {
+          "type": "object",
+          "default": {
+            "num_sections": 3,
+            "folding_ratio": 0.075,
+            "layers": 2
+          }
+        },
+        "score_source": {
+          "type": "string",
+          "default": "cached_selection"
+        },
+        "score_params": {
+          "type": "object",
+          "default": {
+            "cache_path": "../dataflex_saves/loss_output/step_10.json",
+            "metric_key": "loss"
+          }
+        }
+      },
+      "defaults": {
+        "kind": "dynamic",
+        "pattern": "saw",
+        "polarity": "higher_later",
+        "seed": 42,
+        "pattern_params": {
+          "num_sections": 3,
+          "folding_ratio": 0.075,
+          "layers": 2
+        },
+        "score_source": "cached_selection",
+        "score_params": {
+          "cache_path": "../dataflex_saves/loss_output/step_10.json",
+          "metric_key": "loss"
+        }
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [
+        "src/dataflex/train/reorder/dynamic_reorder.py"
+      ],
+      "constructor_args": [
+        "accelerator",
+        "ascending",
+        "consume_once",
+        "data_collator",
+        "dataset",
+        "pattern",
+        "pattern_params",
+        "polarity",
+        "reorder_every",
+        "score_params",
+        "score_source",
+        "seed",
+        "window_size"
+      ],
+      "imports": [
+        "from .base_reorder import Reorder",
+        "from .score_provider import build_score_provider",
+        "from dataflex.core.registry import register_reorder",
+        "from dataflex.utils.logging import logger",
+        "from typing import List, Optional, Sequence",
+        "import numpy as np",
+        "import torch.distributed as dist"
+      ],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "lego:hierarchical",
+      "family": "lego",
+      "bucket": "pipelines",
+      "name": "hierarchical",
+      "implementation_name": "hierarchical",
+      "fields": {
+        "cache_dir": {
+          "type": "string",
+          "default": "../dataflex_saves/lego_output"
+        },
+        "score_batch_size": {
+          "type": "integer",
+          "default": 8
+        },
+        "save_plans": {
+          "type": "boolean",
+          "default": false
+        },
+        "stages": {
+          "type": "array",
+          "default": [
+            {
+              "family": "selector",
+              "component": "loss",
+              "mode": "filter",
+              "keep_ratio": 0.5,
+              "warmup_step": 10,
+              "every": 200
+            },
+            {
+              "family": "mixer",
+              "component": "odm",
+              "every": 50
+            },
+            {
+              "family": "reorder",
+              "component": "dynamic_saw",
+              "every": 50
+            },
+            {
+              "family": "weighter",
+              "component": "loss",
+              "warmup_step": 10
+            }
+          ]
+        }
+      },
+      "defaults": {
+        "cache_dir": "../dataflex_saves/lego_output",
+        "score_batch_size": 8,
+        "save_plans": false,
+        "stages": [
+          {
+            "family": "selector",
+            "component": "loss",
+            "mode": "filter",
+            "keep_ratio": 0.5,
+            "warmup_step": 10,
+            "every": 200
+          },
+          {
+            "family": "mixer",
+            "component": "odm",
+            "every": 50
+          },
+          {
+            "family": "reorder",
+            "component": "dynamic_saw",
+            "every": 50
+          },
+          {
+            "family": "weighter",
+            "component": "loss",
+            "warmup_step": 10
+          }
+        ]
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [],
+      "constructor_args": [],
+      "imports": [],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "lego:select_then_reorder",
+      "family": "lego",
+      "bucket": "pipelines",
+      "name": "select_then_reorder",
+      "implementation_name": "select_then_reorder",
+      "fields": {
+        "cache_dir": {
+          "type": "string",
+          "default": "../dataflex_saves/lego_output"
+        },
+        "stages": {
+          "type": "array",
+          "default": [
+            {
+              "family": "selector",
+              "component": "loss",
+              "mode": "filter",
+              "keep_ratio": 0.5,
+              "warmup_step": 10,
+              "every": 100
+            },
+            {
+              "family": "reorder",
+              "component": "dynamic_saw",
+              "every": 20
+            }
+          ]
+        }
+      },
+      "defaults": {
+        "cache_dir": "../dataflex_saves/lego_output",
+        "stages": [
+          {
+            "family": "selector",
+            "component": "loss",
+            "mode": "filter",
+            "keep_ratio": 0.5,
+            "warmup_step": 10,
+            "every": 100
+          },
+          {
+            "family": "reorder",
+            "component": "dynamic_saw",
+            "every": 20
+          }
+        ]
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [],
+      "constructor_args": [],
+      "imports": [],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "lego:mix_then_weight",
+      "family": "lego",
+      "bucket": "pipelines",
+      "name": "mix_then_weight",
+      "implementation_name": "mix_then_weight",
+      "fields": {
+        "cache_dir": {
+          "type": "string",
+          "default": "../dataflex_saves/lego_output"
+        },
+        "stages": {
+          "type": "array",
+          "default": [
+            {
+              "family": "mixer",
+              "component": "odm",
+              "every": 50
+            },
+            {
+              "family": "weighter",
+              "component": "loss",
+              "warmup_step": 10
+            }
+          ]
+        }
+      },
+      "defaults": {
+        "cache_dir": "../dataflex_saves/lego_output",
+        "stages": [
+          {
+            "family": "mixer",
+            "component": "odm",
+            "every": 50
+          },
+          {
+            "family": "weighter",
+            "component": "loss",
+            "warmup_step": 10
+          }
+        ]
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [],
+      "constructor_args": [],
+      "imports": [],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    },
+    {
+      "id": "lego:select_only",
+      "family": "lego",
+      "bucket": "pipelines",
+      "name": "select_only",
+      "implementation_name": "select_only",
+      "fields": {
+        "cache_dir": {
+          "type": "string",
+          "default": "../dataflex_saves/lego_output"
+        },
+        "stages": {
+          "type": "array",
+          "default": [
+            {
+              "family": "selector",
+              "component": "loss",
+              "mode": "draw",
+              "warmup_step": 10,
+              "every": 1
+            }
+          ]
+        }
+      },
+      "defaults": {
+        "cache_dir": "../dataflex_saves/lego_output",
+        "stages": [
+          {
+            "family": "selector",
+            "component": "loss",
+            "mode": "draw",
+            "warmup_step": 10,
+            "every": 1
+          }
+        ]
+      },
+      "tasks": [
+        "sft",
+        "pt"
+      ],
+      "modalities": [
+        "text",
+        "image_text"
+      ],
+      "requires_reference": false,
+      "prerequisites": [],
+      "source": [],
+      "constructor_args": [],
+      "imports": [],
+      "source_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "validation": "source_inspected_runtime_not_run",
+      "adaptation": "configuration; environment/GPU validation pending"
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+#!/usr/bin/env bash
+# start.sh — Start the DataFlow-WebUI backend server.
+#
+# Usage:
+#   ./scripts/start.sh              # foreground (Ctrl+C to stop)
+#   ./scripts/start.sh --daemon     # background (writes PID to .backend.pid)
+#   ./scripts/start.sh --stop       # stop a backgrounded server
+#   ./scripts/start.sh --status     # check if backend is running
+#
+# Prerequisites: run ./install.sh --profile harness (or webui) first.
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WEBUI_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+BACKEND_DIR="$WEBUI_ROOT/backend"
+PID_FILE="$WEBUI_ROOT/.backend.pid"
+PORT="${DATAFLOW_PORT:-8000}"
+HOST="${DATAFLOW_HOST:-0.0.0.0}"
+# Use the same interpreter the install was run with. Defaults to python3, but
+# DATAFLOW_PYTHON must be honoured here too: on Windows/Git Bash `python3` often
+# resolves to a different (Store) Python than the venv/conda env that was
+# installed into, so hardcoding it would fail to import the backend.
+DF_PYTHON="${DATAFLOW_PYTHON:-python3}"
+DF_APP="${DATAFLOW_APP:-app.main:app}"
+READY_PATH="${DATAFLOW_READY_PATH:-/api/v1/datasets/}"
+
+# ---------- color helpers ---------------------------------------------------
+# Only the colours this script actually prints. (C_YELLOW and C_BOLD were
+# copied in from the installer's palette but there is no warn()/header() here.)
+if [[ -t 1 ]]; then
+  C_GREEN=$'\033[32m'; C_RED=$'\033[31m'
+  C_BLUE=$'\033[34m'; C_RESET=$'\033[0m'
+else
+  C_GREEN=""; C_RED=""; C_BLUE=""; C_RESET=""
+fi
+
+info()  { printf '%s[start]%s %s\n'            "$C_BLUE"   "$C_RESET" "$*"; }
+ok()    { printf '%s[start]%s %sOK%s     %s\n' "$C_BLUE"   "$C_RESET" "$C_GREEN" "$C_RESET" "$*"; }
+err()   { printf '%s[start]%s %sERROR%s  %s\n' "$C_BLUE"   "$C_RESET" "$C_RED"    "$C_RESET" "$*" >&2; }
+
+# ---------- pre-flight checks ----------------------------------------------
+preflight() {
+  # Check Python can import the app, using the selected interpreter. Import from
+  # inside BACKEND_DIR — the same cwd uvicorn runs with — rather than injecting
+  # sys.path. A Windows-native Python (conda) does not understand a MinGW-style
+  # "/d/..." path, so sys.path.insert with a Git Bash path would silently fail
+  # to make `app` importable even when the install is fine.
+  if ! ( cd "$BACKEND_DIR" && "$DF_PYTHON" -c 'import importlib,sys; importlib.import_module(sys.argv[1].split(":")[0])' "$DF_APP" ) >/dev/null 2>&1; then
+    err "Cannot import $DF_APP with '$DF_PYTHON'. Run ./install.sh --profile harness first."
+    err "  If you installed into a specific env, set DATAFLOW_PYTHON to its python, e.g.:"
+    err "    DATAFLOW_PYTHON=/path/to/env/python ./scripts/start.sh --daemon"
+    exit 1
+  fi
+
+  # Check if port is already in use
+  if curl -sf "http://localhost:$PORT${READY_PATH}" >/dev/null 2>&1; then
+    ok "Backend already running at http://localhost:$PORT"
+    exit 0
+  fi
+}
+
+# ---------- wait for ready --------------------------------------------------
+wait_ready() {
+  local max_wait=30
+  local waited=0
+  while [[ $waited -lt $max_wait ]]; do
+    if curl -sf "http://localhost:$PORT${READY_PATH}" >/dev/null 2>&1; then
+      ok "Backend ready at http://localhost:$PORT"
+      return 0
+    fi
+    sleep 1
+    waited=$((waited + 1))
+  done
+  err "Backend did not become ready within ${max_wait}s"
+  return 1
+}
+
+# ---------- commands --------------------------------------------------------
+cmd_start_foreground() {
+  preflight
+  info "Starting backend (foreground) on $HOST:$PORT ..."
+  info "Press Ctrl+C to stop."
+  cd "$BACKEND_DIR"
+  exec "$DF_PYTHON" -m uvicorn "$DF_APP" --port "$PORT" --host "$HOST" --no-proxy-headers
+}
+
+cmd_start_daemon() {
+  preflight
+  info "Starting backend (daemon) on $HOST:$PORT ..."
+  cd "$BACKEND_DIR"
+  nohup "$DF_PYTHON" -m uvicorn "$DF_APP" --port "$PORT" --host "$HOST" --no-proxy-headers \
+    > "$WEBUI_ROOT/.backend.log" 2>&1 &
+  local pid=$!
+  echo "$pid" > "$PID_FILE"
+  info "PID $pid written to .backend.pid"
+  wait_ready
+}
+
+cmd_stop() {
+  if [[ ! -f "$PID_FILE" ]]; then
+    err "No .backend.pid found. Is the daemon running?"
+    exit 1
+  fi
+  local pid
+  pid=$(<"$PID_FILE")
+  if [[ ! "$pid" =~ ^[0-9]+$ ]]; then
+    err "Invalid PID file; inspect $PID_FILE"
+    exit 1
+  fi
+  if kill -0 "$pid" 2>/dev/null; then
+    local command
+    command=$(ps -p "$pid" -o command=)
+    if [[ "$command" != "$DF_PYTHON "* || "$command" != *"uvicorn $DF_APP "* ]]; then
+      err "PID $pid does not identify this backend; refusing to stop it."
+      exit 1
+    fi
+    kill "$pid"
+    ok "Stopped backend (PID $pid)"
+  else
+    info "Process $pid already gone."
+  fi
+  rm -f "$PID_FILE"
+}
+
+cmd_status() {
+  if curl -sf "http://localhost:$PORT${READY_PATH}" >/dev/null 2>&1; then
+    ok "Backend is running at http://localhost:$PORT"
+  else
+    info "Backend is NOT running on port $PORT."
+    exit 1
+  fi
+}
+
+# ---------- dispatch --------------------------------------------------------
+case "${1:-}" in
+  --daemon|-d)   cmd_start_daemon ;;
+  --stop)        cmd_stop ;;
+  --status|-s)   cmd_status ;;
+  --help|-h)
+    echo "Usage: $0 [--daemon|--stop|--status]"
+    echo "  (no flag)  Start in foreground"
+    echo "  --daemon   Start in background"
+    echo "  --stop     Stop background server"
+    echo "  --status   Check if running"
+    ;;
+  *)             cmd_start_foreground ;;
+esac

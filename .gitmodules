@@ -1,9 +1,3 @@
-[submodule "repos/dataflow"]
-	path = repos/dataflow
-	url = https://github.com/Mau-Q/DataFlow.git
-[submodule "repos/dataflow-webui"]
-	path = repos/dataflow-webui
-	url = https://github.com/Mau-Q/DataFlow-WebUI.git
 [submodule "repos/dataflow-mm"]
 	path = repos/dataflow-mm
 	url = https://github.com/OpenDCAI/DataFlow-MM.git

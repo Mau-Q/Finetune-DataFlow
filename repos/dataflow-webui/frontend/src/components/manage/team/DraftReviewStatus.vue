@@ -1,0 +1,8 @@
+<template><section v-if="team.enabled" class="draft-review-status"><h3>当前修订的人工评测</h3><p v-if="error" role="alert">{{ error }}</p><template v-else-if="status"><label v-if="status.batches.length">评测批次<select v-model="selected"><option v-for="b in status.batches" :key="b.id" :value="b.id">{{ b.name }}</option></select></label><p v-if="!current">当前修订尚未评测。可发起人工评测，或查看已分配的批次。</p><template v-else><p>本批次结论适用于当前 {{ current.applicable }} / {{ current.current_total }} 条样本，其中 {{ current.passed }} 条通过。</p><p v-if="current.stale">{{ current.stale }} 条旧结论对应的内容已变化，当前修订尚未评测。</p><p v-if="current.sampled">这是抽样批次，结论只覆盖抽中且修订仍一致的样本。</p></template></template></section></template>
+<script setup>
+import {ref,computed,watch} from 'vue'
+import {team,request} from './client'
+const props=defineProps(['draft']),status=ref(null),error=ref(''),selected=ref(''),current=computed(()=>status.value?.batches.find(b=>b.id===selected.value))
+watch(()=>[props.draft.id,props.draft.updated_at],async()=>{if(!team.enabled)return;const id=props.draft.id;try{const result=await request(`/api/v1/team-data/drafts/${id}/review-status`);if(id!==props.draft.id)return;status.value=result;selected.value=result.batches.some(b=>b.id===selected.value)?selected.value:result.batches[0]?.id||'';error.value=''}catch(e){error.value=e.message}},{immediate:true})
+</script>
+<style scoped>.draft-review-status{margin-top:24px;padding:18px 20px;border:1px solid #d9dfeb;border-radius:8px;line-height:1.8}.draft-review-status h3{margin-bottom:12px}.draft-review-status label{display:flex;align-items:center;gap:15px}.draft-review-status select{font:inherit;color:inherit;background:transparent;border:1px solid #d9dfeb;border-radius:6px;padding:7px 12px}.draft-review-status p{margin:8px 0;color:inherit}</style>

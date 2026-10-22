@@ -1,5 +1,5 @@
 .venvs/
-repos/
+/repos/dataflow-mm/
 models/
 logs/
 outputs/

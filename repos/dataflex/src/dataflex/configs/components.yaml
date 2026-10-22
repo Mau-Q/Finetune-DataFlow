@@ -1,0 +1,557 @@
+# configs/components.yaml
+selectors:
+  adapt_inf:
+    name: adapt_inf
+    params:
+      cache_dir: ../dataflex_saves/adapt_inf
+      num_clusters: 10  # explicit choice; inspect the saved WSS grid for the actual dataset
+      cluster_grid: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+      proj_dim: 8192
+      projection_seed: 0  # author TRAK projection seed
+      parameter_pattern: '\.layers\.16\..*lora_'
+      seed: 42
+      histogram_bins: 50
+      dataset_revision: null
+  # Dynamic selectors
+  nice:
+    name: nice
+    params:
+      cache_dir: ../dataflex_saves/nice_output
+      gradient_type: adam
+      proj_dim: 4096
+      seed: 123
+      save_interval: 16
+      reward_model_backend: local_vllm   # choices: [local_vllm, api]
+      reward_backend_params:
+        local_vllm:
+          hf_model_name_or_path: meta-llama/Llama-3.1-8B
+          vllm_tensor_parallel_size: 1
+          vllm_temperature: 0.0
+          vllm_top_p: 0.9
+          vllm_max_tokens: 512
+          vllm_top_k: 40
+          vllm_seed: 42
+          vllm_max_model_len: null
+          vllm_gpu_memory_utilization: 0.9
+        api:
+          api_url: https://api.openai.com/v1/chat/completions
+          api_key: DF_API_KEY
+          model_name: gpt-4o
+          temperature: 0.0    
+      mc_samples: 4
+      max_new_tokens: 512
+      generation_temperature: 0.7
+      max_prompt_length: 4096
+
+  less:
+    name: less
+    params:
+      cache_dir: ../dataflex_saves/less_output
+      gradient_type: adam
+      proj_dim: 4096
+      seed: 123
+      save_interval: 16
+
+  icons:
+    name: icons
+    params:
+      cache_dir: ../dataflex_saves/icons_output
+      gradient_type: adam
+      # proj_dim 5120 / seed 0 match the reference implementation
+      # (github.com/princetonvisualai/icons, dim5120, collect_grads.py).
+      proj_dim: 5120
+      seed: 0
+      save_interval: 16
+      # Sizes of the task validation sets concatenated into eval_dataset, in order.
+      # With a single entry (or null) there is only one task and the consensus
+      # degenerates to plain top-p influence selection.
+      task_boundaries: null
+      # Slices that must share one vote, max-pooled like the reference code does for
+      # the 13 MME subtasks (icons/generalist.py). Entries index task_boundaries,
+      # e.g. [[3, 4, 5]] pools the 4th-6th slices into a single "MME" task.
+      pool_groups: null
+      # The paper's selection ratio p, which puts each task's vote threshold at the
+      # (1 - p) percentile. null derives p from the schedule as
+      # num_samples / len(dataset) instead.
+      vote_percentile: null
+
+  cluster_less:
+    name: cluster_less
+    params:
+      cache_dir: ../dataflex_saves/cluster_less_output
+      gradient_type: adam
+      proj_dim: 4096
+      seed: 42
+      save_interval: 16
+      cluster_size: 64
+      samples_per_cluster: 4
+      clustering_batch_size: 8
+      clustering_max_iter: 10
+      clustering_method: kmeans
+      representative_strategy: random
+      # Optional: standalone model for the ONE-TIME clustering embeddings.
+      # When set, clustering is done once with this model and frozen for the
+      # whole run; the training model is only used for the per-step gradient
+      # refresh. Leave null to use the training model (legacy behaviour).
+      embedding_model_name_or_path: null
+      embedding_model_dtype: auto
+      embedding_layer: -1
+
+  coincide:
+    name: coincide
+    params:
+      cache_dir: ../dataflex_saves/coincide_output
+      seed: 42
+      # Reference LVLM for the ONE-TIME concept-skill embeddings, loaded with
+      # AutoModelForImageTextToText. null = reuse the training model.
+      embedding_model_name_or_path: null
+      embedding_model_dtype: auto          # [auto, fp16, bf16, fp32]
+      # Hidden-state layers to pool. null = M=5 layers evenly spaced first->top;
+      # or an explicit list like [4, 10, 16, 22, 28].
+      embedding_layers: null
+      num_clusters: 10000                  # actual K = min(num_clusters, N)
+      clustering_batch_size: 8
+      clustering_num_workers: 4           # workers per rank for image loading/collation
+      clustering_device: auto             # CUDA when available, otherwise CPU
+      clustering_max_iter: 10
+      assignment_chunk_size: 4096
+      temperature: 1.0                     # tau in exp(S_i / (tau * D_i))
+      density_chunk_size: 2048             # row block bounding O(|Ci|^2) memory
+      single_member_density: 1.0           # D_i assigned to a singleton cluster
+
+  loss:
+    name: loss
+    params:
+      cache_dir: ../dataflex_saves/loss_output
+      focus: "medium"
+      # Scoring is batch-invariant, so this only trades memory for speed.
+      score_batch_size: 8
+
+  delta_loss:
+    name: delta_loss
+    params:
+      cache_dir: ../dataflex_saves/delta_loss_output
+      window_size: 0.2
+      score_batch_size: 8
+
+  tsds:
+    name: tsds
+    params:
+      probs_path: ./src/dataflex/offline_selector/tsds_probs.npy
+      cache_dir: ../dataflex_saves/tsds_output
+  near:
+    name: near
+    params:
+      indices_path: ./src/dataflex/offline_selector/top_indices.npy
+      cache_dir: ../dataflex_saves/near_output
+  
+  random:
+    name: random
+    params:
+      cache_dir: ../dataflex_saves/random_output
+      seed: 42
+      replacement: false
+
+  custom:
+    name: custom
+    params:
+      cache_dir: ../dataflex_saves/custom_output
+
+mixers:
+  # Dynamic mixers
+  random:
+    name: random
+    params:
+      seed: 42
+  
+  doremi:
+    name: doremi
+    params:
+      # Path to the reference model checkpoint (Step 1 of DoReMi)
+      # reference_model_path: /path/to/ckpt/Qwen2.5-0.5B
+      reference_model_path: /path/to/dataflex_saves/Qwen2.5-0.5B/doremi_step1_static_qwen_pt_full_result/checkpoint-xxx
+      # # Set to null if no reference model available
+      # reference_model_path: null
+      # Learning rate for domain weight updates (eta in the paper)
+      reweight_eta: 0.1
+      reweight_eps: 0.01 # Smoothing parameter for domain weights (epsilon in the paper)
+
+  
+  # Static mixer - for DoReMi's Step 1 and Step 3
+  static:
+    name: static
+    params:
+      # fixed proportions
+      proportions: [0.5, 0.5]  # corresponding proportions for each domain
+      # proportions: null  # use uniform distribution
+      # proportions: [0.541, 0.287, 0.042, 0.037, 0.034, 0.031, 0.028] # For SlimePajama-6B dataset
+  odm:
+    name: odm
+    params:
+      # Online Data Mixing (ODM) uses Multi-Armed Bandits (Exp3) for dynamic mixing
+      
+      # Alpha (smoothing_factor): smoothing parameter for exponential moving average (0 to 1)
+      # Higher alpha = more weight on historical rewards, more stable but slower to adapt
+      # Lower alpha = more responsive to recent rewards, faster adaptation but more volatile
+      alpha: 0.9
+      
+      # Warmup steps: number of steps to use initial proportions before starting ODM
+      # Typically 1% of total training steps
+      warmup_steps: 2000
+      # warmup_steps: 10 # debug
+      # reward_scale: Amplify loss signal for better domain differentiation
+      reward_scale: 15.0
+      
+      # min_exploration_rate: Minimum exploration rate (annealing floor)
+      min_exploration_rate: 0.03
+      # Initial proportions for warmup period and ODM initialization
+      # If not specified, uses uniform distribution
+      initial_proportions: [0.5, 0.5] # debug
+      # initial_proportions: null  # Use uniform distribution if null
+      # initial_proportions: [0.541, 0.287, 0.042, 0.037, 0.034, 0.031, 0.028] # for odm on SlimePajam-6B dataset
+  
+  dynamic_moe:
+    name: dynamic_moe
+    params:
+      eta: 10.0           # Update step size
+      c: 0.05             # Smoothing parameter
+      collect_steps: 5    # Number of batches to sample per domain to estimate gate loads
+      eval_samples: 1000
+      eval_batch_size: 32
+  
+weighters:
+  # Dynamic data weights
+  loss:
+    name: loss
+    params:
+      strategy: linupper # choices: [linupper, uniform, quadratic, extremes]
+      delta: 1.0
+  
+  adapt:
+    name: adapt
+    params:
+      tau: 1.0              # Temperature, smaller values make weight distinction sharper
+      refresh_interval: 50  # Every how many steps to refresh the anchor vector with the current model
+      anchor_batch_size: 8  # Forward batch size for computing sentence embeddings
+      clip: null            # Optional weight upper bound, to prevent gradient explosion
+
+  joint_update_aware:
+    name: joint_update_aware
+    params:
+      # Solve max_w  s^T w - (beta / 2) w^T S w + tau * H(w)
+      # S is the cosine Gram matrix of normalized embeddings, s_i = <u, z_i> is the alignment degree of the anchor mean u
+      beta: 0.1               # Interaction/redundancy strength
+      tau: 0.05               # Entropy temperature (must be > 0), smaller values make weights sharper
+      fixed_point_iters: 5    # Damping fixed point iterations
+      damping: 1.0            # Damping coefficient rho ∈ (0, 1], 1.0 means no damping
+      target_update_step: 50  # Every how many steps to refresh the target vector with the eval set
+      target_batch_size: 1    # Forward batch size for computing target embeddings
+      target_num_batches: 1   # Average how many eval batches to refresh per target; set to 0 to iterate through the entire eval set
+      embed_normalize: true   # Whether to normalize embeddings with L2 norm
+      pooling: last_token     # Sentence vector pooling: last_token / mean_pool
+      embed_layer: -1         # Which hidden state layer to take, -1 means the last layer
+      objective_mode: full    # full / align_only / diverse_only / uniform
+
+  custom:
+    name: custom
+    params:
+      strategy: uniform
+
+reorders:
+  # Data reorders change sample order only; the number of samples is untouched.
+  #
+  # Every reorder is defined along three axes:
+  #   pattern       : one of seven orderings, covering the four guidances of the paper
+  #                   [shuffle, sorting, folding, zigzag, segment, stair, saw]
+  #   score_source  : where the scores come from [precomputed, cached_selection, model_loss, model_perplexity]
+  #   apply_at      : the level the permutation is applied to [raw, index]
+  #                   raw   = permute the raw rows before preprocessing. Required for
+  #                           precomputed scores, because align_dataset drops the score
+  #                           field.
+  #                   index = permute dataset indices block-wise during training. Used
+  #                           for online model scoring.
+  #
+  # polarity states which end of training high-scoring samples belong to:
+  #   higher_later   high scores go last. The default, used both for quality scores
+  #                  (G1: finish on good data) and for loss as difficulty (easy to hard).
+  #   higher_earlier high scores go first. Only needed when the raw metric is inverted,
+  #                  e.g. perplexity used as a quality score (lower is better).
+  # The aliases higher_is_better / lower_is_better are also accepted.
+  #
+  # window_size > 1 is the JIT of the paper (G4) and composes with any pattern.
+
+  # ---------- Static: precomputed quality scores (paper-aligned) ----------
+
+  # CL baseline: ascending by score
+  sorting:
+    name: sorting
+    params:
+      kind: static
+      pattern: sorting
+      apply_at: raw
+      polarity: higher_later
+      ascending: true
+      window_size: 0        # >1 enables JIT; the best value for CL in the paper is 5000
+      seed: 42
+      score_source: precomputed
+      score_params:
+        score_field: score  # field name in the raw jsonl; the paper's repo uses average_test_score
+        # score_path: /path/to/scores.npy   # alternatively load from a file, aligned one-to-one with the raw rows
+
+  # Random baseline. Note that omitting the reorder is not equivalent, because the reorder trainer always samples sequentially.
+  shuffle:
+    name: shuffle
+    params:
+      kind: static
+      pattern: shuffle
+      apply_at: raw
+      seed: 42
+      score_source: precomputed
+      score_params:
+        score_field: score
+
+  # G1 boundary sharpening: low scores at the head, high scores at the tail (SEG(l10-h10) in the paper)
+  segment:
+    name: segment
+    params:
+      kind: static
+      pattern: segment
+      apply_at: raw
+      polarity: higher_later
+      seed: 42
+      pattern_params:
+        x_pct: 10
+        y_pct: 10
+        front_is_high: false
+        back_is_high: true
+      score_source: precomputed
+      score_params:
+        score_field: score
+
+  # G2 periodic review: stratify by i mod L
+  folding:
+    name: folding
+    params:
+      kind: static
+      pattern: folding
+      apply_at: raw
+      polarity: higher_later
+      ascending: true
+      window_size: 0        # the best JIT window for FO in the paper is 50000
+      seed: 42
+      pattern_params:
+        layers: 3           # paper: L=2,3 is best for pretraining, L=3,5 for SFT
+      score_source: precomputed
+      score_params:
+        score_field: score
+
+  # G3 curriculum continuity: FO with odd layers reversed, which removes the gradient spike at cycle boundaries
+  zigzag:
+    name: zigzag
+    params:
+      kind: static
+      pattern: zigzag
+      apply_at: raw
+      polarity: higher_later
+      ascending: true
+      window_size: 0        # the best JIT window for ZIG in the paper is 5000
+      seed: 42
+      pattern_params:
+        layers: 3
+      score_source: precomputed
+      score_params:
+        score_field: score
+
+  # G1+G2+G4: globally monotonic, with folding applied only in the transition zone around each section boundary
+  stair:
+    name: stair
+    params:
+      kind: static
+      pattern: stair
+      apply_at: raw
+      polarity: higher_later
+      ascending: true
+      window_size: 0
+      seed: 42
+      pattern_params:
+        num_sections: 2
+        folding_ratio: 0.225  # fraction of the full dataset; must satisfy 2*ratio < 1/num_sections
+        layers: 3
+      score_source: precomputed
+      score_params:
+        score_field: score
+
+  # G1+G2+G3+G4: same as stair, but the transition zone uses zigzag. SAW-2(JIT) is the best configuration in the scaling experiments of the paper
+  saw:
+    name: saw
+    params:
+      kind: static
+      pattern: saw
+      apply_at: raw
+      polarity: higher_later
+      ascending: true
+      window_size: 0
+      seed: 42
+      pattern_params:
+        num_sections: 3
+        folding_ratio: 0.075
+        layers: 2
+      score_source: precomputed
+      score_params:
+        score_field: score
+
+  # ---------- Dynamic: score with the current model ----------
+
+  # Every update interval, score the remaining samples with the current model and reorder.
+  # Note the semantic: the scores here are loss, representing "how difficult" currently, not "how high the quality". So this is a difficulty course (higher_later = high loss at the tail), not a replication of the paper's numbers - the paper uses quality scores. To align with the paper, please use the static presets above with real quality scores.
+  dynamic_saw:
+    name: dynamic_saw
+    params:
+      kind: dynamic
+      pattern: saw
+      polarity: higher_later
+      ascending: true
+      window_size: 0
+      seed: 42
+      pattern_params:
+        num_sections: 3
+        folding_ratio: 0.075
+        layers: 2
+      score_source: model_loss
+      score_params:
+        batch_size: 8         # LossSelector uses 1, here we score more samples in batch for faster computation
+        num_workers: 2
+        max_samples: 20000    # only score this many samples, to control the forward overhead per round
+      reorder_every: 1        # re-score every k update intervals
+      consume_once: true      # remove the samples sent out to ensure single-round semantic
+
+  dynamic_folding:
+    name: dynamic_folding
+    params:
+      kind: dynamic
+      pattern: folding
+      polarity: higher_later
+      ascending: true
+      seed: 42
+      pattern_params:
+        layers: 3
+      score_source: model_loss
+      score_params:
+        batch_size: 8
+        max_samples: 20000
+      reorder_every: 1
+      consume_once: true
+
+  # Reuse the scores already computed by the selector, no need to run the forward again.
+  # Need to run the selector first to produce cache_dir/step_*.json.
+  reuse_selector_scores:
+    name: reuse_selector_scores
+    params:
+      kind: dynamic
+      pattern: saw
+      polarity: higher_later
+      seed: 42
+      pattern_params:
+        num_sections: 3
+        folding_ratio: 0.075
+        layers: 2
+      score_source: cached_selection
+      score_params:
+        cache_path: ../dataflex_saves/loss_output/step_10.json
+        metric_key: loss
+
+pipelines:
+  # lego-like composable data scheduling (train_type: dynamic_lego).
+  #
+  # A pipeline is a chain of stages, each stage only says two things: which family to use and which preset under that family. So every preset in selectors/mixers/reorders/weighters can be used directly as a building block, without writing a new component for combinations.
+  #
+  # stage fields:
+  #   family      : selector | mixer | reorder | weighter
+  #   component   : preset name under the family bucket
+  #   warmup_step : when the stage starts to take effect (before it is passed through)
+  #   every       : how many optimizer steps to recalculate
+  #   enabled     : false skips a stage, i.e. "leave that brick out"
+  #
+  # Two hard rules (pipeline checks them, not relying on YAML):
+  #   1. The order of index space is semantically fixed as select -> mix -> reorder.
+  #      Writing it in another order is corrected automatically, with a warning.
+  #      The reason: proportions must be computed over the samples that survived,
+  #      ordering must know which samples are in this round, and anything running
+  #      after the ordering stage would destroy its output.
+  #   2. Exactly one stage takes this round's budget. A select stage with
+  #      mode: filter only shrinks the pool and does not take it; mode: draw takes
+  #      it. If no stage takes it, the pipeline appends a uniform draw.
+  #
+  # loss space stages (weighters, and mixers that reweight by domain, like DoReMi) multiply their weights:
+  #   L = mean_i ( prod_k w_i^(k) * l_i )
+
+  # Three-step description: coarse filter -> domain-level proportions -> sample-level reweighting, and insert reorder at the 2.5 position.
+  hierarchical:
+    name: hierarchical
+    params:
+      cache_dir: ../dataflex_saves/lego_output
+      score_batch_size: 8      # shared scoring batch size
+      save_plans: false        # true will save the scoreboard for each round
+      stages:
+        # Step 1: coarse-grained filter, remove redundant data and reduce the scoring overhead of subsequent stages
+        - family: selector
+          component: loss
+          mode: filter         # filter=only shrink the pool; draw=take the budget
+          keep_ratio: 0.5
+          warmup_step: 10
+          every: 200
+        # Step 2: domain-level budget allocation
+        - family: mixer
+          component: odm
+          every: 50
+        # Step 2.5: domain-internal/overall order
+        - family: reorder
+          component: dynamic_saw
+          every: 50
+        # Step 3: sample-level reweighting
+        - family: weighter
+          component: loss
+          warmup_step: 10
+
+  # Minimum combination: filter first, then sort. Both work on a single train_dataset, no need for multi-domain data.
+  select_then_reorder:
+    name: select_then_reorder
+    params:
+      cache_dir: ../dataflex_saves/lego_output
+      stages:
+        - family: selector
+          component: loss
+          mode: filter
+          keep_ratio: 0.5
+          warmup_step: 10
+          every: 100
+        - family: reorder
+          component: dynamic_saw
+          every: 20
+
+  # Domain-level proportions + sample-level reweighting: two different levels of weighting stacked together.
+  # If the mixer is doremi, it will also register as a contributor to the loss space, so here it is "domain weight x sample weight" multiplication, not mutually exclusive.
+  mix_then_weight:
+    name: mix_then_weight
+    params:
+      cache_dir: ../dataflex_saves/lego_output
+      stages:
+        - family: mixer
+          component: odm
+          every: 50
+        - family: weighter
+          component: loss
+          warmup_step: 10
+
+  # Pipeline with only one stage, equivalent to the corresponding dedicated trainer.
+  # Mainly used for comparison: when running a single family, the combination path should be consistent with dynamic_select.
+  select_only:
+    name: select_only
+    params:
+      cache_dir: ../dataflex_saves/lego_output
+      stages:
+        - family: selector
+          component: loss
+          mode: draw           # when used alone, it takes the budget for the entire round
+          warmup_step: 10
+          every: 1

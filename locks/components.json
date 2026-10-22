@@ -5,19 +5,32 @@
       "path": "repos/dataflow",
       "url": "https://github.com/Mau-Q/DataFlow.git",
       "commit": "bf48d61bfb57c122136d2a1bd096ed9409cf242a",
-      "optional": false
+      "optional": false,
+      "kind": "source",
+      "entrypoint": "dataflow/__init__.py"
     },
     {
       "path": "repos/dataflow-webui",
       "url": "https://github.com/Mau-Q/DataFlow-WebUI.git",
       "commit": "41549cb0176e59ca4c1508e0c5caaffcc9815889",
-      "optional": false
+      "optional": false,
+      "kind": "source",
+      "entrypoint": "backend/app/services/training_bundles.py"
     },
     {
       "path": "repos/dataflow-mm",
       "url": "https://github.com/OpenDCAI/DataFlow-MM.git",
       "commit": "155253460f6f2e50705a3e779f259b382a382822",
-      "optional": true
+      "optional": true,
+      "kind": "submodule"
+    },
+    {
+      "path": "repos/dataflex",
+      "url": "https://github.com/OpenDCAI/DataFlex.git",
+      "commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "optional": false,
+      "kind": "source",
+      "entrypoint": "src/dataflex/cli.py"
     }
   ]
 }
