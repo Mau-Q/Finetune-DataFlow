@@ -10,6 +10,7 @@
 | [模型 API 配置](model-api.md) | 四类流程的 API 能力、绑定与输出 |
 | [架构与组件](architecture.md) | 目录职责、数据路径与运行边界 |
 | [开发与验证](development.md) | Git、版本固定、回归和发布 |
+| [Qwen3.5-9B 训练环境准备](training/qwen35-9b-node01-l40-8192.md) | 整合源码、单 L40/8192 目标、候选依赖、平台入口缺口与待验收事项；尚未安装或训练 |
 | [示例流程](../repos/dataflow-webui/examples/representative-training/README.md) | 示例材料、步骤、逐条隔离与负例重试 |
 | [数据备份与恢复](../repos/dataflow-webui/docs/dataset-storage.md) | SQLite 一致性镜像及恢复 |
 

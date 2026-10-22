@@ -29,4 +29,7 @@ scipy==1.15.3
 tyro==0.8.14
 omegaconf==2.3.0
 # LLaMA-Factory source commit: c683e59edd8f893abc5e1403184a1d0644817d2a (0.9.6.dev0).
-# DataFlex current commit: 2e2a74dbe90f8b6a1394bdee37518980f1d5958d; requires scoped adaptation.
+# DataFlex source: repos/dataflex in this root repository; requires scoped adaptation.
+# Upstream IMPORT commit (not the current root HEAD): 2e2a74dbe90f8b6a1394bdee37518980f1d5958d.
+# Local review input: root main@76e9d4c; actual files and source identity are recorded in audit.json.
+# No external /Users/rui/Documents/DataFlex checkout is used.

@@ -1,18 +1,18 @@
 # 学校服务器部署建议（初版与当前状态）
 
-2026-10-22 更新：已连通 school1/mgt01 与 node01。**下文原生安装步骤属于连通前的初版参考，不作为当前执行方案。** 当前建议将平台集中部署在 node01 的独立容器中，mgt01 作为现有跳板；训练、平台、MinerU 分开环境。详见 [Qwen3.5-9B 单 L40、8192-token 环境准备方案](training/qwen35-9b-node01-l40-8192.md)。本轮仅整理文档，没有安装、部署或训练。
+2026-10-22 更新：前轮已只读连通 school1/mgt01 与 node01；本次仅复核整合后的本地源码，未刷新远端资源状态。**下文原生安装步骤属于连通前的初版参考，不作为当前执行方案。** 当前建议将平台集中部署在 node01 的独立容器中，mgt01 作为现有跳板；训练、平台、MinerU 分开环境。Core、WebUI、DataFlex 已纳入同一主仓库，DataFlex 来源固定为 `repos/dataflex`，仅可选 MM 保留子模块。详见 [Qwen3.5-9B 单 L40、8192-token 环境准备方案](training/qwen35-9b-node01-l40-8192.md)。本轮仅整理文档，没有安装、部署或训练。
 
-## 当前 SSH 状态
+## 前轮 SSH 快照
 
-历史上 school 使用密码认证。后续已按用户授权创建专用加密密钥、登记用户本人公钥，并配置 macOS Keychain。当前正式别名为 school1，school 为兼容别名；可无交互登录 mgt01。node01 通过 school1 跳转，使用已保存可信主机指纹。长期连接约定在本机 `~/.codex/AGENTS.md` 与 `~/.codex/server-connections.md`，不把私钥或密码写入仓库。
+历史上 school 使用密码认证。后续已按用户授权创建专用加密密钥、登记用户本人公钥，并配置 macOS Keychain。前轮确认正式别名为 school1，school 为兼容别名，可无交互登录 mgt01；node01 通过 school1 跳转，使用已保存可信主机指纹。长期连接约定在本机 `~/.codex/AGENTS.md` 与 `~/.codex/server-connections.md`，不把私钥或密码写入仓库。
 
-node01 实测为 CentOS 7/glibc 2.17、4 张 L40/驱动 550.127.08、Docker 26.1.4/overlay2；Docker 位于本地 /home 分区，剩约 138 GB。mgt01 的根分区剩约 2.1 GB，Docker 位于 NFS 且使用 vfs；因此当前优先评估 node01。当前 GPU 均有占用；现有模型服务的可访问性不等于训练资源授权或空闲。
+前轮 node01 快照为 CentOS 7/glibc 2.17、4 张 L40/驱动 550.127.08、Docker 26.1.4/overlay2；Docker 位于本地 /home 分区，当时剩约 138 GB。mgt01 的根分区当时剩约 2.1 GB，Docker 位于 NFS 且使用 vfs；因此优先评估 node01。快照中 GPU 均有占用；执行前须刷新，现有模型服务的可访问性不等于训练资源授权或空闲。
 
 ## 推荐形态
 
 当前采用容器隔离宿主旧系统的依赖；前端预构建。平台数据库/活跃状态放 node01 本地持久卷，PDF/固定产物/只读权重可按权限使用 NFS。生成和审核先保留已授权的兼容 API；学校现有 Qwen 服务的复用需确认负责人与使用额度，不能仅凭模型名称替换。模型推理可用不等于微调环境可用。
 
-MinerU 已有 `mineru-easyread:4.0.12-pro2605-bf16` 镜像和用户自有模型目录，可优先复用；当前平台 basic/standard CLI 适配与学校 advanced/vLLM 路线仍需适配，不能声称直接接通。训练模型固定为 Qwen3.5-9B，使用独立环境，以完整样本 8192 tokens 为目标。
+前轮发现 MinerU 的 `mineru-easyread:4.0.12-pro2605-bf16` 镜像和用户自有模型目录，可优先评估复用；当前平台 basic/standard CLI 适配与学校 advanced/vLLM 路线仍需适配，不能声称直接接通。训练模型固定为 Qwen3.5-9B，使用独立环境，以完整样本 8192 tokens 为目标。
 
 先通过 SSH 隧道单人验收，再按学校网络条件启用校园网 HTTPS。多人入口使用现有 `scripts/start-lan.sh` 启动的认证网关；网关只绑定 127.0.0.1，HTTPS 代理是共享入口。不要用开发自动登录的 `scripts/webui.sh` 作为多人服务，也不要把私有项目 worker 端口或 `app.main` 直接暴露。
 
@@ -22,7 +22,7 @@ MinerU 已有 `mineru-easyread:4.0.12-pro2605-bf16` 镜像和用户自有模型�
 
 ### 1. 代码与平台环境
 
-在有写权限的专用目录检出确定的根仓库提交和其固定 submodule 提交。准备 Git、uv、Node.js 22、npm 和 C/C++ 编译器。不要复制 macOS 的 `.venvs`。
+在有写权限的专用目录检出确定的根仓库提交；Core、WebUI、DataFlex 随普通 clone 获取，不需单独克隆或配置外部 DataFlex 路径。仅启用可选 MM 时才涉及其固定子模块。准备 Git、uv、Node.js 22、npm 和 C/C++ 编译器。不要复制 macOS 的 `.venvs`。
 
 仓库 `scripts/setup.sh` 默认编译器为 macOS 路径。Linux 上应按机器的实际编译器覆盖，例如：
 
@@ -30,7 +30,7 @@ MinerU 已有 `mineru-easyread:4.0.12-pro2605-bf16` 镜像和用户自有模型�
 CC=cc CXX=c++ ./scripts/setup.sh
 ```
 
-这会初始化缺失子模块、创建 Python 3.12 环境、安装 Core/论文扩展/后端并构建前端。该命令依赖服务器联网和可安装的轮子；当前没有 Linux 实测结论。现有 locks 中的机器快照不应视为跨平台全量安装清单。
+当前脚本会检查仓库内源码、按需创建 Python 3.12 环境、安装 Core/论文扩展/后端并构建前端；不会初始化可选 MM，也不会安装 DataFlex GPU 训练环境。该命令依赖服务器联网和可安装的轮子；当前没有 Linux 实测结论。现有 locks 中的机器快照不应视为跨平台全量安装清单。
 
 ### 2. PDF 解析环境
 

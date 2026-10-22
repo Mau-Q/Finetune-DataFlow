@@ -1,5 +1,7 @@
 # NOT RUN. Future two-update capacity candidate, not a full training contract.
 # Requires DataFlex dependency adaptation, complete wheel lock and GPU permission.
+# Standalone path placeholders; platform bundles generate their own data/output bindings.
+# See platform-plan.candidate.json for declarative platform parameter mapping (NOT RUN).
 model_name_or_path: /models/Qwen3.5-9B/c202236235762e1c871ad0ccb60c8ee5ba337b9a
 model_revision: c202236235762e1c871ad0ccb60c8ee5ba337b9a
 trust_remote_code: false
@@ -47,5 +49,6 @@ overwrite_output_dir: false
 report_to: none
 seed: 42
 data_seed: 42
-# DataFlex static path; its launcher also expects a separate components.yaml.
+# DataFlex static path; platform bundles emit a separate components.yaml.
+# A standalone run must also materialize compatible data and component configuration.
 train_type: static

@@ -9,7 +9,7 @@
     "task": "text_sft",
     "finetuning": "nf4_qlora"
   },
-  "status": "PLAN_ONLY_WITH_KNOWN_DATAFLEX_CONSTRAINT_CONFLICTS",
+  "status": "PLAN_ONLY_WITH_DATAFLEX_DEPENDENCY_AND_CONTAINER_EXECUTOR_GAPS",
   "model_weights_downloaded": false,
   "installation_performed": false,
   "container_created": false,
@@ -410,7 +410,14 @@
     "runtime_tested": false
   },
   "source_pins": {
-    "DataFlex": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+    "DataFlex": {
+      "path": "repos/dataflex",
+      "upstream_import_commit": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+      "version_authority": "root repository commit plus source_identity_sha256 and per-file hashes",
+      "snapshot_changed_from_import": false,
+      "exported_file_count": 81,
+      "source_identity_sha256": "6f147a4a6a1ddb6bf3a3b062c35c27e13e025d1afded3cc9669dc6a3721a9d90"
+    },
     "LLaMA-Factory": "c683e59edd8f893abc5e1403184a1d0644817d2a",
     "LLaMA-Factory_version": "0.9.6.dev0"
   },
@@ -427,7 +434,9 @@
     "docker_storage_driver": "overlay2",
     "docker_root": "/home/docker-data_node01",
     "local_home_free_approx_gb": 138,
-    "home_directory_is_nfs": true
+    "home_directory_is_nfs": true,
+    "snapshot_date": "2026-10-22",
+    "rechecked_in_integrated_repository_review": false
   },
   "existing_inference_environment": {
     "container": "hiq-qwen",
@@ -446,7 +455,8 @@
   },
   "network_probe": {
     "pypi": "HEAD subprocess timed out; reachability not established",
-    "huggingface": "NOT_RUN after earlier timeout"
+    "huggingface": "NOT_RUN after earlier timeout",
+    "rechecked_in_integrated_repository_review": false
   },
   "sources": [
     {
@@ -606,7 +616,12 @@
     "No new-model GPU/driver/ABI/FLA execution",
     "No real-content 8192-token forward/backward/optimizer or stability test",
     "No platform-to-node01 training execution integration test",
-    "Base image digest and full Linux wheel hashes not yet locked"
+    "Base image digest and full Linux wheel hashes not yet locked",
+    "Integrated source layout does not imply a unified Python environment",
+    "source.commit is the upstream import identity; source.dirty compares against the import, not root worktree cleanliness",
+    "Current platform SSH executor assumes consistent Python/filesystem/process visibility; dedicated training container integration remains unresolved",
+    "Platform GPU configuration accepts numeric indices only; UUID allocation must be mapped and verified",
+    "The local candidate plan compiles without checking placeholder data, upstream runtime compatibility or GPU capacity"
   ],
   "causal_conv1d_release_asset": {
     "name": "causal_conv1d-1.6.0+cu12torch2.7cxx11abiTRUE-cp312-cp312-linux_x86_64.whl",
@@ -615,5 +630,186 @@
     "browser_download_url": "https://github.com/Dao-AILab/causal-conv1d/releases/download/v1.6.0/causal_conv1d-1.6.0%2Bcu12torch2.7cxx11abiTRUE-cp312-cp312-linux_x86_64.whl",
     "downloaded": false,
     "binary_content_verified": false
+  },
+  "integrated_repository_review": {
+    "date": "2026-10-22",
+    "input_repository_commit": "76e9d4cff2aff10a1a719c4f3d12cdf7bd9af51e",
+    "input_branch": "main",
+    "component_source_layout": "ordinary directories in root repository; only optional MM remains a submodule",
+    "independent_dataflex_checkout_used": false,
+    "source_files_sha256": {
+      "locks/components.json": "8173a049c33e6bd16126d9bb8fa47b453b74285bb150375c070497ad3d5b30db",
+      "repos/dataflex/UPSTREAM.json": "201cbe8edcab8803290bb24ef1e21cb26036a8d23ef5db9eda8f09d9ef318de8",
+      "repos/dataflex/requirements.txt": "79df4ecf7c2a6bbade7c2fea484443d5bdd5d4cc077d15c47eb4f1634c9ab269",
+      "repos/dataflex/pyproject.toml": "f6d8adbad1535b8a3f006cacac516af80ccdaaf66639530df3c39bae8f90f0d6",
+      "repos/dataflex/src/dataflex/cli.py": "8bb0500d967c1ef72bb884c1a940f668e8e01fc0fe737422e5235f568c522fdf",
+      "repos/dataflex/src/dataflex/launcher.py": "a3abf5fa39984196a93c6af18fef7dbc4e4cbac6aa31dff11aa9443bcd50117a",
+      "repos/dataflow-webui/backend/app/services/training_bundles.py": "beff607994069107c776cfc46ca0366fb3a0bdf8304f258a8c9d273c6813eef6",
+      "repos/dataflow-webui/backend/app/services/training_compiler.py": "9285fda5adcff1d577137ccee87e4f502a4ea8032cb0a4cb38c901bf3eedca7a",
+      "repos/dataflow-webui/backend/app/services/training_runtime/runner.py": "0a2653bce7b0459d0ead858dde72e10c4f1bbd5fd5061cdbc00d243964bf6054",
+      "repos/dataflow-webui/backend/app/services/training_ssh.py": "e86bbe2fe5a454a97e34886eb6dc8ac54dd467b9e5814e4d5ca0a126d8dd5cc9",
+      "repos/dataflow-webui/backend/app/schemas/model_training.py": "7d401181d75522fd6cc1146c5218d8589670356abec42c36ba74c91489076965",
+      "scripts/setup.sh": "f0e882937d639141f469d1e57d7ef9c8f0bb1e5829cec279f5d943b081d9b35f",
+      "pipelines/paper-multitask-low-cost/pipeline.webui.json": "5c4fc54e5e8e451cd892ce4a345f01e1c4836b997bc00a1130ab5dc93b89e207"
+    },
+    "dataflex_dependency_declarations_changed": false,
+    "direct_constraint_rows_rechecked": 58,
+    "direct_constraint_incompatibilities": 2,
+    "cached_official_sources_hash_verified": 30,
+    "platform_plan_compile": {
+      "status": "PASSED_LOCAL_DECLARATIVE_COMPILATION_ONLY",
+      "plan_file": "deploy/plans/qwen35-9b-8192/platform-plan.candidate.json",
+      "preserved_standalone_fields": [
+        "bf16",
+        "cutoff_len",
+        "data_seed",
+        "do_eval",
+        "do_train",
+        "double_quantization",
+        "enable_thinking",
+        "finetuning_type",
+        "flash_attn",
+        "fp16",
+        "freeze_language_model",
+        "freeze_multi_modal_projector",
+        "freeze_vision_tower",
+        "gradient_accumulation_steps",
+        "gradient_checkpointing",
+        "learning_rate",
+        "logging_steps",
+        "lora_alpha",
+        "lora_dropout",
+        "lora_rank",
+        "lora_target",
+        "lr_scheduler_type",
+        "max_grad_norm",
+        "max_steps",
+        "model_name_or_path",
+        "model_revision",
+        "optim",
+        "overwrite_output_dir",
+        "packing",
+        "per_device_train_batch_size",
+        "quantization_bit",
+        "quantization_method",
+        "quantization_type",
+        "report_to",
+        "save_steps",
+        "save_total_limit",
+        "seed",
+        "stage",
+        "template",
+        "train_on_prompt",
+        "train_type",
+        "trust_remote_code",
+        "use_fast_tokenizer",
+        "warmup_steps"
+      ],
+      "expected_rebindings": {
+        "dataset_dir": "data",
+        "dataset": "dataset_0",
+        "output_dir": "output",
+        "components_cfg_file": "components.yaml",
+        "component_name": ""
+      },
+      "warnings": [],
+      "input_data_exists_checked": false,
+      "training_framework_imported": false,
+      "model_loaded": false,
+      "user_platform_database_modified": false,
+      "bundle_exported": false
+    },
+    "server_connected_this_review": false,
+    "host_snapshot_refreshed": false
+  },
+  "platform_integration_gaps": [
+    {
+      "id": "container_execution",
+      "status": "NOT_IMPLEMENTED_OR_RUNTIME_VERIFIED",
+      "evidence": "SSHTransport uses host.python and SFTP host.workdir; nested controls re-invoke host.python; runner uses /proc PID identities and process groups",
+      "required": "Define consistent container path, interpreter and process namespace for submit, preflight, sync, stop and recovery; a host-side wrapper alone is not validated"
+    },
+    {
+      "id": "gpu_identity",
+      "status": "UUID_NOT_ACCEPTED_BY_CURRENT_HOST_SCHEMA",
+      "evidence": "validate_host accepts digit-only GPU lists; START sets CUDA_VISIBLE_DEVICES; PREFLIGHT does not apply host.gpus",
+      "required": "Bind a dedicated container to the allocated host GPU UUID; use its internal index 0 consistently for preflight and run; validate actual GPU identity"
+    },
+    {
+      "id": "preflight_scope",
+      "status": "LIMITED_TO_EXISTING_CHECKS",
+      "evidence": "runner verifies bundle hashes and checks versions/CUDA and selected model metadata, not full weights, fast-path dispatch or capacity",
+      "required": "Separate full environment, model and 8192 effective-content acceptance from platform preflight"
+    }
+  ],
+  "next_steps": [
+    {
+      "id": "P0",
+      "status": "NOT_IMPLEMENTED",
+      "deliverable": "Root-repository DataFlex dependency adaptation and fixed LLaMA-Factory internal API compatibility checks"
+    },
+    {
+      "id": "P1",
+      "status": "NOT_RUN",
+      "deliverable": "Linux amd64 build environment, image digest, complete runtime/build dependency and wheel hash lock"
+    },
+    {
+      "id": "P2",
+      "status": "NOT_MATERIALIZED",
+      "deliverable": "Pinned model/tokenizer/processor files, data manifests, paper-level splits, real sequence lengths and supervision masks"
+    },
+    {
+      "id": "P3",
+      "status": "NOT_RESERVED_OR_REFRESHED",
+      "deliverable": "Allocated GPU UUID/time window, local storage and mounts, refreshed read-only host/network evidence"
+    },
+    {
+      "id": "P4",
+      "status": "NOT_RUN",
+      "deliverable": "Independent container ABI/kernel/QLoRA/4096/8192 capacity, stability, save and resume acceptance"
+    },
+    {
+      "id": "P5",
+      "status": "NOT_RUN",
+      "deliverable": "Container-aware platform submit/sync/stop/reconnect/artifact acceptance"
+    }
+  ],
+  "formal_training_contract": {
+    "status": "NOT_FROZEN",
+    "missing": [
+      "fixed dataset version and effective supervised token count",
+      "training epochs or total optimization steps",
+      "independent evaluation set and acceptance criteria",
+      "checkpoint and storage budget"
+    ],
+    "capacity_candidate_optimizer_updates": 2
+  },
+  "local_verification": {
+    "date": "2026-10-22",
+    "status": "PASSED_LOCAL_ONLY",
+    "commands": [
+      {
+        "command": "python3 scripts/check-workspace.py",
+        "result": "Workspace OK"
+      },
+      {
+        "command": "PYTHONPATH=repos/dataflow-webui/backend:repos/dataflow .venvs/dataflow/bin/python -m pytest repos/dataflow-webui/backend/tests/test_model_training.py repos/dataflow-webui/backend/tests/test_training_ssh.py -q",
+        "result": "23 passed, 1 third-party deprecation warning"
+      },
+      {
+        "command": "git diff --check",
+        "result": "passed"
+      }
+    ],
+    "static_checks": [
+      "source and official evidence hashes",
+      "source identity and declaration caps",
+      "candidate pins and objective consistency",
+      "platform compilation matches standalone parameters with expected path bindings",
+      "38 relative documentation links resolve"
+    ],
+    "full_regression_rerun": false,
+    "scope": "documentation and declarative candidates only; no application code or dependency declarations changed",
+    "ssh_or_gpu_execution": false
   }
 }

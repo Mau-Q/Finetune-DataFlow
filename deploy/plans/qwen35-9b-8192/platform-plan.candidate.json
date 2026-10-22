@@ -1,0 +1,68 @@
+{
+  "name": "Qwen3.5-9B 单 L40 8192 容量候选（未运行）",
+  "model": "/models/Qwen3.5-9B/c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+  "tokenizer": "",
+  "model_revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+  "template": "qwen3_5_nothink",
+  "task": "sft",
+  "modality": "text",
+  "finetuning_type": "lora",
+  "max_steps": 2,
+  "batch_size": 1,
+  "gradient_accumulation_steps": 16,
+  "learning_rate": 2e-05,
+  "seed": 42,
+  "data": [
+    {
+      "role": "train",
+      "kind": "file",
+      "ref": "/inputs/data/paper_sft_capacity_8192.jsonl",
+      "domain": "default",
+      "revision": "",
+      "subset": "",
+      "split": "train",
+      "sha256": "",
+      "columns": {
+        "prompt": "instruction",
+        "query": "input",
+        "response": "output"
+      }
+    }
+  ],
+  "group_id": null,
+  "strategy": {
+    "family": "static",
+    "component": "",
+    "params": {}
+  },
+  "advanced": {
+    "trust_remote_code": false,
+    "use_fast_tokenizer": true,
+    "quantization_method": "bnb",
+    "quantization_bit": 4,
+    "quantization_type": "nf4",
+    "double_quantization": true,
+    "bf16": true,
+    "fp16": false,
+    "flash_attn": "sdpa",
+    "gradient_checkpointing": true,
+    "lora_rank": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "lora_target": "all",
+    "freeze_vision_tower": true,
+    "freeze_multi_modal_projector": true,
+    "freeze_language_model": false,
+    "enable_thinking": false,
+    "cutoff_len": 8192,
+    "train_on_prompt": false,
+    "optim": "adamw_torch",
+    "lr_scheduler_type": "constant",
+    "warmup_steps": 0,
+    "max_grad_norm": 1.0,
+    "do_eval": false,
+    "save_total_limit": 1,
+    "overwrite_output_dir": false,
+    "data_seed": 42
+  }
+}
