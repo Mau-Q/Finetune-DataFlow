@@ -13,7 +13,7 @@ from app.services.task_store import patch_task
 
 def template():
     rec = json.loads((Path(__file__).parent.parent / 'templates/paper_sft13.json').read_text('utf-8'))
-    workspace = Path(settings.BASE_DIR).resolve().parents[2]
+    workspace = Path(__file__).resolve().parents[5]
     defaults = {'mineru_script': str(workspace / 'scripts/mineru.sh'),
                 'tokenizer_path': str(workspace / 'models/tokenizers/Qwen2.5-7B-Instruct'),
                 'output_dir': str(Path(settings.CACHE_DIR) / 'platform-parsing')}
@@ -75,6 +75,9 @@ class TextGeneration:
         representative = config.get('execution_options', {}).get('representative_training')
         expected = ([('FormatStrPromptedGenerator' if simple.get('modality') == 'text' else 'APIImagePairGenerator'), 'TrainingPairFormatter']
                     if simple else [op['name'] for op in template()['config']['operators']])
+        if config.get('execution_options', {}).get('paper_multitask_low_cost'):
+            from app.services.paper_multitask import definition
+            expected = [op['name'] for op in definition()['config']['operators']]
         if representative and simple:
             from app.services.representative_training import definitions
             definition = next((d for d in definitions() if d['config']['execution_options']['simple_training'] == simple), None)

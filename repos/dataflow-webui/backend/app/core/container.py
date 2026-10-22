@@ -71,6 +71,8 @@ class AppContainer:
         if not is_ray_worker:
             from app.services.representative_training import install_templates
             install_templates(self)
+            from app.services.paper_multitask import install
+            install(self)
 
 
 

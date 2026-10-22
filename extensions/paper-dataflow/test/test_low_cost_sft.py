@@ -147,3 +147,21 @@ def test_saved_transform_chain_with_fixture_responses(tmp_path):
     assert storage.df.iloc[0]['review_status'] == 'PASS'
     assert storage.df.iloc[0]['input'] == '原始材料'
     assert list(tmp_path.glob('*/record_mapping.jsonl'))
+
+
+def test_full_training_length_rejects_without_truncation(tmp_path, monkeypatch):
+    import transformers
+    from types import SimpleNamespace
+    seen = []
+    def apply(messages, **kwargs):
+        seen.append(messages)
+        return list(range(7000))
+    monkeypatch.setattr(transformers.AutoTokenizer, 'from_pretrained', lambda *a, **k: SimpleNamespace(apply_chat_template=apply))
+    frame = reviewed([verdict()])
+    result = export_results(frame, tmp_path, tokenizer_path='offline-fixture', max_tokens=6144)
+    assert result.empty
+    directory, = list(tmp_path.iterdir())
+    audit = json.loads((directory/'audit.jsonl').read_text())
+    assert audit['export_status'] == 'TOO_LONG' and audit['training_tokens'] == 7000
+    assert audit['output'] == '依据材料解释'
+    assert seen[0][0]['content'] == '解释方法\n原始材料'

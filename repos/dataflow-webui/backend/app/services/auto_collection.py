@@ -38,6 +38,8 @@ def validate_target(target, library, contract=None):
 
 
 def pipeline_contract(config):
+    if config.get('execution_options', {}).get('paper_multitask_low_cost'):
+        return dict(modality='text', training_type='sft')
     contract = config.get('execution_options', {}).get('simple_training')
     if contract:
         return contract

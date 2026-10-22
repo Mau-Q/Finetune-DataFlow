@@ -56,12 +56,39 @@ Linux x86_64/CPython3.12 物料在 Mac 下载后上传；训练与平台使用�
 
 平台已完成 3 个 SQLite 的一致性备份，记录位于 `environments/platform/backup-receipt.json`，备份位于 `environments/platform/backups/`。活跃库不放 NFS；备份包含账号/配置状态，应保存在私有目录。恢复前停止本次平台服务，在独立位置验证备份和业务文件后再切换，不覆盖 Mac 原平台数据。
 
-## 仍需完成的接续
+## PDF 到 SFT 的运行方式
 
-- 正式训练数据继续由 Mac 现有 DataFlow 生成、发布/导出后上传；本轮没有配置校内生成模型服务。
-- Mac 本地库当前有 3 个各 1 条的验收发布版本；它们不能作为正式训练集的默认选择。正式数据版本和规模仍待确定，不阻塞构造数据试训。
-- 平台 SSH 训练执行器尚未覆盖容器内外一致的文件路径和进程身份；服务器平台也没有复用 Mac Keychain 的 SSH 认证。直接 DataFlex 试训先独立完成，不能把按钮保存或环境探测当成平台训练链路通过。
-- MinerU advanced 的独立解析已通过；平台到解析器的远程调用还未集成。
-- 单次 HTTPS 读写检查已通过，其他真实成员的浏览器证书信任、账号邀请及跨设备使用尚未代替用户执行。
+学校端已接入论文模板 `论文 PDF → 科研多任务 SFT · 个人 API`。成员在材料库上传 PDF，在模板中选择材料和自己的生成、审核 Serving，检查后提交。个人 Serving 的执行位置选“我的电脑”；Mac / Windows 执行器使用同一平台账号登录，复用现有 Serving 地址、模型和 Key。具体启动命令见 [个人 API 执行说明](personal-api-execution.md)。
+
+链路依次完成：文件哈希与来源登记 → MinerU advanced → 逐页结构提取 → 本地 tokenizer 切块和上下文预算 → 个人电脑生成 → 严格 JSON 检查 → 个人电脑独立审核 → 审核结果匹配 → 长度检查和精确去重 → 受管 SFT 草稿。只有 PASS 且长度合格的样本进入训练数据；REJECT、REVIEW、重复、超长及原始模型响应保留在审计产物中。正式使用前仍需人工抽检并发布版本。
+
+当前学校默认上下文预算 3000 token，块预算 2800，每个上下文最多生成 2 条，完整训练序列上限 6144。预算使用现有 Qwen3.5-9B tokenizer，不在服务器下载。配置在 `/work/paper-workflow.json`；修改配置仅影响后续安装的模板，已有 Pipeline 保留提交时参数。
+
+解析桥只接收带认证的 PDF 内容，平台容器没有 Docker socket 权限。宿主按需创建独立离线 MinerU 容器，复用原镜像和模型；同一时刻解析一个 PDF。当前每篇会启动一次模型，适合先做小批验收，尚未验证数千篇吞吐。显存不足 16 GB 时暂缓解析，不停止其他人的任务。
+
+解析桥目前采用独立进程，没有配置宿主自动开机启动。服务器重启后，在核实 node01/huruiqian 身份后执行：
+
+```sh
+python3 "$HOME/DataFlow/app/deploy/school/start-mineru-bridge.py"
+```
+
+该命令检测已启动的服务，不重复创建进程。日志在 `environments/platform/mineru-bridge/server.log`，每个解析作业的输入、日志、ZIP 和哈希回执在该目录的 `jobs/`。错误先检查对应作业日志，不直接重跑商业请求。
+
+## 代码与运行数据位置
+
+| 内容 | 学校位置 | 用途 |
+| --- | --- | --- |
+| 应用代码 | `/sharedata/home/huruiqian/DataFlow/app` | Mac 代码同步后只读挂入容器 `/app` |
+| 活跃数据库、项目数据 | Docker 卷 `rui-dataflow-platform-state-20261022`，容器 `/state` | 账号、项目、Serving、任务、材料库、生成与发布数据；不随代码同步覆盖 |
+| 环境配置、解析作业、tokenizer、备份 | `/sharedata/home/huruiqian/DataFlow/environments/platform`，容器 `/work` | NFS 大文件与恢复副本；活跃 SQLite 在本地卷 |
+| Mac 开发默认运行目录 | `repos/dataflow-webui/backend/data` 与 `cache_local` | 既有本地数据；后续可用 `DATAFLOW_WORKSPACE_DIR` 指向独立目录，迁移须先备份并验证 |
+
+Serving 文件包含凭据，数据库、任务响应和备份也可能含个人数据，不作为普通代码提交。同步代码时保留学校与 Mac 各自的运行数据。解析缓存、任务快照和发布版本有相互引用，当前没有自动清理策略；不要按临时文件随意删除。
+
+## 训练衔接与验证边界
+
+发布版本可导出 Alpaca JSONL；在既有训练容器中用 [输入验证脚本](../deploy/school/validate-sft-input.py) 按 `qwen3_5_nothink` 检查真实 token 数、监督答案和 6144 上限。该脚本不加载模型权重、不训练。生成链路完成不会自动启动训练。
+
+平台 SSH 训练执行器尚未覆盖容器内外一致的文件路径和进程身份；服务器平台也没有复用 Mac Keychain 的 SSH 认证。直接 DataFlex 试训独立完成，不能把按钮保存或输入校验当成平台训练执行成功。真实 Windows 电脑、其他成员证书与邀请流程，以及大规模多篇吞吐仍需实机验收。
 
 更多成员权限、人工评测和导出操作见 [局域网团队使用说明](lan-usage.md)。HTTPS 配置沿用 [Caddy 官方反向代理机制](https://caddyserver.com/docs/caddyfile/directives/reverse_proxy) 和内网 CA 机制。

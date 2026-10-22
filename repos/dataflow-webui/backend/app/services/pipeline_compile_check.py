@@ -35,7 +35,8 @@ def _key_params(run_params: Dict[str, Any]) -> Dict[str, Any]:
     """Keep only the params DataFlow's OperatorNode treats as keys.
 
     ``OperatorNode._get_keys_from_kwargs`` (dataflow/pipeline/nodes.py) only
-    looks at kwargs named ``input_*`` / ``output_*`` with string values. We pass
+    looks at scalar ``input_*`` / ``output_*`` values. List declarations are
+    expanded on compile-only recordings after signature binding. We pass
     exactly those to ``AutoOP.run`` so the compile key graph matches what the
     real run would produce, and we omit everything else (``storage`` is supplied
     by ``forward``; other params would just bloat the bound signature).
@@ -44,7 +45,10 @@ def _key_params(run_params: Dict[str, Any]) -> Dict[str, Any]:
     for name, value in run_params.items():
         if name == "storage":
             continue
-        if (name.startswith("input_") or name.startswith("output_")) and isinstance(value, str):
+        is_key = name.startswith(("input_", "output_"))
+        is_key_value = isinstance(value, str) or (
+            isinstance(value, list) and all(isinstance(v, str) for v in value))
+        if is_key and is_key_value:
             out[name] = value
     return out
 
@@ -85,6 +89,19 @@ def compile_check(run_op: List[Tuple[Any, Dict[str, Any], str, str]], storage: A
                 # them into AutoOP, so the operator must live as an attribute.
                 setattr(self, attr, operator)
                 self._ordered.append((attr, key_params))
+
+        def _build_operator_nodes_graph(self):
+            # PandasOperator declares multiple created columns in output_key.
+            # Core OperatorNode reads scalar keys only. Expand declarations on
+            # compile-only recordings after signature binding; real run kwargs
+            # and operators remain untouched and no transform is executed.
+            for runtime in self.op_runtimes:
+                for name, value in list(runtime.kwargs.items()):
+                    if name.startswith(('input_', 'output_')) and isinstance(value, list):
+                        del runtime.kwargs[name]
+                        for index, key in enumerate(value):
+                            runtime.kwargs[name+'_'+str(index)] = key
+            super()._build_operator_nodes_graph()
 
         def forward(self):
             for attr, key_params in self._ordered:

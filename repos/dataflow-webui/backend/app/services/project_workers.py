@@ -35,6 +35,8 @@ class Workers:
                 token = secrets.token_urlsafe(32)
                 endpoint = f'http://127.0.0.1:{port}'
                 env = os.environ.copy()
+                extension = BACKEND.parents[2] / 'extensions/paper-dataflow'
+                env['PYTHONPATH'] = os.pathsep.join([str(BACKEND), str(extension), env.get('PYTHONPATH', '')])
                 env.update(DATAFLOW_WORKSPACE_DIR=project['root'], DATAFLOW_TEAM_WORKER='1',
                            DATAFLOW_WORKER_TOKEN=token, DATAFLOW_PROJECT_ID=project_id,
                            DATAFLOW_DATASET_BACKUP_DIR=str(Path(project['root']) / 'backups/datasets'),

@@ -195,7 +195,7 @@ def parse_reviews(df):
         'review_status', 'review_reason', 'sample_review', 'dedup_text'])))
 
 
-def export_results(df, output_dir):
+def export_results(df, output_dir, tokenizer_path=None, max_tokens=6144):
     """Export before filtering so all review outcomes remain auditable.
 
     A fresh directory per invocation prevents overwrite. The returned frame
@@ -204,9 +204,24 @@ def export_results(df, output_dir):
     root = Path(output_dir).expanduser().resolve() / uuid.uuid4().hex
     root.mkdir(parents=True, exist_ok=False)
     all_rows = df.to_dict('records')
+    tokenizer = None
+    if tokenizer_path:
+        from transformers import AutoTokenizer
+        tokenizer = AutoTokenizer.from_pretrained(tokenizer_path, local_files_only=True, trust_remote_code=False)
+
     kept, seen = [], set()
     for row in all_rows:
         row['export_status'] = row['review_status']
+        if tokenizer is not None and row['review_status'] == 'PASS':
+            messages = [{'role':'user','content':'\n'.join(v for v in (row['instruction'], row['input']) if v)},
+                        {'role':'assistant','content':row['output']}]
+            tokens = tokenizer.apply_chat_template(messages, tokenize=True, add_generation_prompt=False, enable_thinking=False)
+            row['training_tokens'] = len(tokens)
+            row['training_tokenizer'] = str(tokenizer_path)
+            row['training_cutoff'] = max_tokens
+            if len(tokens) > max_tokens:
+                row['export_status'] = 'TOO_LONG'
+                continue
         if row['review_status'] == 'PASS':
             if row['dedup_text'] in seen:
                 row['export_status'] = 'DUPLICATE'
