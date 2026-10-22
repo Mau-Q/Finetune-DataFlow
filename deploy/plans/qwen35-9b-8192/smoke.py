@@ -13,7 +13,7 @@ import torch
 import yaml
 
 
-def prepare(root, model):
+def prepare(root, model, lengths=(512, 4096, 8192)):
     from transformers import AutoTokenizer
     from llamafactory.data import get_template_and_fix_tokenizer
     from llamafactory.hparams import DataArguments
@@ -25,7 +25,7 @@ def prepare(root, model):
     data.mkdir(parents=True, exist_ok=True)
     info = {}
     counts = []
-    for length in [512, 4096, 8192]:
+    for length in lengths:
         records = []
         for index in range(2):
             instruction = '这是合成的环境测试材料。请只回答：检查完成。'
@@ -57,6 +57,8 @@ def prepare(root, model):
                 {'role': 'user', 'content': text},
                 {'role': 'assistant', 'content': answer},
             ])
+            if len(prompt) + len(response) != length:
+                raise RuntimeError(f'Expected {length} actual template tokens, got {len(prompt) + len(response)}')
             records.append({'instruction': text, 'input': '', 'output': answer})
             counts.append({'bucket': length, 'index': index, 'effective_tokens': len(prompt) + len(response),
                            'supervised_tokens': len(response), 'synthetic': True})
@@ -69,9 +71,9 @@ def prepare(root, model):
     print(json.dumps({'prepared': counts}), flush=True)
 
 
-def train(root, model, length):
+def train(root, model, length, memory_fraction=0.60):
     # Leave room for the resident workload on the shared GPU. This caps this process's torch allocator.
-    torch.cuda.set_per_process_memory_fraction(0.60, 0)
+    torch.cuda.set_per_process_memory_fraction(memory_fraction, 0)
     torch.cuda.reset_peak_memory_stats()
     output = root / 'output' / str(length)
     if output.exists():
@@ -90,12 +92,27 @@ def train(root, model, length):
     started = time.time()
     from dataflex.cli import main
     sys.argv = ['dataflex-cli', 'train', str(path)]
-    main()
+    try:
+        main()
+    except torch.OutOfMemoryError as error:
+        failure = {'status': 'CUDA_OOM', 'cutoff_len': length,
+                   'cuda_allocator_config': os.environ.get('PYTORCH_CUDA_ALLOC_CONF', 'default'),
+                   'torch_memory_fraction_limit': memory_fraction,
+                   'torch_peak_allocated_gib': torch.cuda.max_memory_allocated() / 2**30,
+                   'torch_peak_reserved_gib': torch.cuda.max_memory_reserved() / 2**30,
+                   'seconds': time.time() - started, 'error': str(error)}
+        (root / f'oom-{length}.json').write_text(json.dumps(failure, indent=2))
+        raise
     from safetensors import safe_open
     adapter = output / 'adapter_model.safetensors'
     with safe_open(adapter, framework='pt', device='cpu') as handle:
-        nonzero_b = [name for name in handle.keys() if 'lora_B' in name
-                     and bool(torch.count_nonzero(handle.get_tensor(name)))]
+        nonzero_b = []
+        for name in handle.keys():
+            tensor = handle.get_tensor(name)
+            if not torch.isfinite(tensor).all():
+                raise RuntimeError(f'Nonfinite saved adapter tensor: {name}')
+            if 'lora_B' in name and bool(torch.count_nonzero(tensor)):
+                nonzero_b.append(name)
         if not nonzero_b:
             raise RuntimeError('No updated LoRA B tensor found')
     states = sorted(output.glob('checkpoint-*/trainer_state.json'))
@@ -106,8 +123,10 @@ def train(root, model, length):
     if state['global_step'] != 2 or not losses or not all(math.isfinite(x) for x in losses):
         raise RuntimeError('Optimizer steps or finite training loss not verified')
     receipt = {'synthetic': True, 'cutoff_len': length, 'gradient_accumulation_steps': 1,
+               'cuda_allocator_config': os.environ.get('PYTORCH_CUDA_ALLOC_CONF', 'default'),
                'optimizer_steps': state['global_step'], 'losses': losses,
                'nonzero_lora_b_tensors': len(nonzero_b), 'adapter': str(adapter),
+               'saved_adapter_tensors_finite': True, 'torch_memory_fraction_limit': memory_fraction,
                'torch_peak_allocated_gib': torch.cuda.max_memory_allocated() / 2**30,
                'torch_peak_reserved_gib': torch.cuda.max_memory_reserved() / 2**30,
                'seconds': time.time() - started, 'gpu': torch.cuda.get_device_name(0)}
@@ -142,10 +161,15 @@ def reload_adapter(root, model):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('command', choices=['prepare', 'train', 'reload'])
-    parser.add_argument('--length', type=int, choices=[512, 4096, 8192], default=512)
+    parser.add_argument('--length', type=int, default=512)
+    parser.add_argument('--only-length', action='store_true')
+    parser.add_argument('--memory-fraction', type=float, default=0.60)
     parser.add_argument('--root', type=Path, default=Path('/runs'))
     parser.add_argument('--model', type=Path, default=Path('/models/Qwen3.5-9B'))
     args = parser.parse_args()
-    if args.command == 'prepare': prepare(args.root, args.model)
-    elif args.command == 'train': train(args.root, args.model, args.length)
+    if not 256 <= args.length <= 131072 or not 0 < args.memory_fraction <= 0.90:
+        parser.error('length must be 256..131072; memory fraction must be (0, 0.90]')
+    if args.command == 'prepare':
+        prepare(args.root, args.model, (args.length,) if args.only_length else (512, 4096, 8192))
+    elif args.command == 'train': train(args.root, args.model, args.length, args.memory_fraction)
     else: reload_adapter(args.root, args.model)

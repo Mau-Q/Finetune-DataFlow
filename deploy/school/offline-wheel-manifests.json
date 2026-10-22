@@ -1163,5 +1163,11 @@
     },
     "local_temporary_archives_deleted": true
   },
-  "temporary_mac_wheel_copies_deleted_after_remote_verification": true
+  "temporary_mac_wheel_copies_deleted_after_remote_verification": true,
+  "rejected_release_wheels": {
+    "causal_conv1d-1.6.0+cu12torch2.6cxx11abiFALSE-cp312-cp312-linux_x86_64.whl": {
+      "location": "offline/rejected",
+      "reason": "Actual ABI import failed; source-built wheel is used and added to install pool"
+    }
+  }
 }

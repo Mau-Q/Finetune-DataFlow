@@ -9,14 +9,14 @@
     "task": "text_sft",
     "finetuning": "nf4_qlora"
   },
-  "status": "ENVIRONMENT_READY_MODEL_TRANSFER_IN_PROGRESS",
-  "model_weights_downloaded": false,
+  "status": "TRAINING_SMOKE_AND_SHARED_GPU_CAPACITY_TEST_COMPLETED",
+  "model_weights_downloaded": true,
   "installation_performed": true,
   "container_created": true,
-  "training_performed": false,
-  "model_runtime_checked": false,
+  "training_performed": true,
+  "model_runtime_checked": true,
   "core_direct_metadata": {
-    "scope": "58 selected-core direct constraints; revised sources are pinned release metadata. Full Linux-target dependency resolution was also generated separately; GPU execution is pending.",
+    "scope": "58 selected-core constraints verified statically; selected dependency closure subsequently installed and exercised by real GPU QLoRA training (runtime records below)",
     "pins": {
       "torch": "2.6.0",
       "torchvision": "0.21.0",
@@ -394,7 +394,7 @@
       }
     ],
     "incompatibilities": [],
-    "runtime_tested": false
+    "runtime_tested": true
   },
   "source_pins": {
     "DataFlex": {
@@ -754,7 +754,7 @@
   "next_steps": [
     {
       "id": "offline-transfer",
-      "status": "RUNNING",
+      "status": "PASSED_UPLOAD_HASH_VERIFICATION_AND_MAC_TEMP_CLEANUP",
       "deliverable": "Mac downloads for Linux, upload verification and local temporary cleanup"
     },
     {
@@ -764,17 +764,17 @@
     },
     {
       "id": "short-smoke",
-      "status": "NOT_RUN",
+      "status": "PASSED_TWO_UPDATES_SAVE_RELOAD",
       "deliverable": "Constructed-data SFT save/reload"
     },
     {
       "id": "capacity-smoke",
-      "status": "NOT_RUN",
-      "deliverable": "Constructed effective-length 4096/8192 capacity"
+      "status": "COMPLETED_WITH_OOM_BOUND",
+      "deliverable": "Optimized allocator: 7168 passed, 8192 CUDA OOM under 31.30 GiB shared-GPU allocation budget"
     },
     {
       "id": "optional-platform",
-      "status": "PASSED_HTTP_DEPLOYMENT_SMOKE",
+      "status": "PASSED_EXTERNAL_MAC_HTTPS_AUTH_AND_WRITE",
       "deliverable": "Deploy if straightforward; keep its blockers independent of training"
     },
     {
@@ -867,7 +867,7 @@
     "python_dependencies": "INSTALLED_PIP_CHECK_PASSED",
     "causal_conv1d": "SOURCE_BUILT_IMPORT_PASSED",
     "full_imports": "PASSED",
-    "training": "NOT_RUN"
+    "training": "SYNTHETIC_TWO_UPDATE_QLORA_AND_ADAPTER_RELOAD_PASSED"
   },
   "execution_target": {
     "hostname": "node01",
@@ -994,7 +994,7 @@
         "core_wheel_sha256": "cba3db29380002da3cbfc0db94d6efac19aaf528900d19c05c2765e8f3cc485b",
         "core_wheel_hash_verified": true,
         "selected": true,
-        "runtime_tested": false
+        "runtime_tested": true
       }
     ],
     "qwen_call_signature_checks": [
@@ -1079,7 +1079,8 @@
       "full_model_training": false
     },
     "torchinductor_compile_threads": 1,
-    "mistral_common": "Inherited optional mistral_common 1.5.4 broke Qwen AutoProcessor through missing ReasoningEffort; removed from dedicated containers, pip check passed"
+    "mistral_common": "Inherited optional mistral_common 1.5.4 broke Qwen AutoProcessor through missing ReasoningEffort; removed from dedicated containers, pip check passed",
+    "causal_install_pool": "ABI-failing release wheel moved to offline/rejected; source-built wheel verified and placed in offline/wheels/py312-torch26-cu124"
   },
   "runtime_environment": {
     "versions": {
@@ -1104,7 +1105,9 @@
     "cuda": "12.4",
     "cxx11_abi": false,
     "entrypoint_imports": "passed",
-    "training": "NOT_RUN"
+    "training": "PASSED: 512/4096/6144/7168 two updates; adapter save finite; 512 reload/generate passed",
+    "cuda_allocator_config": "expandable_segments:True",
+    "training_gpu": "node01 GPU 3"
   },
   "synthetic_data": {
     "prepared": true,
@@ -1116,7 +1119,7 @@
     ],
     "supervised_tokens": 5,
     "source": "constructed locally in server container using actual Qwen tokenizer and qwen3_5_nothink template",
-    "full_model_training": "NOT_RUN",
+    "full_model_training": "PASSED_SYNTHETIC_TWO_UPDATES",
     "actual_preprocessing": [
       {
         "cutoff_len": 512,
@@ -1192,7 +1195,17 @@
     "ca_sha256_fingerprint": "95:DE:19:30:E8:46:50:D3:6F:AB:0A:CC:9E:D6:57:D3:6C:CF:65:7B:D4:B9:4D:0B:83:D1:8C:15:57:D8:68:89",
     "mac_direct_tls_status_probe": "PASSED",
     "container_restart_policy": "unless-stopped",
-    "host_reboot_test": "NOT_RUN"
+    "host_reboot_test": "NOT_RUN",
+    "external_mac_https_smoke": {
+      "status": "PASSED_EXTERNAL_MAC_HTTPS_AUTH_AND_WRITE",
+      "url": "https://192.168.247.162:18443",
+      "tls_verified": true,
+      "secure_cookie": true,
+      "anonymous_api_rejected": true,
+      "save_fresh_login_read": true,
+      "credential_logged_or_saved_on_mac": false,
+      "seconds": 0.46773576736450195
+    }
   },
   "previous_local_verification": {
     "date": "2026-10-22",
@@ -1221,5 +1234,93 @@
     "full_regression_rerun": false,
     "scope": "documentation and declarative candidates only; no application code or dependency declarations changed",
     "ssh_or_gpu_execution": false
-  }
+  },
+  "gpu_selection_review": {
+    "inventory": "8 L40 total: mgt01 4, node01 4",
+    "lowest_current_memory": "mgt01 GPU 2, 1 MiB at review",
+    "mgt01_gpu2_existing_service": "valik-ollama-gpu2 running, Docker DeviceIDs=[2]",
+    "migration_cost": "training image 19999739658 bytes / 46 layers; mgt01 missing base; Docker on NFS vfs",
+    "user_choice": "Keep node01 GPU 3 for this smoke run",
+    "training_gpu_uuid": "GPU-ff8b5640-bfd0-97ff-2bfc-7486717f66a0",
+    "other_tasks_stopped": false
+  },
+  "model_transfer": {
+    "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+    "files": 13,
+    "all_server_hashes_verified": true,
+    "all_mac_temporary_copies_deleted": true,
+    "upstream_lfs_hashes_match": true
+  },
+  "capacity_test": {
+    "status": "COMPLETED",
+    "cuda_allocator_config": "expandable_segments:True",
+    "max_pass_tokens": 7168,
+    "next_tested_oom_tokens": 8192,
+    "precision_tokens": 1024,
+    "torch_allocator_budget_gib": 31.3017578125,
+    "physical_card_maximum_tested": false,
+    "test_configuration": "NF4 QLoRA, BF16, SDPA, gradient checkpointing, LoRA r16/all language linear layers, microbatch1, accumulation1, two updates, synthetic prompt with 5 supervised tokens",
+    "other_tasks_stopped": false
+  },
+  "exclusive_card_estimate": {
+    "status": "ESTIMATED_NOT_RUN",
+    "driver_total_gib": 44.98828125,
+    "driver_reserved_mib": 696,
+    "cuda_total_gib": 44.30926513671875,
+    "method": "Linear fit of allocated peaks, plus measured approximate driver/cache overhead and 1-2 GiB extra margin; extrapolation beyond tested passing length",
+    "points": [
+      {
+        "tokens": 512,
+        "peak_allocated_gib": 9.62563419342041
+      },
+      {
+        "tokens": 4096,
+        "peak_allocated_gib": 20.51973247528076
+      },
+      {
+        "tokens": 6144,
+        "peak_allocated_gib": 26.754435539245605
+      },
+      {
+        "tokens": 7168,
+        "peak_allocated_gib": 29.863710403442383
+      }
+    ],
+    "fit_intercept_gib": 8.067643781251546,
+    "fit_gib_per_token": 0.0030409005293740503,
+    "observed_7168_driver_process_peak_gib": 32.7646484375,
+    "observed_7168_over_allocated_gib": 2.900938034057617,
+    "observed_driver_sampling_seconds": 2,
+    "estimated_zero_extra_margin_tokens": 10964.082185309939,
+    "estimated_with_1_to_2_gib_margin_tokens": [
+      10306.382276785904,
+      10635.232231047921
+    ],
+    "predictions": [
+      {
+        "tokens": 8192,
+        "allocated_gib": 32.978700917883764,
+        "estimated_driver_process_gib": 35.87963895194138
+      },
+      {
+        "tokens": 10240,
+        "allocated_gib": 39.20646520204182,
+        "estimated_driver_process_gib": 42.10740323609944
+      },
+      {
+        "tokens": 11264,
+        "allocated_gib": 42.32034734412085,
+        "estimated_driver_process_gib": 45.221285378178464
+      },
+      {
+        "tokens": 16384,
+        "allocated_gib": 57.88975805451599,
+        "estimated_driver_process_gib": 60.790696088573604
+      }
+    ],
+    "recommended_initial_exclusive_cutoff": 8192,
+    "next_exclusive_trial_cutoff": 10240,
+    "not_a_guarantee": "Two updates, synthetic data, allocator and kernel shapes; real dataset, longer training, microbatch or LoRA changes require renewed validation"
+  },
+  "runtime_results": "deploy/plans/qwen35-9b-8192/runtime-results.json"
 }

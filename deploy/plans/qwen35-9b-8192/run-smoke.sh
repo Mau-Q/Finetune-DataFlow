@@ -3,7 +3,9 @@
 set -euo pipefail
 export HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1 HF_HUB_DISABLE_TELEMETRY=1
 export TORCHINDUCTOR_COMPILE_THREADS=1
+export PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:True}"
 test -f /models/Qwen3.5-9B/transfer-manifest.json
+while test -f /work/GPU_SELECTION_PENDING; do sleep 2; done
 python - <<'PY'
 import torch
 free, total = torch.cuda.mem_get_info()

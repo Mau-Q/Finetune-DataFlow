@@ -1,10 +1,10 @@
 # 学校离线平台与训练部署
 
-2026-10-22（Asia/Shanghai）更新。平台已部署到 node01，校内 HTTPS 入口和认证读写检查通过；MinerU advanced 已复用原有模型完成一页解析。Qwen3.5-9B 的训练环境已安装，完整权重仍在传输，短训和 8192 容量结果另行记录。当前实际配置见 [训练方案及执行状态](training/qwen35-9b-node01-l40-8192.md) 与 [audit.json](../deploy/plans/qwen35-9b-8192/audit.json)。
+2026-10-22（Asia/Shanghai）更新。平台已部署到 node01，校内 HTTPS 入口和认证读写检查通过；MinerU advanced 已复用原有模型完成一页解析。Qwen3.5-9B 的训练环境已安装，完整权重已上传校验，构造数据短训、adapter 重载与显存上限测试已完成：优化分配器后 7168 token 通过，8192 token 在当前共享显存预算下 OOM；独占整卡估计约 1 万 token。当前实际配置见 [训练方案及执行状态](training/qwen35-9b-node01-l40-8192.md) 与 [audit.json](../deploy/plans/qwen35-9b-8192/audit.json)。
 
 ## 校内访问
 
-访问地址：**https://192.168.247.162:18443/**。已从 Mac 直接连接该地址并验证 TLS；其他设备须处于能访问 node01 的校内网络或相应 VPN 中。
+访问地址：**https://192.168.247.162:18443/**。已从 Mac 直接连接该地址，并通过 TLS、登录、匿名 API 拦截、保存后重新登录回读和退出检查；其他设备须处于能访问 node01 的校内网络或相应 VPN 中。
 
 首次使用先导入并信任 [DataFlow 内网 CA 公共证书](../deploy/school/node01-dataflow-root-ca.crt)，再访问上面的地址。该证书对应 Caddy 的内网 CA，不是公开 CA 自动签发的证书；没有自动修改任何客户端的系统信任设置。公共证书 SHA-256 指纹：
 
@@ -44,7 +44,7 @@ docker logs --tail 100 rui-dataflow-https-20261022
 docker restart rui-dataflow-platform-20261022
 docker restart rui-dataflow-https-20261022
 
-# 查看训练日志；训练尚未开始时相应文件可能不存在。
+# 查看已完成的训练日志。
 tail -n 100 "$HOME/DataFlow/runs/qwen35-9b/20261022-smoke/logs/train-512.log"
 ```
 
