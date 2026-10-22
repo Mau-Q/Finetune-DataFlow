@@ -301,7 +301,7 @@ async def execute_pipeline(request: Request, pipeline_id, body: RunOutput | None
                                 "context": e.context,
                                 "original_error": str(e.original_error) if e.original_error else None
                             },
-                            "completed_at": datetime.now().isoformat()
+                            "completed_at": datetime.now().astimezone().isoformat()
                         })
                         container.task_registry._write(data)
                 except Exception as update_error:

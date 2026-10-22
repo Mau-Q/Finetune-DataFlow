@@ -96,3 +96,45 @@ def test_compile_tracks_pandas_declared_columns_without_running(tmp_path):
     result = compile_check([(producer, params, 'PandasOperator','0'),
                             (Consumer(), {'input_key':'missing'}, 'Consumer','1')], storage)
     assert not result['ok'] and not result['skipped']
+
+
+def test_execution_timestamps_have_explicit_timezone(tmp_path):
+    from datetime import datetime
+    from app.services.task_registry import TaskRegistry
+    registry = TaskRegistry(path=str(tmp_path/'tasks.json'))
+    task = registry.create({'dataset_id':'time-fixture'})
+    started = registry.update(task['id'], {'status':'running'})
+    completed = registry.update(task['id'], {'status':'completed'})
+    for value in [task['created_at'], started['started_at'], completed['finished_at'], registry.get_current_time()]:
+        assert datetime.fromisoformat(value).utcoffset() is not None
+
+
+def test_warm_parser_reuses_owned_model_for_multiple_pdfs(tmp_path, monkeypatch):
+    import hashlib
+    bridge = load('mineru_bridge')
+    script = tmp_path/'job.py';script.write_text('# frozen model job')
+    parser = bridge.WarmParser(tmp_path/'bridge', tmp_path, script)
+    engine = parser.root/'engines'/'existing';engine.mkdir()
+    (engine/'ready.json').write_text('{}');(engine/'lease').touch()
+    parser.state.write_text(json.dumps({'container':'owned-model','engine':str(engine),'gpu':'GPU-fixture',
+        'script_sha256':hashlib.sha256(script.read_bytes()).hexdigest()}))
+    calls = []
+    actual_owner = parser.owner
+    def command(args, **kwargs):
+        calls.append(args)
+        if args[:2] == ['docker','inspect']:
+            return SimpleNamespace(returncode=0, stdout=json.dumps([{
+                'Config':{'Labels':{'dataflow.mineru.owner':actual_owner}}, 'State':{'Running':True}}]))
+        assert args[:3] == ['docker','exec','owned-model']
+        (parser.root/'jobs'/Path(args[-1]).parent.name/'parsed.zip').write_bytes(b'parsed-archive')
+        return SimpleNamespace(returncode=0)
+    monkeypatch.setattr(bridge.subprocess, 'run', command)
+    monkeypatch.setattr(bridge, 'choose_gpu', lambda: pytest.fail('Must reuse the already loaded GPU model'))
+    for content in [b'%PDF-first',b'%PDF-second']:
+        assert parser(parser.root, tmp_path, script, content) == b'parsed-archive'
+    receipts = [json.loads(p.read_text()) for p in (parser.root/'jobs').glob('*/receipt.json')]
+    assert len(receipts) == 2 and all(r['reused_model'] for r in receipts)
+    assert all(c[1] in {'inspect','exec'} for c in calls)
+    parser.owner = 'different-owner'
+    with pytest.raises(RuntimeError, match='different owner'):
+        parser.running('owned-model')

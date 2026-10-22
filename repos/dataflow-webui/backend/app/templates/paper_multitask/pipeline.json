@@ -181,7 +181,7 @@
     },
     {
       "name": "FormatStrPromptedGenerator",
-      "pipeline_role": "结合重要内容、读者背景与阅读目的生成最多四条不同科研任务。",
+      "pipeline_role": "结合重要内容、读者背景与阅读目的，在配置的样本预算内生成不同科研任务。",
       "location": [
         40,
         340

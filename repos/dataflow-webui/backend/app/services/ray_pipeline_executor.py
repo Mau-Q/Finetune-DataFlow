@@ -177,7 +177,7 @@ def dataflow_pipeline_execute(pipeline_config: Dict[str, Any], dataflow_runtime:
         execution_path: Execution path
     """
     pipeline_config, _ = resolve_pipeline_resources(pipeline_config)
-    started_at = datetime.now().isoformat()
+    started_at = datetime.now().astimezone().isoformat()
     logs: List[str] = []
     output: Dict[str, Any] = {}
     global settings
@@ -222,8 +222,8 @@ def dataflow_pipeline_execute(pipeline_config: Dict[str, Any], dataflow_runtime:
     logger.info(f"Starting pipeline execution: {task_id}")
     try:
         # Step 1: 初始化 Storage
-        add_log("init", f"[{datetime.now().isoformat()}] Step 1: Initializing storage...")
-        logs.append(f"[{datetime.now().isoformat()}] Step 1: Initializing storage...")
+        add_log("init", f"[{datetime.now().astimezone().isoformat()}] Step 1: Initializing storage...")
+        logs.append(f"[{datetime.now().astimezone().isoformat()}] Step 1: Initializing storage...")
         logger.info(f"Step 1: Initializing storage...")
         try:    
             storage_class = FileStorage
@@ -237,15 +237,15 @@ def dataflow_pipeline_execute(pipeline_config: Dict[str, Any], dataflow_runtime:
                 cache_type=dataflow_runtime['storage']['cache_type'],
             )
             add_log("init", f"Storage initialized with dataset: {dataflow_runtime['storage']['first_entry_file_name']}")
-            logs.append(f"[{datetime.now().isoformat()}] Storage initialized with dataset: {dataflow_runtime['storage']['first_entry_file_name']}")
+            logs.append(f"[{datetime.now().astimezone().isoformat()}] Storage initialized with dataset: {dataflow_runtime['storage']['first_entry_file_name']}")
             logger.info(f"Storage initialized with dataset: {dataflow_runtime['storage']['first_entry_file_name']}")
             
         except Exception as e:
             raise Exception(f"Failed to initialize storage: {e}")
         
         # Step 2: 初始化所有 Operators
-        add_log("init", f"[{datetime.now().isoformat()}] Step 2: Initializing operators...")
-        logs.append(f"[{datetime.now().isoformat()}] Step 2: Initializing operators...")
+        add_log("init", f"[{datetime.now().astimezone().isoformat()}] Step 2: Initializing operators...")
+        logs.append(f"[{datetime.now().astimezone().isoformat()}] Step 2: Initializing operators...")
         logger.info(f"Step 2: Initializing operators...")
         
         serving_instance_map: Dict[str, Any] = {}
@@ -254,8 +254,8 @@ def dataflow_pipeline_execute(pipeline_config: Dict[str, Any], dataflow_runtime:
         run_op = []
         operators = pipeline_config.get("operators", [])
         
-        add_log("init", f"[{datetime.now().isoformat()}] Found {len(operators)} operators to initialize")
-        logs.append(f"[{datetime.now().isoformat()}] Found {len(operators)} operators to initialize")
+        add_log("init", f"[{datetime.now().astimezone().isoformat()}] Found {len(operators)} operators to initialize")
+        logs.append(f"[{datetime.now().astimezone().isoformat()}] Found {len(operators)} operators to initialize")
         logger.info(f"Initializing {len(operators)} operators...")
         OPERATOR_REGISTRY._get_all()
         for op_idx, op in enumerate(operators):
@@ -266,7 +266,7 @@ def dataflow_pipeline_execute(pipeline_config: Dict[str, Any], dataflow_runtime:
                 "index": op_idx,
                 "status": "initializing"
             }
-            add_log("init", f"[{datetime.now().isoformat()}] [{op_idx+1}/{len(operators)}] Initializing operator: {op_name}", op_key)
+            add_log("init", f"[{datetime.now().astimezone().isoformat()}] [{op_idx+1}/{len(operators)}] Initializing operator: {op_name}", op_key)
             logger.info(f"[{op_idx+1}/{len(operators)}] Initializing operator: {op_name}")
             try:
                 init_params = {}
@@ -319,7 +319,7 @@ def dataflow_pipeline_execute(pipeline_config: Dict[str, Any], dataflow_runtime:
                         if param_name == "llm_serving":
                             serving_id = param_value
                             logger.info(f"Operator {op_name}: initializing serving {serving_id}")
-                            add_log("init", f"[{datetime.now().isoformat()}]   - Initializing LLM serving: {serving_id}", op_key)
+                            add_log("init", f"[{datetime.now().astimezone().isoformat()}]   - Initializing LLM serving: {serving_id}", op_key)
                             if serving_id not in serving_instance_map:
                                 serving_info = dataflow_runtime['serving_map'][serving_id]
                                 params_dict = {}
@@ -362,8 +362,8 @@ def dataflow_pipeline_execute(pipeline_config: Dict[str, Any], dataflow_runtime:
                         elif param_name == "embedding_serving":
                             serving_id = param_value
                             logger.info(f"Operator {op_name}: initializing embedding serving {serving_id}")
-                            add_log("init", f"[{datetime.now().isoformat()}]   - Initializing embedding serving: {serving_id}", op_name)
-                            logs.append(f"[{datetime.now().isoformat()}]   - Initializing embedding serving: {serving_id}")
+                            add_log("init", f"[{datetime.now().astimezone().isoformat()}]   - Initializing embedding serving: {serving_id}", op_name)
+                            logs.append(f"[{datetime.now().astimezone().isoformat()}]   - Initializing embedding serving: {serving_id}")
                             if serving_id not in embedding_serving_instance_map:
                                 serving_info = dataflow_runtime['embedding_serving_map'][serving_id]
                                 params_dict = {}
@@ -447,7 +447,7 @@ def dataflow_pipeline_execute(pipeline_config: Dict[str, Any], dataflow_runtime:
                                 for item in normalized_items
                             ]
                             param_value = compiled
-                            add_log("init", f"[{datetime.now().isoformat()}]   - Compiled {len(compiled)} code-string(s) for {param_name}", op_key)
+                            add_log("init", f"[{datetime.now().astimezone().isoformat()}]   - Compiled {len(compiled)} code-string(s) for {param_name}", op_key)
                         else:
                             ann = init_sig.parameters.get(param_name).annotation if param_name in init_sig.parameters else inspect.Parameter.empty
                             param_value = coerce_param_value(param_value, annotation=ann, default_value=default_value)
@@ -510,7 +510,7 @@ def dataflow_pipeline_execute(pipeline_config: Dict[str, Any], dataflow_runtime:
                 run_op.append((operator_instance, run_params, op_name, op_key))
                 
                 operators_detail[op_key]["status"] = "initialized"
-                add_log("init", f"[{datetime.now().isoformat()}] [{op_idx+1}/{len(operators)}] {op_name} initialized successfully", op_key)
+                add_log("init", f"[{datetime.now().astimezone().isoformat()}] [{op_idx+1}/{len(operators)}] {op_name} initialized successfully", op_key)
                 logger.info(f"Operator {op_name} initialized successfully")
                 
             except DataFlowEngineError:
@@ -542,11 +542,11 @@ def dataflow_pipeline_execute(pipeline_config: Dict[str, Any], dataflow_runtime:
             compile_result = {"ok": True, "skipped": True, "detail": str(_ce), "errors": []}
 
         if compile_result.get("skipped"):
-            add_log("init", f"[{datetime.now().isoformat()}] [compile] key check skipped: {compile_result.get('detail','')}")
+            add_log("init", f"[{datetime.now().astimezone().isoformat()}] [compile] key check skipped: {compile_result.get('detail','')}")
             logger.warning(f"[compile] key check skipped: {compile_result.get('detail','')}")
         elif not compile_result["ok"]:
             detail = compile_result.get("detail", "key matching error")
-            add_log("init", f"[{datetime.now().isoformat()}] [compile] key 校验未通过，已在执行前中止:\n{detail}")
+            add_log("init", f"[{datetime.now().astimezone().isoformat()}] [compile] key 校验未通过，已在执行前中止:\n{detail}")
             logger.error(f"[compile] key check FAILED, aborting before run:\n{detail}")
             raise DataFlowEngineError(
                 "Pipeline key 校验未通过（compile）——上游算子的 output key 与下游 input key 不匹配，已在执行前中止。",
@@ -556,10 +556,10 @@ def dataflow_pipeline_execute(pipeline_config: Dict[str, Any], dataflow_runtime:
                 },
             )
         else:
-            add_log("init", f"[{datetime.now().isoformat()}] [compile] key check passed")
+            add_log("init", f"[{datetime.now().astimezone().isoformat()}] [compile] key check passed")
             logger.info("[compile] key check passed")
 
-        add_log("run", f"[{datetime.now().isoformat()}] Step 3: Executing {len(run_op)} operators...")
+        add_log("run", f"[{datetime.now().astimezone().isoformat()}] Step 3: Executing {len(run_op)} operators...")
         logger.info(f"Executing {len(run_op)} operators...")
         
         execution_results = []
@@ -567,13 +567,13 @@ def dataflow_pipeline_execute(pipeline_config: Dict[str, Any], dataflow_runtime:
         for op_idx, (operator, run_params, op_name, op_key) in enumerate(run_op):
             try:
                 run_params["storage"] = storage.step()
-                add_log("run", f"[{datetime.now().isoformat()}] [{op_idx+1}/{len(run_op)}] Running operator: {op_name}", op_key)
+                add_log("run", f"[{datetime.now().astimezone().isoformat()}] [{op_idx+1}/{len(run_op)}] Running operator: {op_name}", op_key)
                 logger.info(f"[{op_idx+1}/{len(run_op)}] Running {op_name}")
                 logger.debug(f"Run params: {list(run_params.keys())}")
                 
                  # ✅ 更新算子粒度状态：开始执行
                 operators_detail[op_key]["status"] = "running"
-                operators_detail[op_key]["started_at"] = datetime.now().isoformat()
+                operators_detail[op_key]["started_at"] = datetime.now().astimezone().isoformat()
                 
                 # ✅ 实时更新状态到文件
                 update_execution_status("running", {
@@ -644,12 +644,12 @@ def dataflow_pipeline_execute(pipeline_config: Dict[str, Any], dataflow_runtime:
                 operators_detail[op_key]["sample_count"] = sample_count
                 add_log("run", f"Processed {sample_count} samples", op_key)
                 
-                add_log("run", f"[{datetime.now().isoformat()}] [{op_idx+1}/{len(run_op)}] {op_name} completed successfully", op_key)
+                add_log("run", f"[{datetime.now().astimezone().isoformat()}] [{op_idx+1}/{len(run_op)}] {op_name} completed successfully", op_key)
                 logger.info(f"[{op_idx+1}/{len(run_op)}] {op_name} completed")
                 
                 # ✅ 更新算子粒度状态：执行完成
                 operators_detail[op_key]["status"] = "completed"
-                operators_detail[op_key]["completed_at"] = datetime.now().isoformat()
+                operators_detail[op_key]["completed_at"] = datetime.now().astimezone().isoformat()
                 
                 # ✅ 记录缓存文件信息
                 from app.core.config import settings
@@ -701,7 +701,7 @@ def dataflow_pipeline_execute(pipeline_config: Dict[str, Any], dataflow_runtime:
                     original_error=e
                 )
         # 成功完成
-        completed_at = datetime.now().isoformat()
+        completed_at = datetime.now().astimezone().isoformat()
         add_log("global", f"[{completed_at}] Pipeline execution completed successfully")
         logger.info(f"Pipeline execution completed successfully: {task_id}")
         
@@ -722,7 +722,7 @@ def dataflow_pipeline_execute(pipeline_config: Dict[str, Any], dataflow_runtime:
         }
         
     except DataFlowEngineError as e:
-        completed_at = datetime.now().isoformat()
+        completed_at = datetime.now().astimezone().isoformat()
         error_log = f"[{completed_at}] ERROR: {e.message}"
         error_op_name = e.context.get("operator")
         if error_op_name:
@@ -761,7 +761,7 @@ def dataflow_pipeline_execute(pipeline_config: Dict[str, Any], dataflow_runtime:
         }
     
     except Exception as e:
-        completed_at = datetime.now().isoformat()
+        completed_at = datetime.now().astimezone().isoformat()
         error_log = f"[{completed_at}] ERROR: Unexpected error - {str(e)}"
         logs.append(error_log)
         
@@ -902,7 +902,7 @@ class RayPipelineExecutor:
             # 更新状态为 running
             try:
                 from app.services.task_store import patch_task
-                patch_task(pipeline_execution_path, task_id, {"status": "running", "started_at": datetime.now().isoformat()})
+                patch_task(pipeline_execution_path, task_id, {"status": "running", "started_at": datetime.now().astimezone().isoformat()})
             except Exception as e:
                 logger.error(f"[Ray Worker] Failed to update execution status to running: {e}")
                         
@@ -932,8 +932,8 @@ class RayPipelineExecutor:
                     "traceback": traceback.format_exc()
                 },
                 "logs": [f"ERROR: {str(e)}"],
-                "started_at": datetime.now().isoformat(),
-                "completed_at": datetime.now().isoformat()
+                "started_at": datetime.now().astimezone().isoformat(),
+                "completed_at": datetime.now().astimezone().isoformat()
             }
     
             from app.services.task_store import patch_task

@@ -45,7 +45,7 @@ class TaskRegistry:
 
     def _generate_task_id(self) -> str:
         """生成唯一的任务ID"""
-        timestamp = pandas.Timestamp.now().isoformat()
+        timestamp = pandas.Timestamp.now(tz='UTC').isoformat()
         random_str = os.urandom(8).hex()
         combined = f"{timestamp}-{random_str}"
         return hashlib.md5(combined.encode("utf-8")).hexdigest()[:12]
@@ -84,7 +84,7 @@ class TaskRegistry:
         task_id = self._generate_task_id()
         task["id"] = task_id
         task["status"] = "pending"  # 初始状态
-        task["created_at"] = pandas.Timestamp.now().isoformat()
+        task["created_at"] = pandas.Timestamp.now(tz='UTC').isoformat()
         task["started_at"] = None
         task["finished_at"] = None
         task["output_id"] = None
@@ -112,9 +112,9 @@ class TaskRegistry:
         """
         updates = {key: value for key, value in updates.items() if value is not None}
         if updates.get('status') == 'running':
-            updates.setdefault('started_at', pandas.Timestamp.now().isoformat())
+            updates.setdefault('started_at', pandas.Timestamp.now(tz='UTC').isoformat())
         elif updates.get('status') in {'success', 'completed', 'failed', 'cancelled'}:
-            updates.setdefault('finished_at', pandas.Timestamp.now().isoformat())
+            updates.setdefault('finished_at', pandas.Timestamp.now(tz='UTC').isoformat())
         return patch_task(self.path, task_id, updates)
 
     def delete(self, task_id: str) -> bool:
@@ -172,7 +172,7 @@ class TaskRegistry:
 
     def get_current_time(self):
         """获取当前时间的ISO格式字符串"""
-        return datetime.datetime.now().isoformat()
+        return datetime.datetime.now().astimezone().isoformat()
 
     def start_execution(self, pipeline_id: Optional[str] = None, config: Optional[Dict[str, Any]] = None) -> Tuple[str, Dict[str, Any], Dict[str, Any]]:
         """开始执行Pipeline"""
@@ -510,7 +510,7 @@ class TaskRegistry:
             killed_via_ray = ray_executor.kill_execution(task_id)
             
             # 3. 构造状态更新
-            now = datetime.now().isoformat()
+            now = datetime.now().astimezone().isoformat()
             task_record["status"] = "cancelled"
             task_record["finished_at"] = now
             task_record["error_message"] = "Task was killed by user"
@@ -535,7 +535,7 @@ class TaskRegistry:
             
             # 即使发生异常，也尝试更新任务状态
             try:
-                now = datetime.now().isoformat()
+                now = datetime.now().astimezone().isoformat()
                 task_record["status"] = "cancelled"
                 task_record["finished_at"] = now
                 task_record["error_message"] = f"Task kill failed: {str(e)}"

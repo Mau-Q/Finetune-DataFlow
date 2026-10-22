@@ -64,7 +64,7 @@ Linux x86_64/CPython3.12 物料在 Mac 下载后上传；训练与平台使用�
 
 当前学校默认上下文预算 3000 token，块预算 2800，每个上下文最多生成 2 条，完整训练序列上限 6144。预算使用现有 Qwen3.5-9B tokenizer，不在服务器下载。配置在 `/work/paper-workflow.json`；修改配置仅影响后续安装的模板，已有 Pipeline 保留提交时参数。
 
-解析桥只接收带认证的 PDF 内容，平台容器没有 Docker socket 权限。宿主按需创建独立离线 MinerU 容器，复用原镜像和模型；同一时刻解析一个 PDF。当前每篇会启动一次模型，适合先做小批验收，尚未验证数千篇吞吐。显存不足 16 GB 时暂缓解析，不停止其他人的任务。
+解析桥只接收带认证的 PDF 内容，平台容器没有 Docker socket 权限。宿主按需创建本项目独立的离线 MinerU 容器，复用原镜像和模型；同一时刻解析一个 PDF。同一批连续请求复用已加载的 advanced VLM 模型，空闲 5 分钟后容器自行退出并释放显存；运行中的解析定期续租，即使宿主桥退出也不会永久占用 GPU。每篇的布局/OCR 子流程仍单独执行。只有新建模型时检查至少 16 GB 空闲显存，不停止其他人的任务。尚未验证数千篇吞吐。
 
 解析桥目前采用独立进程，没有配置宿主自动开机启动。服务器重启后，在核实 node01/huruiqian 身份后执行：
 
@@ -72,7 +72,7 @@ Linux x86_64/CPython3.12 物料在 Mac 下载后上传；训练与平台使用�
 python3 "$HOME/DataFlow/app/deploy/school/start-mineru-bridge.py"
 ```
 
-该命令检测已启动的服务，不重复创建进程。日志在 `environments/platform/mineru-bridge/server.log`，每个解析作业的输入、日志、ZIP 和哈希回执在该目录的 `jobs/`。错误先检查对应作业日志，不直接重跑商业请求。
+该命令检测已启动的服务，不重复创建进程。日志在 `environments/platform/mineru-bridge/server.log`，每个解析作业的输入、日志、ZIP 和哈希回执在该目录的 `jobs/`；模型启动日志在 `engines/`。回执记录是否复用了模型及总耗时。错误先检查对应作业日志，不直接重跑商业请求。
 
 ## 代码与运行数据位置
 
@@ -89,6 +89,6 @@ Serving 文件包含凭据，数据库、任务响应和备份也可能含个人
 
 发布版本可导出 Alpaca JSONL；在既有训练容器中用 [输入验证脚本](../deploy/school/validate-sft-input.py) 按 `qwen3_5_nothink` 检查真实 token 数、监督答案和 6144 上限。该脚本不加载模型权重、不训练。生成链路完成不会自动启动训练。
 
-平台 SSH 训练执行器尚未覆盖容器内外一致的文件路径和进程身份；服务器平台也没有复用 Mac Keychain 的 SSH 认证。直接 DataFlex 试训独立完成，不能把按钮保存或输入校验当成平台训练执行成功。真实 Windows 电脑、其他成员证书与邀请流程，以及大规模多篇吞吐仍需实机验收。
+平台 SSH 训练执行器尚未覆盖容器内外一致的文件路径和进程身份；服务器平台也没有复用 Mac Keychain 的 SSH 认证。直接 DataFlex 试训独立完成，不能把按钮保存或输入校验当成平台训练执行成功。任务及算子时间已改为携带时区，避免服务器与浏览器时区不同造成运行时长偏差；既有记录不作猜测性迁移。真实 Windows 电脑、其他成员证书与邀请流程，以及大规模多篇吞吐仍需实机验收。
 
 更多成员权限、人工评测和导出操作见 [局域网团队使用说明](lan-usage.md)。HTTPS 配置沿用 [Caddy 官方反向代理机制](https://caddyserver.com/docs/caddyfile/directives/reverse_proxy) 和内网 CA 机制。

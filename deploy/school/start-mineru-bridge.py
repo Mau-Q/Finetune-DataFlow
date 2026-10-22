@@ -34,7 +34,7 @@ def start(root):
         process = subprocess.Popen(command, stdin=subprocess.DEVNULL, stdout=log,
                                    stderr=log, start_new_session=True)
     (state/'pid').write_text(str(process.pid))
-    for _ in range(40):
+    for _ in range(120):
         if process.poll() is not None:
             raise RuntimeError('Bridge exited; inspect '+str(state/'server.log'))
         if ready():
