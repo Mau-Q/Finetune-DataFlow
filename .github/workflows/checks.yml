@@ -17,7 +17,7 @@ jobs:
       - name: Validate component pins and public files
         run: python scripts/check-workspace.py
       - name: Check shell syntax
-        run: bash -n scripts/setup.sh && sh -n scripts/webui.sh scripts/test-local.sh
+        run: bash -n scripts/setup.sh && sh -n scripts/webui.sh scripts/dev.sh scripts/test-local.sh
       - name: Check whitespace
         run: git diff --check
   frontend:
@@ -50,7 +50,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install isolated persistence test dependencies
-        run: python -m pip install loguru pydantic-settings Pillow pypdf pyyaml
+        run: python -m pip install loguru pydantic-settings Pillow pypdf pyyaml fastapi httpx uvicorn
       - name: Test Windows file locking and backup restore
         working-directory: repos/dataflow-webui/backend
         run: python -m unittest discover -s platform_tests -v

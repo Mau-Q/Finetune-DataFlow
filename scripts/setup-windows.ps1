@@ -21,7 +21,11 @@ foreach ($tool in $Tools) {
 }
 
 Write-Host "Initializing required submodules..."
-Invoke-CheckedNative git @("submodule", "update", "--init", "--", "repos/dataflow", "repos/dataflow-webui")
+foreach ($module in @("dataflow", "dataflow-webui")) {
+    if (-not (Test-Path (Join-Path $Root "repos/$module/.git"))) {
+        Invoke-CheckedNative git @("submodule", "update", "--init", "--", "repos/$module")
+    }
+}
 
 $Python = Join-Path $Root ".venv\Scripts\python.exe"
 if (-not (Test-Path $Python)) {
@@ -40,17 +44,18 @@ try {
 
     # langkit pulls whylogs-sketching, whose Windows/Python 3.12 installation
     # requires a native C++ build. Langkit is an optional evaluator and is
-    # disabled by scripts/windows_server.py when unavailable.
-    Get-Content (Join-Path $Root "repos\dataflow\requirements.txt") |
-        Where-Object { $_ -notmatch '^\s*langkit\s*$' } |
-        Set-Content -Encoding utf8 $CoreRequirements
+    # skipped by Core optional-operator discovery when unavailable.
+    $Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+    $CoreLines = @(Get-Content (Join-Path $Root "repos\dataflow\requirements.txt") |
+        Where-Object { $_ -notmatch '^\s*langkit\s*$' })
+    [IO.File]::WriteAllLines($CoreRequirements, [string[]]$CoreLines, $Utf8NoBom)
 
     # Install the local editable DataFlow package below. Do not let the
     # published open-dataflow requirement pull a second copy and its full
     # dependency graph back into the Windows environment.
-    Get-Content (Join-Path $Root "repos\dataflow-webui\backend\requirements.txt") |
-        Where-Object { $_ -notmatch '^\s*open-dataflow(?:==.*)?\s*$' } |
-        Set-Content -Encoding utf8 $WebuiRequirements
+    $WebuiLines = @(Get-Content (Join-Path $Root "repos\dataflow-webui\backend\requirements.txt") |
+        Where-Object { $_ -notmatch '^\s*open-dataflow(?:==.*)?\s*$' })
+    [IO.File]::WriteAllLines($WebuiRequirements, [string[]]$WebuiLines, $Utf8NoBom)
 
     Write-Host "Installing the local DataFlow package without dependency re-resolution..."
     Invoke-CheckedNative uv @("pip", "install", "--python", $Python, "--no-deps", "-e", (Join-Path $Root "repos\dataflow"))

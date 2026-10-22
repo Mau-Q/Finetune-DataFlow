@@ -22,7 +22,13 @@ cd Finetune-DataFlow
 ./scripts/webui.sh --stop
 ```
 
-打开 `http://127.0.0.1:8000/`，MCP 为 `http://127.0.0.1:8000/mcp`。前台调试运行 `./scripts/webui.sh`。日志在 `repos/dataflow-webui/.backend.log`。此项目没有登录与多用户隔离，默认作为本机工具使用。
+打开 `http://127.0.0.1:8001/`。本地开发默认自动进入“默认工作区”，首次启动自动创建独立的“本地开发者”身份，不需要管理员密码。每位开发者在自己的电脑运行实例，数据库、账号、任务和模型服务配置都保存在本机，不通过 Git 同步。
+
+前台调试可运行 `./scripts/dev.sh` 或 `./scripts/webui.sh`；日志在终端，后台日志在 `repos/dataflow-webui/.backend.log`。前后端热更新开发可另开终端，在 `frontend` 目录运行 `npm run dev`，Vite 会把 `/team` 和 `/api` 转发到 `8001`。修改后端代码需在没有任务运行时重启后端；网关会管理私有项目进程。
+
+退出后当前标签页停留在登录页；点击“进入本地工作区”可重新进入。已有管理员账号保留，开发身份不复用管理员密码。测试正常登录流程可运行 `./scripts/dev.sh --require-login`，或用 `DATAFLOW_DEV_AUTO_LOGIN=0 ./scripts/webui.sh`。新机器如需使用普通账号，先按 [团队指南](lan-usage.md) 初始化管理员，再选择正常登录模式。
+
+开发模式仅允许本机连接和本机 Host，不支持把端口转发给其他人；局域网部署使用独立的 `start-lan.sh`，默认不开启开发自动登录。产品内 Agent/MCP 入口已移除。
 
 更新前端后，进入 `repos/dataflow-webui/frontend` 执行 `npm run build` 并刷新页面；后台模式更新 Python 后，在没有任务写入时停止并重新启动。
 
@@ -36,11 +42,11 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 .\scripts\webui-windows.ps1 -Action Foreground
 ```
 
-启动后会在当前 PowerShell 中打印：
+首次运行会自动创建本机开发身份并进入默认工作区；不需要你的 Mac 管理员账号。启动后会在当前 PowerShell 中打印：
 
 - `.venv` 激活状态和实际 Python 路径
 - 后端启动日志
-- `http://127.0.0.1:8000` 的服务地址
+- `http://127.0.0.1:8001` 的服务地址
 
 保持这个窗口打开即可使用 WebUI；停止时按 `Ctrl+C`。
 
@@ -49,6 +55,8 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 ```powershell
 .\scripts\webui-windows.ps1 -Action Foreground
 ```
+
+需要测试正常登录时运行 `.\scripts\webui-windows.ps1 -Action Foreground -RequireLogin`。
 
 后台模式仍然可用，但日志会写入文件：
 
@@ -63,7 +71,7 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 .\scripts\webui-windows.ps1 -Action Stop
 ```
 
-安装脚本会检查每个外部命令的退出码；子模块检查、依赖安装或前端构建失败时会立即停止。后台服务未就绪时也会返回失败；`Stop` 会核验进程路径和启动参数，发现旧 PID 被其他程序占用时会拒绝停止并提示检查 PID 文件。
+安装脚本会检查每个外部命令的退出码；子模块检查、依赖安装或前端构建失败时会立即停止。后台服务未就绪时也会返回失败；`Stop` 会核验进程路径和启动参数，发现旧 PID 被其他程序占用时会拒绝停止并提示检查 PID 文件。Windows 后台停止会终止该实例的整个进程树，请先确认没有生成任务运行。
 
 可用以下命令运行隔离的 Windows 回归测试（包含超过 10 秒的锁等待，不会调用模型服务）：
 
@@ -74,7 +82,7 @@ try { & ..\..\..\.venv\Scripts\python.exe -m unittest discover -s platform_tests
 finally { Pop-Location }
 ```
 
-GitHub Actions 同时运行 Windows 持久化测试、Windows PowerShell 5.1 和 PowerShell 7 脚本测试。
+GitHub Actions 同时运行 Windows 持久化测试、真实私有进程启停和凭证隔离测试、Windows PowerShell 5.1 和 PowerShell 7 脚本测试。这些检查不等于完整 Windows 安装、浏览器和模型调用验收；完整验收步骤见 [Windows 开发验收](windows-development.md)。
 
 Windows 安装路径不安装可选的 Langkit 评估依赖，因此不需要编译 `whylogs-sketching` 或安装 Visual Studio C++ 工具；LangkitFilter 和 LangkitSampleEvaluator 在该环境中不可用，其余 WebUI 流程保持不变。
 

@@ -1,7 +1,8 @@
 [CmdletBinding()]
 param(
     [ValidateSet("Foreground", "Daemon", "Status", "Stop")]
-    [string]$Action = "Foreground"
+    [string]$Action = "Foreground",
+    [switch]$RequireLogin
 )
 
 $ErrorActionPreference = "Stop"
@@ -16,10 +17,15 @@ $LogFile = Join-Path $Root "repos\dataflow-webui\.backend.log"
 $ErrorLogFile = Join-Path $Root "repos\dataflow-webui\.backend.error.log"
 
 $BindHost = if ($env:DATAFLOW_HOST) { $env:DATAFLOW_HOST } else { "127.0.0.1" }
-$Port = if ($env:DATAFLOW_PORT) { [int]$env:DATAFLOW_PORT } else { 8000 }
+$Port = if ($env:DATAFLOW_PORT) { [int]$env:DATAFLOW_PORT } else { 8001 }
+$UrlHost = if ($BindHost.Contains(":")) { "[$BindHost]" } else { $BindHost }
+$BaseUrl = "http://$UrlHost`:$Port"
 $env:DATAFLOW_HOST = $BindHost
 $env:DATAFLOW_PORT = "$Port"
 $env:HF_HOME = Join-Path $Root "models\huggingface-cache"
+$env:PYTHONUTF8 = "1"
+$ServerArguments = @('"' + $Server + '"')
+if ($RequireLogin) { $ServerArguments += "--require-login" }
 
 function Get-BackendProcess {
     if (-not (Test-Path $PidFile)) { return $null }
@@ -55,8 +61,8 @@ switch ($Action) {
             exit 1
         }
         try {
-            Invoke-WebRequest -UseBasicParsing "http://$BindHost`:$Port/api/v1/datasets/" -TimeoutSec 3 | Out-Null
-            Write-Host "Backend is running at http://$BindHost`:$Port (PID $($process.Id))."
+            Invoke-WebRequest -UseBasicParsing "$BaseUrl/team/status" -TimeoutSec 3 | Out-Null
+            Write-Host "Backend is running at $BaseUrl (PID $($process.Id))."
         }
         catch {
             Write-Host "Process $($process.Id) exists, but the backend is not ready yet."
@@ -71,7 +77,7 @@ switch ($Action) {
             Write-Host "Backend is not running."
             break
         }
-        Stop-Process -Id $process.Id -Force
+        Invoke-CheckedNative taskkill.exe @("/PID", "$($process.Id)", "/T", "/F")
         Remove-Item -LiteralPath $PidFile -Force -ErrorAction SilentlyContinue
         Write-Host "Stopped backend (PID $($process.Id))."
         break
@@ -82,7 +88,7 @@ switch ($Action) {
             break
         }
         $process = Start-Process -FilePath $Python `
-            -ArgumentList @('"' + $Server + '"') `
+            -ArgumentList $ServerArguments `
             -WorkingDirectory $Backend `
             -RedirectStandardOutput $LogFile `
             -RedirectStandardError $ErrorLogFile `
@@ -94,7 +100,7 @@ switch ($Action) {
         for ($attempt = 0; $attempt -lt 60; $attempt++) {
             Start-Sleep -Seconds 1
             try {
-                Invoke-WebRequest -UseBasicParsing "http://$BindHost`:$Port/api/v1/datasets/" -TimeoutSec 2 | Out-Null
+                Invoke-WebRequest -UseBasicParsing "$BaseUrl/team/status" -TimeoutSec 2 | Out-Null
                 $ready = $true
                 break
             }
@@ -103,7 +109,7 @@ switch ($Action) {
             }
         }
         if ($ready) {
-            Write-Host "Backend ready at http://$BindHost`:$Port."
+            Write-Host "Backend ready at $BaseUrl."
         }
         else {
             throw "Backend did not become ready. Check $LogFile and $ErrorLogFile."
@@ -119,7 +125,9 @@ switch ($Action) {
         Write-Host "WebUI logs are shown below. Press Ctrl+C to stop."
         Push-Location $Backend
         try {
-            Invoke-CheckedNative $Python @($Server)
+            $ForegroundArguments = @($Server)
+            if ($RequireLogin) { $ForegroundArguments += "--require-login" }
+            Invoke-CheckedNative $Python $ForegroundArguments
         }
         finally {
             Pop-Location

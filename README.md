@@ -32,7 +32,9 @@ cd Finetune-DataFlow
 ./scripts/webui.sh --status
 ```
 
-打开 [本地 WebUI](http://127.0.0.1:8000/)。停止服务：`./scripts/webui.sh --stop`。
+打开 [本地 WebUI](http://127.0.0.1:8001/)，开发模式自动进入本机默认工作区。停止服务：`./scripts/webui.sh --stop`。
+Windows 使用 PowerShell：`.\scripts\setup-windows.ps1`，然后 `.\scripts\webui-windows.ps1 -Action Foreground`。各开发者分别运行本机实例，互不共享账号和运行数据。详细步骤见 [Windows 开发验收](docs/windows-development.md)。
+
 安装细节、常见问题和可选 PDF 解析见 [安装与启动](docs/getting-started.md)。
 
 首次生成：在 WebUI 配置模型服务 → 导入示例 → 选择模板并为每个模型节点绑定服务 → Save & Run → 选择收录目标和输出目录 → 检查结果。API 配置及真实运行由使用者在自己的实例完成。

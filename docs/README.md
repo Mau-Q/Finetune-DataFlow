@@ -5,6 +5,7 @@
 | 文档 | 内容 |
 | --- | --- |
 | [安装与启动](getting-started.md) | 克隆、安装、启动、停止与排错 |
+| [Windows 开发验收](windows-development.md) | 独立本机开发、自动登录、Windows 启停与实机验收 |
 | [模型 API 配置](model-api.md) | 四类流程的 API 能力、绑定与输出 |
 | [架构与组件](architecture.md) | 目录职责、数据路径与运行边界 |
 | [开发与验证](development.md) | Git、版本固定、回归和发布 |
