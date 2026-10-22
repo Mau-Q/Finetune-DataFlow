@@ -133,6 +133,8 @@ finally { Pop-Location }
 - **NOT_RUN：需要历史 tokenizer / 回放数据的论文实验。** 仓库首次检出无这些资源，对应测试跳过，未当作通过。
 - 清理范围限定为本轮临时脚本、测试缓存、下载副本和临时服务；保留 `.venv`、`node_modules`、生产构建和已保存的本机验收运行数据。它们均不进入 Git 提交。未清理系统交换空间或无关项目。
 
+实际已删除临时验收脚本、截图、Node ZIP 副本和根目录回归日志，关闭两个验收浏览器、Vite、前后台服务；8001、8002、5173 无本轮监听。`.playwright-cli`、Core/WebUI backend/论文扩展的 `.pytest_cache` 目录及部分 Python 字节码缓存仍保留：自动安全检查拒绝目录清理，唯一返回原因是 `blocked by policy`；更窄的文件枚举清理同样被拒绝。没有绕过限制或改动用户运行结果，这些缓存均被 Git 忽略。
+
 ## 交付提交
 
 两个子模块均已先提交并直接推送到 Mau-Q fork 的 main，无强制推送；随后主仓库更新 gitlink 与组件锁。验收后的修复版本为：
@@ -143,3 +145,9 @@ finally { Pop-Location }
 | WebUI | `41549cb0176e59ca4c1508e0c5caaffcc9815889` |
 
 主仓库提交由包含本记录的 Git 历史核对。本记录的实机结果不能代替 CI，也不把 CI 平台夹具当成真实模型执行。
+
+## CI 核对
+
+主仓库实现提交 `2d95e0e6109f3e24d1503c42b3886b8893de4ce6` 的 [Repository checks](https://github.com/Mau-Q/Finetune-DataFlow/actions/runs/39703591710) 已全部通过：workspace、frontend、windows-persistence、regression。该运行检出的 Core/WebUI 正是上表修复提交，包含新增修订冲突回归。后续只更新本记录的文档提交，可按其 SHA 在 Actions 核对最新运行。
+
+Core 和 WebUI fork 的 Actions 权限均启用、工作流状态 active，但本轮推送没有产生独立 workflow run；没有把无运行记录记为通过。集成仓库的上述 CI 已针对固定组件执行；没有为触发上游含 API 测试的工作流而配置模型凭证。
