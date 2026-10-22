@@ -23,6 +23,8 @@ class MemoryStorage:
         self.frame = frame
 
 
+@unittest.skipUnless((ROOT / 'models/tokenizers/Qwen2.5-7B-Instruct/tokenizer.json').is_file(),
+                     'Optional historical Qwen tokenizer is not installed; no automatic download')
 class EvidenceContractTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

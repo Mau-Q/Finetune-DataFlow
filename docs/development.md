@@ -26,6 +26,20 @@ npm run build
 
 完整本地脚本依次运行 Core CPU 测试、WebUI 后端与本地扩展测试；Core 排除 `gpu` 标记。测试环境为 `.venvs/dataflow`。CI 执行组件与仓库边界检查，以及前端契约测试和构建，尚未代替完整后端回归。
 
+Windows 使用等效的 PowerShell 入口，环境位于根目录 `.venv`：
+
+```powershell
+.\scripts\test-local.ps1
+.\scripts\test-windows.ps1 -Python .\.venv\Scripts\python.exe
+Push-Location repos\dataflow-webui\backend
+try { & ..\..\..\.venv\Scripts\python.exe -X utf8 -m unittest discover -s platform_tests -v; if ($LASTEXITCODE -ne 0) { throw 'Platform tests failed' } }
+finally { Pop-Location }
+```
+
+Windows 完整入口统一设置 UTF-8 和 `PYTHONPATH`，检查每个退出码。手动执行多个 npm/Python 命令时也要逐条检查 `$LASTEXITCODE`，不能用最后一次成功的构建掩盖前面的测试失败。历史论文 tokenizer 和回放数据缺失时对应检查明确跳过；Linux 远端 runner 的 POSIX 检查不作为 Windows 主机能力。实际结果见 [Windows 实机验收](windows-acceptance.md)。
+
+前后端热更新：先运行当前平台启动脚本，再在 WebUI `frontend` 运行 `npm run dev`；Vite 的 `/team` 与 `/api` 代理到 `8001`。默认开发身份和工作区只用于本机；普通账号验证用 `-RequireLogin`。不要连接其他开发者的后端、复制数据库或更改他们的密码。
+
 对持久化或页面行为的修改还应在隔离数据下验证保存、重开、运行拦截、下载和媒体引用。变更数据库前保留一致性备份；真实 API、用户原始材料和正在运行的任务不用于自动冒烟测试。
 
 ## 发布边界

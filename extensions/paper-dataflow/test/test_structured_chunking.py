@@ -20,6 +20,8 @@ def page(number, blocks, document='fixture'):
     return {'source_page': dict(document_id=document, page_number=number, text=text, blocks=result)}
 
 
+@unittest.skipUnless((ROOT / 'models/tokenizers/Qwen2.5-7B-Instruct/tokenizer.json').is_file(),
+                     'Optional historical Qwen tokenizer is not installed; no automatic download')
 class StructuredChunkingTests(unittest.TestCase):
     def run_chunker(self, source, size=128):
         op = PaperStructuredChunker(str(ROOT / 'models/tokenizers/Qwen2.5-7B-Instruct'), size)

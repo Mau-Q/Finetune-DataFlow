@@ -2,7 +2,7 @@
 
 基于 [OpenDCAI DataFlow](https://github.com/OpenDCAI/DataFlow) 与 [DataFlow-WebUI](https://github.com/OpenDCAI/DataFlow-WebUI) 的本地微调数据生成平台。通过可视化 Pipeline，将文本或图片材料转换成 SFT / DPO 训练样本，并管理来源、运行记录、数据集草稿和发布版本。
 
-支持个人在本机使用，以及管理员维护的局域网小团队共享；默认仅监听 `127.0.0.1`。团队模式采用独立账号、项目隔离、单人人工评测和固定导出，不提供产品内 Agent/MCP 入口。当前主要验证环境是 macOS Apple Silicon；Linux / Windows 尚未完成同等本地验收。
+支持个人在本机使用，以及管理员维护的局域网小团队共享；默认仅监听 `127.0.0.1`。团队模式采用独立账号、项目隔离、单人人工评测和固定导出，不提供产品内 Agent/MCP 入口。已在 macOS Apple Silicon 和 Windows 11 验证本地开发；Windows 实测安装、原生选择器、浏览器交互与无需模型的 CPU 流程，详见 [实机验收](docs/windows-acceptance.md)。这不代表所有算子、模型与硬件均可用。
 
 ## 能做什么
 
@@ -25,7 +25,7 @@
 需要 Git、[uv](https://docs.astral.sh/uv/)、Node.js 22 和 npm。安装会下载 Python 3.12 与依赖；不需要下载本地大模型。已有工作环境可直接使用启动命令，无需重复安装。
 
 ```sh
-git clone --recurse-submodules https://github.com/Mau-Q/Finetune-DataFlow.git
+git clone https://github.com/Mau-Q/Finetune-DataFlow.git
 cd Finetune-DataFlow
 ./scripts/setup.sh
 ./scripts/webui.sh --daemon
@@ -33,7 +33,17 @@ cd Finetune-DataFlow
 ```
 
 打开 [本地 WebUI](http://127.0.0.1:8001/)，开发模式自动进入本机默认工作区。停止服务：`./scripts/webui.sh --stop`。
-Windows 使用 PowerShell：`.\scripts\setup-windows.ps1`，然后 `.\scripts\webui-windows.ps1 -Action Foreground`。各开发者分别运行本机实例，互不共享账号和运行数据。详细步骤见 [Windows 开发验收](docs/windows-development.md)。
+Windows 首次安装，在 PowerShell 中执行（只初始化固定版本的 Core 和 WebUI，不初始化可选 MM）：
+
+```powershell
+git clone https://github.com/Mau-Q/Finetune-DataFlow.git
+Set-Location Finetune-DataFlow
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\scripts\setup-windows.ps1
+.\scripts\webui-windows.ps1 -Action Foreground
+```
+
+各开发者分别运行本机实例，互不共享账号、数据库、密钥和虚拟环境。Windows 使用根目录 `.venv`，默认以“本地开发者”进入“默认工作区”；退出后刷新停留登录页，“进入本地工作区”可恢复。普通登录使用 `-RequireLogin`，LAN 入口默认不开启开发自动登录。日常只需执行最后一条启动命令，停止前台服务按 Ctrl+C。详细步骤见 [Windows 开发指南](docs/windows-development.md)。
 
 安装细节、常见问题和可选 PDF 解析见 [安装与启动](docs/getting-started.md)。
 
@@ -82,7 +92,7 @@ node --test src/hooks/dataflow/*.test.mjs
 npm run build
 ```
 
-完整本地回归使用 `.venvs/dataflow`，排除 Core 的 `gpu` 标记测试。CI 检查组件版本、仓库边界、前端契约和构建；完整 Python 回归在本机运行。真实模型兼容性、内容质量和可选 MinerU / DataFlow-MM 执行需要另外验收。
+Unix 完整本地回归使用 `.venvs/dataflow`；Windows 等效入口为 `.\scripts\test-local.ps1`，使用 `.venv` 并启用 UTF-8。两者排除 Core 的 `gpu` 标记；缺少历史论文 tokenizer / 回放数据时对应测试明确跳过。CI 检查组件、前端、Windows 持久化和脚本等；真实模型兼容性、内容质量和可选 MinerU / DataFlow-MM 执行需要另外验收。
 
 ## 许可
 

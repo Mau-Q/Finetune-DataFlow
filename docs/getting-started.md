@@ -2,15 +2,15 @@
 
 ## 源码和环境
 
-主要本地验证环境为 macOS Apple Silicon。需要 Git、uv、Node.js 22 和 npm；安装依赖与首次模型调用需要网络。uv 负责在工作区创建 Python 3.12 环境。
+本地开发已在 macOS Apple Silicon 与 Windows 11 实测。需要 Git、uv、Node.js 22 和 npm；安装依赖与首次模型调用需要网络。uv 负责在工作区创建 Python 3.12 环境。每位开发者分别安装并运行自己的后端；Windows 的步骤见下方 PowerShell 章节。
 
 ```sh
-git clone --recurse-submodules https://github.com/Mau-Q/Finetune-DataFlow.git
+git clone https://github.com/Mau-Q/Finetune-DataFlow.git
 cd Finetune-DataFlow
 ./scripts/setup.sh
 ```
 
-不使用 MM 研究源码时，可不递归克隆，安装脚本只初始化 Core 与 WebUI 两个必需子模块。脚本不会重置已有子模块或替换现有虚拟环境；组件版本不同会停止并提示，先检查本地改动再决定更新。安装会修改目标虚拟环境中的依赖和重建前端，已有可用环境无需重复运行。
+不需要递归克隆，安装脚本只初始化 Core 与 WebUI 两个必需子模块。脚本不会重置已有子模块或替换现有虚拟环境；组件版本不同会停止并提示，先检查本地改动再决定更新。安装会修改目标虚拟环境中的依赖和重建前端，已有可用环境无需重复运行。
 
 `locks/components.json` 固定源码提交。`locks/dataflow.txt`、`mineru.txt` 等是旧机器的环境快照，部分包含 editable 绝对路径、平台相关包，不能直接 `pip install -r` 作为通用重建方法。当前安装依据组件的项目元数据、WebUI 依赖和测试叠加依赖；尚未承诺跨平台完整依赖锁定。
 
@@ -38,11 +38,12 @@ Windows 原生环境使用根目录 `.venv` 时，不要执行默认的 `scripts
 
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+git submodule update --init -- repos/dataflow repos/dataflow-webui
 .\scripts\setup-windows.ps1
 .\scripts\webui-windows.ps1 -Action Foreground
 ```
 
-首次运行会自动创建本机开发身份并进入默认工作区；不需要你的 Mac 管理员账号。启动后会在当前 PowerShell 中打印：
+首次运行会自动创建本机开发身份并进入默认工作区；不需要其他电脑上的管理员账号。启动后会在当前 PowerShell 中打印：
 
 - `.venv` 激活状态和实际 Python 路径
 - 后端启动日志
@@ -86,6 +87,17 @@ GitHub Actions 同时运行 Windows 持久化测试、真实私有进程启停�
 
 Windows 安装路径不安装可选的 Langkit 评估依赖，因此不需要编译 `whylogs-sketching` 或安装 Visual Studio C++ 工具；LangkitFilter 和 LangkitSampleEvaluator 在该环境中不可用，其余 WebUI 流程保持不变。
 
+已有检出更新前先停止服务并检查主仓库与子模块的 `git status --short --branch`，保存自己的修改，再执行：
+
+```powershell
+git pull --ff-only
+git submodule update --init -- repos/dataflow repos/dataflow-webui
+.\scripts\setup-windows.ps1
+.\scripts\webui-windows.ps1 -Action Foreground
+```
+
+不使用 `git submodule update --remote`，以主仓库固定提交为准。完整离线回归使用 `.\scripts\test-local.ps1`；实际通过范围和跳过原因见 [Windows 实机验收](windows-acceptance.md)。
+
 这些 Windows 兼容性修复涉及 `repos/dataflow` 和 `repos/dataflow-webui` 子模块。向 GitHub 提交时，需要先分别在对应子模块提交并推送，再在根仓库提交更新后的子模块指针。
 
 ## 第一次生成
@@ -100,11 +112,14 @@ Windows 安装路径不安装可选的 Langkit 评估依赖，因此不需要编
 
 ## 常见问题
 
-- 缺少 `paper_dataflow`：确认使用工作区 `.venvs/dataflow/bin/python`，并安装 `extensions/paper-dataflow`。不要将 Core 和 MM 的同名 `dataflow` 包装入同一环境。
+- 缺少 `paper_dataflow`：Unix 确认使用 `.venvs/dataflow/bin/python`，Windows 确认使用 `.venv\Scripts\python.exe`，并运行对应安装脚本安装 `extensions/paper-dataflow`。不要将 Core 和 MM 的同名 `dataflow` 包装入同一环境。
 - API 返回 401/404：核对密钥、模型名和完整 `/chat/completions` URL。配置保存并不证明远端可用。
 - 图片请求失败：模型须支持多模态 `image_url` 及 base64 data URL，并允许当前图片大小。
 - `fasttext-wheel` 编译失败：macOS 需要可用的 Command Line Tools；脚本默认使用 `/usr/bin/clang` 和 `/usr/bin/clang++`。
 - 端口被占用：先确认已有实例及任务状态；启动脚本不会替你终止其他进程。
+- 中文路径或测试结果乱码：通过 Windows 启动、回归脚本运行，它们给 Python 及子进程设置 `PYTHONUTF8=1`。手动执行 Python 时先设置 `$env:PYTHONUTF8='1'`；不要把 UTF-8 数据改存为 GBK。
+- 首次进入画布较慢：完整项目进程冷加载 CPU 依赖需要时间，当前就绪上限为 180 秒。超过时限检查 `backend/data/collaboration/default.worker.log`，不要删除数据库重试。
+- 终端无法直连网络而浏览器可以：Git、uv、npm 不一定自动继承 Windows 系统代理。仅在当前终端为对应工具配置自己的有效代理，保留证书校验；不要提交个人代理地址或凭据。
 
 ## 可选论文 PDF 路线
 

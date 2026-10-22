@@ -6,6 +6,7 @@
 | --- | --- |
 | [安装与启动](getting-started.md) | 克隆、安装、启动、停止与排错 |
 | [Windows 开发验收](windows-development.md) | 独立本机开发、自动登录、Windows 启停与实机验收 |
+| [Windows 实机验收记录](windows-acceptance.md) | 实际工具和组件版本、修复、离线与浏览器结果、NOT_RUN 边界 |
 | [模型 API 配置](model-api.md) | 四类流程的 API 能力、绑定与输出 |
 | [架构与组件](architecture.md) | 目录职责、数据路径与运行边界 |
 | [开发与验证](development.md) | Git、版本固定、回归和发布 |
@@ -14,7 +15,7 @@
 
 ## 设计与历史证据
 
-[局域网团队协作与数据质检 Spec](lan-collaboration-data-review-spec.md) 记录下一阶段确定的范围：原始数据集生成关联、项目与账号、单人样本评测及生成数据导出；这是待实施规格，不代表当前已经具备多用户能力。
+[局域网团队协作与数据质检 Spec](lan-collaboration-data-review-spec.md) 记录原始数据集生成关联、项目与账号、单人样本评测及生成数据导出的设计边界；当前实施状态与验证范围见 [实施与验收](lan-implementation.md)。个人开发仍各自运行本机实例，团队共享按专门的 LAN 指南部署。
 
 [DataFlex 接入设计](dataflex-integration-design.md) 与 [分批实施计划](dataflex-implementation-plan.md) 记录模型训练、五类策略配置、固定主机 SSH 及结果展示的新增范围；B1–B6 已完成离线/隔离实现与验证，真实 SSH/GPU 训练待 G1 资源就绪后验收。详见 [交付记录](dataflex-delivery.md)。
 

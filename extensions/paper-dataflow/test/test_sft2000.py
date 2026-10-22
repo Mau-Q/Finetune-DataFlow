@@ -34,6 +34,8 @@ def serving(role):
         api_url='https://provider.invalid/v1/chat/completions')
 
 
+@unittest.skipUnless((ROOT / 'data/sft2000/manifest.json').is_file(),
+                     'Historical SFT2000 replay dataset is not included in a fresh checkout')
 class Contracts(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
