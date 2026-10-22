@@ -36,19 +36,48 @@ def test_paper_budget_preserves_all_evidence_but_admits_at_most_eight_candidates
     original = pd.DataFrame([dict(document_id=doc, unit_id=f'{doc}-{i}', context_valid=True,
                                   context=f'exact original {doc}-{i}', preparation_reason='')
                              for doc in ('a', 'b') for i in range(10)])
-    selected = {'a': ['a-1', 'a-3', 'a-6', 'a-8'], 'b': ['b-2', 'b-5']}
+    selected = {'a': {'a-1': 1, 'a-3': 3, 'a-6': 4}, 'b': {f'b-{i}': 1 for i in range(8)}}
     result = select_paper_contexts(original, selected)
     assert result['context'].tolist() == original['context'].tolist()
     assert len(result) == 20
-    assert result.loc[result.context_valid].groupby('document_id').size().to_dict() == {'a': 4, 'b': 2}
+    assert result.loc[result.context_valid].groupby('document_id').size().to_dict() == {'a': 3, 'b': 8}
+    assert result.groupby('document_id').generation_sample_budget.sum().to_dict() == {'a': 8, 'b': 8}
+    assert '最多样本数：4' in result.loc[result.unit_id == 'a-6', 'generation_input'].iloc[0]
     assert original.context_valid.all()
     with pytest.raises(ValueError):
-        select_paper_contexts(original, {'a': [f'a-{i}' for i in range(5)], 'b': ['b-0']})
+        select_paper_contexts(original, {'a': {'a-1': 9}, 'b': {}})
     with pytest.raises(ValueError):
-        select_paper_contexts(original, {'a': ['b-0'], 'b': ['b-1']})
+        select_paper_contexts(original, {'a': {'b-0': 1}, 'b': {'b-1': 1}})
     original.loc[original.unit_id == 'a-1', 'context_valid'] = False
     with pytest.raises(ValueError):
         select_paper_contexts(original, selected)
+
+
+def test_paper_budget_allows_empty_plans_and_rejects_invalid_allocations():
+    frame = pd.DataFrame([dict(document_id=doc, unit_id=doc, context_valid=True, context='evidence')
+                          for doc in ['a', 'b', 'c']])
+    plans = {'a': {'a': 7}, 'b': {'b': 1}, 'c': {}}
+    result = select_paper_contexts(frame, plans)
+    assert result.generation_sample_budget.tolist() == [7, 1, 0]
+    assert result.context_valid.tolist() == [True, True, False]
+    with pytest.raises(ValueError, match='paper candidate'):
+        select_paper_contexts(frame, plans, 6)
+    with pytest.raises(ValueError, match='positive integer'):
+        select_paper_contexts(frame, plans, None)
+    for count in [True, 0, -1, 1.5]:
+        with pytest.raises(ValueError, match='positive sample counts'):
+            select_paper_contexts(frame, {'a': {'a': count}, 'b': {}, 'c': {}})
+
+
+def test_candidate_protocol_enforces_variable_allocation_and_preserves_raw_response():
+    frame = batch([candidate(str(i)) for i in range(5)])
+    frame['generation_sample_budget'] = 5
+    assert parse_candidates(frame, max_samples=2).iloc[0].candidate_count == 5
+    frame['generation_sample_budget'] = 4
+    result = parse_candidates(frame).iloc[0]
+    assert result.candidate_count == 0
+    assert result.generation_raw == frame.iloc[0].generation_raw
+    assert 'exceeds budget' in result.invalid_candidates[0]['reason']
 
 
 def test_duplicate_pdf_aliases_and_split_isolation(tmp_path):

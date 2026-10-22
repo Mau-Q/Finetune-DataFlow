@@ -119,7 +119,10 @@ def parse_candidates(df, max_samples=4):
             samples = obj['samples']
             if not isinstance(keywords, list) or len(keywords) > 8 or not all(isinstance(v, str) for v in keywords):
                 raise ValueError('Invalid keywords')
-            if not isinstance(samples, list) or len(samples) > max_samples:
+            allowance = row.get('generation_sample_budget', max_samples)
+            if type(allowance) is not int or allowance < 0:
+                raise ValueError('Invalid allocated sample budget')
+            if not isinstance(samples, list) or len(samples) > allowance:
                 raise ValueError('Candidate count exceeds budget')
             seen = set()
             for index, sample in enumerate(samples):
@@ -150,41 +153,43 @@ def parse_candidates(df, max_samples=4):
         'invalid_candidates', 'candidate_count', 'review_input'])))
 
 
-def select_paper_contexts(df, selections, max_candidates_per_paper=8, max_samples_per_context=2):
-    """Apply an explicit paper-level budget without losing unselected evidence.
+def select_paper_contexts(df, selections, max_candidates_per_paper=8):
+    """Validate explicit sample allocations without a fixed context quota.
 
-    `selections` maps each PDF hash to the exact reviewed context IDs. Keep all
-    rows in the preparation artifact; the ordinary context filter sends only
-    selected, originally eligible rows to the billable generator.
+    `selections` is {document_id: {unit_id: positive sample allowance}}.
+    A planner may allocate 1+3+4, eight single-sample units, or any other
+    distribution within the paper cap. Empty paper plans
+    are allowed. All source rows remain in the preparation artifact.
     """
-    if (type(max_candidates_per_paper) is not int or max_candidates_per_paper < 1
-            or type(max_samples_per_context) is not int or max_samples_per_context < 1):
-        raise ValueError('Paper candidate budgets must be positive integers')
+    if type(max_candidates_per_paper) is not int or max_candidates_per_paper < 1:
+        raise ValueError('Paper candidate budget must be a positive integer')
     rows = df.to_dict('records')
     docs = {r['document_id'] for r in rows}
     if len({(r['document_id'], r['unit_id']) for r in rows}) != len(rows):
         raise ValueError('Duplicate document/context identity')
     if not isinstance(selections, dict) or set(selections) != docs:
         raise ValueError('Context selection must cover exactly the input papers')
-    chosen = set()
-    for doc, units in selections.items():
-        if (not isinstance(units, list) or not units or len(units) != len(set(units))
-                or len(units) * max_samples_per_context > max_candidates_per_paper):
-            raise ValueError('Context selection exceeds paper candidate budget or repeats IDs')
+    for doc, allocations in selections.items():
+        if (not isinstance(allocations, dict)
+                or any(type(count) is not int or count < 1 for count in allocations.values())):
+            raise ValueError('Context allocations must map IDs to positive sample counts')
+        paper_total = sum(allocations.values())
+        if paper_total > max_candidates_per_paper:
+            raise ValueError('Context selection exceeds paper candidate budget')
         available = {r['unit_id']: r for r in rows if r['document_id'] == doc}
-        if any(u not in available or not available[u].get('context_valid') for u in units):
+        if any(u not in available or not available[u].get('context_valid') for u in allocations):
             raise ValueError('Selected context is missing or was ineligible before selection')
-        chosen.update((doc, unit) for unit in units)
     for row in rows:
-        selected = (row['document_id'], row['unit_id']) in chosen
-        row['selected_for_generation'] = selected
+        allowance = selections[row['document_id']].get(row['unit_id'], 0)
+        row['selected_for_generation'] = allowance > 0
+        row['generation_sample_budget'] = allowance
         row['paper_candidate_budget'] = max_candidates_per_paper
         row['generation_input'] = (f"材料范围：{row.get('context_scope', 'section_or_blocks')}\n"
-                                   f'最多样本数：{max_samples_per_context}\n'
+                                   f'最多样本数：{allowance}\n'
                                    f"<material>\n{row['context']}\n</material>")
-        if not selected:
+        if not allowance:
             row['context_valid'] = False
-            row['preparation_reason'] = row.get('preparation_reason') or 'paper_budget_not_selected'
+            row['preparation_reason'] = row.get('preparation_reason') or 'sample_budget_not_allocated'
     return pd.DataFrame(rows)
 
 

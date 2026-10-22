@@ -22,7 +22,8 @@ def test_coverage_escapes_repeated_early_sections_and_keeps_exact_evidence():
     selections, traces = propose_contexts(frame)
     assert set(selections['paper']) == {'0', 'r', 'l'}
     assert traces['paper']['covered_roles'] == ['boundary', 'experiment', 'method']
-    output = select_paper_contexts(frame, selections)
+    allocations = {doc: {unit: 1 for unit in units} for doc, units in selections.items()}
+    output = select_paper_contexts(frame, allocations)
     assert len(output) == len(frame)
     assert output.context.tolist() == frame.context.tolist()
     assert output.source_map.tolist() == frame.source_map.tolist()
@@ -30,9 +31,9 @@ def test_coverage_escapes_repeated_early_sections_and_keeps_exact_evidence():
     assert output.context_valid.sum() == 3
     shuffled, _ = propose_contexts(frame.sample(frac=1, random_state=17))
     assert selections == shuffled
-    bounded = budget_contexts(frame)
-    assert all('最多样本数：2' in text for text in bounded.generation_input)
-    assert bounded.iloc[0].context_selection['algorithm'] == 'lexical-facility-role-v1'
+    bounded = budget_contexts(frame, {'paper': {'0': 3, 'r': 4, 'l': 1}})
+    assert bounded.generation_sample_budget.sum() == 8
+    assert bounded.loc[bounded.unit_id == 'r', 'generation_sample_budget'].iloc[0] == 4
 
 
 def test_budget_is_per_paper_and_duplicate_ids_fail_closed():
@@ -47,3 +48,5 @@ def test_budget_is_per_paper_and_duplicate_ids_fail_closed():
         select_paper_contexts(duplicate, selections)
     with pytest.raises(ValueError, match='No eligible'):
         propose_contexts(pd.DataFrame([item('x', 'References', 'citation')]))
+    unbounded, _ = propose_contexts(frame)
+    assert all(len(units) == 5 for units in unbounded.values())

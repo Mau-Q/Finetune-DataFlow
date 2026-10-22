@@ -27,16 +27,17 @@ def _terms(text):
                    if t not in STOP)
 
 
-def propose_contexts(df, max_contexts=4):
+def propose_contexts(df, max_contexts=None):
     """Return document->IDs and auditable offline selection traces.
 
     Optimize F(S)=mean_j max_i∈S cosine(tfidf_j,tfidf_i)
     +0.5*|union roles(S)|/|available roles|. Both terms have diminishing
-    returns. Greedy is used under a cardinality cap; no measured semantic
+    returns. Greedy ranks all available contexts by default; an optional
+    cardinality cap is for offline comparisons only. No measured semantic
     coverage, generation quality, or speed-up is implied by this objective.
     Exact normalized duplicates add zero gain and are not selected twice.
     """
-    if type(max_contexts) is not int or max_contexts < 1:
+    if max_contexts is not None and (type(max_contexts) is not int or max_contexts < 1):
         raise ValueError('max_contexts must be a positive integer')
     groups = {}
     seen = set()
@@ -77,7 +78,7 @@ def propose_contexts(df, max_contexts=4):
         available_roles = set().union(*(roles for _, _, roles in eligible))
         covered = np.zeros(n)
         roles, chosen, steps = set(), [], []
-        for _ in range(min(max_contexts, n)):
+        for _ in range(n if max_contexts is None else min(max_contexts, n)):
             gains = []
             for i, (_, _, item_roles) in enumerate(eligible):
                 if i in chosen:
@@ -104,14 +105,11 @@ def propose_contexts(df, max_contexts=4):
     return selections, traces
 
 
-def budget_contexts(df, max_candidates_per_paper=8, max_samples_per_context=2):
-    """PandasOperator binding; retain selection traces in preparation artifacts."""
+def budget_contexts(df, allocations, max_candidates_per_paper=8):
+    """Apply a planner's variable sample allocations, independently of ranking.
+
+    Ranking does not assign sample counts or impose a fixed number of contexts.
+    The caller supplies allocations from a paper-level plan.
+    """
     from paper_dataflow.low_cost_sft import select_paper_contexts
-    if (type(max_candidates_per_paper) is not int or max_candidates_per_paper < 1
-            or type(max_samples_per_context) is not int or max_samples_per_context < 1
-            or max_candidates_per_paper < max_samples_per_context):
-        raise ValueError('Invalid paper/context sample budget')
-    choices, traces = propose_contexts(df, max_candidates_per_paper // max_samples_per_context)
-    result = select_paper_contexts(df, choices, max_candidates_per_paper, max_samples_per_context)
-    result['context_selection'] = [traces[doc] for doc in result.document_id]
-    return result
+    return select_paper_contexts(df, allocations, max_candidates_per_paper)
