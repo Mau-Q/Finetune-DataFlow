@@ -1,0 +1,619 @@
+{
+  "date": "2026-10-22",
+  "timezone": "Asia/Shanghai",
+  "objective": {
+    "model": "Qwen/Qwen3.5-9B",
+    "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+    "sequence_tokens": 8192,
+    "gpu_count": 1,
+    "task": "text_sft",
+    "finetuning": "nf4_qlora"
+  },
+  "status": "PLAN_ONLY_WITH_KNOWN_DATAFLEX_CONSTRAINT_CONFLICTS",
+  "model_weights_downloaded": false,
+  "installation_performed": false,
+  "container_created": false,
+  "training_performed": false,
+  "model_runtime_checked": false,
+  "core_direct_metadata": {
+    "scope": "direct metadata constraints for selected core pins only; not a complete transitive resolver or runtime validation",
+    "pins": {
+      "torch": "2.7.1+cu128",
+      "torchvision": "0.22.1+cu128",
+      "torchaudio": "2.7.1+cu128",
+      "transformers": "5.5.4",
+      "accelerate": "1.11.0",
+      "peft": "0.18.1",
+      "trl": "0.24.0",
+      "datasets": "4.0.0",
+      "torchdata": "0.11.0",
+      "bitsandbytes": "0.49.2",
+      "triton": "3.3.1",
+      "flash-linear-attention": "0.5.0",
+      "fla-core": "0.5.0",
+      "causal-conv1d": "1.6.0",
+      "numpy": "2.2.6",
+      "pandas": "2.2.3",
+      "scipy": "1.15.3",
+      "tyro": "0.8.14",
+      "omegaconf": "2.3.0",
+      "tokenizers": "0.22.2",
+      "huggingface-hub": "1.5.0",
+      "safetensors": "0.6.2",
+      "ninja": "1.11.1.4",
+      "llamafactory": "0.9.6.dev0"
+    },
+    "checked": [
+      {
+        "source": "LLaMA-Factory@c683e59",
+        "requirement": "torch>=2.4.0",
+        "selected": "2.7.1+cu128",
+        "compatible": true
+      },
+      {
+        "source": "LLaMA-Factory@c683e59",
+        "requirement": "torchvision>=0.19.0",
+        "selected": "0.22.1+cu128",
+        "compatible": true
+      },
+      {
+        "source": "LLaMA-Factory@c683e59",
+        "requirement": "torchaudio>=2.4.0",
+        "selected": "2.7.1+cu128",
+        "compatible": true
+      },
+      {
+        "source": "LLaMA-Factory@c683e59",
+        "requirement": "transformers!=4.57.0,!=5.6.0,<=5.8.0,>=4.55.0",
+        "selected": "5.5.4",
+        "compatible": true
+      },
+      {
+        "source": "LLaMA-Factory@c683e59",
+        "requirement": "datasets<=4.0.0,>=2.16.0",
+        "selected": "4.0.0",
+        "compatible": true
+      },
+      {
+        "source": "LLaMA-Factory@c683e59",
+        "requirement": "accelerate<=1.11.0,>=1.3.0",
+        "selected": "1.11.0",
+        "compatible": true
+      },
+      {
+        "source": "LLaMA-Factory@c683e59",
+        "requirement": "peft<=0.18.1,>=0.18.0",
+        "selected": "0.18.1",
+        "compatible": true
+      },
+      {
+        "source": "LLaMA-Factory@c683e59",
+        "requirement": "trl<=0.24.0,>=0.18.0",
+        "selected": "0.24.0",
+        "compatible": true
+      },
+      {
+        "source": "LLaMA-Factory@c683e59",
+        "requirement": "torchdata<=0.11.0,>=0.10.0",
+        "selected": "0.11.0",
+        "compatible": true
+      },
+      {
+        "source": "LLaMA-Factory@c683e59",
+        "requirement": "tyro<0.9.0",
+        "selected": "0.8.14",
+        "compatible": true
+      },
+      {
+        "source": "LLaMA-Factory@c683e59",
+        "requirement": "numpy",
+        "selected": "2.2.6",
+        "compatible": true
+      },
+      {
+        "source": "LLaMA-Factory@c683e59",
+        "requirement": "pandas",
+        "selected": "2.2.3",
+        "compatible": true
+      },
+      {
+        "source": "LLaMA-Factory@c683e59",
+        "requirement": "scipy",
+        "selected": "1.15.3",
+        "compatible": true
+      },
+      {
+        "source": "LLaMA-Factory@c683e59",
+        "requirement": "safetensors",
+        "selected": "0.6.2",
+        "compatible": true
+      },
+      {
+        "source": "LLaMA-Factory@c683e59",
+        "requirement": "omegaconf",
+        "selected": "2.3.0",
+        "compatible": true
+      },
+      {
+        "source": "DataFlex@2e2a74d",
+        "requirement": "torch<=2.10.0,>=2.4.0",
+        "selected": "2.7.1+cu128",
+        "compatible": true
+      },
+      {
+        "source": "DataFlex@2e2a74d",
+        "requirement": "torchvision<=0.21.0,>=0.19.0",
+        "selected": "0.22.1+cu128",
+        "compatible": false
+      },
+      {
+        "source": "DataFlex@2e2a74d",
+        "requirement": "torchaudio<=2.6.0,>=2.4.0",
+        "selected": "2.7.1+cu128",
+        "compatible": false
+      },
+      {
+        "source": "DataFlex@2e2a74d",
+        "requirement": "transformers!=4.57.0,<=5.6.0,>=4.55.0",
+        "selected": "5.5.4",
+        "compatible": true
+      },
+      {
+        "source": "DataFlex@2e2a74d",
+        "requirement": "accelerate<1.12.0,>=1.3.0",
+        "selected": "1.11.0",
+        "compatible": true
+      },
+      {
+        "source": "DataFlex@2e2a74d",
+        "requirement": "tyro==0.8.14",
+        "selected": "0.8.14",
+        "compatible": true
+      },
+      {
+        "source": "DataFlex@2e2a74d",
+        "requirement": "numpy>=1.24.0",
+        "selected": "2.2.6",
+        "compatible": true
+      },
+      {
+        "source": "DataFlex@2e2a74d",
+        "requirement": "datasets<=4.0.0,>=2.16.0",
+        "selected": "4.0.0",
+        "compatible": true
+      },
+      {
+        "source": "DataFlex@2e2a74d",
+        "requirement": "pandas<3.0.0,>=2.0.0",
+        "selected": "2.2.3",
+        "compatible": true
+      },
+      {
+        "source": "DataFlex@2e2a74d",
+        "requirement": "scipy",
+        "selected": "1.15.3",
+        "compatible": true
+      },
+      {
+        "source": "DataFlex@2e2a74d",
+        "requirement": "omegaconf",
+        "selected": "2.3.0",
+        "compatible": true
+      },
+      {
+        "source": "DataFlex@2e2a74d",
+        "requirement": "llamafactory>=0.9.5",
+        "selected": "0.9.6.dev0",
+        "compatible": true
+      },
+      {
+        "source": "torch==2.7.1+cu128",
+        "requirement": "triton==3.3.1; platform_system == \"Linux\" and platform_machine == \"x86_64\"",
+        "selected": "3.3.1",
+        "compatible": true
+      },
+      {
+        "source": "torchvision==0.22.1+cu128",
+        "requirement": "numpy",
+        "selected": "2.2.6",
+        "compatible": true
+      },
+      {
+        "source": "torchvision==0.22.1+cu128",
+        "requirement": "torch==2.7.1",
+        "selected": "2.7.1+cu128",
+        "compatible": true
+      },
+      {
+        "source": "torchaudio==2.7.1+cu128",
+        "requirement": "torch==2.7.1",
+        "selected": "2.7.1+cu128",
+        "compatible": true
+      },
+      {
+        "source": "transformers==5.5.4",
+        "requirement": "huggingface-hub<2.0,>=1.5.0",
+        "selected": "1.5.0",
+        "compatible": true
+      },
+      {
+        "source": "transformers==5.5.4",
+        "requirement": "numpy>=1.17",
+        "selected": "2.2.6",
+        "compatible": true
+      },
+      {
+        "source": "transformers==5.5.4",
+        "requirement": "tokenizers<=0.23.0,>=0.22.0",
+        "selected": "0.22.2",
+        "compatible": true
+      },
+      {
+        "source": "transformers==5.5.4",
+        "requirement": "safetensors>=0.4.3",
+        "selected": "0.6.2",
+        "compatible": true
+      },
+      {
+        "source": "accelerate==1.11.0",
+        "requirement": "numpy>=1.17",
+        "selected": "2.2.6",
+        "compatible": true
+      },
+      {
+        "source": "accelerate==1.11.0",
+        "requirement": "torch>=2.0.0",
+        "selected": "2.7.1+cu128",
+        "compatible": true
+      },
+      {
+        "source": "accelerate==1.11.0",
+        "requirement": "safetensors>=0.4.3",
+        "selected": "0.6.2",
+        "compatible": true
+      },
+      {
+        "source": "peft==0.18.1",
+        "requirement": "numpy>=1.17",
+        "selected": "2.2.6",
+        "compatible": true
+      },
+      {
+        "source": "peft==0.18.1",
+        "requirement": "torch>=1.13.0",
+        "selected": "2.7.1+cu128",
+        "compatible": true
+      },
+      {
+        "source": "peft==0.18.1",
+        "requirement": "transformers",
+        "selected": "5.5.4",
+        "compatible": true
+      },
+      {
+        "source": "peft==0.18.1",
+        "requirement": "accelerate>=0.21.0",
+        "selected": "1.11.0",
+        "compatible": true
+      },
+      {
+        "source": "peft==0.18.1",
+        "requirement": "safetensors",
+        "selected": "0.6.2",
+        "compatible": true
+      },
+      {
+        "source": "trl==0.24.0",
+        "requirement": "accelerate>=1.4.0",
+        "selected": "1.11.0",
+        "compatible": true
+      },
+      {
+        "source": "trl==0.24.0",
+        "requirement": "datasets>=3.0.0",
+        "selected": "4.0.0",
+        "compatible": true
+      },
+      {
+        "source": "trl==0.24.0",
+        "requirement": "transformers>=4.56.1",
+        "selected": "5.5.4",
+        "compatible": true
+      },
+      {
+        "source": "datasets==4.0.0",
+        "requirement": "numpy>=1.17",
+        "selected": "2.2.6",
+        "compatible": true
+      },
+      {
+        "source": "datasets==4.0.0",
+        "requirement": "pandas",
+        "selected": "2.2.3",
+        "compatible": true
+      },
+      {
+        "source": "datasets==4.0.0",
+        "requirement": "huggingface-hub>=0.24.0",
+        "selected": "1.5.0",
+        "compatible": true
+      },
+      {
+        "source": "torchdata==0.11.0",
+        "requirement": "torch>=2",
+        "selected": "2.7.1+cu128",
+        "compatible": true
+      },
+      {
+        "source": "flash-linear-attention==0.5.0",
+        "requirement": "fla-core==0.5.0",
+        "selected": "0.5.0",
+        "compatible": true
+      },
+      {
+        "source": "flash-linear-attention==0.5.0",
+        "requirement": "transformers",
+        "selected": "5.5.4",
+        "compatible": true
+      },
+      {
+        "source": "fla-core==0.5.0",
+        "requirement": "torch>=2.7.0",
+        "selected": "2.7.1+cu128",
+        "compatible": true
+      },
+      {
+        "source": "causal-conv1d==1.6.0",
+        "requirement": "torch",
+        "selected": "2.7.1+cu128",
+        "compatible": true
+      },
+      {
+        "source": "causal-conv1d==1.6.0",
+        "requirement": "ninja",
+        "selected": "1.11.1.4",
+        "compatible": true
+      },
+      {
+        "source": "pandas==2.2.3",
+        "requirement": "numpy>=1.26.0; python_version >= \"3.12\"",
+        "selected": "2.2.6",
+        "compatible": true
+      },
+      {
+        "source": "scipy==1.15.3",
+        "requirement": "numpy<2.5,>=1.23.5",
+        "selected": "2.2.6",
+        "compatible": true
+      },
+      {
+        "source": "tokenizers==0.22.2",
+        "requirement": "huggingface-hub<2.0,>=0.16.4",
+        "selected": "1.5.0",
+        "compatible": true
+      }
+    ],
+    "incompatibilities": [
+      {
+        "source": "DataFlex@2e2a74d",
+        "requirement": "torchvision<=0.21.0,>=0.19.0",
+        "selected": "0.22.1+cu128",
+        "compatible": false
+      },
+      {
+        "source": "DataFlex@2e2a74d",
+        "requirement": "torchaudio<=2.6.0,>=2.4.0",
+        "selected": "2.7.1+cu128",
+        "compatible": false
+      }
+    ],
+    "runtime_tested": false
+  },
+  "source_pins": {
+    "DataFlex": "2e2a74dbe90f8b6a1394bdee37518980f1d5958d",
+    "LLaMA-Factory": "c683e59edd8f893abc5e1403184a1d0644817d2a",
+    "LLaMA-Factory_version": "0.9.6.dev0"
+  },
+  "host_readonly_snapshot": {
+    "hostname": "node01",
+    "account": "huruiqian",
+    "kernel": "3.10.0-1160.el7.x86_64",
+    "glibc": "2.17",
+    "driver": "550.127.08",
+    "gpu_name": "NVIDIA L40",
+    "gpu_memory_mib": 46068,
+    "all_gpus_have_existing_allocations": true,
+    "docker": "26.1.4",
+    "docker_storage_driver": "overlay2",
+    "docker_root": "/home/docker-data_node01",
+    "local_home_free_approx_gb": 138,
+    "home_directory_is_nfs": true
+  },
+  "existing_inference_environment": {
+    "container": "hiq-qwen",
+    "python": "3.12.10",
+    "torch": "2.6.0",
+    "torchvision": "0.21.0",
+    "torchaudio": "2.6.0",
+    "transformers": "4.51.3",
+    "bitsandbytes": "0.45.5",
+    "triton": "3.2.0",
+    "llamafactory": null,
+    "dataflex": null,
+    "peft": null,
+    "fla": null,
+    "changed": false
+  },
+  "network_probe": {
+    "pypi": "HEAD subprocess timed out; reachability not established",
+    "huggingface": "NOT_RUN after earlier timeout"
+  },
+  "sources": [
+    {
+      "local_evidence": "lf-pyproject.txt",
+      "url": "https://raw.githubusercontent.com/hiyouga/LlamaFactory/c683e59edd8f893abc5e1403184a1d0644817d2a/pyproject.toml",
+      "sha256": "d2d044de25f84d319338de30299437ee882650e2a998af50f617bfbb5964becf"
+    },
+    {
+      "local_evidence": "lf-template.txt",
+      "url": "https://raw.githubusercontent.com/hiyouga/LlamaFactory/c683e59edd8f893abc5e1403184a1d0644817d2a/src/llamafactory/data/template.py",
+      "sha256": "25681bdceb0d11e36a55455e293f16cb5c8f3d15b48df63eb1f3bdd863567932"
+    },
+    {
+      "local_evidence": "lf-loader.txt",
+      "url": "https://raw.githubusercontent.com/hiyouga/LlamaFactory/c683e59edd8f893abc5e1403184a1d0644817d2a/src/llamafactory/model/loader.py",
+      "sha256": "ed132ebc37129345f88c882cb928e3ca5294954e4040d4eb7d64324f38022ae9"
+    },
+    {
+      "local_evidence": "lf-visual.txt",
+      "url": "https://raw.githubusercontent.com/hiyouga/LlamaFactory/c683e59edd8f893abc5e1403184a1d0644817d2a/src/llamafactory/model/model_utils/visual.py",
+      "sha256": "ee76a45b6ed50c2f7324a1d5b36ea58688f4e12cbd86b9159e041c67867c3f85"
+    },
+    {
+      "local_evidence": "tf-554-source.txt",
+      "url": "https://raw.githubusercontent.com/huggingface/transformers/v5.5.4/src/transformers/models/qwen3_5/modeling_qwen3_5.py",
+      "sha256": "aee59d55ee4e8ce0e50bf0e279796b85c2c66a28dfae55c3fcbb62fa9bcba048"
+    },
+    {
+      "local_evidence": "qwen-config.txt",
+      "url": "https://huggingface.co/Qwen/Qwen3.5-9B/resolve/c202236235762e1c871ad0ccb60c8ee5ba337b9a/config.json",
+      "sha256": "d0883072e01861ed0b2d47be3c16c36a8e81c224c7ffaa310c6558fb3f932b05"
+    },
+    {
+      "local_evidence": "qwen-index.txt",
+      "url": "https://huggingface.co/Qwen/Qwen3.5-9B/resolve/c202236235762e1c871ad0ccb60c8ee5ba337b9a/model.safetensors.index.json",
+      "sha256": "26d3539b516be613f39563617cb9d33b3f83d401298125be392c80cefb8f7fe5"
+    },
+    {
+      "local_evidence": "torch-cu128.metadata",
+      "url": "https://download-r2.pytorch.org/whl/cu128/torch-2.7.1%2Bcu128-cp312-cp312-manylinux_2_28_x86_64.whl.metadata",
+      "sha256": "e41a1ec38ccc8170c228b57b1432cc7ae03718dd69bb0a72d1fc32707dde1765"
+    },
+    {
+      "local_evidence": "torch-2.7.1.json",
+      "url": "https://pypi.org/pypi/torch/2.7.1/json",
+      "sha256": "9755282317b13f360760f078bc7605079cc851d0e84b6d9a99cb8a350e00eb7b"
+    },
+    {
+      "local_evidence": "torchvision-0.22.1.json",
+      "url": "https://pypi.org/pypi/torchvision/0.22.1/json",
+      "sha256": "0817063b556c5fec091bd633e036d4c94575f54f5baa7708df059730084cfa9c"
+    },
+    {
+      "local_evidence": "torchaudio-2.7.1.json",
+      "url": "https://pypi.org/pypi/torchaudio/2.7.1/json",
+      "sha256": "1696a45e4b02d0b93269499fb54b9b6e110789bdd05996c16b20aa7d168b2ff3"
+    },
+    {
+      "local_evidence": "transformers-5.5.4.json",
+      "url": "https://pypi.org/pypi/transformers/5.5.4/json",
+      "sha256": "246126b755733ed673a25889b4301064fd216a894601b23533160c915cec5ef1"
+    },
+    {
+      "local_evidence": "accelerate-1.11.0.json",
+      "url": "https://pypi.org/pypi/accelerate/1.11.0/json",
+      "sha256": "7c502da6eb0970a5f09a5a51ee43963eec84bc0961b1c5f74750b42b3d941001"
+    },
+    {
+      "local_evidence": "peft-0.18.1.json",
+      "url": "https://pypi.org/pypi/peft/0.18.1/json",
+      "sha256": "25d089cbb1769a12e7f85e912521e93ddf1d2092c86ce382d8f5bbcc252d7c92"
+    },
+    {
+      "local_evidence": "trl-0.24.0.json",
+      "url": "https://pypi.org/pypi/trl/0.24.0/json",
+      "sha256": "9409170c0f5927bdd2b8f7ce40581dfa446423bc3c21bf7ca14b5c54793c3380"
+    },
+    {
+      "local_evidence": "datasets-4.0.0.json",
+      "url": "https://pypi.org/pypi/datasets/4.0.0/json",
+      "sha256": "ced94bdf2dc36710fc51f6392de73dede7dc0685e876cb8356b3d851ae0c55a4"
+    },
+    {
+      "local_evidence": "torchdata-0.11.0.json",
+      "url": "https://pypi.org/pypi/torchdata/0.11.0/json",
+      "sha256": "7ca7bad05b4ee37a1f043086938ea1e8232b4cbde0a997ad7683f788c377ea9d"
+    },
+    {
+      "local_evidence": "flash-linear-attention-0.5.0.json",
+      "url": "https://pypi.org/pypi/flash-linear-attention/0.5.0/json",
+      "sha256": "e54109d69cf2a302fce46dd8e41912dc28d1862366d61b54156ef6f25097980d"
+    },
+    {
+      "local_evidence": "fla-core-0.5.0.json",
+      "url": "https://pypi.org/pypi/fla-core/0.5.0/json",
+      "sha256": "12dfb884aaf5bbfbe5537ac946901e1903dafbf0d485dc61ee454be5dc0c7b3e"
+    },
+    {
+      "local_evidence": "causal-conv1d-1.6.0.json",
+      "url": "https://pypi.org/pypi/causal-conv1d/1.6.0/json",
+      "sha256": "2a5d8b4d309a571168dc8c3a05b3c87bb2ff76b66d6000bfc296b9e361db2b8c"
+    },
+    {
+      "local_evidence": "numpy-2.2.6.json",
+      "url": "https://pypi.org/pypi/numpy/2.2.6/json",
+      "sha256": "51dd78a65b122d87244ebf772615784f4cf57f2695cab22a14a58802160f9489"
+    },
+    {
+      "local_evidence": "pandas-2.2.3.json",
+      "url": "https://pypi.org/pypi/pandas/2.2.3/json",
+      "sha256": "ee09c77ac2c2d9a81da5be96e6779874602a9fa7087806dc7f9785865d14bb63"
+    },
+    {
+      "local_evidence": "scipy-1.15.3.json",
+      "url": "https://pypi.org/pypi/scipy/1.15.3/json",
+      "sha256": "0b2343c5d630823bd3d961db1b06ac6c8481090e10ee87b0d7e0c55ca07fa07b"
+    },
+    {
+      "local_evidence": "tyro-0.8.14.json",
+      "url": "https://pypi.org/pypi/tyro/0.8.14/json",
+      "sha256": "3d6797e9d87eb778445719214e95a33a72a36a3e62572a0e0ebcb503d99976f1"
+    },
+    {
+      "local_evidence": "omegaconf-2.3.0.json",
+      "url": "https://pypi.org/pypi/omegaconf/2.3.0/json",
+      "sha256": "be25e2ab0695a84603709897842ef116bb7680ffbc6787b90413c7b6563c4dc5"
+    },
+    {
+      "local_evidence": "tokenizers-0.22.2.json",
+      "url": "https://pypi.org/pypi/tokenizers/0.22.2/json",
+      "sha256": "8ae49a98d1383e64acce0c8ee5e856bcfffda54d77b5e44e4f2313db9a4c2f9d"
+    },
+    {
+      "local_evidence": "huggingface-hub-1.5.0.json",
+      "url": "https://pypi.org/pypi/huggingface-hub/1.5.0/json",
+      "sha256": "89f146344c0941384cecae88c94e6f1bc60eb9335403bc7ee50a6e4b6e8e6db2"
+    },
+    {
+      "local_evidence": "safetensors-0.6.2.json",
+      "url": "https://pypi.org/pypi/safetensors/0.6.2/json",
+      "sha256": "b7fd4627f413e4cf8ba1e2bb06829bb0ca01376800fba543dff0be15cbca1141"
+    },
+    {
+      "local_evidence": "ninja-1.11.1.4.json",
+      "url": "https://pypi.org/pypi/ninja/1.11.1.4/json",
+      "sha256": "5d2a5a874a263e672318d3f6f7563c32da74b3e6b4148bf1e86550f4be652957"
+    },
+    {
+      "local_evidence": "causal-conv1d-wheel-lookup.json",
+      "url": "https://api.github.com/repos/Dao-AILab/causal-conv1d/releases/tags/v1.6.0",
+      "sha256": "a160c5f3dd05afb439ac461e4f2a27e1b934e56f8ad4d3705c0909416bf3199d"
+    }
+  ],
+  "limitations": [
+    "Not a full transitive dependency resolution",
+    "DataFlex requirements and pyproject optional torch caps require scoped adaptation",
+    "No new-model GPU/driver/ABI/FLA execution",
+    "No real-content 8192-token forward/backward/optimizer or stability test",
+    "No platform-to-node01 training execution integration test",
+    "Base image digest and full Linux wheel hashes not yet locked"
+  ],
+  "causal_conv1d_release_asset": {
+    "name": "causal_conv1d-1.6.0+cu12torch2.7cxx11abiTRUE-cp312-cp312-linux_x86_64.whl",
+    "size": 287396328,
+    "digest": "sha256:799609028a53cac05ec63a78133ef7dc637dd521366b76964156d69d1523deed",
+    "browser_download_url": "https://github.com/Dao-AILab/causal-conv1d/releases/download/v1.6.0/causal_conv1d-1.6.0%2Bcu12torch2.7cxx11abiTRUE-cp312-cp312-linux_x86_64.whl",
+    "downloaded": false,
+    "binary_content_verified": false
+  }
+}

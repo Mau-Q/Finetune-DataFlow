@@ -1,0 +1,51 @@
+# NOT RUN. Future two-update capacity candidate, not a full training contract.
+# Requires DataFlex dependency adaptation, complete wheel lock and GPU permission.
+model_name_or_path: /models/Qwen3.5-9B/c202236235762e1c871ad0ccb60c8ee5ba337b9a
+model_revision: c202236235762e1c871ad0ccb60c8ee5ba337b9a
+trust_remote_code: false
+use_fast_tokenizer: true
+stage: sft
+do_train: true
+finetuning_type: lora
+quantization_method: bnb
+quantization_bit: 4
+quantization_type: nf4
+double_quantization: true
+bf16: true
+fp16: false
+flash_attn: sdpa
+gradient_checkpointing: true
+lora_rank: 16
+lora_alpha: 32
+lora_dropout: 0.05
+lora_target: all
+freeze_vision_tower: true
+freeze_multi_modal_projector: true
+freeze_language_model: false
+template: qwen3_5_nothink
+enable_thinking: false
+cutoff_len: 8192
+train_on_prompt: false
+packing: false
+dataset_dir: /inputs/data
+# Future materialized, verified dataset_info.json binding. No dataset exists here yet.
+dataset: paper_sft_capacity_8192
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 16
+learning_rate: 2.0e-5
+optim: adamw_torch
+lr_scheduler_type: constant
+warmup_steps: 0
+max_grad_norm: 1.0
+max_steps: 2
+do_eval: false
+logging_steps: 1
+save_steps: 2
+save_total_limit: 1
+output_dir: /runs/capacity-8192/output
+overwrite_output_dir: false
+report_to: none
+seed: 42
+data_seed: 42
+# DataFlex static path; its launcher also expects a separate components.yaml.
+train_type: static
