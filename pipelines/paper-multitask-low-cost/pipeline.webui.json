@@ -1,0 +1,393 @@
+{
+  "name": "论文 PDF → 科研多任务 SFT · 低成本生成与批量审核 v1",
+  "config": {
+    "file_path": "/Users/rui/Documents/DataFlow/pipelines/paper-multitask-low-cost/pipeline.webui.json",
+    "input_dataset": {
+      "id": "a5f3dd5c5d",
+      "location": [
+        40,
+        80
+      ],
+      "pipeline_role": "现有受管 PDF 论文来源，未复制或修改原文。"
+    },
+    "operators": [
+      {
+        "name": "PandasOperator",
+        "pipeline_role": "检查 PDF 文件并按内容哈希去重，保留重复来源映射；不修改原材料。",
+        "location": [
+          370,
+          80
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "process_fn",
+              "value": [
+                "lambda df: __import__('paper_dataflow.low_cost_sft', fromlist=['prepare_sources']).prepare_sources(df)"
+              ]
+            }
+          ],
+          "run": [
+            {
+              "name": "output_key",
+              "value": [
+                "source_path",
+                "document_id",
+                "split",
+                "source_aliases"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "MinerU4PDFParser",
+        "pipeline_role": "保留 PDF 快照与结构化解析产物，不调用生成/审核模型。",
+        "location": [
+          700,
+          80
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "mineru_script",
+              "value": "/Users/rui/Documents/DataFlow/scripts/mineru.sh"
+            },
+            {
+              "name": "output_dir",
+              "value": "/Users/rui/Documents/DataFlow/outputs/paper-multitask-low-cost/parsing"
+            },
+            {
+              "name": "tier",
+              "value": "standard"
+            },
+            {
+              "name": "timeout_seconds",
+              "value": 900
+            }
+          ],
+          "run": [
+            {
+              "name": "input_key",
+              "value": "source_path"
+            },
+            {
+              "name": "output_key",
+              "value": "parsed_document"
+            }
+          ]
+        }
+      },
+      {
+        "name": "MinerU4PageExtractor",
+        "pipeline_role": "逐页提取正文、表格、公式和可追溯块位置。",
+        "location": [
+          1030,
+          80
+        ],
+        "params": {
+          "init": [],
+          "run": [
+            {
+              "name": "input_key",
+              "value": "parsed_document"
+            },
+            {
+              "name": "output_key",
+              "value": "source_page"
+            }
+          ]
+        }
+      },
+      {
+        "name": "PaperStructuredChunker",
+        "pipeline_role": "章节优先、完整结构块切分；正文不经过模型改写。",
+        "location": [
+          1030,
+          340
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "tokenizer_path",
+              "value": "/Users/rui/Documents/DataFlow/models/tokenizers/Qwen2.5-7B-Instruct"
+            },
+            {
+              "name": "chunk_size",
+              "value": 5800
+            }
+          ],
+          "run": [
+            {
+              "name": "input_key",
+              "value": "source_page"
+            },
+            {
+              "name": "output_key",
+              "value": "raw_chunk"
+            },
+            {
+              "name": "output_meta_key",
+              "value": "chunk_metadata"
+            }
+          ]
+        }
+      },
+      {
+        "name": "PandasOperator",
+        "pipeline_role": "整篇解析文字可放入预算时合并；否则保留章节/结构块上下文，超长不截断。",
+        "location": [
+          700,
+          340
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "process_fn",
+              "value": [
+                "lambda df: __import__('paper_dataflow.low_cost_sft', fromlist=['build_contexts']).build_contexts(df, tokenizer_path='/Users/rui/Documents/DataFlow/models/tokenizers/Qwen2.5-7B-Instruct', context_tokens=6000, max_samples=4)"
+              ]
+            }
+          ],
+          "run": [
+            {
+              "name": "output_key",
+              "value": [
+                "unit_id",
+                "context",
+                "context_scope",
+                "context_valid",
+                "source_map",
+                "generation_input"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "GeneralFilter",
+        "pipeline_role": "暂缓超预算或已标记缺损的上下文；原记录仍在上一步产物。",
+        "location": [
+          370,
+          340
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "filter_rules",
+              "value": [
+                "lambda df: df['context_valid'].fillna(False).astype(bool)"
+              ]
+            }
+          ],
+          "run": []
+        }
+      },
+      {
+        "name": "FormatStrPromptedGenerator",
+        "pipeline_role": "结合重要内容、读者背景与阅读目的生成最多四条不同科研任务。",
+        "location": [
+          40,
+          340
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "llm_serving",
+              "value": "586e578e9e102ac5"
+            },
+            {
+              "name": "system_prompt",
+              "value": "你负责依据所给论文材料生成准确、清楚的中文科研任务训练样本。"
+            },
+            {
+              "name": "prompt_template",
+              "value": "user_prompt:tpl_f74d0862"
+            },
+            {
+              "name": "json_schema",
+              "value": "schema_ref:schema_6465edf1"
+            }
+          ],
+          "run": [
+            {
+              "name": "output_key",
+              "value": "generation_raw"
+            },
+            {
+              "name": "material",
+              "value": "generation_input"
+            }
+          ]
+        }
+      },
+      {
+        "name": "PandasOperator",
+        "pipeline_role": "严格解析生成 JSON、逐候选检查、分配稳定 ID，并复用上下文准备审核批次。",
+        "location": [
+          40,
+          600
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "process_fn",
+              "value": [
+                "lambda df: __import__('paper_dataflow.low_cost_sft', fromlist=['parse_candidates']).parse_candidates(df)"
+              ]
+            }
+          ],
+          "run": [
+            {
+              "name": "output_key",
+              "value": [
+                "keywords",
+                "candidates",
+                "invalid_candidates",
+                "candidate_count",
+                "review_input"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "GeneralFilter",
+        "pipeline_role": "只有结构合格的候选进入审核；无效响应保留在上一步产物。",
+        "location": [
+          370,
+          600
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "filter_rules",
+              "value": [
+                "lambda df: df['candidate_count'].fillna(0).gt(0)"
+              ]
+            }
+          ],
+          "run": []
+        }
+      },
+      {
+        "name": "FormatStrPromptedGenerator",
+        "pipeline_role": "同一上下文批量逐条审核，检查事实依据、任务完成与学习价值。",
+        "location": [
+          700,
+          600
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "llm_serving",
+              "value": "9fb9ebf1ed9ee33e"
+            },
+            {
+              "name": "system_prompt",
+              "value": "你是独立科研数据审核者，依据材料逐条核对，不改写答案。"
+            },
+            {
+              "name": "prompt_template",
+              "value": "user_prompt:tpl_2979adf7"
+            },
+            {
+              "name": "json_schema",
+              "value": "schema_ref:schema_30c358f4"
+            }
+          ],
+          "run": [
+            {
+              "name": "output_key",
+              "value": "review_raw"
+            },
+            {
+              "name": "batch",
+              "value": "review_input"
+            }
+          ]
+        }
+      },
+      {
+        "name": "PandasOperator",
+        "pipeline_role": "按样本 ID 匹配审核，未知或重复 ID 拒绝自动准入；展开为独立样本。",
+        "location": [
+          1030,
+          600
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "process_fn",
+              "value": [
+                "lambda df: __import__('paper_dataflow.low_cost_sft', fromlist=['parse_reviews']).parse_reviews(df)"
+              ]
+            }
+          ],
+          "run": [
+            {
+              "name": "output_key",
+              "value": [
+                "sample_id",
+                "task_type",
+                "instruction",
+                "input",
+                "output",
+                "review_status",
+                "review_reason",
+                "dedup_text"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "name": "PandasOperator",
+        "pipeline_role": "先保留全部审核审计，再筛选 PASS、精确去重，导出 SFT、映射与汇总。",
+        "location": [
+          1030,
+          860
+        ],
+        "params": {
+          "init": [
+            {
+              "name": "process_fn",
+              "value": [
+                "lambda df: __import__('paper_dataflow.low_cost_sft', fromlist=['export_results']).export_results(df, output_dir='/Users/rui/Documents/DataFlow/outputs/paper-multitask-low-cost/exports')"
+              ]
+            }
+          ],
+          "run": [
+            {
+              "name": "output_key",
+              "value": [
+                "export_status",
+                "sft_row",
+                "export_dir"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "execution_options": {
+      "simple_training": {
+        "modality": "text",
+        "training_type": "sft"
+      },
+      "paper_multitask_low_cost": {
+        "version": 1,
+        "max_samples": 4,
+        "context_tokens": 6000,
+        "automatic_semantic_retry": false
+      }
+    }
+  },
+  "tags": [
+    "paper",
+    "sft",
+    "multitask",
+    "low-cost",
+    "not-run"
+  ]
+}

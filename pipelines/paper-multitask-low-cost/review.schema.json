@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "reviews": {
+      "type": "array",
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sample_id": {
+            "type": "string"
+          },
+          "grounded": {
+            "type": "string",
+            "enum": [
+              "PASS",
+              "FAIL",
+              "UNCERTAIN"
+            ]
+          },
+          "task_fit": {
+            "type": "string",
+            "enum": [
+              "PASS",
+              "FAIL",
+              "UNCERTAIN"
+            ]
+          },
+          "usefulness": {
+            "type": "string",
+            "enum": [
+              "PASS",
+              "FAIL",
+              "UNCERTAIN"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "sample_id",
+          "grounded",
+          "task_fit",
+          "usefulness",
+          "reason"
+        ]
+      }
+    }
+  },
+  "required": [
+    "reviews"
+  ]
+}

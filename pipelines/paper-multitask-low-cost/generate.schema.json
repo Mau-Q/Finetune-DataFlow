@@ -1,0 +1,57 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "keywords": {
+      "type": "array",
+      "maxItems": 8,
+      "items": {
+        "type": "string"
+      }
+    },
+    "samples": {
+      "type": "array",
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "reader_level": {
+            "type": "string"
+          },
+          "user_goal": {
+            "type": "string"
+          },
+          "task_type": {
+            "type": "string"
+          },
+          "instruction": {
+            "type": "string"
+          },
+          "answer_format": {
+            "type": "string",
+            "enum": [
+              "text",
+              "json"
+            ]
+          },
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "reader_level",
+          "user_goal",
+          "task_type",
+          "instruction",
+          "answer_format",
+          "answer"
+        ]
+      }
+    }
+  },
+  "required": [
+    "keywords",
+    "samples"
+  ]
+}

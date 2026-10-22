@@ -1,0 +1,70 @@
+{
+  "pipeline_id": "3bc16630-8e85-43cd-97df-c40f8e86d5d1",
+  "name": "论文 PDF → 科研多任务 SFT · 低成本生成与批量审核 v1",
+  "dataset_id": "a5f3dd5c5d",
+  "generator_id": "586e578e9e102ac5",
+  "reviewer_id": "9fb9ebf1ed9ee33e",
+  "prompt_ids": [
+    "tpl_f74d0862",
+    "tpl_2979adf7"
+  ],
+  "schema_ids": [
+    "schema_6465edf1",
+    "schema_30c358f4"
+  ],
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "dataset_id": "a5f3dd5c5d",
+    "available_input_fields": [
+      "source",
+      "source_name",
+      "material_id"
+    ],
+    "final_available_fields": [
+      "source",
+      "source_name",
+      "material_id",
+      "source_path",
+      "document_id",
+      "split",
+      "source_aliases",
+      "parsed_document",
+      "source_page",
+      "raw_chunk",
+      "chunk_metadata",
+      "unit_id",
+      "context",
+      "context_scope",
+      "context_valid",
+      "source_map",
+      "generation_input",
+      "generation_raw",
+      "keywords",
+      "candidates",
+      "invalid_candidates",
+      "candidate_count",
+      "review_input",
+      "review_raw",
+      "sample_id",
+      "task_type",
+      "instruction",
+      "input",
+      "output",
+      "review_status",
+      "review_reason",
+      "dedup_text",
+      "export_status",
+      "sft_row",
+      "export_dir"
+    ]
+  },
+  "readback_operator_count": 12,
+  "model_calls": 0,
+  "execution_submitted": false,
+  "prompt_sha256": [
+    "5bdc6c19e94b7dce2cd59ca0b985f0aaace08df692214a50a96f837ba052c357",
+    "06476dc8f5449cc38f3d03d33a879f652dcd99744970779c1899cd97a86e497a"
+  ]
+}
