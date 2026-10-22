@@ -20,13 +20,13 @@ catch {
 }
 if (-not $failed) { throw "Nonzero native exit code was ignored" }
 
-# Fail setup in an isolated missing-submodule checkout; never modify this checkout.
+# Fail setup in an isolated missing-source checkout; never modify this checkout.
 $SetupFixture = Join-Path ([IO.Path]::GetTempPath()) ("dataflow setup " + [guid]::NewGuid().ToString("N"))
 $SetupScripts = Join-Path $SetupFixture "scripts"
 New-Item -ItemType Directory -Force $SetupScripts | Out-Null
 Copy-Item (Join-Path $PSScriptRoot "setup-windows.ps1"), (Join-Path $PSScriptRoot "windows-common.ps1") $SetupScripts
 function global:git { $global:LASTEXITCODE = 24 }
-function global:uv { throw "uv must not run after git fails" }
+function global:uv { throw "uv must not run after source validation fails" }
 function global:node { throw "node must not run" }
 function global:npm { throw "npm must not run" }
 $OriginalDirectory = Get-Location
@@ -34,10 +34,10 @@ try {
     $failed = $false
     try { & (Join-Path $SetupScripts "setup-windows.ps1") -SkipFrontend }
     catch {
-        if ($_.Exception.Message -notmatch 'exit code 24') { throw }
+        if ($_.Exception.Message -notmatch 'Missing repository source') { throw }
         $failed = $true
     }
-    if (-not $failed) { throw "Setup ignored failed submodule initialization" }
+    if (-not $failed) { throw "Setup ignored missing repository source" }
 }
 finally {
     Set-Location $OriginalDirectory

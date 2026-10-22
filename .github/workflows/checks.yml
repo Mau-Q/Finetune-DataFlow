@@ -9,12 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: true
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Validate component pins and public files
+      - name: Validate integrated sources and public files
         run: python scripts/check-workspace.py
       - name: Check shell syntax
         run: bash -n scripts/setup.sh && sh -n scripts/webui.sh scripts/dev.sh scripts/test-local.sh
@@ -24,8 +22,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: true
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -44,8 +40,6 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: true
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -65,8 +59,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: true
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'

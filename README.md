@@ -33,7 +33,7 @@ cd Finetune-DataFlow
 ```
 
 打开 [本地 WebUI](http://127.0.0.1:8001/)，开发模式自动进入本机默认工作区。停止服务：`./scripts/webui.sh --stop`。
-Windows 首次安装，在 PowerShell 中执行（只初始化固定版本的 Core 和 WebUI，不初始化可选 MM）：
+Windows 首次安装，在 PowerShell 中执行（Core、WebUI、DataFlex 源码已包含在仓库中，不安装可选 MM）：
 
 ```powershell
 git clone https://github.com/Mau-Q/Finetune-DataFlow.git
@@ -44,6 +44,8 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 ```
 
 各开发者分别运行本机实例，互不共享账号、数据库、密钥和虚拟环境。Windows 使用根目录 `.venv`，默认以“本地开发者”进入“默认工作区”；退出后刷新停留登录页，“进入本地工作区”可恢复。普通登录使用 `-RequireLogin`，LAN 入口默认不开启开发自动登录。日常只需执行最后一条启动命令，停止前台服务按 Ctrl+C。详细步骤见 [Windows 开发指南](docs/windows-development.md)。
+
+DataFlex 固定使用 `repos/dataflex`，不读取 `DATAFLEX_SOURCE_DIR`。导出训练运行包会携带源码；训练主机仍需准备训练依赖和模型，WebUI 安装不会安装 GPU 训练环境。
 
 安装细节、常见问题和可选 PDF 解析见 [安装与启动](docs/getting-started.md)。
 
@@ -62,19 +64,20 @@ DPO 配对节点另有负例重试服务绑定，通常复用生成服务。详�
 
 ```text
 repos/
-  dataflow/          # Core fork，固定提交的子模块
-  dataflow-webui/    # WebUI fork，固定提交的子模块
+  dataflow/          # Core 源码，由总仓库统一管理
+  dataflow-webui/    # WebUI 源码，由总仓库统一管理
+  dataflex/          # DataFlex 训练引擎源码，随运行包分发
   dataflow-mm/       # 可选上游参考，独立 Python 环境
 extensions/
   paper-dataflow/    # 论文解析衔接、分块及 QA 扩展
 scripts/             # 安装、启动、检查、回归和历史实验工具
 pipelines/           # 论文流程配置及历史实验记录
 locks/               # 组件提交与本机环境快照
-  components.json    # 当前源码版本的权威清单
+  components.json    # 集成源码来源及可选子模块版本
 docs/                # 安装、API、架构、开发及历史交付记录
 ```
 
-组件采用子模块，保留上游许可证与独立 Git 历史。环境、模型、原始数据、密钥、SQLite 数据库、缓存和生成输出都不纳入 Git。旧论文实验配置含本机路径，须重新绑定后使用；历史依赖快照不能直接作为跨平台安装清单。
+Core、WebUI 和 DataFlex 直接纳入本仓库，普通 `git clone` 即包含源码，无需单独克隆 fork 或配置 DataFlex 路径。各目录保留上游许可证及 `UPSTREAM.json` 来源快照；后续修改统一在本仓库提交。只有可选 MM 仍为子模块。环境、模型、原始数据、密钥、SQLite 数据库、缓存和生成输出都不纳入 Git。旧论文实验配置含本机路径，须重新绑定后使用；历史依赖快照不能直接作为跨平台安装清单。
 
 ## 文档与验证
 

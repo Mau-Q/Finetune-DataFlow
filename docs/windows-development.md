@@ -39,11 +39,10 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 
 安装过程从本地 Core 源码和 WebUI 依赖构建，不安装可选 Langkit，不下载大模型。可选 MinerU、MM、远程 Linux/GPU 训练不是本次 Windows 本机 UI 验收的一部分。真实生成需要你在自己的 WebUI 配置模型 API。
 
-已有检出的更新方式：先提交或暂存自己的修改，再执行下面的命令。子模块更新会切到根仓库固定提交，不要在含未保存修改的子模块中直接运行。
+已有检出的更新方式：先提交或暂存自己的修改，再执行下面的命令。Core、WebUI、DataFlex 已纳入总仓库，不需要初始化子模块。
 
 ```powershell
 git pull --ff-only
-git submodule update --init -- repos/dataflow repos/dataflow-webui
 .\scripts\setup-windows.ps1
 ```
 

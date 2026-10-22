@@ -1,14 +1,10 @@
 # 工作区与公开源码基线
 
-2026-10-20：统一公开入口为 `Mau-Q/Finetune-DataFlow`。根仓库管理集成脚本、文档、Pipeline、依赖记录及论文扩展；三个组件以固定提交的 Git 子模块引用，各自保留独立历史。下表已于 2026-10-21 同步至 Windows/review 修复与 DataFlex 整合后的版本。
+2026-10-22：Core、WebUI、DataFlex 改为总仓库中的普通源码目录，不再依赖独立 fork 或外部 DataFlex 路径。原目录位置保持不变，DataFlex 放在 `repos/dataflex`；可选 MM 保留子模块。
 
-| 目录 | 固定提交 | 远端 |
-| --- | --- | --- |
-| `repos/dataflow` | `b5b69c144617abf24005bb61db5ab7e2cef865e7` | https://github.com/Mau-Q/DataFlow.git |
-| `repos/dataflow-webui` | `566ff32e1cd35c640b161fd2f1b5dae9ae3412db` | https://github.com/Mau-Q/DataFlow-WebUI.git |
-| `repos/dataflow-mm` | `155253460f6f2e50705a3e779f259b382a382822` | https://github.com/OpenDCAI/DataFlow-MM.git |
+导入来源由 [locks/components.json](locks/components.json) 及各源码目录的 `UPSTREAM.json` 记录。来源记录保存导入提交与原始文件哈希，后续修改统一由总仓库 Git 历史管理。`python3 scripts/check-workspace.py` 检查源码存在、来源一致性、普通文件跟踪及可选子模块版本。
 
-权威版本清单为 [locks/components.json](locks/components.json)，`python3 scripts/check-workspace.py` 检查清单、gitlink、当前 checkout 与 URL 是否一致。安装不会重置现有开发 checkout。
+此次本机迁移前的 Core / WebUI Git 元数据保存在 `.git/component-history/2026-10-22/`，包含原有提交和 stash，不上传 GitHub。独立 `/Users/rui/Documents/DataFlex` 未删除。历史基线与旧交付记录仅说明当时结构。
 
 ## 跟踪边界
 
@@ -18,7 +14,7 @@
 
 ## 提交与验证
 
-先检查涉及仓库的 Git 状态，各仓库分别提交，推送组件提交后再发布根仓库引用。不要使用全仓 `git add -A` 顺带提交其他任务的改动。
+先检查总仓库 Git 状态，集成源码统一在总仓库提交。不要使用全仓 `git add -A` 顺带提交其他任务的改动。
 
 完整本地回归运行 `./scripts/test-local.sh`，前端另执行 Node 契约测试与构建。安装与端口可访问不证明模型/API、MinerU 或 MM 的真实运行能力。
 

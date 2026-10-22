@@ -62,10 +62,12 @@ from app.services.training_bundles import export_bundle, safe_members, snapshot_
 def test_portable_bundle_hash_guard_and_no_fake_run(tmp_path,monkeypatch):
     src=tmp_path/'src';(src/'src/dataflex').mkdir(parents=True)
     (src/'src/dataflex/cli.py').write_text('print("fixture")')
-    subprocess.run(['git','init',str(src)],check=True,capture_output=True)
-    subprocess.run(['git','-C',str(src),'add','src'],check=True)
-    monkeypatch.setenv('DATAFLEX_SOURCE_DIR',str(src))
-    subprocess.run(['git','-C',str(src),'-c','user.name=test','-c','user.email=test@example.invalid','commit','-m','fixture'],check=True,capture_output=True)
+    from app.services import training_bundles
+    from app.services.model_training import digest
+    (src/'UPSTREAM.json').write_text(json.dumps({'commit':'a'*40,'files':{'src/dataflex/cli.py':digest((src/'src/dataflex/cli.py').read_bytes())}}))
+    monkeypatch.setattr(training_bundles,'DATAFLEX_SOURCE_ROOT',src)
+    # A stale external-path variable must never redirect the source snapshot.
+    monkeypatch.setenv('DATAFLEX_SOURCE_DIR',str(tmp_path/'missing-external-source'))
     data=tmp_path/'rows.jsonl';data.write_text('{"instruction":"q","output":"a"}\n')
     service=ModelTraining(tmp_path/'state')
     r=service.save_plan(TrainingPlan(model='/remote/model',data=[{'kind':'file','ref':str(data)}]).model_dump())

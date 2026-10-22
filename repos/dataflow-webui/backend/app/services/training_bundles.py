@@ -4,11 +4,9 @@ from app.services.dataset_persistence import atomic_write
 import copy
 import io
 import json
-import os
 from pathlib import Path, PurePosixPath
 import re
 import stat
-import subprocess
 import tempfile
 import uuid
 import zipfile
@@ -18,6 +16,7 @@ from app.services.training_compiler import compile_plan, catalog
 
 MAX_FILE=100*1024*1024
 MAX_BUNDLE=512*1024*1024
+DATAFLEX_SOURCE_ROOT=Path(__file__).resolve().parents[4]/'dataflex'
 
 
 def safe_read(path):
@@ -43,23 +42,28 @@ def safe_members(blob):
 def snapshot_source(root, custom_files):
     root=Path(root)
     try:
-        commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()
-        dirty=bool(subprocess.check_output(['git','status','--porcelain','--untracked-files=no'],cwd=root))
-        tracked=subprocess.check_output(['git','ls-files','-z','src/dataflex','pyproject.toml','setup.py','requirements.txt'],cwd=root).decode().split('\0')
-    except (OSError,subprocess.CalledProcessError) as e:raise TrainingError('DataFlex 源码目录不可用，请设置 DATAFLEX_SOURCE_DIR') from e
+        upstream=json.loads(safe_read(root/'UPSTREAM.json'))
+        commit=upstream['commit']
+        if not re.fullmatch(r'[0-9a-f]{40}',commit) or not isinstance(upstream['files'],dict):raise ValueError('Invalid provenance')
+    except (OSError,ValueError,KeyError,TypeError) as e:raise TrainingError('仓库内 DataFlex 源码或来源记录缺失，请重新获取完整项目') from e
+    tracked=[p.relative_to(root).as_posix() for p in (root/'src/dataflex').rglob('*') if p.is_file()]
+    tracked += [name for name in ['pyproject.toml','setup.py','requirements.txt','LICENSE','NOTICE','README.md','MANIFEST.in','UPSTREAM.json'] if (root/name).is_file()]
     files={}
     if not isinstance(custom_files,list) or not all(isinstance(x,str) for x in custom_files):raise TrainingError('custom_sources 必须为源码相对路径列表')
     for name in [*filter(None,tracked),*custom_files]:
         p=PurePosixPath(name)
-        if p.is_absolute() or '..' in p.parts or not (name.startswith('src/dataflex/') or name in ['pyproject.toml','setup.py','requirements.txt']):raise TrainingError('自定义源码必须显式位于 src/dataflex 下')
+        if p.is_absolute() or '..' in p.parts or not (name.startswith('src/dataflex/') or name in ['pyproject.toml','setup.py','requirements.txt','LICENSE','NOTICE','README.md','MANIFEST.in','UPSTREAM.json']):raise TrainingError('自定义源码必须显式位于 src/dataflex 下')
         path=root/name
         if not path.resolve().is_relative_to(root.resolve()):raise TrainingError('源码路径越界')
-        if path.suffix not in ['.py','.yaml','.yml','.toml','.txt']:continue
+        if path.suffix not in ['.py','.yaml','.yml','.toml','.txt','.json','.md','.in'] and name not in ['LICENSE','NOTICE']:continue
         content=safe_read(path)
         # Fail closed on literal credential assignments, without echoing any value.
         if re.search(rb'(?im)^\s*(?:[\w]*api[_-]?key|[\w]*secret|[\w]*password|[\w]*token)\s*[:=]\s*[\'"][^\'"\s]{8,}[\'"]',content):raise TrainingError('源码包含疑似凭据字面值，请移除后重试')
         files['source/'+name]=content
     if 'source/src/dataflex/cli.py' not in files:raise TrainingError('DataFlex 入口缺失')
+    actual={name.removeprefix('source/'):digest(body) for name,body in files.items() if name!='source/UPSTREAM.json'}
+    baseline={name:value for name,value in upstream['files'].items() if name in actual or name.startswith('src/dataflex/')}
+    dirty=actual!=baseline
     return files,{'commit':commit,'dirty':dirty,'custom_files':custom_files,'files':{k:digest(v) for k,v in files.items()}}
 
 
@@ -67,7 +71,7 @@ def snapshot_source(root, custom_files):
 def export_bundle(service, key, options=None):
     options=options or {};record=service.get('plans',key);plan=copy.deepcopy(record['plan']);compiled=compile_plan(service,plan)
     if compiled['checks']['errors']:raise TrainingError('; '.join(compiled['checks']['errors']))
-    root=Path(os.environ.get('DATAFLEX_SOURCE_DIR') or Path(__file__).resolve().parents[5].parent/'DataFlex')
+    root=DATAFLEX_SOURCE_ROOT
     files,source=snapshot_source(root,plan.get('custom_sources',[]))
     source_hash=digest(canonical(source));refs=[];inputs=[];mapping=[];role_members={'train':set(),'validation':set(),'reference':set()}
     train=compiled['train'];info=compiled['dataset_info']

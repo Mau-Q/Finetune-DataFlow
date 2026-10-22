@@ -38,7 +38,6 @@ Windows 原生环境使用根目录 `.venv` 时，不要执行默认的 `scripts
 
 ```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-git submodule update --init -- repos/dataflow repos/dataflow-webui
 .\scripts\setup-windows.ps1
 .\scripts\webui-windows.ps1 -Action Foreground
 ```
@@ -87,18 +86,17 @@ GitHub Actions 同时运行 Windows 持久化测试、真实私有进程启停�
 
 Windows 安装路径不安装可选的 Langkit 评估依赖，因此不需要编译 `whylogs-sketching` 或安装 Visual Studio C++ 工具；LangkitFilter 和 LangkitSampleEvaluator 在该环境中不可用，其余 WebUI 流程保持不变。
 
-已有检出更新前先停止服务并检查主仓库与子模块的 `git status --short --branch`，保存自己的修改，再执行：
+已有检出更新前先停止服务并检查主仓库的 `git status --short --branch`，保存自己的修改，再执行：
 
 ```powershell
 git pull --ff-only
-git submodule update --init -- repos/dataflow repos/dataflow-webui
 .\scripts\setup-windows.ps1
 .\scripts\webui-windows.ps1 -Action Foreground
 ```
 
-不使用 `git submodule update --remote`，以主仓库固定提交为准。完整离线回归使用 `.\scripts\test-local.ps1`；实际通过范围和跳过原因见 [Windows 实机验收](windows-acceptance.md)。
+源码随主仓库更新。完整离线回归使用 `.\scripts\test-local.ps1`；实际通过范围和跳过原因见 [Windows 实机验收](windows-acceptance.md)。
 
-这些 Windows 兼容性修复涉及 `repos/dataflow` 和 `repos/dataflow-webui` 子模块。向 GitHub 提交时，需要先分别在对应子模块提交并推送，再在根仓库提交更新后的子模块指针。
+Core、WebUI、DataFlex 源码直接在总仓库中提交；只有可选 MM 使用子模块。
 
 ## 第一次生成
 

@@ -1,19 +1,20 @@
 # 开发与验证
 
-先分别检查根仓库和相关子模块的 `git status --short --branch`，保留他人或先前任务的修改。根目录遵守 `AGENTS.md`，WebUI 另有其 `CLAUDE.md` 约定。
+先检查总仓库的 `git status --short --branch`，保留他人或先前任务的修改。根目录遵守 `AGENTS.md`，WebUI 另有其 `CLAUDE.md` 约定。
 
 ## 固定与更新组件
 
-子模块保存各自 Git 历史。更改组件后先在组件内提交并推送到自己的 fork，再更新根仓库 gitlink 和 `locks/components.json`。不要把提交推送到 `OpenDCAI` 上游。普通克隆使用固定提交，无需追踪组件某条浮动分支。
+Core、WebUI、DataFlex 是普通源码目录，直接在总仓库提交和推送，不再分别维护 fork。各组件 `UPSTREAM.json` 和 `locks/components.json` 记录导入来源与基线提交，后续修改以总仓库 Git 历史为准。更新上游时显式比较并迁移源码，保留许可证和来源记录。
 
 ```sh
 python3 scripts/check-workspace.py
-git submodule status
-git diff --submodule=short
+git status --short
 git diff --check
 ```
 
-版本检查只验证提交、URL 和跟踪边界，不代替 `git status` 对未提交改动的检查。已有工作区的安装脚本不会自动回滚子模块以满足版本固定。
+只有可选 `repos/dataflow-mm` 仍按子模块管理。组件检查验证源码、来源记录与跟踪边界，不执行模型训练。
+
+从旧子模块布局迁移时，建议先保存各组件和总仓库的未提交工作、数据库和配置，再另行克隆新版仓库并按需迁移本机数据；不要直接删除旧目录或在有未保存修改的子模块上强制覆盖。
 
 ## 回归
 

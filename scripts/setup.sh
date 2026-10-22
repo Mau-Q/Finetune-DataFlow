@@ -15,11 +15,10 @@ for tool in git uv node npm; do
     command -v "$tool" >/dev/null || { echo "Missing prerequisite: $tool" >&2; exit 1; }
 done
 cd "$root"
-# Init only missing modules. Never reset an existing developer checkout.
-for module in dataflow dataflow-webui; do
-    if [[ ! -e "repos/$module/.git" ]]; then
-        git submodule update --init -- "repos/$module"
-    fi
+# Core, WebUI and DataFlex are ordinary source directories in this repository.
+# Validate before creating an environment or installing dependencies.
+for entry in repos/dataflow/dataflow/__init__.py repos/dataflow-webui/backend/app/services/training_bundles.py repos/dataflex/src/dataflex/cli.py; do
+    [[ -f "$entry" ]] || { echo "Missing repository source: $entry. Fetch a complete checkout." >&2; exit 1; }
 done
 python="$root/.venvs/dataflow/bin/python"
 if [[ ! -x "$python" ]]; then

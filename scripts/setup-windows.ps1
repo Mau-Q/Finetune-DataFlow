@@ -20,10 +20,10 @@ foreach ($tool in $Tools) {
     Require-Command $tool
 }
 
-Write-Host "Initializing required submodules..."
-foreach ($module in @("dataflow", "dataflow-webui")) {
-    if (-not (Test-Path (Join-Path $Root "repos/$module/.git"))) {
-        Invoke-CheckedNative git @("submodule", "update", "--init", "--", "repos/$module")
+Write-Host "Checking repository source..."
+foreach ($entry in @("repos/dataflow/dataflow/__init__.py", "repos/dataflow-webui/backend/app/services/training_bundles.py", "repos/dataflex/src/dataflex/cli.py")) {
+    if (-not (Test-Path (Join-Path $Root $entry) -PathType Leaf)) {
+        throw "Missing repository source: $entry. Fetch a complete checkout."
     }
 }
 
