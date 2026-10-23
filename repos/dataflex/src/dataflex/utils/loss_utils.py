@@ -23,8 +23,11 @@ IGNORE_INDEX = -100
 UNSCORED = float("nan")
 
 
-def per_sample_loss_from_logits(logits, labels, ignore_index: int = IGNORE_INDEX) -> torch.Tensor:
-    """Token-mean cross-entropy for each row of the batch. Detached.
+def per_sample_loss_from_logits(
+    logits, labels, ignore_index: int = IGNORE_INDEX, *, detach: bool = True,
+    label_smoothing: float = 0.0,
+) -> torch.Tensor:
+    """Token-mean cross-entropy for each row, detached unless used for training.
 
     Logits are upcast to float32 first, which is what HuggingFace's own causal-LM
     loss does. It is not optional under bf16: a loss near 1.28 lands on a bf16
@@ -34,7 +37,9 @@ def per_sample_loss_from_logits(logits, labels, ignore_index: int = IGNORE_INDEX
     """
     shift_logits = logits[..., :-1, :].float().contiguous()
     shift_labels = labels[..., 1:].contiguous()
-    loss_fct = torch.nn.CrossEntropyLoss(reduction="none", ignore_index=ignore_index)
+    loss_fct = torch.nn.CrossEntropyLoss(
+        reduction="none", ignore_index=ignore_index, label_smoothing=label_smoothing
+    )
     tok_loss = loss_fct(
         shift_logits.view(-1, shift_logits.size(-1)),
         shift_labels.view(-1).long(),
@@ -44,7 +49,8 @@ def per_sample_loss_from_logits(logits, labels, ignore_index: int = IGNORE_INDEX
     # A sample with no trainable token has no defined loss, which is also what
     # HuggingFace's mean reduction reports there. Returning 0.0 instead would
     # make it look like the easiest data in the pool.
-    return per_sample.masked_fill(active == 0, UNSCORED).detach()
+    per_sample = per_sample.masked_fill(active == 0, UNSCORED)
+    return per_sample.detach() if detach else per_sample
 
 
 def per_sample_loss_from_outputs(outputs, inputs: Dict[str, Any]) -> torch.Tensor:

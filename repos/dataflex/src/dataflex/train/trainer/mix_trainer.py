@@ -38,6 +38,7 @@ from dataflex.core.registry import REGISTRY
 from dataflex.train.hooks import WHOLE_DATASET, DataflexTrainerMixin, group_by_length_requested
 from dataflex.utils.load_component import load_component
 from dataflex.utils.logging import logger
+from dataflex.utils.loss_utils import per_sample_loss_from_logits
 
 
 if is_datasets_available():
@@ -79,6 +80,12 @@ class MixTrainer(DataflexTrainerMixin, CustomSeq2SeqTrainer):
             logger.info("[Dataflex] Using static mix proportions during training.")
         else:
             logger.info("[Dataflex] No mixture manager available, using standard training.")
+
+        if self.mixer is not None and hasattr(self.mixer, 'get_current_doremi_weights'):
+            # We recompute a sample-mean loss instead of using the model's
+            # num_items_in_batch-normalized loss. Let Trainer divide by the
+            # actual accumulation count, as it does for other custom losses.
+            self.model_accepts_loss_kwargs = False
 
         # SFT data mixer: dynamic MoE
         if getattr(finetuning_args, 'freeze_gate', False):
@@ -211,8 +218,6 @@ class MixTrainer(DataflexTrainerMixin, CustomSeq2SeqTrainer):
             and hasattr(self.mixer, 'update_batch_info')
         ):
             domain_id = inputs.get('domain_id') if hasattr(inputs, 'get') else None
-            if torch.is_tensor(domain_id):
-                domain_id = int(domain_id.view(-1)[0].item()) if domain_id.numel() else None
             if domain_id is not None:
                 self.mixer.update_batch_info(float(loss.detach().float().cpu()), domain_id)
 
@@ -228,49 +233,40 @@ class MixTrainer(DataflexTrainerMixin, CustomSeq2SeqTrainer):
         )
         if not is_doremi:
             return super().compute_loss(
-                model, inputs, return_outputs=return_outputs, num_items_in_batch=num_items_in_batch
+                model, {k: v for k, v in inputs.items() if k != 'domain_id'},
+                return_outputs=return_outputs, num_items_in_batch=num_items_in_batch
             )
 
         domain_ids = inputs.get('domain_id')
         if domain_ids is None:
-            logger.warning("[DoremiMixer] No domain_id in batch, using standard loss computation")
-            return super().compute_loss(
-                model, inputs, return_outputs=return_outputs, num_items_in_batch=num_items_in_batch
-            )
+            raise ValueError("DoReMi loss weighting requires domain_id for every sample")
 
         domain_weights = self.mixer.get_current_doremi_weights()
 
-        labels = inputs.pop("labels") if (self.label_smoother is not None and "labels" in inputs) else None
-        outputs = model(**inputs)
-
+        labels = inputs.get("labels")
         if labels is None:
-            loss = outputs["loss"] if isinstance(outputs, dict) and "loss" in outputs else outputs[0]
-            return (loss, outputs) if return_outputs else loss
-
-        logits = getattr(outputs, "logits", None)
+            raise ValueError("DoReMi loss weighting requires supervised labels")
+        outputs = model(**{k: v for k, v in inputs.items() if k != 'domain_id'})
+        logits = outputs.get("logits") if isinstance(outputs, dict) else getattr(outputs, "logits", None)
         if logits is None:
-            # Nothing to reduce per sample; report the model's own loss unweighted.
-            loss = outputs["loss"] if isinstance(outputs, dict) else outputs[0]
-            logger.warning("[DoremiMixer] Model returned scalar loss, cannot apply per-sample reweighting")
-            return (loss, outputs) if return_outputs else loss
-
-        if self.label_smoother is not None:
-            per_sample_loss = self.label_smoother(outputs, labels, shift_labels=True)
-        else:
-            shift_logits = logits[..., :-1, :].contiguous()
-            shift_labels = labels[..., 1:].contiguous()
-            loss_fct = torch.nn.CrossEntropyLoss(reduction='none', ignore_index=-100)
-            per_token_loss = loss_fct(
-                shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1)
-            ).view(shift_labels.size())
-            valid_mask = (shift_labels != -100)
-            per_sample_loss = (
-                (per_token_loss * valid_mask.float()).sum(dim=1) / valid_mask.sum(dim=1).clamp(min=1)
-            )
+            raise ValueError("DoReMi loss weighting requires per-sample logits; scalar fallback is invalid")
+        per_sample_loss = per_sample_loss_from_logits(
+            logits, labels, detach=False,
+            label_smoothing=float(getattr(self.args, "label_smoothing_factor", 0.0)),
+        )
+        if not torch.isfinite(per_sample_loss).all():
+            raise ValueError("DoReMi received non-finite or unsupervised sample losses")
 
         domain_weights_tensor = torch.tensor(
             domain_weights, dtype=per_sample_loss.dtype, device=per_sample_loss.device
         )
+        domain_ids = torch.as_tensor(domain_ids, dtype=torch.long, device=per_sample_loss.device).view(-1)
+        if domain_ids.numel() != per_sample_loss.numel():
+            raise ValueError("DoReMi domain_id count does not match the microbatch")
+        if (domain_ids < 0).any() or (domain_ids >= domain_weights_tensor.numel()).any():
+            raise ValueError("DoReMi domain_id is outside the configured domains")
+        if not torch.isfinite(domain_weights_tensor).all() or (domain_weights_tensor < 0).any():
+            raise ValueError("DoReMi domain weights must be finite and non-negative")
         sample_weights = domain_weights_tensor[domain_ids]
         weighted_loss = (per_sample_loss * sample_weights).mean()
 

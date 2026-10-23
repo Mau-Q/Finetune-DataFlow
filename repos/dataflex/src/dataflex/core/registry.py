@@ -22,8 +22,13 @@ class Registry:
         cfg = cfg or {}
         merged = {**cfg, **runtime}                     # Runtime dependencies take precedence
         sig = inspect.signature(cls.__init__)
-        accepted = {p.name for p in list(sig.parameters.values())[1:]}  # Skip self
+        parameters = list(sig.parameters.values())[1:]
+        accepted = {p.name for p in parameters if p.kind not in (p.VAR_KEYWORD, p.VAR_POSITIONAL)}
         filtered = {k: v for k, v in merged.items() if k in accepted}   # Only feed needed
+        if any(p.kind == p.VAR_KEYWORD for p in parameters):
+            # Forward user configuration accepted through **kwargs, but do not
+            # leak unrelated trainer runtime objects into a component's bases.
+            filtered.update({k: merged[k] for k in cfg if k not in accepted})
         return cls(**filtered)
 
 REGISTRY = Registry()

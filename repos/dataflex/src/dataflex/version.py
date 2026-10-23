@@ -1,4 +1,4 @@
-__version__ = "1.1.0"
+__version__ = "1.1.0+dataflow.20261023"
 short_version = __version__
 
 
@@ -8,7 +8,7 @@ def get_version():
 
 def parse_version_info(version_str):
     version_info = []
-    for x in version_str.split("."):
+    for x in version_str.split("+", 1)[0].split("."):
         if x.isdigit():
             version_info.append(int(x))
         elif x.find("rc") != -1:

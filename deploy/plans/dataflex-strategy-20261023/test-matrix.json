@@ -3,7 +3,7 @@
   "date": "2026-10-23",
   "timezone": "Asia/Shanghai",
   "kind": "test_specification_not_executable_config",
-  "status": "PLANNED_NOT_RUN",
+  "status": "CONFIGS_DEPLOYED_REAL_DATA_AND_GPU_RUNS_PENDING",
   "authority": "User requested analysis and formulation of DataFlex strategy tests; this artifact does not initiate training.",
   "data": {
     "dataset": "allenai/SciRIFF",
@@ -45,7 +45,8 @@
     "lr_warmup_steps": 0,
     "seed": 42,
     "data_seed": 42,
-    "environment_status": "MUST_REVERIFY_BEFORE_GPU_RUN"
+    "environment_status": "INSTALLED_PACKAGE_AND_CPU_REGRESSIONS_VERIFIED_GPU_CAPACITY_PENDING",
+    "runtime_model_root": "/models/Qwen3.5-9B"
   },
   "gate": {
     "id": "GATE",
@@ -694,9 +695,21 @@
   ],
   "observer_runner_status": "NOT_IMPLEMENTED",
   "verification_boundaries": [
-    "No data downloaded",
-    "No server connection",
-    "No algorithm CPU tests or GPU training performed",
-    "Plan validation and source inspection do not establish runtime success"
-  ]
+    "Data not downloaded or prepared",
+    "School environment inspected and DataFlex source/package/configs updated under user authorization",
+    "8 Mac CPU regressions passed; 5 school-framework checks skipped locally",
+    "13 school CPU regressions passed with CUDA hidden; no Qwen weights loaded",
+    "2 configuration generation tests and17 platform training tests passed",
+    "8 core GPU runs and model evaluation remain NOT_RUN"
+  ],
+  "school_reconciliation": "school-reconciliation.json",
+  "runtime": {
+    "root": "/runs/strategy-20261023",
+    "config_count": 8,
+    "installed_dataflex_version": "1.1.0+dataflow.20261023",
+    "source_matches_local": true,
+    "data_prepared": false,
+    "gpu_training_started": false,
+    "gpu_selection": "Select from live free-memory/UUID at launch; no fixed index. Other GPU requires explicit container device binding."
+  }
 }

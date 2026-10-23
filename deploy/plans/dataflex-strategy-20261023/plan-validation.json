@@ -1,19 +1,34 @@
 {
-  "status": "PLAN_INTEGRITY_CHECK_PASSED",
+  "status": "PASS",
+  "scope": "Plan integrity, actual school deployment/config readback and hash parity; not GPU strategy acceptance.",
   "checks": [
-    "352-row quotas",
-    "8 core runs and 192 optimizer updates",
-    "768 sample presentations",
-    "effective batch 4 for every run",
-    "dynamic boundaries at4/9/14/19",
-    "all dependencies exist",
-    "ODM B1 and weighter B2 separation",
-    "576 predictions planned",
-    "quota rounding examples",
-    "23 source hashes unchanged",
+    "352 rows planned",
+    "8 runs remain NOT_RUN",
+    "192 optimizer updates and768 sample presentations planned",
+    "family batch and schedule checks",
+    "75 installed/local/platform source files match",
+    "8 generated configs match school hashes",
+    "actual model and component paths exist",
+    "actual LLaMA-Factory parser field ownership checked",
+    "platform source snapshot passed",
     "local Markdown references resolve"
   ],
-  "runtime_tests_executed": false,
-  "server_connected": false,
-  "data_downloaded": false
+  "verified_runtime_tests": {
+    "mac_dataflex_passed": 8,
+    "mac_framework_skipped": 5,
+    "school_cpu_passed": 13,
+    "configuration_tests_passed": 2,
+    "webui_training_tests_passed": 17,
+    "pip_check": "PASS"
+  },
+  "server_connected": true,
+  "school_source_and_package_updated": true,
+  "data_downloaded": false,
+  "gpu_training_started": false,
+  "remaining": [
+    "Frozen real dataset",
+    "Consumption/weight observation runner",
+    "GPU batch1/batch2 smoke and8-run suite",
+    "Platform SSH/container end-to-end acceptance"
+  ]
 }

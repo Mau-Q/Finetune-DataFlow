@@ -272,15 +272,9 @@ class LegoTrainer(SelectTrainer):
             domain_id = inputs.get("domain_id")
             if domain_id is None:
                 continue
-            if torch.is_tensor(domain_id):
-                domain_id = domain_id.view(-1)
-                domain_id = int(domain_id[0].item()) if domain_id.numel() else None
-            if domain_id is None:
-                continue
-            try:
-                fn(float(loss.detach().float().cpu()), domain_id)
-            except Exception as exc:
-                logger.warning(f"[Dataflex][Lego] {stage.name}.update_batch_info failed: {exc}")
+            # Keep every domain label so scalar-feedback mixers can reject an
+            # ambiguous batch instead of silently attributing it to item 0.
+            fn(float(loss.detach().float().cpu()), domain_id)
 
         return loss
 

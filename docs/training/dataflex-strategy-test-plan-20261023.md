@@ -1,6 +1,6 @@
 # DataFlex 小样本微调策略测试方案
 
-日期：2026-10-23（Asia/Shanghai）。状态：**方案已制定；未准备真实数据、未启动训练、未连接服务器。**
+日期：2026-10-23（Asia/Shanghai）。状态：**已核对本地与学校代码、完成必要修复并部署独立配置；未准备真实数据，未启动 GPU 训练。** 学校侧核对、修改和验证结果见 [对照记录](dataflex-school-reconciliation-20261023.md)。
 
 ## 1. 目标与验收层次
 
@@ -33,7 +33,7 @@
 | R11 | ReorderTrainer 强制 SequentialSampler；Lego 存在 reorder 时同样采用顺序 sampler | 检查训练实际消费顺序，防止后续 shuffle/按长度分组破坏排序 |
 | R12 | README 提到 skills/how_to_use.md 和 examples，但当前 vendored 目录未包含这些入口 | 以后续生成的独立运行配置为准；不得引用不存在的 examples 作为可直接执行的命令 |
 
-R05、R06 等是检查点，不是本轮已经修复或实测确认的故障报告。
+上表保留修改前审查的观察。随后用户授权修改本地和学校代码：R05 已改为可微逐样本 CE 加权，不再依赖 label_smoother 是否存在；R06 已修正配置 kwargs 传播且不泄露无关 runtime 对象。R04 对混域微批采用明确拒绝，尚未实现逐域反馈。学校实际安装环境的 13 项 CPU 回归通过；这不代替 Qwen3.5 GPU 训练、完整 DoReMi 参考模型流程或 8 组策略验收。
 
 ## 3. 数据方案：352 条真实样本，外加微型可控夹具
 
@@ -103,7 +103,7 @@ Loss 重加权使用 `linupper`。`LossWeighter(strategy=uniform)` 仍对归一�
 | P08 | 缓存、域顺序与中断状态 | 独立 run 不误读历史step缓存；tokenized snapshot的域顺序/模板/cutoff变化被拒绝；恢复缺少动态状态不能假装无缝继续 |
 | P09 | 观察能力与模型评测格式 | 可以捕获真实消费ID/域/标签数/有效权重与实际 backward loss；错误JSON、空答、超限输出保留并计入分母；模型产物哈希绑定评测 |
 
-P01 特别用非默认 reward_scale/min_exploration_rate 做一次传播诊断；已观察到 Registry 过滤风险。核心 ODM 首轮使用当前实现默认 15/0.03，并在实例上确认，不因此宣称非默认配置传播正确。
+P01 使用非默认 reward_scale/min_exploration_rate 做传播诊断：修复后的学校 CPU 检查已确认 2.0/0.02 能传入真实 ODM 实例。核心 ODM 首轮仍采用默认 15/0.03；其余参数与配置组合继续按项目核对。
 
 P06 还需记录回报来自哪一个微批：当前 `update_batch_info` 会覆盖上一条信息，边界更新读取最近微批，不是自动聚合整个窗口的域平均 loss。训练步骤返回的 loss 也可能已经过梯度累积归一化。测试要保留原始监督 CE、返回 loss、accumulation 与奖励之间的关系，明确验证的是当前反馈口径；如果预期算法要求窗口聚合，应另列语义差异，不能把该实现当作完整论文复现。
 
@@ -182,10 +182,12 @@ X05 必须使用同一24步scheduler horizon，在step12保存后中断；不能
 
 执行顺序：P00～P09 → GATE → G00 → G01/G02/G03 → G04/G05 → G06/G07 → 64题评测与汇总 → X00～X06分批 → 按依赖选择P3。任一关键机制失败先定位该类，不让其他类的成功掩盖问题。每次有效样本/源码/配置变化都记录新的身份。
 
-服务器运行时遵守项目连接约定：先读连接表，明确school1/node01目标并确认hostname与账号；实时检查GPU，离线准备物料；不影响其他用户任务。必要依赖和数据由Mac准备再上传，核验后清理本轮可丢弃传输副本。本轮没有连接、下载或训练动作。
+服务器运行时遵守项目连接约定：先读连接表，明确school1/node01目标并确认hostname与账号；实时检查GPU，离线准备物料；不影响其他用户任务。必要依赖和数据由Mac准备再上传，核验后清理本轮可丢弃传输副本。本轮已核实school1/mgt01与node01/huruiqian，按用户后续授权修复并同步学校源码/安装包/测试配置，未启动GPU训练。
+
+用户允许换 GPU，选卡不再固定 index=3。现有训练容器按 GPU UUID 绑定，不能只修改 CUDA_VISIBLE_DEVICES 就访问容器外其他卡；实际换卡需为新测试启动具有目标 UUID 设备绑定的独立容器，或在没有活动训练时重新配置专用容器。任何操作前均刷新显存并保留其他任务。此阶段没有更换 GPU 或重启现有容器。
 
 ## 11. 本轮交付与仍需执行的工作
 
-已完成：本地源代码核对、测试范围、352条数据配额、8组核心训练预算、P0/P2/P3测试项目与判定标准、机器可读运行矩阵。未完成：实际数据准备、环境复核、观察runner、任何CPU算法测试/GPU训练/模型评测/平台真实执行。文档校验只验证计划内部一致性与引用，不构成算法通过。
+已完成：本地/学校源码与配置对照、352条数据配额、8组核心训练预算、P0/P2/P3项目、必要修复与学校CPU回归、独立配置物化及部署。未完成：实际数据准备、观察runner、GPU短训、完整模型评测和平台SSH训练执行。CPU回归及配置校验不构成各算法完整通过。
 
-机器可读项目见 [test-matrix.json](../../deploy/plans/dataflex-strategy-20261023/test-matrix.json)。首轮开始时先处理P0暴露的问题，再物化可运行配置；该JSON是测试规格，不可直接传给dataflex-cli。
+机器可读项目见 [test-matrix.json](../../deploy/plans/dataflex-strategy-20261023/test-matrix.json)。配置物化工具为 [materialize_configs.py](../../deploy/plans/dataflex-strategy-20261023/materialize_configs.py)，只生成配置，不下载数据或启动训练。8组配置在学校容器 `/runs/strategy-20261023/G00`～`G07`，数据缺失时仍标记未就绪；该JSON是测试规格，不可直接传给dataflex-cli。

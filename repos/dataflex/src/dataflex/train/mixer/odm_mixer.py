@@ -237,10 +237,24 @@ class ODMMixer(Mixer):
             batch_loss: Training loss from the batch
             domain_id: Domain ID of the sampled batch
         """
-        self.prev_batch_info = {
-            'loss': batch_loss,
-            'domain_id': domain_id
-        }
+        # A scalar loss cannot be attributed to item 0 of a mixed-domain batch.
+        # Keep the scalar feedback contract explicit until per-domain loss
+        # feedback is implemented.
+        if torch.is_tensor(domain_id):
+            domain_id = domain_id.detach().cpu().numpy()
+        domains = np.asarray(domain_id).reshape(-1)
+        if not domains.size or not np.isfinite(domains).all():
+            raise ValueError("ODM requires a non-empty, finite domain_id")
+        first = int(domains[0])
+        if not np.all(domains == first) or not 0 <= first < self.k:
+            raise ValueError(
+                "ODM scalar feedback requires a homogeneous-domain microbatch; "
+                "use per_device_train_batch_size=1 for mixed-source training"
+            )
+        batch_loss = float(batch_loss)
+        if not np.isfinite(batch_loss):
+            raise ValueError("ODM batch loss must be finite")
+        self.prev_batch_info = {'loss': batch_loss, 'domain_id': first}
     
     def save_weights_to_jsonl(self, output_dir, step_id):
         """Save domain weights to JSONL file (append mode, one line per update)."""
