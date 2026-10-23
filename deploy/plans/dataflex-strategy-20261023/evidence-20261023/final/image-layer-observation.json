@@ -1,0 +1,7 @@
+{
+  "evidence_type": "TOOL_OBSERVED_TRANSCRIPT",
+  "command": "docker image history --format '{{.Size}}' rui/dataflex-strategy:20261023-patched",
+  "raw_output": "bash: warning: setlocale: LC_ALL: cannot change locale (C.UTF-8)\n2.16GB\n0B\n0B\n0B\n0B\n0B\n0B\n4.15MB\n62.5MB\n0B\n0B\n0B\n0B\n0B\n0B\n4.14kB\n106kB\n0B\n44.2MB\n3.89MB\n2.37kB\n42.4kB\n13.7kB\n60.2kB\n4.23kB\n164kB\n26.7kB\n429MB\n308B\n0B\n0B\n0B\n325MB\n0B\n0B\n68.4MB\n133B\n27.3kB\n487kB\n526kB\n765MB\n8.03GB\n0B\n57.4kB\n0B\n59.9MB\n825MB\n136B\n0B\n0B\n0B\n0B\n0B\n0B\n390kB\n4.94GB\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n2.53kB\n3.06kB\n263kB\n2.03GB\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n17.3kB\n0B\n0B\n46B\n156MB\n0B\n10.6MB\n0B\n0B\n0B\n0B\n0B\n0B\n0B\n77.9MB\n0B\n0B\n0B\n0B\n",
+  "top_committed_layer_reported": "2.16GB",
+  "scope": "Image layer logical size; unique additional physical Docker storage has not been separately measured"
+}

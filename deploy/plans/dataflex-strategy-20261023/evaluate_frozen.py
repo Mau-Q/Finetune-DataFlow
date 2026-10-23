@@ -57,6 +57,15 @@ def metrics(rows):
   out[task]=d
  return out
 
+def generation_prompt(tokenizer, instruction):
+ # LF's generic qwen3_5_nothink encode_oneturn produces a training prompt but
+ # does not add Qwen3.5's native generation-only empty-thinking prefill.
+ messages=[{'role':'user','content':instruction}]
+ text=tokenizer.apply_chat_template(messages,tokenize=False,add_generation_prompt=True,enable_thinking=False)
+ if not text.rstrip().endswith('</think>'):
+  raise ValueError('Native Qwen no-think generation prefill missing')
+ return tokenizer.encode(text,add_special_tokens=False)
+
 def main(name, attempt=None):
  from transformers import AutoModelForImageTextToText,AutoTokenizer,BitsAndBytesConfig
  from peft import PeftModel
@@ -90,23 +99,25 @@ def main(name, attempt=None):
  rows=[json.loads(l) for l in (ROOT/'data/test.jsonl').read_text().splitlines()]
  meta=[json.loads(l) for l in (ROOT/'data/metadata.jsonl').read_text().splitlines() if json.loads(l)['official_split']=='test']
  if name.startswith('GATE'):
-  rows=[json.loads(l) for l in (ROOT/'data/gate.jsonl').read_text().splitlines()][:2]; meta=[{'_instance_id':'gate-reload-'+str(i),'task':'gate'} for i in range(2)]
+  rows=[json.loads(l) for l in (ROOT/'data/gate.jsonl').read_text().splitlines()][:2]; gate_ids=json.loads((ROOT/'data-manifest.json').read_text())['gate_ids'];meta=[{'_instance_id':gate_ids[i],'task':gate_ids[i].split(':')[0]} for i in range(2)]
  order=[i for j in range(16) for i in [j,16+j,32+j,48+j]] if len(rows)==64 else list(range(len(rows)))
  predictions=[];gen_started=time.monotonic()
  for count,index in enumerate(order):
-  r=rows[index];m=meta[index];prompt,response=template.encode_oneturn(tokenizer,[{'role':'user','content':r['instruction']},{'role':'assistant','content':r['output']}])
+  r=rows[index];m=meta[index];prompt=generation_prompt(tokenizer,r['instruction'])
   inputs=torch.tensor([prompt],device='cuda');mask=torch.ones_like(inputs)
   with torch.inference_mode():seq=model.generate(input_ids=inputs,attention_mask=mask,max_new_tokens=256,do_sample=False,pad_token_id=tokenizer.pad_token_id,eos_token_id=tokenizer.eos_token_id)
-  new=seq[0,len(prompt):].tolist();pred=tokenizer.decode(new,skip_special_tokens=True)
-  row={'sample_id':m['_instance_id'],'task':m['task'],'prediction':pred,'reference':r['output'],'prompt_tokens':len(prompt),'generated_tokens':len(new),'cap_hit':len(new)>=256 and new[-1]!=tokenizer.eos_token_id,'last_token':new[-1] if new else None}
+  new=seq[0,len(prompt):].tolist();pred=tokenizer.decode(new,skip_special_tokens=True);raw=tokenizer.decode(new,skip_special_tokens=False);thought_tag=('<think>' in raw or '</think>' in raw)
+  row={'reasoning_tag_emitted':thought_tag,'sample_id':m['_instance_id'],'task':m['task'],'prediction':pred,'reference':r['output'],'prompt_tokens':len(prompt),'generated_tokens':len(new),'cap_hit':len(new)>=256 and new[-1]!=tokenizer.eos_token_id,'last_token':new[-1] if new else None}
   with (folder/'predictions.jsonl').open('a') as f:f.write(json.dumps(row)+'\n')
-  predictions.append(row);print(json.dumps({'model':name,'completed':len(predictions),'total':len(rows),'last_tokens':len(new)}),flush=True)
+  predictions.append(row)
+  if thought_tag:raise RuntimeError('Model emitted reasoning tags under native no-think prefill; preserved failing prediction')
+  print(json.dumps({'model':name,'completed':len(predictions),'total':len(rows),'last_tokens':len(new)}),flush=True)
   if count==7:
    # Parsing failures count in denominator; a total inability to generate is a
    # runtime failure. Do not tune generation using test scores.
    assert all(x['prediction'].strip() for x in predictions),'Empty output in first eight runtime checks; preserve attempt and inspect before full evaluation'
    (folder/'first-eight-check.json').write_text(json.dumps({'nonempty':sum(bool(x['prediction'].strip()) for x in predictions),'cap_hits':sum(x['cap_hit'] for x in predictions),'n':8}))
- receipt={'model':name,'adapter_reloaded':name!='BASE','adapter_sha256':sha(adapter/'adapter_model.safetensors') if adapter else None,'data_manifest_sha256':sha(ROOT/'data-manifest.json'),'n':len(predictions),'total_seconds':time.monotonic()-t,'generation_seconds':time.monotonic()-gen_started,'peak_allocated_gib':torch.cuda.max_memory_allocated()/2**30,'peak_reserved_gib':torch.cuda.max_memory_reserved()/2**30,'prediction_sha256':sha(folder/'predictions.jsonl'),'generation':{'do_sample':False,'max_new_tokens':256,'template':'qwen3_5_nothink','enable_thinking':False}}
+ receipt={'model':name,'adapter_reloaded':name!='BASE','adapter_sha256':sha(adapter/'adapter_model.safetensors') if adapter else None,'data_manifest_sha256':sha(ROOT/'data-manifest.json'),'n':len(predictions),'total_seconds':time.monotonic()-t,'generation_seconds':time.monotonic()-gen_started,'peak_allocated_gib':torch.cuda.max_memory_allocated()/2**30,'peak_reserved_gib':torch.cuda.max_memory_reserved()/2**30,'prediction_sha256':sha(folder/'predictions.jsonl'),'evaluation_script_sha256':sha(Path(__file__)),'model_config_sha256':sha(Path(modelpath)/'config.json'),'eos_token_id':tokenizer.eos_token_id,'pad_token_id':tokenizer.pad_token_id,'empty_outputs':sum(not r['prediction'].strip() for r in predictions),'reasoning_tag_outputs':sum(r['reasoning_tag_emitted'] for r in predictions),'generation':{'prompt_method':'hf_native_chat_template_enable_thinking_false','do_sample':False,'max_new_tokens':256,'template':'qwen3_5_nothink','enable_thinking':False}}
  if not name.startswith('GATE'):receipt['metrics']=metrics(predictions)
  (folder/'metrics.json').write_text(json.dumps(receipt,indent=2))
  (base_folder/'successful-evaluation.json').write_text(json.dumps({'attempt':attempt or 'initial'}))

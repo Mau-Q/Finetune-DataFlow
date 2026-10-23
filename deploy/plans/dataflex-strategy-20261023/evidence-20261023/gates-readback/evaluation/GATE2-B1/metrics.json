@@ -1,0 +1,18 @@
+{
+  "model": "GATE2-B1",
+  "adapter_reloaded": true,
+  "adapter_sha256": "794b0d5710fe71f6809763436df2c520c362b9e19de185268cbfa71f11e04be3",
+  "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+  "n": 2,
+  "total_seconds": 74.23410073900595,
+  "generation_seconds": 59.459146041888744,
+  "peak_allocated_gib": 7.890501976013184,
+  "peak_reserved_gib": 8.072265625,
+  "prediction_sha256": "36f7b3f5d44930193bfcec0dd8633057408f35d4e3a6f17f9cc8952875dede56",
+  "generation": {
+    "do_sample": false,
+    "max_new_tokens": 256,
+    "template": "qwen3_5_nothink",
+    "enable_thinking": false
+  }
+}

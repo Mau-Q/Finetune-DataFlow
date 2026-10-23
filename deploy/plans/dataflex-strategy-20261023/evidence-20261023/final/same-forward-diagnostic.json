@@ -1,0 +1,51 @@
+{
+  "status": "SAME_FORWARD_WEIGHT_GRADIENT_VERIFIED",
+  "optimizer_updates": 0,
+  "sample_ids": [
+    "scicite_classification:train:5456",
+    "bioasq_factoid_qa:train:1257"
+  ],
+  "micro": 9,
+  "forward_samples": 2,
+  "model_forward_calls": 1,
+  "effective_tokens": 339,
+  "losses": [
+    3.8045294284820557,
+    5.737917900085449
+  ],
+  "gradient_accumulation": 2,
+  "uniform_coefficients": [
+    0.25,
+    0.25
+  ],
+  "linupper_coefficients": [
+    0.13447071611881256,
+    0.36552926898002625
+  ],
+  "gradient_comparisons": {
+    "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_A.default.weight": {
+      "uniform_norm": 0.0,
+      "linupper_norm": 0.0,
+      "repeat_difference_l2": 0.0,
+      "weight_difference_l2": 0.0,
+      "weight_relative_l2": 0.0
+    },
+    "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_B.default.weight": {
+      "uniform_norm": 7.456930160522461,
+      "linupper_norm": 5.207355499267578,
+      "repeat_difference_l2": 0.0,
+      "weight_difference_l2": 3.2621235847473145,
+      "weight_relative_l2": 0.4374620020389557
+    }
+  },
+  "uniform_repeat_atol": 0.0001,
+  "uniform_repeat_rtol": 0.02,
+  "minimum_weight_relative_l2": 0.02,
+  "initial_snapshot_sha256": "c56d3f34fbb0d1b4001c77fa2eba35eb5ad4f88e91a2e94c5db38e34ba30809a",
+  "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+  "script_sha256": "fa704778419d723027a8d7a2f6fde05c5066460c1938f8ef996dcc2677348de2",
+  "seconds": 128.5963115079794,
+  "peak_allocated_gib": 13.03609323501587,
+  "peak_reserved_gib": 15.302734375,
+  "scope": "Same initial adapter and single actual Qwen loss graph; separate training warmup mismatch remains unresolved"
+}

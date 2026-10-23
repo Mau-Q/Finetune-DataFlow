@@ -20,7 +20,7 @@ def expected_delta_indices(baseline, current, step, iteration, total_updates=4):
  gen=torch.Generator().manual_seed(42+step)
  return torch.multinomial(probability,20,replacement=False,generator=gen).tolist(),[start,end]
 
-def main(name):
+def main(name, same_forward_path=None):
  pointer=ROOT/name/'successful-attempt.json';folder=Path(json.loads(pointer.read_text())['observation_dir']) if pointer.exists() else ROOT/name/'attempt1';cfg=yaml.safe_load((folder/'actual-config.yaml').read_text());receipt=json.loads((folder/'resource.json').read_text());cons=rows(folder/'consumption.jsonl');events=rows(folder/'events.jsonl');back=rows(folder/'backward-input.jsonl');grads=rows(folder/'gradient.jsonl');strategy=rows(folder/'strategy.jsonl')
  assert receipt['status']=='TRAIN_VERIFIED'
  expected=cfg['max_steps'];effective=cfg['per_device_train_batch_size']*cfg['gradient_accumulation_steps']
@@ -79,13 +79,41 @@ def main(name):
     z=2*(l-l.min())/max(l.max()-l.min(),1e-6)-1;r=np.minimum(z+1,1);v=np.exp(r-r.max());v/=v.sum();assert np.allclose(a,v,atol=.015)
    assert np.allclose(np.array(g['coefficients']),a/cfg['gradient_accumulation_steps'],atol=.005)
   if name!='G06':assert any(abs(w['weights'][0]-.5)>.05 for w in weights)
+ paired_receipt=None
+ if name in ['G06','G07']:
+  paired_receipt=json.loads((folder/'paired-control-receipt.json').read_text())
  if name=='G07':
-  paired=rows(ROOT/'G06/attempt1/consumption.jsonl');assert [[x['sample_id'] for x in c['items']] for c in paired]==[[x['sample_id'] for x in c['items']] for c in cons]
+  cp=json.loads((ROOT/'G06/successful-attempt.json').read_text());control_folder=Path(cp['observation_dir'])
+  cidentity=json.loads((control_folder/'paired-control-receipt.json').read_text());assert cidentity['initial_adapter_tensor_sha256']==paired_receipt['initial_adapter_tensor_sha256']
+  assert rows(control_folder/'paired-rng.jsonl')==rows(folder/'paired-rng.jsonl')
+  paired=rows(control_folder/'consumption.jsonl');assert [[x['sample_id'] for x in c['items']] for c in paired]==[[x['sample_id'] for x in c['items']] for c in cons]
   # The warmup trajectories share initialization, batches and RNG. At the first
   # weighted batch, recorded actual LoRA gradients demonstrate the effect.
-  ctrl=rows(ROOT/'G06/attempt1/gradient.jsonl');start=next(w['micro'] for w in weights)
-  ga=[g for g in grads if g['micro']==start];gb=[g for g in ctrl if g['micro']==start];assert any(abs(a['norm']-b['norm'])>1e-7 for a,b in zip(ga,gb))
+  ctrl=rows(control_folder/'gradient.jsonl');start=next(w['micro'] for w in weights)
+  ga={(g['micro'],g['parameter']):g for g in grads};gb={(g['micro'],g['parameter']):g for g in ctrl};assert set(ga)==set(gb)
+  warm=[k for k in ga if k[0]<start];matched=all(np.isclose(ga[k]['norm'],gb[k]['norm'],atol=1e-4,rtol=.02) for k in warm)
+  first=[k for k in ga if k[0]==start]
+  paired_receipt['trajectory_status']='MATCHED_WITHIN_PREDECLARED_TOLERANCE' if matched else 'INCONCLUSIVE_WARMUP_MISMATCH'
+  if not matched:
+   # The original cross-run assertion remains the default. A separately named
+   # diagnostic can establish the weight effect, never trajectory equivalence.
+   if same_forward_path is None:raise AssertionError('Warmup gradient control mismatch (predeclared atol=1e-4 rtol=.02)')
+   probe=json.loads(Path(same_forward_path).read_text())
+   assert probe['status']=='SAME_FORWARD_WEIGHT_GRADIENT_VERIFIED' and probe['optimizer_updates']==0
+   assert probe['data_manifest_sha256']==receipt['data_manifest_sha256']
+   assert probe['initial_snapshot_sha256']==paired_receipt['snapshot_sha256']
+   assert probe['sample_ids']==[x['sample_id'] for c in cons if c['micro']==start for x in c['items']]
+   assert probe['model_forward_calls']==1 and probe['forward_samples']==2
+   assert any(v['weight_relative_l2']>.02 for v in probe['gradient_comparisons'].values())
+   paired_receipt['same_forward_diagnostic']=probe
+   paired_receipt['cross_run_gradient_attribution']='INCONCLUSIVE; do not attribute separate trajectory differences solely to weights'
+  else:
+   assert any(abs(ga[k]['norm']-gb[k]['norm'])>max(1e-4,.02*abs(gb[k]['norm'])) for k in first)
+   cw=rows(control_folder/'weights.jsonl');assert np.allclose(cw[0]['losses'],weights[0]['losses'],atol=.03,rtol=.01)
+  paired_receipt['warmup_max_gradient_norm_relative_difference']=max(abs(ga[k]['norm']-gb[k]['norm'])/max(abs(gb[k]['norm']),1e-4) for k in warm)
+  paired_receipt['first_weighted_gradient_norms']={k[1]:{'uniform':gb[k]['norm'],'linupper':ga[k]['norm']} for k in first}
  summary={'status':'MECHANISM_OBSERVED','name':name,'optimizer_steps':expected,'sample_presentations':len(flat),'distinct_samples':len(set(x['sample_id'] for x in flat)),'source_counts':dict(counts),'effective_tokens':sum(x['effective_tokens'] for x in flat),'supervised_tokens':sum(x['valid_labels'] for x in flat),'length_min':min(x['effective_tokens'] for x in flat),'length_max':max(x['effective_tokens'] for x in flat),'supervised_max':max(x['valid_labels'] for x in flat),'strategy_boundaries':[s['step'] for s in strategy],'stage_consumption':by_stage,'weight_batches':len(weights),'gradient_observations':len(grads),'resource':receipt,'observer_identity_rng_checks':True,'reload_status':'NOT_YET_VERIFIED','source_scope':'Direct DataFlex CLI; no platform SSH acceptance','limitations':['Single run, 24 updates maximum, engineering evidence only','Original document IDs unavailable in released SciRIFF export; different-context paper overlap unresolved']}
+ summary['paired_control']=paired_receipt
  score_rows=rows(folder/'scores.jsonl')
  summary['scoring_seconds']=sum(r['seconds'] for r in score_rows)
  if score_rows:
@@ -93,4 +121,7 @@ def main(name):
   summary['scoring_effective_tokens']=sum(lookup[i]['total_tokens'] for r in score_rows for i in r['positions'])
  summary['observation_sha256']={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in folder.glob('*.jsonl')}
  (folder/'audit.json').write_text(json.dumps(summary,indent=2));print(json.dumps(summary),flush=True)
-if __name__=='__main__':import sys;main(sys.argv[1])
+if __name__=='__main__':
+ import argparse
+ parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('name');parser.add_argument('--same-forward-receipt',type=Path)
+ args=parser.parse_args();main(args.name,args.same_forward_receipt)

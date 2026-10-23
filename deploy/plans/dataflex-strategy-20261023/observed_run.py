@@ -13,6 +13,12 @@ def install(cls,folder):
  from transformers import TrainerCallback
  records=json.loads((ROOT/'data/token-map.json').read_text());mapping={r['token_sha256']:r for r in records};assert len(mapping)==len(records)
  current={}; counters=collections.Counter(); refs={}; started=time.monotonic()
+ pair_control_path=folder.parent/('paired-control-'+folder.name+'.json');pair_control=json.loads(pair_control_path.read_text()) if pair_control_path.exists() else None
+ def adapter_digest(state):
+  h=hashlib.sha256()
+  for key,value in sorted(state.items()):
+   value=value.detach().cpu().contiguous();h.update(key.encode());h.update(str(value.shape).encode());h.update(str(value.dtype).encode());h.update(value.view(torch.uint8).numpy().tobytes())
+  return h.hexdigest()
  def log(kind,**kwargs):emit(folder/(kind+'.jsonl'),kwargs)
  def identities(inputs):
   ids=inputs['input_ids'].detach().cpu(); labels=inputs['labels'].detach().cpu(); mask=inputs['attention_mask'].detach().cpu()
@@ -29,7 +35,20 @@ def install(cls,folder):
   return result
  class Callback(TrainerCallback):
   def on_train_begin(self,args,state,control,**kw):
-   model=kw['model']; params=[(n,p) for n,p in model.named_parameters() if p.requires_grad]
+   model=kw['model']
+   if pair_control:
+    from peft import get_peft_model_state_dict,set_peft_model_state_dict
+    from safetensors.torch import save_file,load_file
+    snapshot=Path(pair_control['initial_adapter']);snapshot.parent.mkdir(parents=True,exist_ok=True)
+    if pair_control['role']=='capture':
+     if snapshot.exists():raise FileExistsError('Never replace a paired initial state')
+     adapter_state={k:v.detach().cpu().contiguous() for k,v in get_peft_model_state_dict(model).items()};save_file(adapter_state,str(snapshot))
+     digest=adapter_digest(adapter_state);(snapshot.parent/'identity.json').write_text(json.dumps({'tensor_state_sha256':digest,'file_sha256':sha(snapshot)}))
+    else:
+     adapter_state=load_file(str(snapshot));set_peft_model_state_dict(model,adapter_state,adapter_name='default')
+     digest=adapter_digest(get_peft_model_state_dict(model));assert digest==json.loads((snapshot.parent/'identity.json').read_text())['tensor_state_sha256']
+    (folder/'paired-control-receipt.json').write_text(json.dumps({'initial_adapter_tensor_sha256':digest,'snapshot_sha256':sha(snapshot),'micro_rng_seed_base':pair_control['micro_rng_seed_base'],'lora_dropout':float(current['trainer'].finetuning_args.lora_dropout),'protocol':'Shared exact LoRA initialization and explicit per-microbatch CPU/CUDA seed control; not a passive observer operation'}))
+   params=[(n,p) for n,p in model.named_parameters() if p.requires_grad]
    assert params and all('lora_' in n for n,p in params)
    log('events',event='train_begin',max_steps=state.max_steps,args_max_steps=args.max_steps,gradient_accumulation=args.gradient_accumulation_steps,trainable_tensors=len(params),base_frozen=True,remove_unused_columns=args.remove_unused_columns,train_sampling_strategy=getattr(args,'train_sampling_strategy',None),scheduler_state=kw['lr_scheduler'].state_dict())
    # Read-only gradient hooks on two representative LoRA matrices.
@@ -112,6 +131,10 @@ def install(cls,folder):
  @functools.wraps(orig_step)
  def step(self,model,inputs,num_items_in_batch=None):
   counters['micro']+=1;current.update(step=self.state.global_step,micro=counters['micro'],active=True)
+  if pair_control:
+   # Explicit paired experiment protocol, separate from passive identity reads.
+   seed=int(pair_control['micro_rng_seed_base'])+counters['micro'];torch.manual_seed(seed);torch.cuda.manual_seed_all(seed)
+   log('paired-rng',micro=counters['micro'],seed=seed,cuda_rng_sha256=hashlib.sha256(torch.cuda.get_rng_state().numpy().tobytes()).hexdigest())
   # Identity/mask reads are CPU only and consume no random numbers.
   rng=torch.get_rng_state().clone();crng=torch.cuda.get_rng_state().clone()
   items=identities(inputs)

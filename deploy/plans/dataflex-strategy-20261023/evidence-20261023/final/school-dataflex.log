@@ -1,0 +1,61 @@
+.......[ODMMixer] Using initial proportions from mixture_manager: [0.5 0.5]
+INFO:dataflex.utils.logging:[ODMMixer] Using initial proportions from mixture_manager: [0.5 0.5]
+[ODMMixer] Initialized: K=2, alpha=0.9, warmup=0
+INFO:dataflex.utils.logging:[ODMMixer] Initialized: K=2, alpha=0.9, warmup=0
+[ODMMixer] Scaling: reward_scale=2.0, min_eps=0.02
+[ODMMixer] Domain names: ['a', 'b']
+INFO:dataflex.utils.logging:[ODMMixer] Scaling: reward_scale=2.0, min_eps=0.02
+INFO:dataflex.utils.logging:[ODMMixer] Domain names: ['a', 'b']
+.[ODMMixer] Using initial proportions from mixture_manager: [0.5 0.5]
+INFO:dataflex.utils.logging:[ODMMixer] Using initial proportions from mixture_manager: [0.5 0.5]
+[ODMMixer] Initialized: K=2, alpha=0.9, warmup=0
+INFO:dataflex.utils.logging:[ODMMixer] Initialized: K=2, alpha=0.9, warmup=0
+INFO:dataflex.utils.logging:[ODMMixer] Scaling: reward_scale=2.0, min_eps=0.02
+[ODMMixer] Scaling: reward_scale=2.0, min_eps=0.02
+[ODMMixer] Domain names: ['a', 'b']
+INFO:dataflex.utils.logging:[ODMMixer] Domain names: ['a', 'b']
+.INFO:dataflex.utils.logging:[ODMMixer] Using initial proportions from mixture_manager: [0.5 0.5]
+[ODMMixer] Using initial proportions from mixture_manager: [0.5 0.5]
+[ODMMixer] Initialized: K=2, alpha=0.9, warmup=0
+INFO:dataflex.utils.logging:[ODMMixer] Initialized: K=2, alpha=0.9, warmup=0
+[ODMMixer] Scaling: reward_scale=2.0, min_eps=0.02
+[ODMMixer] Domain names: ['a', 'b']
+INFO:dataflex.utils.logging:[ODMMixer] Scaling: reward_scale=2.0, min_eps=0.02
+INFO:dataflex.utils.logging:[ODMMixer] Domain names: ['a', 'b']
+[ODMMixer] Step 20: Updating domain weights with ODM
+INFO:dataflex.utils.logging:[ODMMixer] Step 20: Updating domain weights with ODM
+[ODMMixer] Updated reward for 'a': loss=3.0000, R̂=1.2000
+INFO:dataflex.utils.logging:[ODMMixer] Updated reward for 'a': loss=3.0000, R̂=1.2000
+[ODMMixer] ε_t=0.131638
+INFO:dataflex.utils.logging:[ODMMixer] ε_t=0.131638
+INFO:dataflex.utils.logging:[ODMMixer] Updated domain weights:
+[ODMMixer] Updated domain weights:
+  a: 0.6073 (R̂=1.2000)
+INFO:dataflex.utils.logging:  a: 0.6073 (R̂=1.2000)
+INFO:dataflex.utils.logging:  b: 0.3927 (R̂=0.0000)
+  b: 0.3927 (R̂=0.0000)
+.[ODMMixer] Using initial proportions from mixture_manager: [0.5 0.5]
+INFO:dataflex.utils.logging:[ODMMixer] Using initial proportions from mixture_manager: [0.5 0.5]
+[ODMMixer] Initialized: K=2, alpha=0.9, warmup=0
+[ODMMixer] Scaling: reward_scale=2.0, min_eps=0.02
+INFO:dataflex.utils.logging:[ODMMixer] Initialized: K=2, alpha=0.9, warmup=0
+INFO:dataflex.utils.logging:[ODMMixer] Scaling: reward_scale=2.0, min_eps=0.02
+[ODMMixer] Domain names: ['a', 'b']
+INFO:dataflex.utils.logging:[ODMMixer] Domain names: ['a', 'b']
+...CustomWeighter initialized with strategy: uniform
+INFO:dataflex.utils.logging:CustomWeighter initialized with strategy: uniform
+[Dataflex] Before weighting per-sample (first sample): 1.3142240047454834
+INFO:dataflex.utils.logging:[Dataflex] Before weighting per-sample (first sample): 1.3142240047454834
+[Dataflex] After weighting (first sample): 1.2851917743682861
+INFO:dataflex.utils.logging:[Dataflex] After weighting (first sample): 1.2851917743682861
+[Dataflex] Before weighting per-sample (first sample): 1.3142240047454834
+INFO:dataflex.utils.logging:[Dataflex] Before weighting per-sample (first sample): 1.3142240047454834
+[Dataflex] After weighting (first sample): 1.2986080646514893
+INFO:dataflex.utils.logging:[Dataflex] After weighting (first sample): 1.2986080646514893
+.CustomWeighter initialized with strategy: uniform
+INFO:dataflex.utils.logging:CustomWeighter initialized with strategy: uniform
+..
+----------------------------------------------------------------------
+Ran 16 tests in 1.485s
+
+OK

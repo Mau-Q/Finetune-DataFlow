@@ -1,0 +1,18 @@
+{
+  "status": "TRAIN_VERIFIED",
+  "error": null,
+  "seconds": 65.24792312690988,
+  "peak_allocated_gib": 10.986482620239258,
+  "peak_reserved_gib": 12.044921875,
+  "allocator_fraction": 0.42,
+  "gpu_name": "NVIDIA L40",
+  "config_sha256": "bb12fc788b982428cb65ad6c423bcecc8991bc5de86131eae84a7219d2c719b7",
+  "adapter_sha256": "794b0d5710fe71f6809763436df2c520c362b9e19de185268cbfa71f11e04be3",
+  "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+  "optimizer_steps": 2,
+  "nonzero_lora_b_tensors": 248,
+  "losses": [
+    2.7577099800109863,
+    1.9809606075286865
+  ]
+}

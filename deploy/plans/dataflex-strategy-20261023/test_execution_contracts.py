@@ -80,7 +80,7 @@ class SuiteContracts(unittest.TestCase):
             adapter.write_bytes(b'fixture, not real adapter')
             evaluation = self.root / 'evaluation' / name
             evaluation.mkdir(parents=True)
-            (evaluation / 'metrics.json').write_text(json.dumps({'model': name, 'n': 2, 'adapter_reloaded': True, 'data_manifest_sha256': hashlib.sha256((self.root / 'data-manifest.json').read_bytes()).hexdigest(), 'adapter_sha256': hashlib.sha256(adapter.read_bytes()).hexdigest()}))
+            (evaluation / 'metrics.json').write_text(json.dumps({'model': name, 'n': 2, 'generation': {'prompt_method': 'hf_native_chat_template_enable_thinking_false'}, 'reasoning_tag_outputs': 0, 'empty_outputs': 0, 'adapter_reloaded': True, 'data_manifest_sha256': hashlib.sha256((self.root / 'data-manifest.json').read_bytes()).hexdigest(), 'adapter_sha256': hashlib.sha256(adapter.read_bytes()).hexdigest()}))
         score = self.root / 'evaluation/GATE2-B2/score-batch-check.json'
         score.write_text(json.dumps({'single': [1., 2., 3., 4.], 'batch2': [1.001, 2., 3., 4.]}))
         return score
@@ -131,6 +131,32 @@ class SuiteContracts(unittest.TestCase):
         with self.assertRaises(ValueError):
             SUITE.successful_folder('GATE2-B1', self.root)
 
+    def test_old_weight_audit_cannot_substitute_for_paired_control(self):
+        folder = self.root / 'G07/attempt1'
+        folder.mkdir(parents=True)
+        (folder.parent / 'successful-attempt.json').write_text(json.dumps({'attempt': 'attempt1'}))
+        path = folder / 'audit.json'
+        audit = {'status': 'MECHANISM_OBSERVED', 'name': 'G07'}
+        path.write_text(json.dumps(audit))
+        with self.assertRaisesRegex(ValueError, 'initialization'):
+            SUITE.require_mechanism('G07', self.root)
+        audit['paired_control'] = {'initial_adapter_tensor_sha256': 'fixture', 'snapshot_sha256': 'fixture',
+                                   'micro_rng_seed_base': 420000}
+        path.write_text(json.dumps(audit))
+        with self.assertRaisesRegex(ValueError, 'gradient'):
+            SUITE.require_mechanism('G07', self.root)
+        audit['paired_control']['first_weighted_gradient_norms'] = {'fixture': {'uniform': 1., 'linupper': 2.}}
+        path.write_text(json.dumps(audit))
+        self.assertEqual(SUITE.require_mechanism('G07', self.root)['name'], 'G07')
+        audit['paired_control']['trajectory_status'] = 'INCONCLUSIVE_WARMUP_MISMATCH'
+        path.write_text(json.dumps(audit))
+        with self.assertRaisesRegex(ValueError, 'separate same-forward'):
+            SUITE.require_mechanism('G07', self.root)
+        audit['paired_control']['same_forward_diagnostic'] = {'status': 'SAME_FORWARD_WEIGHT_GRADIENT_VERIFIED'}
+        path.write_text(json.dumps(audit))
+        self.assertEqual(SUITE.require_mechanism('G07', self.root)['paired_control']['trajectory_status'],
+                         'INCONCLUSIVE_WARMUP_MISMATCH')
+
 
 class DeltaContract(unittest.TestCase):
     def test_negative_delta_empty_window_has_reproducible_uniform_fallback(self):
@@ -140,6 +166,24 @@ class DeltaContract(unittest.TestCase):
         generator=torch.Generator().manual_seed(42+9)
         expected=torch.multinomial(torch.full((256,),1/256),20,replacement=False,generator=generator).tolist()
         self.assertEqual(indices,expected)
+
+
+class GenerationPromptContract(unittest.TestCase):
+    def test_native_no_think_uses_only_user_input(self):
+        class Tokenizer:
+            def apply_chat_template(self,messages,**kwargs):
+                self.messages,self.kwargs=messages,kwargs
+                return 'assistant\n<think>\n\n</think>\n\n'
+            def encode(self,text,**kwargs):return [1,2]
+        tokenizer=Tokenizer()
+        self.assertEqual(EVAL.generation_prompt(tokenizer,'question only'),[1,2])
+        self.assertEqual(tokenizer.messages,[{'role':'user','content':'question only'}])
+        self.assertFalse(tokenizer.kwargs['enable_thinking'])
+
+    def test_missing_native_no_think_prefill_is_rejected(self):
+        class Tokenizer:
+            def apply_chat_template(self,*args,**kwargs):return 'assistant\n'
+        with self.assertRaises(ValueError):EVAL.generation_prompt(Tokenizer(),'q')
 
 
 class MetricContracts(unittest.TestCase):
@@ -175,6 +219,63 @@ class MetricContracts(unittest.TestCase):
         self.assertEqual(EVAL.rouge_l('A B', 'a b'), 1.)
         self.assertAlmostEqual(EVAL.rouge_l('a b c', 'a c'), 4/5)
         self.assertEqual(EVAL.rouge_l('', 'a'), 0.)
+
+
+@unittest.skipUnless(importlib.util.find_spec('peft') is not None, 'Actual PEFT callback check runs on school')
+class PairedInitializationContracts(unittest.TestCase):
+    def test_callback_preserves_trainer_control_and_state_and_restores_all_adapter_tensors(self):
+        import torch
+        from types import SimpleNamespace
+        from peft import LoraConfig, get_peft_model
+        observer = load('observed_run')
+        class Tiny(torch.nn.Module):
+            def __init__(self):
+                super().__init__()
+                self.linear = torch.nn.Linear(3, 2)
+            def forward(self, x):
+                return self.linear(x)
+        class Trainer:
+            def __init__(self, model):
+                self.model = model
+                self.finetuning_args = SimpleNamespace(lora_dropout=.05)
+                self.accelerator = SimpleNamespace(backward=lambda value, **kw: None)
+                self.callbacks = []
+            def add_callback(self, callback):
+                self.callbacks.append(callback)
+            def compute_loss(self, *args, **kwargs):
+                raise AssertionError('This CPU check must not train')
+            def training_step(self, *args, **kwargs):
+                raise AssertionError('This CPU check must not train')
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / 'data').mkdir()
+            (root / 'data/token-map.json').write_text('[]')
+            observer.ROOT = root
+            receipts = []
+            for name, role in [('capture', 'capture'), ('restore', 'restore')]:
+                folder = root / name / 'attempt1'
+                folder.mkdir(parents=True)
+                control = {'role': role, 'initial_adapter': str(root / 'shared/adapter.safetensors'),
+                           'micro_rng_seed_base': 420000, 'lora_dropout': .05}
+                (folder.parent / 'paired-control-attempt1.json').write_text(json.dumps(control))
+                model = get_peft_model(Tiny(), LoraConfig(r=2, lora_alpha=4, lora_dropout=.05, target_modules=['linear']))
+                # A fresh class avoids one wrapped callback leaking into the other.
+                trainer_class = type('Trainer' + name, (Trainer,), {})
+                observer.install(trainer_class, folder)
+                trainer = trainer_class(model)
+                state = SimpleNamespace(max_steps=2, global_step=0)
+                callback_control = SimpleNamespace(should_training_stop=False)
+                args = SimpleNamespace(max_steps=2, gradient_accumulation_steps=2,
+                                       remove_unused_columns=False, train_sampling_strategy='random')
+                trainer.callbacks[0].on_train_begin(args, state, callback_control, model=model,
+                                                    lr_scheduler=SimpleNamespace(state_dict=lambda: {}))
+                receipt = json.loads((folder / 'paired-control-receipt.json').read_text())
+                receipts.append(receipt)
+                self.assertEqual(state.max_steps, 2)
+                self.assertFalse(callback_control.should_training_stop)
+                event = [x for x in map(json.loads, (folder / 'events.jsonl').read_text().splitlines()) if x['event'] == 'train_begin'][0]
+                self.assertEqual(event['max_steps'], 2)
+            self.assertEqual(receipts[0]['initial_adapter_tensor_sha256'], receipts[1]['initial_adapter_tensor_sha256'])
 
 
 if __name__ == '__main__':

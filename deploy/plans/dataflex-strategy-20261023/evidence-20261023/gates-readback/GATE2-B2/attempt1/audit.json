@@ -1,0 +1,47 @@
+{
+  "status": "MECHANISM_OBSERVED",
+  "name": "GATE2-B2",
+  "optimizer_steps": 2,
+  "sample_presentations": 8,
+  "distinct_samples": 8,
+  "source_counts": {
+    "bioasq_factoid_qa": 2,
+    "scitldr_aic": 2,
+    "genia_ner": 2,
+    "scicite_classification": 2
+  },
+  "effective_tokens": 5011,
+  "supervised_tokens": 619,
+  "length_min": 160,
+  "length_max": 1024,
+  "supervised_max": 286,
+  "strategy_boundaries": [],
+  "stage_consumption": {},
+  "weight_batches": 4,
+  "gradient_observations": 8,
+  "resource": {
+    "status": "TRAIN_VERIFIED",
+    "error": null,
+    "seconds": 78.40375569602475,
+    "peak_allocated_gib": 16.191567420959473,
+    "peak_reserved_gib": 17.92578125,
+    "allocator_fraction": 0.42,
+    "gpu_name": "NVIDIA L40",
+    "config_sha256": "7cc15412e318cc2735e0df22344b266f81dfd942f5171280926a3c94041e9877",
+    "adapter_sha256": "df66c09a90fa4857abc9e9b117b32cdc0c7c28c68844bdf181ecfd6bfd8e02e9",
+    "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+    "optimizer_steps": 2,
+    "nonzero_lora_b_tensors": 248,
+    "losses": [
+      3.229921817779541,
+      2.1460318565368652
+    ]
+  },
+  "observer_identity_rng_checks": true,
+  "reload_status": "NOT_YET_VERIFIED",
+  "source_scope": "Direct DataFlex CLI; no platform SSH acceptance",
+  "limitations": [
+    "Single run, 24 updates maximum, engineering evidence only",
+    "Original document IDs unavailable in released SciRIFF export; different-context paper overlap unresolved"
+  ]
+}

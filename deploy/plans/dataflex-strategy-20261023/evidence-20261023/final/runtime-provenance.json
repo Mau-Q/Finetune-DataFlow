@@ -1,0 +1,90 @@
+{
+  "lf_template_enable_thinking_attribute": true,
+  "lf_training_prompt_tail": "<|im_start|>user\nTemplate identity probe.<|im_end|>\n<|im_start|>assistant\n",
+  "native_nothink_generation_tail": "<|im_start|>user\nTemplate identity probe.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+  "native_nothink_probe_ids": [
+    248045,
+    846,
+    198,
+    7048,
+    9284,
+    21059,
+    13,
+    248046,
+    198,
+    248045,
+    74455,
+    198,
+    248068,
+    271,
+    248069,
+    271
+  ],
+  "captured_unix": 1792758014.9953647,
+  "model_revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+  "model_mount": "/models/Qwen3.5-9B",
+  "template_name": "qwen3_5_nothink",
+  "enable_thinking": false,
+  "tokenizer_class": "TokenizersBackend",
+  "template_class": "Template",
+  "eos_token_id": 248046,
+  "pad_token_id": 248044,
+  "identity_probe": {
+    "synthetic": true,
+    "training_data": false,
+    "prompt_ids": [
+      248045,
+      846,
+      198,
+      7048,
+      9284,
+      21059,
+      13,
+      248046,
+      198,
+      248045,
+      74455,
+      198
+    ],
+    "answer_ids": [
+      78621,
+      4087,
+      13,
+      248046,
+      198
+    ]
+  },
+  "model_tokenizer_metadata_files": {
+    "video_preprocessor_config.json": "7768af27c1fafa9cc9011c1dc20067e03f8915e03b63504550e11d5066986d13",
+    "vocab.json": "ce99b4cb2983d118806ce0a8b777a35b093e2000a503ebde25853284c9dfa003",
+    "tokenizer.json": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+    "model.safetensors.index.json": "26d3539b516be613f39563617cb9d33b3f83d401298125be392c80cefb8f7fe5",
+    "config.json": "d0883072e01861ed0b2d47be3c16c36a8e81c224c7ffaa310c6558fb3f932b05",
+    "tokenizer_config.json": "316230d6a809701f4db5ea8f8fc862bc3a6f3229c937c174e674ff3ca0a64ac8",
+    "preprocessor_config.json": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516",
+    "chat_template.jinja": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715",
+    "transfer-manifest.json": "94ae1e7d3be80c13b3f10b33194c90b1d4a4d9f3b865ffd2ea3cb68e72d378ff"
+  },
+  "llamafactory_source_files": {
+    "data/template.py": "25681bdceb0d11e36a55455e293f16cb5c8f3d15b48df63eb1f3bdd863567932",
+    "data/formatter.py": "345728a904b0a0168003cd44424d068fcddf7ea0d3c2ec07718f68b19e879d77",
+    "data/processor/supervised.py": "f1b4b8db32179f7471e7c0bf45806533f8cabe8ade98d3a6b427d80a94b959cf",
+    "data/collator.py": "d9c0c4d5583001c9e2f9825de7dbf2f57cd7c724d0b3c70b4e9cd61cda08edb2",
+    "data/mm_plugin.py": "a30cc247579ef836c76237a38aea8d473aad865a4cbd2a5a0e3a3534eb04787f",
+    "train/sft/trainer.py": "4016aa09576891d53f2f3ee8f0cd21cd0f5c80c8ee1f45ab964a00750253d7c9",
+    "train/sft/workflow.py": "aaa1f92b66c4985fe1c1d47a6c28831a1cd0b107d77e3819c2ea174e37a1384b"
+  },
+  "packages": {
+    "dataflex": "1.1.0+dataflow.20261023.1",
+    "llamafactory": "0.9.6.dev0",
+    "torch": "2.6.0",
+    "transformers": "5.5.4",
+    "peft": "0.18.1",
+    "accelerate": "1.11.0",
+    "bitsandbytes": "0.49.2",
+    "datasets": "4.0.0",
+    "safetensors": "0.6.2"
+  },
+  "torch_cuda_build": "12.4",
+  "scope": "Identity capture only; no model weights loaded, no GPU validation implied"
+}

@@ -1,0 +1,25 @@
+{
+  "model": "GATE2-B2",
+  "adapter_reloaded": true,
+  "adapter_sha256": "df66c09a90fa4857abc9e9b117b32cdc0c7c28c68844bdf181ecfd6bfd8e02e9",
+  "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+  "n": 2,
+  "total_seconds": 39.27004359802231,
+  "generation_seconds": 4.950805289903656,
+  "peak_allocated_gib": 12.243424415588379,
+  "peak_reserved_gib": 12.759765625,
+  "prediction_sha256": "dde4f644cf1bea04c779c3ba075a3cfebe784de3113846468f03439be0abb14c",
+  "evaluation_script_sha256": "457ed4f40004b7ec6743a9e457d05f3230c065548f8508be92d893f4b844dae2",
+  "model_config_sha256": "d0883072e01861ed0b2d47be3c16c36a8e81c224c7ffaa310c6558fb3f932b05",
+  "eos_token_id": 248046,
+  "pad_token_id": 248044,
+  "empty_outputs": 0,
+  "reasoning_tag_outputs": 0,
+  "generation": {
+    "prompt_method": "hf_native_chat_template_enable_thinking_false",
+    "do_sample": false,
+    "max_new_tokens": 256,
+    "template": "qwen3_5_nothink",
+    "enable_thinking": false
+  }
+}

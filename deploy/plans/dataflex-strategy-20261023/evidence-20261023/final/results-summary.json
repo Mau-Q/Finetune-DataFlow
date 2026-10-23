@@ -1,0 +1,2858 @@
+{
+  "status": "CORE8_EXECUTION_AND_FROZEN_EVALUATION_VERIFIED_WITH_LIMITATION",
+  "scope": "Direct DataFlex CLI GPU2 engineering acceptance; no platform SSH or algorithm ranking claim",
+  "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+  "dataset_revision": "eddf83df1ab4acf1ead5b81898dd4c7e7450050e",
+  "tasks": [
+    "scicite_classification",
+    "genia_ner",
+    "bioasq_factoid_qa",
+    "scitldr_aic"
+  ],
+  "data_counts": {
+    "train": 256,
+    "validation": 32,
+    "test": 64
+  },
+  "task_substitution": {
+    "original": "covid_deepset_qa",
+    "replacement": "bioasq_factoid_qa",
+    "reason": "1024-token intact filtering leaves original 1/1/2 rows; qasper_extractive_qa has zero fitting rows. Replacement preserves short-answer QA and EM/token-F1 scoring but is labeled qa.abstractive by SciRIFF, not extractive."
+  },
+  "core_runs": {
+    "G00": {
+      "status": "MECHANISM_OBSERVED",
+      "name": "G00",
+      "optimizer_steps": 24,
+      "sample_presentations": 96,
+      "distinct_samples": 96,
+      "source_counts": {
+        "genia_ner": 18,
+        "bioasq_factoid_qa": 19,
+        "scicite_classification": 30,
+        "scitldr_aic": 29
+      },
+      "effective_tokens": 46963,
+      "supervised_tokens": 3776,
+      "length_min": 79,
+      "length_max": 1024,
+      "supervised_max": 286,
+      "strategy_boundaries": [],
+      "stage_consumption": {},
+      "weight_batches": 0,
+      "gradient_observations": 192,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 176.53121170890518,
+        "peak_allocated_gib": 11.211688041687012,
+        "peak_reserved_gib": 12.076171875,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "d8b1aa925640536cf3f8e9e2495dbbe1a2017f444de4389fef9b849f8c18d9fd",
+        "adapter_sha256": "7255a27735a7321257268147810c268e5a65a99ec58f34eb45eaef2fd0f74b97",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          2.8139803409576416,
+          3.2195611000061035,
+          2.7896995544433594,
+          3.3933005332946777,
+          2.4308152198791504,
+          2.617720365524292,
+          1.6626861095428467,
+          0.9097939729690552,
+          1.540846586227417,
+          1.562060832977295,
+          0.637311577796936,
+          0.5107846260070801,
+          1.0193886756896973,
+          1.6275211572647095,
+          0.3977024555206299,
+          1.0256534814834595,
+          0.9632083177566528,
+          1.1763404607772827,
+          2.254690647125244,
+          0.8503873944282532,
+          1.0219124555587769,
+          0.4594103991985321,
+          0.3703311085700989,
+          0.9092828035354614
+        ]
+      },
+      "observer_identity_rng_checks": true,
+      "reload_status": "VERIFIED_WITH_64_PREDICTIONS",
+      "source_scope": "Direct DataFlex CLI; no platform SSH acceptance",
+      "limitations": [
+        "Single run, 24 updates maximum, engineering evidence only",
+        "Original document IDs unavailable in released SciRIFF export; different-context paper overlap unresolved"
+      ],
+      "scoring_seconds": 0,
+      "observation_sha256": {
+        "backward-input.jsonl": "4dc1a958855bf36556436f1446f9fbb791a08bdc41c88ecd889cb71130bd6776",
+        "events.jsonl": "bd6d56d9240f5153a4c4bda5637a1a80b52f114ddae38748ac5f92044c01463b",
+        "backward.jsonl": "8ff97105435c10586eeb0173382a41f34761e018da86d8e50b8e5ff95e01ae91",
+        "gradient.jsonl": "8f7917840b939e086f63b4e64cec1ce4166e6a7726e9b85f4d9a5b391b37fead",
+        "consumption.jsonl": "173f33f39320a4a3e4210b799827058d6388a9dfc27d95a3f45fdd1456750ffc",
+        "loss.jsonl": "3f3b0bca175dcbca62c10aa7c9c63ca5cad85823bc1f9e199f3bd2f3492eeb05"
+      },
+      "attempt": "attempt1",
+      "observer_sha256": "eec2afeced2f27bae45762c988179fe9f0017f0c67b93d2486708189ac108bb5",
+      "source_files_sha256": {
+        "__init__.py": "c3b103e7730b4cfcff6b6a3dfe802dfb1fcd89b1ff542cdf2496d4bd415ce27e",
+        "cli.py": "8bb0500d967c1ef72bb884c1a940f668e8e01fc0fe737422e5235f568c522fdf",
+        "configs/components.yaml": "af70d83669b88cd9737207ec1e02f3d7d64fc5f2ae354147b2fdffe6cdf00b93",
+        "core/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "core/registry.py": "c6e841aff445d6df84c8b394b0b52f26837a83096d0d7e8a305d075ace4ab3e8",
+        "launcher.py": "a3abf5fa39984196a93c6af18fef7dbc4e4cbac6aa31dff11aa9443bcd50117a",
+        "offline_selector/offline_near_selector.py": "4fe4437c8c29130a33bd5ae88d47cf13007dbcfd3af8b40892822e6317afd532",
+        "offline_selector/offline_presel_selector.py": "be28b784c5c8193c01b383f3296128f0b0adffd012e94de6eb8eaee8b4949cf4",
+        "offline_selector/offline_tsds_selector.py": "d6798d0701fd5562c844c00cdf6930592cb39012f451bfd3ec46ee31df4eafff",
+        "offline_selector/record_presel_pipeline.py": "0016605e7d5200ccb0a3fe1134af010669ee3d6599ab20c0ac15f5521478a36a",
+        "offline_selector/record_presel_selector.py": "dc8196a04ac1e1421ccdc8b90c9bcc3b01f1fcf88f0ad9d6d19b39dba175de94",
+        "train/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/data/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/data/loader.py": "420467600d21a6c3c37fd74234f42bc46e1d29800190266455114306513042f4",
+        "train/dataset/__init__.py": "f752d68e7a23c3c126b94bc91338b1b40b1d265965f81308c47ec2c93ae2092a",
+        "train/dataset/mixed_proportion_manager.py": "ce0aba1948d048101f0a1c576669574ba05f2e66c7783adbc9491140bba6d1ce",
+        "train/hooks.py": "0b967ab8037c6d7f5fd86cd28087facbb4e0442695631eb2a2827c7bd4149fce",
+        "train/hparams/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/hparams/dynamic_data_params.py": "acadb2ec2b529434a6ad066268fadc188352d955c86178be641759fd2dbef8f2",
+        "train/hparams/dynamic_params.py": "8137058e11a95daed0639b4535a97bb07b6a8aa5837ee742416003153dc651c6",
+        "train/lego/__init__.py": "454934739054eb3488db488b8c241859505262242b3644387a5189c9cf881194",
+        "train/lego/context.py": "1f156a4d7ac3e371ad833a27a10b6adb8a628d8e8120370778652399071fce0e",
+        "train/lego/domain_view.py": "f82264b73e0a230f95c2284dcd871fd4df5d18f4f3f428a075573661db74334c",
+        "train/lego/pipeline.py": "2dd996fad1fa6d6b2712507377836f9b3e686aa58c2bf9bd39d708acf1792a9a",
+        "train/lego/plan.py": "25f6fc3d762e03f2d12058a875c66d2b60df24bd23d84e11f1f83134cd974849",
+        "train/lego/scoreboard.py": "9de6d41d91e355c14368deeaef87387d8dd4da31d11a0f8375674ff2c1fc65e8",
+        "train/lego/stages.py": "e87edbd37b3f07c76b34d5ca4b35a5f71369dc01834879ad1ac93624116d6b0a",
+        "train/mixer/__init__.py": "2da764ddb88a85ce9fa4761f6918c77f92f3cf8a26cfcc21606d4de6281f62c4",
+        "train/mixer/base_mixer.py": "b48851df3fc31c8e6b31c28c99cc03b255e5842f591fa171de08b0b7289425bd",
+        "train/mixer/doremi_mixer.py": "22a95013da8a2b415b68872c39fdc3b044041ff57ff9c925dbdd03565856d845",
+        "train/mixer/dynamic_moe_mixer.py": "0f48b0b6f248a7d868b772260b42d9e10203cac6963ebd478c7d1773aa5bda5a",
+        "train/mixer/odm_mixer.py": "9b58a14251eb2a42a1bf7c467063bf76a1c70392cac1f96e8ecbf8c24f0e5170",
+        "train/mixer/random_mixer.py": "7280c9b42ccc0e8dad729745e5a20a85f0553925e3cfaadf0ad49bf3257d9b2a",
+        "train/mixer/static_mixer.py": "6406b5b76e8255a39b501331e43d499987eb754b40f98d59274c652c5008f6b8",
+        "train/reorder/__init__.py": "73491ecc95d6ecf2f835ce71f175a53ef2e1297fa63370fbb5cc825d0b5a69c1",
+        "train/reorder/base_reorder.py": "f78c4249574be521211780b3ac5b92dad728dd36719162a40c32427cb226f74d",
+        "train/reorder/dynamic_reorder.py": "213273a6356a7f6f2dc09619a27782ace06203e07797cbe0f87f2ad1463d3e7c",
+        "train/reorder/patterns.py": "56aaef1df4b79d3793f12ca7f8790a77514dcaa75162bc2268ea4fe0126820f2",
+        "train/reorder/score_provider.py": "ccc2be4d2daa6061b5f5557e2bcca4054b86d0c0ff2dfc0460ce9769e4e6db44",
+        "train/reorder/static_reorder.py": "6ae159f284eecdf85bfe00bfb5dcf14b1dc1488121f2dc9c75c0cdf97097b5cc",
+        "train/selector/__init__.py": "b61d83ce0b3690efa088fd125e170993923603f559e0531ab5e85196824e1bd3",
+        "train/selector/adapt_inf_selector.py": "46a38bc4baed73bb32d0641a87f92a951840981fd104f438d4b16cc1b74edc3a",
+        "train/selector/base_selector.py": "9df44635823a7492162a0788682c92d49f9399aeacdf7e351fcdbc39d87270e6",
+        "train/selector/cluster_less_selector.py": "1c6514012d585713b8965e39efb77be98ec048dbed23fc930a48e5e11e319d1c",
+        "train/selector/coincide_selector.py": "fb0a658ce72093ac260e64ddb339f9d1011597ed777654bde46cc3548459ff26",
+        "train/selector/custom_selector.py": "f7c6338319306a27f49aaf66b43c611bd0a4d8988061dab90cab614976e43b61",
+        "train/selector/delta_loss_selector.py": "703946204c20495033704c69fdf62b6452e895894b01f581945fe3de3c3e891e",
+        "train/selector/icons_selector.py": "42400cec0ce71b15033a869b17b702a0c7b828f833f6577bab49a4931ae06f6f",
+        "train/selector/less_selector.py": "3271c60e7e873f1f26a7bec51b2256ad117de95aa938a1891c523dc581d5b639",
+        "train/selector/loss_selector.py": "1425c520674fbd7907caa5e7260139fc090b02b40344b53f193023820bf21cfc",
+        "train/selector/near_selector.py": "d43bcbe401f76722f929c89e6d2157f4230149ea5fe36065d10e40516746272e",
+        "train/selector/nice_selector.py": "f77d74056579fa3083cd8ae696c378e530d71b31a99e90ebf0f0639eda1c918d",
+        "train/selector/random_selector.py": "7d6e694c2e34e04972a4646cc2c218179c5e4412b2c65263f59cba6b1eb82809",
+        "train/selector/tsds_selector.py": "39798f0719048032252a70d5bed5eb3857c3aa06fab2b7494bc2ec1bbdb66fd4",
+        "train/trainer/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/trainer/lego_trainer.py": "0eb582002488cb777ae005b9c7cb50dc6c57065aa73042f853c43cad1a5ecf70",
+        "train/trainer/mix_trainer.py": "6fc10c9774af26ff11be2d88846f3acf10d8318d6973bf25a053095c9fd854b8",
+        "train/trainer/reorder_trainer.py": "b8e2288ddbc45c3e4dd7c5e0b50cbb792ad9f390f8e710c4f25a337ec9b0a832",
+        "train/trainer/select_trainer.py": "f2c78fbd01c6995ed9eb72fc66188a455ba654d46215f73c1831fc46fe488319",
+        "train/trainer/weight_trainer.py": "fb59888f85d40342e235a176c7ef52af9388cbb15b79f0a41b0d6ba7cd20f97f",
+        "train/weighter/__init__.py": "f9b0e876bc1636c7e4e69e52aa9f241087a308f930583e997804e889a7923814",
+        "train/weighter/adapt_weighter.py": "5408ec3c373dfb10a99ae38847a3b72e9811683af60161d819078e12d1caba11",
+        "train/weighter/base_weighter.py": "4fa18e66fc539591ba4c0a55dc0d49cecef6e824ddb5ce697939cbb395fd0cd6",
+        "train/weighter/custom_weighter.py": "c98c5c13c9468e3eeaaf38f1912f5303a02761cfe87162870b43353fa21a6a39",
+        "train/weighter/joint_update_aware_weighter.py": "258136381afb24710d585bbae4a86a52abd5e2921da122597c930b881b1b787a",
+        "train/weighter/loss_weighter.py": "f52fd76bf3023bb8b0a4e0a0b8d471b88a21526a77a83a686dc942153d8c4cc1",
+        "utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "utils/llava_v1d5_ckpt_merge.py": "cbf61820bae5949e6988490b1178ab533b470ed60d4fd0378b8c5b45bda00301",
+        "utils/load_component.py": "e4b764477e1686be95ccaea1f94f04376906a1b9f9e3a7effc8e22a0105e9e56",
+        "utils/logging.py": "92a3b71473062a28933df6a84fa506bc21bc1faee5d297165e486ea616ed61b6",
+        "utils/loss_utils.py": "25f244454fad6853112c2aea904224c11b3878b886074332c90f26811c535a73",
+        "utils/multimodal_scoring.py": "09149ad4bddfe1285d6199dfd92d7ae6c9f5656be9b795716b016642dd6898a3",
+        "utils/multimodal_selection.py": "09ea3e9d13addd53ee1a90f59e049c7eee71c9f6151fad59de1a8df7179b5fc2",
+        "utils/selector_io.py": "7b7d2a653e27e5a463a76e2b2668e28f4f6eb60fe2f8fa0bc38d248f7d40fce3",
+        "version.py": "44e763cd77d82aea28463d3eda5f7f5ec8b3dd83d31533b846818e354905a67c"
+      },
+      "packages": {
+        "dataflex": "1.1.0+dataflow.20261023.1",
+        "torch": "2.6.0",
+        "transformers": "5.5.4",
+        "peft": "0.18.1",
+        "accelerate": "1.11.0",
+        "bitsandbytes": "0.49.2",
+        "llamafactory": "0.9.6.dev0"
+      },
+      "source_proportions": {
+        "genia_ner": 0.1875,
+        "bioasq_factoid_qa": 0.19791666666666666,
+        "scicite_classification": 0.3125,
+        "scitldr_aic": 0.3020833333333333
+      },
+      "repetition_fraction": 0.0,
+      "adapter_sha256": "7255a27735a7321257268147810c268e5a65a99ec58f34eb45eaef2fd0f74b97",
+      "validation_runs": [
+        {
+          "epoch": 0.1875,
+          "eval_loss": 1.1143767833709717,
+          "eval_runtime": 9.2936,
+          "eval_samples_per_second": 3.443,
+          "eval_steps_per_second": 3.443,
+          "step": 12
+        },
+        {
+          "epoch": 0.375,
+          "eval_loss": 0.9537568092346191,
+          "eval_runtime": 8.9724,
+          "eval_samples_per_second": 3.566,
+          "eval_steps_per_second": 3.566,
+          "step": 24
+        }
+      ],
+      "final_cli_validation": {
+        "epoch": 0.375,
+        "eval_loss": 0.9537568092346191,
+        "eval_runtime": 6.6989,
+        "eval_samples_per_second": 4.777,
+        "eval_steps_per_second": 4.777
+      },
+      "validation_complete_loops_including_final": 3,
+      "validation_token_budget_derived": 48249
+    },
+    "G01": {
+      "status": "MECHANISM_OBSERVED",
+      "name": "G01",
+      "optimizer_steps": 24,
+      "sample_presentations": 96,
+      "distinct_samples": 80,
+      "source_counts": {
+        "bioasq_factoid_qa": 27,
+        "scicite_classification": 20,
+        "genia_ner": 29,
+        "scitldr_aic": 20
+      },
+      "effective_tokens": 46919,
+      "supervised_tokens": 4605,
+      "length_min": 114,
+      "length_max": 1021,
+      "supervised_max": 286,
+      "strategy_boundaries": [
+        4,
+        9,
+        14,
+        19
+      ],
+      "stage_consumption": {
+        "4": {
+          "n": 20,
+          "sources": {
+            "genia_ner": 4,
+            "bioasq_factoid_qa": 9,
+            "scitldr_aic": 3,
+            "scicite_classification": 4
+          }
+        },
+        "9": {
+          "n": 20,
+          "sources": {
+            "bioasq_factoid_qa": 4,
+            "scicite_classification": 5,
+            "genia_ner": 6,
+            "scitldr_aic": 5
+          }
+        },
+        "14": {
+          "n": 20,
+          "sources": {
+            "bioasq_factoid_qa": 7,
+            "genia_ner": 6,
+            "scicite_classification": 4,
+            "scitldr_aic": 3
+          }
+        },
+        "19": {
+          "n": 20,
+          "sources": {
+            "bioasq_factoid_qa": 5,
+            "scicite_classification": 5,
+            "scitldr_aic": 6,
+            "genia_ner": 4
+          }
+        }
+      },
+      "weight_batches": 0,
+      "gradient_observations": 192,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 175.09167040302418,
+        "peak_allocated_gib": 11.30893611907959,
+        "peak_reserved_gib": 12.03515625,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "c1b27a7046394b7c30be8e85c03a5c1d578e61366f60470c1c9ce66988cea0af",
+        "adapter_sha256": "29a66d1b9eae36b6dc25c82e3934c46e9f54242a47c16ccba3b3e560b0da111b",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          3.487652540206909,
+          1.705588698387146,
+          0.9080846905708313,
+          2.5422680377960205,
+          2.625244379043579,
+          2.3509507179260254,
+          1.6350443363189697,
+          2.415703296661377,
+          1.4446396827697754,
+          1.5525898933410645,
+          1.6483135223388672,
+          0.9028599858283997,
+          0.4622397720813751,
+          1.0892860889434814,
+          0.6536348462104797,
+          1.5831029415130615,
+          0.7968007326126099,
+          1.1771589517593384,
+          1.0903716087341309,
+          0.6497822999954224,
+          0.7493051290512085,
+          0.5047702789306641,
+          0.7876842617988586,
+          1.1337140798568726
+        ]
+      },
+      "observer_identity_rng_checks": true,
+      "reload_status": "VERIFIED_WITH_64_PREDICTIONS",
+      "source_scope": "Direct DataFlex CLI; no platform SSH acceptance",
+      "limitations": [
+        "Single run, 24 updates maximum, engineering evidence only",
+        "Original document IDs unavailable in released SciRIFF export; different-context paper overlap unresolved"
+      ],
+      "scoring_seconds": 0,
+      "observation_sha256": {
+        "backward-input.jsonl": "274cc6863a13b96b47a842ca1ad5483038e8dd11ab4c8d27c553f3103b202816",
+        "strategy.jsonl": "d80ecd221cbfe725cda65c62eb453b5a9a9ff8753a159fde4e5534ff68684d12",
+        "events.jsonl": "fc4467e3283e2f55cc0f3c8b8d7f0d96a899df206e78a4ab6a4c7694de64b24d",
+        "backward.jsonl": "ceb1a125d38f23924d5e12bbec7f10a65063a5eb341277f77f51b87b5d619e8a",
+        "gradient.jsonl": "3587785af93ea5bdea0958b3c0b9cc4411489c940898836403304df1cb301782",
+        "consumption.jsonl": "36c69c86c15326779074dd2d0ccc9bd8b944ec4e1c862f34fd1b88d7d1e2633c",
+        "loss.jsonl": "eda960a45bd53a0c39fa285470360d481692700d445882d827b2a654a8a43240"
+      },
+      "attempt": "attempt1",
+      "observer_sha256": "eec2afeced2f27bae45762c988179fe9f0017f0c67b93d2486708189ac108bb5",
+      "source_files_sha256": {
+        "__init__.py": "c3b103e7730b4cfcff6b6a3dfe802dfb1fcd89b1ff542cdf2496d4bd415ce27e",
+        "cli.py": "8bb0500d967c1ef72bb884c1a940f668e8e01fc0fe737422e5235f568c522fdf",
+        "configs/components.yaml": "af70d83669b88cd9737207ec1e02f3d7d64fc5f2ae354147b2fdffe6cdf00b93",
+        "core/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "core/registry.py": "c6e841aff445d6df84c8b394b0b52f26837a83096d0d7e8a305d075ace4ab3e8",
+        "launcher.py": "a3abf5fa39984196a93c6af18fef7dbc4e4cbac6aa31dff11aa9443bcd50117a",
+        "offline_selector/offline_near_selector.py": "4fe4437c8c29130a33bd5ae88d47cf13007dbcfd3af8b40892822e6317afd532",
+        "offline_selector/offline_presel_selector.py": "be28b784c5c8193c01b383f3296128f0b0adffd012e94de6eb8eaee8b4949cf4",
+        "offline_selector/offline_tsds_selector.py": "d6798d0701fd5562c844c00cdf6930592cb39012f451bfd3ec46ee31df4eafff",
+        "offline_selector/record_presel_pipeline.py": "0016605e7d5200ccb0a3fe1134af010669ee3d6599ab20c0ac15f5521478a36a",
+        "offline_selector/record_presel_selector.py": "dc8196a04ac1e1421ccdc8b90c9bcc3b01f1fcf88f0ad9d6d19b39dba175de94",
+        "train/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/data/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/data/loader.py": "420467600d21a6c3c37fd74234f42bc46e1d29800190266455114306513042f4",
+        "train/dataset/__init__.py": "f752d68e7a23c3c126b94bc91338b1b40b1d265965f81308c47ec2c93ae2092a",
+        "train/dataset/mixed_proportion_manager.py": "ce0aba1948d048101f0a1c576669574ba05f2e66c7783adbc9491140bba6d1ce",
+        "train/hooks.py": "0b967ab8037c6d7f5fd86cd28087facbb4e0442695631eb2a2827c7bd4149fce",
+        "train/hparams/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/hparams/dynamic_data_params.py": "acadb2ec2b529434a6ad066268fadc188352d955c86178be641759fd2dbef8f2",
+        "train/hparams/dynamic_params.py": "8137058e11a95daed0639b4535a97bb07b6a8aa5837ee742416003153dc651c6",
+        "train/lego/__init__.py": "454934739054eb3488db488b8c241859505262242b3644387a5189c9cf881194",
+        "train/lego/context.py": "1f156a4d7ac3e371ad833a27a10b6adb8a628d8e8120370778652399071fce0e",
+        "train/lego/domain_view.py": "f82264b73e0a230f95c2284dcd871fd4df5d18f4f3f428a075573661db74334c",
+        "train/lego/pipeline.py": "2dd996fad1fa6d6b2712507377836f9b3e686aa58c2bf9bd39d708acf1792a9a",
+        "train/lego/plan.py": "25f6fc3d762e03f2d12058a875c66d2b60df24bd23d84e11f1f83134cd974849",
+        "train/lego/scoreboard.py": "9de6d41d91e355c14368deeaef87387d8dd4da31d11a0f8375674ff2c1fc65e8",
+        "train/lego/stages.py": "e87edbd37b3f07c76b34d5ca4b35a5f71369dc01834879ad1ac93624116d6b0a",
+        "train/mixer/__init__.py": "2da764ddb88a85ce9fa4761f6918c77f92f3cf8a26cfcc21606d4de6281f62c4",
+        "train/mixer/base_mixer.py": "b48851df3fc31c8e6b31c28c99cc03b255e5842f591fa171de08b0b7289425bd",
+        "train/mixer/doremi_mixer.py": "22a95013da8a2b415b68872c39fdc3b044041ff57ff9c925dbdd03565856d845",
+        "train/mixer/dynamic_moe_mixer.py": "0f48b0b6f248a7d868b772260b42d9e10203cac6963ebd478c7d1773aa5bda5a",
+        "train/mixer/odm_mixer.py": "9b58a14251eb2a42a1bf7c467063bf76a1c70392cac1f96e8ecbf8c24f0e5170",
+        "train/mixer/random_mixer.py": "7280c9b42ccc0e8dad729745e5a20a85f0553925e3cfaadf0ad49bf3257d9b2a",
+        "train/mixer/static_mixer.py": "6406b5b76e8255a39b501331e43d499987eb754b40f98d59274c652c5008f6b8",
+        "train/reorder/__init__.py": "73491ecc95d6ecf2f835ce71f175a53ef2e1297fa63370fbb5cc825d0b5a69c1",
+        "train/reorder/base_reorder.py": "f78c4249574be521211780b3ac5b92dad728dd36719162a40c32427cb226f74d",
+        "train/reorder/dynamic_reorder.py": "213273a6356a7f6f2dc09619a27782ace06203e07797cbe0f87f2ad1463d3e7c",
+        "train/reorder/patterns.py": "56aaef1df4b79d3793f12ca7f8790a77514dcaa75162bc2268ea4fe0126820f2",
+        "train/reorder/score_provider.py": "ccc2be4d2daa6061b5f5557e2bcca4054b86d0c0ff2dfc0460ce9769e4e6db44",
+        "train/reorder/static_reorder.py": "6ae159f284eecdf85bfe00bfb5dcf14b1dc1488121f2dc9c75c0cdf97097b5cc",
+        "train/selector/__init__.py": "b61d83ce0b3690efa088fd125e170993923603f559e0531ab5e85196824e1bd3",
+        "train/selector/adapt_inf_selector.py": "46a38bc4baed73bb32d0641a87f92a951840981fd104f438d4b16cc1b74edc3a",
+        "train/selector/base_selector.py": "9df44635823a7492162a0788682c92d49f9399aeacdf7e351fcdbc39d87270e6",
+        "train/selector/cluster_less_selector.py": "1c6514012d585713b8965e39efb77be98ec048dbed23fc930a48e5e11e319d1c",
+        "train/selector/coincide_selector.py": "fb0a658ce72093ac260e64ddb339f9d1011597ed777654bde46cc3548459ff26",
+        "train/selector/custom_selector.py": "f7c6338319306a27f49aaf66b43c611bd0a4d8988061dab90cab614976e43b61",
+        "train/selector/delta_loss_selector.py": "703946204c20495033704c69fdf62b6452e895894b01f581945fe3de3c3e891e",
+        "train/selector/icons_selector.py": "42400cec0ce71b15033a869b17b702a0c7b828f833f6577bab49a4931ae06f6f",
+        "train/selector/less_selector.py": "3271c60e7e873f1f26a7bec51b2256ad117de95aa938a1891c523dc581d5b639",
+        "train/selector/loss_selector.py": "1425c520674fbd7907caa5e7260139fc090b02b40344b53f193023820bf21cfc",
+        "train/selector/near_selector.py": "d43bcbe401f76722f929c89e6d2157f4230149ea5fe36065d10e40516746272e",
+        "train/selector/nice_selector.py": "f77d74056579fa3083cd8ae696c378e530d71b31a99e90ebf0f0639eda1c918d",
+        "train/selector/random_selector.py": "7d6e694c2e34e04972a4646cc2c218179c5e4412b2c65263f59cba6b1eb82809",
+        "train/selector/tsds_selector.py": "39798f0719048032252a70d5bed5eb3857c3aa06fab2b7494bc2ec1bbdb66fd4",
+        "train/trainer/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/trainer/lego_trainer.py": "0eb582002488cb777ae005b9c7cb50dc6c57065aa73042f853c43cad1a5ecf70",
+        "train/trainer/mix_trainer.py": "6fc10c9774af26ff11be2d88846f3acf10d8318d6973bf25a053095c9fd854b8",
+        "train/trainer/reorder_trainer.py": "b8e2288ddbc45c3e4dd7c5e0b50cbb792ad9f390f8e710c4f25a337ec9b0a832",
+        "train/trainer/select_trainer.py": "f2c78fbd01c6995ed9eb72fc66188a455ba654d46215f73c1831fc46fe488319",
+        "train/trainer/weight_trainer.py": "fb59888f85d40342e235a176c7ef52af9388cbb15b79f0a41b0d6ba7cd20f97f",
+        "train/weighter/__init__.py": "f9b0e876bc1636c7e4e69e52aa9f241087a308f930583e997804e889a7923814",
+        "train/weighter/adapt_weighter.py": "5408ec3c373dfb10a99ae38847a3b72e9811683af60161d819078e12d1caba11",
+        "train/weighter/base_weighter.py": "4fa18e66fc539591ba4c0a55dc0d49cecef6e824ddb5ce697939cbb395fd0cd6",
+        "train/weighter/custom_weighter.py": "c98c5c13c9468e3eeaaf38f1912f5303a02761cfe87162870b43353fa21a6a39",
+        "train/weighter/joint_update_aware_weighter.py": "258136381afb24710d585bbae4a86a52abd5e2921da122597c930b881b1b787a",
+        "train/weighter/loss_weighter.py": "f52fd76bf3023bb8b0a4e0a0b8d471b88a21526a77a83a686dc942153d8c4cc1",
+        "utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "utils/llava_v1d5_ckpt_merge.py": "cbf61820bae5949e6988490b1178ab533b470ed60d4fd0378b8c5b45bda00301",
+        "utils/load_component.py": "e4b764477e1686be95ccaea1f94f04376906a1b9f9e3a7effc8e22a0105e9e56",
+        "utils/logging.py": "92a3b71473062a28933df6a84fa506bc21bc1faee5d297165e486ea616ed61b6",
+        "utils/loss_utils.py": "25f244454fad6853112c2aea904224c11b3878b886074332c90f26811c535a73",
+        "utils/multimodal_scoring.py": "09149ad4bddfe1285d6199dfd92d7ae6c9f5656be9b795716b016642dd6898a3",
+        "utils/multimodal_selection.py": "09ea3e9d13addd53ee1a90f59e049c7eee71c9f6151fad59de1a8df7179b5fc2",
+        "utils/selector_io.py": "7b7d2a653e27e5a463a76e2b2668e28f4f6eb60fe2f8fa0bc38d248f7d40fce3",
+        "version.py": "44e763cd77d82aea28463d3eda5f7f5ec8b3dd83d31533b846818e354905a67c"
+      },
+      "packages": {
+        "dataflex": "1.1.0+dataflow.20261023.1",
+        "torch": "2.6.0",
+        "transformers": "5.5.4",
+        "peft": "0.18.1",
+        "accelerate": "1.11.0",
+        "bitsandbytes": "0.49.2",
+        "llamafactory": "0.9.6.dev0"
+      },
+      "source_proportions": {
+        "bioasq_factoid_qa": 0.28125,
+        "scicite_classification": 0.20833333333333334,
+        "genia_ner": 0.3020833333333333,
+        "scitldr_aic": 0.20833333333333334
+      },
+      "repetition_fraction": 0.16666666666666663,
+      "adapter_sha256": "29a66d1b9eae36b6dc25c82e3934c46e9f54242a47c16ccba3b3e560b0da111b",
+      "validation_runs": [
+        {
+          "epoch": 0.1875,
+          "eval_loss": 1.1248165369033813,
+          "eval_runtime": 8.8582,
+          "eval_samples_per_second": 3.612,
+          "eval_steps_per_second": 3.612,
+          "step": 12
+        },
+        {
+          "epoch": 0.375,
+          "eval_loss": 0.935942530632019,
+          "eval_runtime": 9.0907,
+          "eval_samples_per_second": 3.52,
+          "eval_steps_per_second": 3.52,
+          "step": 24
+        }
+      ],
+      "final_cli_validation": {
+        "epoch": 0.375,
+        "eval_loss": 0.935942530632019,
+        "eval_runtime": 8.9589,
+        "eval_samples_per_second": 3.572,
+        "eval_steps_per_second": 3.572
+      },
+      "validation_complete_loops_including_final": 3,
+      "validation_token_budget_derived": 48249
+    },
+    "G02": {
+      "status": "MECHANISM_OBSERVED",
+      "name": "G02",
+      "optimizer_steps": 24,
+      "sample_presentations": 96,
+      "distinct_samples": 79,
+      "source_counts": {
+        "bioasq_factoid_qa": 28,
+        "scicite_classification": 15,
+        "genia_ner": 17,
+        "scitldr_aic": 36
+      },
+      "effective_tokens": 51626,
+      "supervised_tokens": 3181,
+      "length_min": 114,
+      "length_max": 1024,
+      "supervised_max": 286,
+      "strategy_boundaries": [
+        4,
+        9,
+        14,
+        19
+      ],
+      "stage_consumption": {
+        "4": {
+          "n": 20,
+          "sources": {
+            "scicite_classification": 5,
+            "genia_ner": 3,
+            "bioasq_factoid_qa": 4,
+            "scitldr_aic": 8
+          }
+        },
+        "9": {
+          "n": 20,
+          "sources": {
+            "scitldr_aic": 8,
+            "bioasq_factoid_qa": 6,
+            "scicite_classification": 4,
+            "genia_ner": 2
+          }
+        },
+        "14": {
+          "n": 20,
+          "sources": {
+            "scitldr_aic": 7,
+            "bioasq_factoid_qa": 9,
+            "scicite_classification": 3,
+            "genia_ner": 1
+          }
+        },
+        "19": {
+          "n": 20,
+          "sources": {
+            "bioasq_factoid_qa": 7,
+            "scitldr_aic": 10,
+            "genia_ner": 2,
+            "scicite_classification": 1
+          }
+        }
+      },
+      "weight_batches": 0,
+      "gradient_observations": 192,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 471.9225401459262,
+        "peak_allocated_gib": 11.335046768188477,
+        "peak_reserved_gib": 12.2109375,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "6fbaf47790ac058d12a127e69e3e566bdc96b72dd25300af31f7a88a702a5774",
+        "adapter_sha256": "f01915f1341ace8b51ffc9b6971de5b4ead87068ce77204f4b1755b44ff3a199",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          3.5116100311279297,
+          1.7069562673568726,
+          0.910115659236908,
+          2.5271427631378174,
+          2.4358768463134766,
+          4.208401203155518,
+          3.557723045349121,
+          2.648660182952881,
+          2.0785040855407715,
+          2.5192651748657227,
+          2.9188590049743652,
+          1.3536884784698486,
+          2.3442978858947754,
+          1.7823102474212646,
+          2.452335834503174,
+          2.2544925212860107,
+          1.0765199661254883,
+          0.7826067805290222,
+          1.2752058506011963,
+          0.7226014733314514,
+          1.6922874450683594,
+          1.444462776184082,
+          1.3262367248535156,
+          1.0603772401809692
+        ]
+      },
+      "observer_identity_rng_checks": true,
+      "reload_status": "VERIFIED_WITH_64_PREDICTIONS",
+      "source_scope": "Direct DataFlex CLI; no platform SSH acceptance",
+      "limitations": [
+        "Single run, 24 updates maximum, engineering evidence only",
+        "Original document IDs unavailable in released SciRIFF export; different-context paper overlap unresolved"
+      ],
+      "scoring_seconds": 284.4272168560419,
+      "scoring_effective_tokens": 495828,
+      "observation_sha256": {
+        "backward-input.jsonl": "7f962633fef2de6dd2dc88346727000fa734114de60157678cc2981503aa56b8",
+        "strategy.jsonl": "4bfd3a580ae07fa6eb4b0a49d9aa2d6f6619d1bf0c7cc4a612ec1173bf2d7629",
+        "events.jsonl": "551aac016ba0af734b901301b5a05cdfe4e74e17c0cceeab4e30a6123ba672aa",
+        "backward.jsonl": "039d2ba2410db1c440a8cf154a10e5840c772c05eeed970b28de2e9ce057fbf6",
+        "gradient.jsonl": "e6bd9daaadfbdad6125b22e1d42af5ad51751d0af45a905c80aaadfff0c3c856",
+        "scores.jsonl": "7089aa70e9130424d29030a79d5934ba3f72e1eef4f32efe52a34f733f49e6e3",
+        "consumption.jsonl": "2bc70ddec44b67135325d496234eacde4dc82004bf8e2f0e2c80c36ad13ac643",
+        "loss.jsonl": "38f9e6a784864042d8bfa6b50f48c44a0c1722ffa6652f113ad555742adf6e2b"
+      },
+      "attempt": "attempt1",
+      "observer_sha256": "eec2afeced2f27bae45762c988179fe9f0017f0c67b93d2486708189ac108bb5",
+      "source_files_sha256": {
+        "__init__.py": "c3b103e7730b4cfcff6b6a3dfe802dfb1fcd89b1ff542cdf2496d4bd415ce27e",
+        "cli.py": "8bb0500d967c1ef72bb884c1a940f668e8e01fc0fe737422e5235f568c522fdf",
+        "configs/components.yaml": "af70d83669b88cd9737207ec1e02f3d7d64fc5f2ae354147b2fdffe6cdf00b93",
+        "core/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "core/registry.py": "c6e841aff445d6df84c8b394b0b52f26837a83096d0d7e8a305d075ace4ab3e8",
+        "launcher.py": "a3abf5fa39984196a93c6af18fef7dbc4e4cbac6aa31dff11aa9443bcd50117a",
+        "offline_selector/offline_near_selector.py": "4fe4437c8c29130a33bd5ae88d47cf13007dbcfd3af8b40892822e6317afd532",
+        "offline_selector/offline_presel_selector.py": "be28b784c5c8193c01b383f3296128f0b0adffd012e94de6eb8eaee8b4949cf4",
+        "offline_selector/offline_tsds_selector.py": "d6798d0701fd5562c844c00cdf6930592cb39012f451bfd3ec46ee31df4eafff",
+        "offline_selector/record_presel_pipeline.py": "0016605e7d5200ccb0a3fe1134af010669ee3d6599ab20c0ac15f5521478a36a",
+        "offline_selector/record_presel_selector.py": "dc8196a04ac1e1421ccdc8b90c9bcc3b01f1fcf88f0ad9d6d19b39dba175de94",
+        "train/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/data/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/data/loader.py": "420467600d21a6c3c37fd74234f42bc46e1d29800190266455114306513042f4",
+        "train/dataset/__init__.py": "f752d68e7a23c3c126b94bc91338b1b40b1d265965f81308c47ec2c93ae2092a",
+        "train/dataset/mixed_proportion_manager.py": "ce0aba1948d048101f0a1c576669574ba05f2e66c7783adbc9491140bba6d1ce",
+        "train/hooks.py": "0b967ab8037c6d7f5fd86cd28087facbb4e0442695631eb2a2827c7bd4149fce",
+        "train/hparams/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/hparams/dynamic_data_params.py": "acadb2ec2b529434a6ad066268fadc188352d955c86178be641759fd2dbef8f2",
+        "train/hparams/dynamic_params.py": "8137058e11a95daed0639b4535a97bb07b6a8aa5837ee742416003153dc651c6",
+        "train/lego/__init__.py": "454934739054eb3488db488b8c241859505262242b3644387a5189c9cf881194",
+        "train/lego/context.py": "1f156a4d7ac3e371ad833a27a10b6adb8a628d8e8120370778652399071fce0e",
+        "train/lego/domain_view.py": "f82264b73e0a230f95c2284dcd871fd4df5d18f4f3f428a075573661db74334c",
+        "train/lego/pipeline.py": "2dd996fad1fa6d6b2712507377836f9b3e686aa58c2bf9bd39d708acf1792a9a",
+        "train/lego/plan.py": "25f6fc3d762e03f2d12058a875c66d2b60df24bd23d84e11f1f83134cd974849",
+        "train/lego/scoreboard.py": "9de6d41d91e355c14368deeaef87387d8dd4da31d11a0f8375674ff2c1fc65e8",
+        "train/lego/stages.py": "e87edbd37b3f07c76b34d5ca4b35a5f71369dc01834879ad1ac93624116d6b0a",
+        "train/mixer/__init__.py": "2da764ddb88a85ce9fa4761f6918c77f92f3cf8a26cfcc21606d4de6281f62c4",
+        "train/mixer/base_mixer.py": "b48851df3fc31c8e6b31c28c99cc03b255e5842f591fa171de08b0b7289425bd",
+        "train/mixer/doremi_mixer.py": "22a95013da8a2b415b68872c39fdc3b044041ff57ff9c925dbdd03565856d845",
+        "train/mixer/dynamic_moe_mixer.py": "0f48b0b6f248a7d868b772260b42d9e10203cac6963ebd478c7d1773aa5bda5a",
+        "train/mixer/odm_mixer.py": "9b58a14251eb2a42a1bf7c467063bf76a1c70392cac1f96e8ecbf8c24f0e5170",
+        "train/mixer/random_mixer.py": "7280c9b42ccc0e8dad729745e5a20a85f0553925e3cfaadf0ad49bf3257d9b2a",
+        "train/mixer/static_mixer.py": "6406b5b76e8255a39b501331e43d499987eb754b40f98d59274c652c5008f6b8",
+        "train/reorder/__init__.py": "73491ecc95d6ecf2f835ce71f175a53ef2e1297fa63370fbb5cc825d0b5a69c1",
+        "train/reorder/base_reorder.py": "f78c4249574be521211780b3ac5b92dad728dd36719162a40c32427cb226f74d",
+        "train/reorder/dynamic_reorder.py": "213273a6356a7f6f2dc09619a27782ace06203e07797cbe0f87f2ad1463d3e7c",
+        "train/reorder/patterns.py": "56aaef1df4b79d3793f12ca7f8790a77514dcaa75162bc2268ea4fe0126820f2",
+        "train/reorder/score_provider.py": "ccc2be4d2daa6061b5f5557e2bcca4054b86d0c0ff2dfc0460ce9769e4e6db44",
+        "train/reorder/static_reorder.py": "6ae159f284eecdf85bfe00bfb5dcf14b1dc1488121f2dc9c75c0cdf97097b5cc",
+        "train/selector/__init__.py": "b61d83ce0b3690efa088fd125e170993923603f559e0531ab5e85196824e1bd3",
+        "train/selector/adapt_inf_selector.py": "46a38bc4baed73bb32d0641a87f92a951840981fd104f438d4b16cc1b74edc3a",
+        "train/selector/base_selector.py": "9df44635823a7492162a0788682c92d49f9399aeacdf7e351fcdbc39d87270e6",
+        "train/selector/cluster_less_selector.py": "1c6514012d585713b8965e39efb77be98ec048dbed23fc930a48e5e11e319d1c",
+        "train/selector/coincide_selector.py": "fb0a658ce72093ac260e64ddb339f9d1011597ed777654bde46cc3548459ff26",
+        "train/selector/custom_selector.py": "f7c6338319306a27f49aaf66b43c611bd0a4d8988061dab90cab614976e43b61",
+        "train/selector/delta_loss_selector.py": "703946204c20495033704c69fdf62b6452e895894b01f581945fe3de3c3e891e",
+        "train/selector/icons_selector.py": "42400cec0ce71b15033a869b17b702a0c7b828f833f6577bab49a4931ae06f6f",
+        "train/selector/less_selector.py": "3271c60e7e873f1f26a7bec51b2256ad117de95aa938a1891c523dc581d5b639",
+        "train/selector/loss_selector.py": "1425c520674fbd7907caa5e7260139fc090b02b40344b53f193023820bf21cfc",
+        "train/selector/near_selector.py": "d43bcbe401f76722f929c89e6d2157f4230149ea5fe36065d10e40516746272e",
+        "train/selector/nice_selector.py": "f77d74056579fa3083cd8ae696c378e530d71b31a99e90ebf0f0639eda1c918d",
+        "train/selector/random_selector.py": "7d6e694c2e34e04972a4646cc2c218179c5e4412b2c65263f59cba6b1eb82809",
+        "train/selector/tsds_selector.py": "39798f0719048032252a70d5bed5eb3857c3aa06fab2b7494bc2ec1bbdb66fd4",
+        "train/trainer/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/trainer/lego_trainer.py": "0eb582002488cb777ae005b9c7cb50dc6c57065aa73042f853c43cad1a5ecf70",
+        "train/trainer/mix_trainer.py": "6fc10c9774af26ff11be2d88846f3acf10d8318d6973bf25a053095c9fd854b8",
+        "train/trainer/reorder_trainer.py": "b8e2288ddbc45c3e4dd7c5e0b50cbb792ad9f390f8e710c4f25a337ec9b0a832",
+        "train/trainer/select_trainer.py": "f2c78fbd01c6995ed9eb72fc66188a455ba654d46215f73c1831fc46fe488319",
+        "train/trainer/weight_trainer.py": "fb59888f85d40342e235a176c7ef52af9388cbb15b79f0a41b0d6ba7cd20f97f",
+        "train/weighter/__init__.py": "f9b0e876bc1636c7e4e69e52aa9f241087a308f930583e997804e889a7923814",
+        "train/weighter/adapt_weighter.py": "5408ec3c373dfb10a99ae38847a3b72e9811683af60161d819078e12d1caba11",
+        "train/weighter/base_weighter.py": "4fa18e66fc539591ba4c0a55dc0d49cecef6e824ddb5ce697939cbb395fd0cd6",
+        "train/weighter/custom_weighter.py": "c98c5c13c9468e3eeaaf38f1912f5303a02761cfe87162870b43353fa21a6a39",
+        "train/weighter/joint_update_aware_weighter.py": "258136381afb24710d585bbae4a86a52abd5e2921da122597c930b881b1b787a",
+        "train/weighter/loss_weighter.py": "f52fd76bf3023bb8b0a4e0a0b8d471b88a21526a77a83a686dc942153d8c4cc1",
+        "utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "utils/llava_v1d5_ckpt_merge.py": "cbf61820bae5949e6988490b1178ab533b470ed60d4fd0378b8c5b45bda00301",
+        "utils/load_component.py": "e4b764477e1686be95ccaea1f94f04376906a1b9f9e3a7effc8e22a0105e9e56",
+        "utils/logging.py": "92a3b71473062a28933df6a84fa506bc21bc1faee5d297165e486ea616ed61b6",
+        "utils/loss_utils.py": "25f244454fad6853112c2aea904224c11b3878b886074332c90f26811c535a73",
+        "utils/multimodal_scoring.py": "09149ad4bddfe1285d6199dfd92d7ae6c9f5656be9b795716b016642dd6898a3",
+        "utils/multimodal_selection.py": "09ea3e9d13addd53ee1a90f59e049c7eee71c9f6151fad59de1a8df7179b5fc2",
+        "utils/selector_io.py": "7b7d2a653e27e5a463a76e2b2668e28f4f6eb60fe2f8fa0bc38d248f7d40fce3",
+        "version.py": "44e763cd77d82aea28463d3eda5f7f5ec8b3dd83d31533b846818e354905a67c"
+      },
+      "packages": {
+        "dataflex": "1.1.0+dataflow.20261023.1",
+        "torch": "2.6.0",
+        "transformers": "5.5.4",
+        "peft": "0.18.1",
+        "accelerate": "1.11.0",
+        "bitsandbytes": "0.49.2",
+        "llamafactory": "0.9.6.dev0"
+      },
+      "source_proportions": {
+        "bioasq_factoid_qa": 0.2916666666666667,
+        "scicite_classification": 0.15625,
+        "genia_ner": 0.17708333333333334,
+        "scitldr_aic": 0.375
+      },
+      "repetition_fraction": 0.17708333333333337,
+      "adapter_sha256": "f01915f1341ace8b51ffc9b6971de5b4ead87068ce77204f4b1755b44ff3a199",
+      "validation_runs": [
+        {
+          "epoch": 0.1875,
+          "eval_loss": 1.093700885772705,
+          "eval_runtime": 9.5738,
+          "eval_samples_per_second": 3.342,
+          "eval_steps_per_second": 3.342,
+          "step": 12
+        },
+        {
+          "epoch": 0.375,
+          "eval_loss": 0.9386590719223022,
+          "eval_runtime": 9.536,
+          "eval_samples_per_second": 3.356,
+          "eval_steps_per_second": 3.356,
+          "step": 24
+        }
+      ],
+      "final_cli_validation": {
+        "epoch": 0.375,
+        "eval_loss": 0.9386590719223022,
+        "eval_runtime": 7.9552,
+        "eval_samples_per_second": 4.023,
+        "eval_steps_per_second": 4.023
+      },
+      "validation_complete_loops_including_final": 3,
+      "validation_token_budget_derived": 48249
+    },
+    "G03": {
+      "status": "MECHANISM_OBSERVED",
+      "name": "G03",
+      "optimizer_steps": 24,
+      "sample_presentations": 96,
+      "distinct_samples": 79,
+      "source_counts": {
+        "bioasq_factoid_qa": 15,
+        "scicite_classification": 21,
+        "genia_ner": 45,
+        "scitldr_aic": 15
+      },
+      "effective_tokens": 48740,
+      "supervised_tokens": 6523,
+      "length_min": 118,
+      "length_max": 1024,
+      "supervised_max": 286,
+      "strategy_boundaries": [
+        4,
+        9,
+        14,
+        19
+      ],
+      "stage_consumption": {
+        "4": {
+          "n": 20,
+          "sources": {
+            "bioasq_factoid_qa": 4,
+            "scitldr_aic": 4,
+            "scicite_classification": 6,
+            "genia_ner": 6
+          }
+        },
+        "9": {
+          "n": 20,
+          "sources": {
+            "scicite_classification": 12,
+            "bioasq_factoid_qa": 5,
+            "scitldr_aic": 1,
+            "genia_ner": 2
+          },
+          "delta_window": [
+            32,
+            83
+          ]
+        },
+        "14": {
+          "n": 20,
+          "sources": {
+            "genia_ner": 11,
+            "scitldr_aic": 7,
+            "bioasq_factoid_qa": 2
+          },
+          "delta_window": [
+            172,
+            223
+          ]
+        },
+        "19": {
+          "n": 20,
+          "sources": {
+            "genia_ner": 17,
+            "bioasq_factoid_qa": 2,
+            "scicite_classification": 1
+          },
+          "delta_window": [
+            203,
+            254
+          ]
+        }
+      },
+      "weight_batches": 0,
+      "gradient_observations": 192,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 488.29862688085996,
+        "peak_allocated_gib": 11.335058212280273,
+        "peak_reserved_gib": 12.216796875,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "74be48ff3618d50a9c8991c17afceed7bb84f84e67fd476c9a073d4c960c3276",
+        "adapter_sha256": "05c58682e313b9a0d6a393c006246a7b96e46c3239b21b4b45877a793ffd3059",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          3.487652540206909,
+          1.7047215700149536,
+          0.9036261439323425,
+          2.540395736694336,
+          2.4957423210144043,
+          2.494300365447998,
+          1.2754634618759155,
+          2.6827890872955322,
+          1.2855660915374756,
+          0.4436677098274231,
+          0.36964842677116394,
+          1.5997987985610962,
+          1.398783564567566,
+          0.3782699704170227,
+          1.8595454692840576,
+          1.746495008468628,
+          1.0051438808441162,
+          0.535681962966919,
+          0.4949621558189392,
+          0.6280494928359985,
+          0.6601648330688477,
+          0.5970083475112915,
+          0.9587445259094238,
+          0.4756733179092407
+        ]
+      },
+      "observer_identity_rng_checks": true,
+      "reload_status": "VERIFIED_WITH_64_PREDICTIONS",
+      "source_scope": "Direct DataFlex CLI; no platform SSH acceptance",
+      "limitations": [
+        "Single run, 24 updates maximum, engineering evidence only",
+        "Original document IDs unavailable in released SciRIFF export; different-context paper overlap unresolved"
+      ],
+      "scoring_seconds": 304.20260412828065,
+      "scoring_effective_tokens": 495828,
+      "observation_sha256": {
+        "backward-input.jsonl": "826ad0d7d97815a058c0477f4ca8373e19e0eb271642de0e815a3ca687161462",
+        "strategy.jsonl": "ed769ba81a38af737142d1d3be23f654441c0c93c3fd1019e26a9100b60788c4",
+        "events.jsonl": "77e533e44e21e0a9738b192b7b014edaf754831b7d0814e6ca92691b3349680c",
+        "backward.jsonl": "e474cc66d985ec061ad1fd94f38d461c3da1ca3302380a2d57672b0a453f95dd",
+        "gradient.jsonl": "21fe198972c35e75438883b7b0d036c24f79dda187a0b076a338b643d45e478e",
+        "scores.jsonl": "63d8aeaa4a17efaa37b3efcea6d2a0de01a17a66628d40ec5d5c14048c9efed0",
+        "consumption.jsonl": "c9e10bcfe0d70004fb378a2dfad9234e1609fcfc2974ff6f6192b02006b88df3",
+        "loss.jsonl": "6f4860f78aac5aef7b100413cd3fbf9305a6dee27c4d3b2c49c26ce29db99629"
+      },
+      "attempt": "attempt1",
+      "observer_sha256": "eec2afeced2f27bae45762c988179fe9f0017f0c67b93d2486708189ac108bb5",
+      "source_files_sha256": {
+        "__init__.py": "c3b103e7730b4cfcff6b6a3dfe802dfb1fcd89b1ff542cdf2496d4bd415ce27e",
+        "cli.py": "8bb0500d967c1ef72bb884c1a940f668e8e01fc0fe737422e5235f568c522fdf",
+        "configs/components.yaml": "af70d83669b88cd9737207ec1e02f3d7d64fc5f2ae354147b2fdffe6cdf00b93",
+        "core/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "core/registry.py": "c6e841aff445d6df84c8b394b0b52f26837a83096d0d7e8a305d075ace4ab3e8",
+        "launcher.py": "a3abf5fa39984196a93c6af18fef7dbc4e4cbac6aa31dff11aa9443bcd50117a",
+        "offline_selector/offline_near_selector.py": "4fe4437c8c29130a33bd5ae88d47cf13007dbcfd3af8b40892822e6317afd532",
+        "offline_selector/offline_presel_selector.py": "be28b784c5c8193c01b383f3296128f0b0adffd012e94de6eb8eaee8b4949cf4",
+        "offline_selector/offline_tsds_selector.py": "d6798d0701fd5562c844c00cdf6930592cb39012f451bfd3ec46ee31df4eafff",
+        "offline_selector/record_presel_pipeline.py": "0016605e7d5200ccb0a3fe1134af010669ee3d6599ab20c0ac15f5521478a36a",
+        "offline_selector/record_presel_selector.py": "dc8196a04ac1e1421ccdc8b90c9bcc3b01f1fcf88f0ad9d6d19b39dba175de94",
+        "train/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/data/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/data/loader.py": "420467600d21a6c3c37fd74234f42bc46e1d29800190266455114306513042f4",
+        "train/dataset/__init__.py": "f752d68e7a23c3c126b94bc91338b1b40b1d265965f81308c47ec2c93ae2092a",
+        "train/dataset/mixed_proportion_manager.py": "ce0aba1948d048101f0a1c576669574ba05f2e66c7783adbc9491140bba6d1ce",
+        "train/hooks.py": "0b967ab8037c6d7f5fd86cd28087facbb4e0442695631eb2a2827c7bd4149fce",
+        "train/hparams/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/hparams/dynamic_data_params.py": "acadb2ec2b529434a6ad066268fadc188352d955c86178be641759fd2dbef8f2",
+        "train/hparams/dynamic_params.py": "8137058e11a95daed0639b4535a97bb07b6a8aa5837ee742416003153dc651c6",
+        "train/lego/__init__.py": "454934739054eb3488db488b8c241859505262242b3644387a5189c9cf881194",
+        "train/lego/context.py": "1f156a4d7ac3e371ad833a27a10b6adb8a628d8e8120370778652399071fce0e",
+        "train/lego/domain_view.py": "f82264b73e0a230f95c2284dcd871fd4df5d18f4f3f428a075573661db74334c",
+        "train/lego/pipeline.py": "2dd996fad1fa6d6b2712507377836f9b3e686aa58c2bf9bd39d708acf1792a9a",
+        "train/lego/plan.py": "25f6fc3d762e03f2d12058a875c66d2b60df24bd23d84e11f1f83134cd974849",
+        "train/lego/scoreboard.py": "9de6d41d91e355c14368deeaef87387d8dd4da31d11a0f8375674ff2c1fc65e8",
+        "train/lego/stages.py": "e87edbd37b3f07c76b34d5ca4b35a5f71369dc01834879ad1ac93624116d6b0a",
+        "train/mixer/__init__.py": "2da764ddb88a85ce9fa4761f6918c77f92f3cf8a26cfcc21606d4de6281f62c4",
+        "train/mixer/base_mixer.py": "b48851df3fc31c8e6b31c28c99cc03b255e5842f591fa171de08b0b7289425bd",
+        "train/mixer/doremi_mixer.py": "22a95013da8a2b415b68872c39fdc3b044041ff57ff9c925dbdd03565856d845",
+        "train/mixer/dynamic_moe_mixer.py": "0f48b0b6f248a7d868b772260b42d9e10203cac6963ebd478c7d1773aa5bda5a",
+        "train/mixer/odm_mixer.py": "9b58a14251eb2a42a1bf7c467063bf76a1c70392cac1f96e8ecbf8c24f0e5170",
+        "train/mixer/random_mixer.py": "7280c9b42ccc0e8dad729745e5a20a85f0553925e3cfaadf0ad49bf3257d9b2a",
+        "train/mixer/static_mixer.py": "6406b5b76e8255a39b501331e43d499987eb754b40f98d59274c652c5008f6b8",
+        "train/reorder/__init__.py": "73491ecc95d6ecf2f835ce71f175a53ef2e1297fa63370fbb5cc825d0b5a69c1",
+        "train/reorder/base_reorder.py": "f78c4249574be521211780b3ac5b92dad728dd36719162a40c32427cb226f74d",
+        "train/reorder/dynamic_reorder.py": "213273a6356a7f6f2dc09619a27782ace06203e07797cbe0f87f2ad1463d3e7c",
+        "train/reorder/patterns.py": "56aaef1df4b79d3793f12ca7f8790a77514dcaa75162bc2268ea4fe0126820f2",
+        "train/reorder/score_provider.py": "ccc2be4d2daa6061b5f5557e2bcca4054b86d0c0ff2dfc0460ce9769e4e6db44",
+        "train/reorder/static_reorder.py": "6ae159f284eecdf85bfe00bfb5dcf14b1dc1488121f2dc9c75c0cdf97097b5cc",
+        "train/selector/__init__.py": "b61d83ce0b3690efa088fd125e170993923603f559e0531ab5e85196824e1bd3",
+        "train/selector/adapt_inf_selector.py": "46a38bc4baed73bb32d0641a87f92a951840981fd104f438d4b16cc1b74edc3a",
+        "train/selector/base_selector.py": "9df44635823a7492162a0788682c92d49f9399aeacdf7e351fcdbc39d87270e6",
+        "train/selector/cluster_less_selector.py": "1c6514012d585713b8965e39efb77be98ec048dbed23fc930a48e5e11e319d1c",
+        "train/selector/coincide_selector.py": "fb0a658ce72093ac260e64ddb339f9d1011597ed777654bde46cc3548459ff26",
+        "train/selector/custom_selector.py": "f7c6338319306a27f49aaf66b43c611bd0a4d8988061dab90cab614976e43b61",
+        "train/selector/delta_loss_selector.py": "703946204c20495033704c69fdf62b6452e895894b01f581945fe3de3c3e891e",
+        "train/selector/icons_selector.py": "42400cec0ce71b15033a869b17b702a0c7b828f833f6577bab49a4931ae06f6f",
+        "train/selector/less_selector.py": "3271c60e7e873f1f26a7bec51b2256ad117de95aa938a1891c523dc581d5b639",
+        "train/selector/loss_selector.py": "1425c520674fbd7907caa5e7260139fc090b02b40344b53f193023820bf21cfc",
+        "train/selector/near_selector.py": "d43bcbe401f76722f929c89e6d2157f4230149ea5fe36065d10e40516746272e",
+        "train/selector/nice_selector.py": "f77d74056579fa3083cd8ae696c378e530d71b31a99e90ebf0f0639eda1c918d",
+        "train/selector/random_selector.py": "7d6e694c2e34e04972a4646cc2c218179c5e4412b2c65263f59cba6b1eb82809",
+        "train/selector/tsds_selector.py": "39798f0719048032252a70d5bed5eb3857c3aa06fab2b7494bc2ec1bbdb66fd4",
+        "train/trainer/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/trainer/lego_trainer.py": "0eb582002488cb777ae005b9c7cb50dc6c57065aa73042f853c43cad1a5ecf70",
+        "train/trainer/mix_trainer.py": "6fc10c9774af26ff11be2d88846f3acf10d8318d6973bf25a053095c9fd854b8",
+        "train/trainer/reorder_trainer.py": "b8e2288ddbc45c3e4dd7c5e0b50cbb792ad9f390f8e710c4f25a337ec9b0a832",
+        "train/trainer/select_trainer.py": "f2c78fbd01c6995ed9eb72fc66188a455ba654d46215f73c1831fc46fe488319",
+        "train/trainer/weight_trainer.py": "fb59888f85d40342e235a176c7ef52af9388cbb15b79f0a41b0d6ba7cd20f97f",
+        "train/weighter/__init__.py": "f9b0e876bc1636c7e4e69e52aa9f241087a308f930583e997804e889a7923814",
+        "train/weighter/adapt_weighter.py": "5408ec3c373dfb10a99ae38847a3b72e9811683af60161d819078e12d1caba11",
+        "train/weighter/base_weighter.py": "4fa18e66fc539591ba4c0a55dc0d49cecef6e824ddb5ce697939cbb395fd0cd6",
+        "train/weighter/custom_weighter.py": "c98c5c13c9468e3eeaaf38f1912f5303a02761cfe87162870b43353fa21a6a39",
+        "train/weighter/joint_update_aware_weighter.py": "258136381afb24710d585bbae4a86a52abd5e2921da122597c930b881b1b787a",
+        "train/weighter/loss_weighter.py": "f52fd76bf3023bb8b0a4e0a0b8d471b88a21526a77a83a686dc942153d8c4cc1",
+        "utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "utils/llava_v1d5_ckpt_merge.py": "cbf61820bae5949e6988490b1178ab533b470ed60d4fd0378b8c5b45bda00301",
+        "utils/load_component.py": "e4b764477e1686be95ccaea1f94f04376906a1b9f9e3a7effc8e22a0105e9e56",
+        "utils/logging.py": "92a3b71473062a28933df6a84fa506bc21bc1faee5d297165e486ea616ed61b6",
+        "utils/loss_utils.py": "25f244454fad6853112c2aea904224c11b3878b886074332c90f26811c535a73",
+        "utils/multimodal_scoring.py": "09149ad4bddfe1285d6199dfd92d7ae6c9f5656be9b795716b016642dd6898a3",
+        "utils/multimodal_selection.py": "09ea3e9d13addd53ee1a90f59e049c7eee71c9f6151fad59de1a8df7179b5fc2",
+        "utils/selector_io.py": "7b7d2a653e27e5a463a76e2b2668e28f4f6eb60fe2f8fa0bc38d248f7d40fce3",
+        "version.py": "44e763cd77d82aea28463d3eda5f7f5ec8b3dd83d31533b846818e354905a67c"
+      },
+      "packages": {
+        "dataflex": "1.1.0+dataflow.20261023.1",
+        "torch": "2.6.0",
+        "transformers": "5.5.4",
+        "peft": "0.18.1",
+        "accelerate": "1.11.0",
+        "bitsandbytes": "0.49.2",
+        "llamafactory": "0.9.6.dev0"
+      },
+      "source_proportions": {
+        "bioasq_factoid_qa": 0.15625,
+        "scicite_classification": 0.21875,
+        "genia_ner": 0.46875,
+        "scitldr_aic": 0.15625
+      },
+      "repetition_fraction": 0.17708333333333337,
+      "adapter_sha256": "05c58682e313b9a0d6a393c006246a7b96e46c3239b21b4b45877a793ffd3059",
+      "validation_runs": [
+        {
+          "epoch": 0.1875,
+          "eval_loss": 1.0928294658660889,
+          "eval_runtime": 9.6206,
+          "eval_samples_per_second": 3.326,
+          "eval_steps_per_second": 3.326,
+          "step": 12
+        },
+        {
+          "epoch": 0.375,
+          "eval_loss": 0.9462610483169556,
+          "eval_runtime": 9.6974,
+          "eval_samples_per_second": 3.3,
+          "eval_steps_per_second": 3.3,
+          "step": 24
+        }
+      ],
+      "final_cli_validation": {
+        "epoch": 0.375,
+        "eval_loss": 0.9462610483169556,
+        "eval_runtime": 7.7531,
+        "eval_samples_per_second": 4.127,
+        "eval_steps_per_second": 4.127
+      },
+      "validation_complete_loops_including_final": 3,
+      "validation_token_budget_derived": 48249
+    },
+    "G04": {
+      "status": "MECHANISM_OBSERVED",
+      "name": "G04",
+      "optimizer_steps": 24,
+      "sample_presentations": 96,
+      "distinct_samples": 81,
+      "source_counts": {
+        "genia_ner": 24,
+        "bioasq_factoid_qa": 24,
+        "scitldr_aic": 24,
+        "scicite_classification": 24
+      },
+      "effective_tokens": 47996,
+      "supervised_tokens": 3928,
+      "length_min": 86,
+      "length_max": 999,
+      "supervised_max": 256,
+      "strategy_boundaries": [],
+      "stage_consumption": {},
+      "weight_batches": 0,
+      "gradient_observations": 192,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 178.8138356739655,
+        "peak_allocated_gib": 11.260290145874023,
+        "peak_reserved_gib": 11.998046875,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "8257004296e83218d6ca6abcb5b11e35d45e3a9926ec964eff35f5b9782b4a05",
+        "adapter_sha256": "4b7f3606e6823160c5e03077109dbcd94eaa1fe414825be0f4731ff116290b98",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          1.950150728225708,
+          4.090291500091553,
+          3.1225333213806152,
+          3.3530845642089844,
+          2.391909122467041,
+          2.4014015197753906,
+          1.3576793670654297,
+          1.1427353620529175,
+          1.346954107284546,
+          2.136932611465454,
+          0.949691653251648,
+          1.4773567914962769,
+          1.5960050821304321,
+          0.7530073523521423,
+          1.3569074869155884,
+          1.5711469650268555,
+          0.41188719868659973,
+          0.3611600399017334,
+          0.4439665675163269,
+          0.5995666980743408,
+          0.26896554231643677,
+          1.1899980306625366,
+          1.6679441928863525,
+          1.326324462890625
+        ]
+      },
+      "observer_identity_rng_checks": true,
+      "reload_status": "VERIFIED_WITH_64_PREDICTIONS",
+      "source_scope": "Direct DataFlex CLI; no platform SSH acceptance",
+      "limitations": [
+        "Single run, 24 updates maximum, engineering evidence only",
+        "Original document IDs unavailable in released SciRIFF export; different-context paper overlap unresolved"
+      ],
+      "scoring_seconds": 0,
+      "observation_sha256": {
+        "backward-input.jsonl": "65243c63fcb55165a3a85ae4c5b3048226e2545a34fba2062aca6bafe51f799f",
+        "events.jsonl": "3b57fadd81c66f345b0711d8fa9db3db82582251d902745cd80c77761c5c6da9",
+        "backward.jsonl": "42b41588fe9f6b9417fe247c6a63cb06e8ec0ec522b3bb9e4a8391ae61c21403",
+        "gradient.jsonl": "5bb592907ea1ca52b3bef75a1ee1e758756fdd6c419ee47e0fa965fad784f63c",
+        "consumption.jsonl": "c2b6981fa7c9099872c16977db4fa6a3305a09cd467161d8f0455f01d87c72f0",
+        "loss.jsonl": "f7464e87c84c57c9e119c20bd685462793dbdd0aa7d93b39b3fce7e3846e6f36"
+      },
+      "attempt": "attempt1",
+      "observer_sha256": "eec2afeced2f27bae45762c988179fe9f0017f0c67b93d2486708189ac108bb5",
+      "source_files_sha256": {
+        "__init__.py": "c3b103e7730b4cfcff6b6a3dfe802dfb1fcd89b1ff542cdf2496d4bd415ce27e",
+        "cli.py": "8bb0500d967c1ef72bb884c1a940f668e8e01fc0fe737422e5235f568c522fdf",
+        "configs/components.yaml": "af70d83669b88cd9737207ec1e02f3d7d64fc5f2ae354147b2fdffe6cdf00b93",
+        "core/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "core/registry.py": "c6e841aff445d6df84c8b394b0b52f26837a83096d0d7e8a305d075ace4ab3e8",
+        "launcher.py": "a3abf5fa39984196a93c6af18fef7dbc4e4cbac6aa31dff11aa9443bcd50117a",
+        "offline_selector/offline_near_selector.py": "4fe4437c8c29130a33bd5ae88d47cf13007dbcfd3af8b40892822e6317afd532",
+        "offline_selector/offline_presel_selector.py": "be28b784c5c8193c01b383f3296128f0b0adffd012e94de6eb8eaee8b4949cf4",
+        "offline_selector/offline_tsds_selector.py": "d6798d0701fd5562c844c00cdf6930592cb39012f451bfd3ec46ee31df4eafff",
+        "offline_selector/record_presel_pipeline.py": "0016605e7d5200ccb0a3fe1134af010669ee3d6599ab20c0ac15f5521478a36a",
+        "offline_selector/record_presel_selector.py": "dc8196a04ac1e1421ccdc8b90c9bcc3b01f1fcf88f0ad9d6d19b39dba175de94",
+        "train/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/data/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/data/loader.py": "420467600d21a6c3c37fd74234f42bc46e1d29800190266455114306513042f4",
+        "train/dataset/__init__.py": "f752d68e7a23c3c126b94bc91338b1b40b1d265965f81308c47ec2c93ae2092a",
+        "train/dataset/mixed_proportion_manager.py": "ce0aba1948d048101f0a1c576669574ba05f2e66c7783adbc9491140bba6d1ce",
+        "train/hooks.py": "0b967ab8037c6d7f5fd86cd28087facbb4e0442695631eb2a2827c7bd4149fce",
+        "train/hparams/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/hparams/dynamic_data_params.py": "acadb2ec2b529434a6ad066268fadc188352d955c86178be641759fd2dbef8f2",
+        "train/hparams/dynamic_params.py": "8137058e11a95daed0639b4535a97bb07b6a8aa5837ee742416003153dc651c6",
+        "train/lego/__init__.py": "454934739054eb3488db488b8c241859505262242b3644387a5189c9cf881194",
+        "train/lego/context.py": "1f156a4d7ac3e371ad833a27a10b6adb8a628d8e8120370778652399071fce0e",
+        "train/lego/domain_view.py": "f82264b73e0a230f95c2284dcd871fd4df5d18f4f3f428a075573661db74334c",
+        "train/lego/pipeline.py": "2dd996fad1fa6d6b2712507377836f9b3e686aa58c2bf9bd39d708acf1792a9a",
+        "train/lego/plan.py": "25f6fc3d762e03f2d12058a875c66d2b60df24bd23d84e11f1f83134cd974849",
+        "train/lego/scoreboard.py": "9de6d41d91e355c14368deeaef87387d8dd4da31d11a0f8375674ff2c1fc65e8",
+        "train/lego/stages.py": "e87edbd37b3f07c76b34d5ca4b35a5f71369dc01834879ad1ac93624116d6b0a",
+        "train/mixer/__init__.py": "2da764ddb88a85ce9fa4761f6918c77f92f3cf8a26cfcc21606d4de6281f62c4",
+        "train/mixer/base_mixer.py": "b48851df3fc31c8e6b31c28c99cc03b255e5842f591fa171de08b0b7289425bd",
+        "train/mixer/doremi_mixer.py": "22a95013da8a2b415b68872c39fdc3b044041ff57ff9c925dbdd03565856d845",
+        "train/mixer/dynamic_moe_mixer.py": "0f48b0b6f248a7d868b772260b42d9e10203cac6963ebd478c7d1773aa5bda5a",
+        "train/mixer/odm_mixer.py": "9b58a14251eb2a42a1bf7c467063bf76a1c70392cac1f96e8ecbf8c24f0e5170",
+        "train/mixer/random_mixer.py": "7280c9b42ccc0e8dad729745e5a20a85f0553925e3cfaadf0ad49bf3257d9b2a",
+        "train/mixer/static_mixer.py": "6406b5b76e8255a39b501331e43d499987eb754b40f98d59274c652c5008f6b8",
+        "train/reorder/__init__.py": "73491ecc95d6ecf2f835ce71f175a53ef2e1297fa63370fbb5cc825d0b5a69c1",
+        "train/reorder/base_reorder.py": "f78c4249574be521211780b3ac5b92dad728dd36719162a40c32427cb226f74d",
+        "train/reorder/dynamic_reorder.py": "213273a6356a7f6f2dc09619a27782ace06203e07797cbe0f87f2ad1463d3e7c",
+        "train/reorder/patterns.py": "56aaef1df4b79d3793f12ca7f8790a77514dcaa75162bc2268ea4fe0126820f2",
+        "train/reorder/score_provider.py": "ccc2be4d2daa6061b5f5557e2bcca4054b86d0c0ff2dfc0460ce9769e4e6db44",
+        "train/reorder/static_reorder.py": "6ae159f284eecdf85bfe00bfb5dcf14b1dc1488121f2dc9c75c0cdf97097b5cc",
+        "train/selector/__init__.py": "b61d83ce0b3690efa088fd125e170993923603f559e0531ab5e85196824e1bd3",
+        "train/selector/adapt_inf_selector.py": "46a38bc4baed73bb32d0641a87f92a951840981fd104f438d4b16cc1b74edc3a",
+        "train/selector/base_selector.py": "9df44635823a7492162a0788682c92d49f9399aeacdf7e351fcdbc39d87270e6",
+        "train/selector/cluster_less_selector.py": "1c6514012d585713b8965e39efb77be98ec048dbed23fc930a48e5e11e319d1c",
+        "train/selector/coincide_selector.py": "fb0a658ce72093ac260e64ddb339f9d1011597ed777654bde46cc3548459ff26",
+        "train/selector/custom_selector.py": "f7c6338319306a27f49aaf66b43c611bd0a4d8988061dab90cab614976e43b61",
+        "train/selector/delta_loss_selector.py": "703946204c20495033704c69fdf62b6452e895894b01f581945fe3de3c3e891e",
+        "train/selector/icons_selector.py": "42400cec0ce71b15033a869b17b702a0c7b828f833f6577bab49a4931ae06f6f",
+        "train/selector/less_selector.py": "3271c60e7e873f1f26a7bec51b2256ad117de95aa938a1891c523dc581d5b639",
+        "train/selector/loss_selector.py": "1425c520674fbd7907caa5e7260139fc090b02b40344b53f193023820bf21cfc",
+        "train/selector/near_selector.py": "d43bcbe401f76722f929c89e6d2157f4230149ea5fe36065d10e40516746272e",
+        "train/selector/nice_selector.py": "f77d74056579fa3083cd8ae696c378e530d71b31a99e90ebf0f0639eda1c918d",
+        "train/selector/random_selector.py": "7d6e694c2e34e04972a4646cc2c218179c5e4412b2c65263f59cba6b1eb82809",
+        "train/selector/tsds_selector.py": "39798f0719048032252a70d5bed5eb3857c3aa06fab2b7494bc2ec1bbdb66fd4",
+        "train/trainer/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/trainer/lego_trainer.py": "0eb582002488cb777ae005b9c7cb50dc6c57065aa73042f853c43cad1a5ecf70",
+        "train/trainer/mix_trainer.py": "6fc10c9774af26ff11be2d88846f3acf10d8318d6973bf25a053095c9fd854b8",
+        "train/trainer/reorder_trainer.py": "b8e2288ddbc45c3e4dd7c5e0b50cbb792ad9f390f8e710c4f25a337ec9b0a832",
+        "train/trainer/select_trainer.py": "f2c78fbd01c6995ed9eb72fc66188a455ba654d46215f73c1831fc46fe488319",
+        "train/trainer/weight_trainer.py": "fb59888f85d40342e235a176c7ef52af9388cbb15b79f0a41b0d6ba7cd20f97f",
+        "train/weighter/__init__.py": "f9b0e876bc1636c7e4e69e52aa9f241087a308f930583e997804e889a7923814",
+        "train/weighter/adapt_weighter.py": "5408ec3c373dfb10a99ae38847a3b72e9811683af60161d819078e12d1caba11",
+        "train/weighter/base_weighter.py": "4fa18e66fc539591ba4c0a55dc0d49cecef6e824ddb5ce697939cbb395fd0cd6",
+        "train/weighter/custom_weighter.py": "c98c5c13c9468e3eeaaf38f1912f5303a02761cfe87162870b43353fa21a6a39",
+        "train/weighter/joint_update_aware_weighter.py": "258136381afb24710d585bbae4a86a52abd5e2921da122597c930b881b1b787a",
+        "train/weighter/loss_weighter.py": "f52fd76bf3023bb8b0a4e0a0b8d471b88a21526a77a83a686dc942153d8c4cc1",
+        "utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "utils/llava_v1d5_ckpt_merge.py": "cbf61820bae5949e6988490b1178ab533b470ed60d4fd0378b8c5b45bda00301",
+        "utils/load_component.py": "e4b764477e1686be95ccaea1f94f04376906a1b9f9e3a7effc8e22a0105e9e56",
+        "utils/logging.py": "92a3b71473062a28933df6a84fa506bc21bc1faee5d297165e486ea616ed61b6",
+        "utils/loss_utils.py": "25f244454fad6853112c2aea904224c11b3878b886074332c90f26811c535a73",
+        "utils/multimodal_scoring.py": "09149ad4bddfe1285d6199dfd92d7ae6c9f5656be9b795716b016642dd6898a3",
+        "utils/multimodal_selection.py": "09ea3e9d13addd53ee1a90f59e049c7eee71c9f6151fad59de1a8df7179b5fc2",
+        "utils/selector_io.py": "7b7d2a653e27e5a463a76e2b2668e28f4f6eb60fe2f8fa0bc38d248f7d40fce3",
+        "version.py": "44e763cd77d82aea28463d3eda5f7f5ec8b3dd83d31533b846818e354905a67c"
+      },
+      "packages": {
+        "dataflex": "1.1.0+dataflow.20261023.1",
+        "torch": "2.6.0",
+        "transformers": "5.5.4",
+        "peft": "0.18.1",
+        "accelerate": "1.11.0",
+        "bitsandbytes": "0.49.2",
+        "llamafactory": "0.9.6.dev0"
+      },
+      "source_proportions": {
+        "genia_ner": 0.25,
+        "bioasq_factoid_qa": 0.25,
+        "scitldr_aic": 0.25,
+        "scicite_classification": 0.25
+      },
+      "repetition_fraction": 0.15625,
+      "adapter_sha256": "4b7f3606e6823160c5e03077109dbcd94eaa1fe414825be0f4731ff116290b98",
+      "validation_runs": [
+        {
+          "epoch": 0.5,
+          "eval_loss": 1.1179518699645996,
+          "eval_runtime": 9.866,
+          "eval_samples_per_second": 3.243,
+          "eval_steps_per_second": 3.243,
+          "step": 12
+        },
+        {
+          "epoch": 1.0,
+          "eval_loss": 0.9753771424293518,
+          "eval_runtime": 8.7622,
+          "eval_samples_per_second": 3.652,
+          "eval_steps_per_second": 3.652,
+          "step": 24
+        }
+      ],
+      "final_cli_validation": {
+        "epoch": 1.0,
+        "eval_loss": 0.9753771424293518,
+        "eval_runtime": 9.5726,
+        "eval_samples_per_second": 3.343,
+        "eval_steps_per_second": 3.343
+      },
+      "validation_complete_loops_including_final": 3,
+      "validation_token_budget_derived": 48249
+    },
+    "G05": {
+      "status": "MECHANISM_OBSERVED",
+      "name": "G05",
+      "optimizer_steps": 24,
+      "sample_presentations": 96,
+      "distinct_samples": 78,
+      "source_counts": {
+        "genia_ner": 21,
+        "bioasq_factoid_qa": 21,
+        "scitldr_aic": 27,
+        "scicite_classification": 27
+      },
+      "effective_tokens": 47245,
+      "supervised_tokens": 3736,
+      "length_min": 119,
+      "length_max": 1024,
+      "supervised_max": 229,
+      "strategy_boundaries": [
+        4,
+        9,
+        14,
+        19
+      ],
+      "stage_consumption": {
+        "4": {
+          "sources": [
+            5,
+            5,
+            5,
+            5
+          ],
+          "proportions": [
+            0.25,
+            0.25,
+            0.25,
+            0.25
+          ]
+        },
+        "9": {
+          "sources": [
+            6,
+            4,
+            4,
+            6
+          ],
+          "proportions": [
+            0.3042997901278701,
+            0.2393723466295556,
+            0.22816393162128715,
+            0.22816393162128715
+          ]
+        },
+        "14": {
+          "sources": [
+            6,
+            4,
+            4,
+            6
+          ],
+          "proportions": [
+            0.3200675613371413,
+            0.23648023014355773,
+            0.22361982882311515,
+            0.21983237969618583
+          ]
+        },
+        "19": {
+          "sources": [
+            6,
+            4,
+            4,
+            6
+          ],
+          "proportions": [
+            0.31433325808154844,
+            0.24507051592869417,
+            0.22230839229445828,
+            0.21828783369529906
+          ]
+        }
+      },
+      "weight_batches": 0,
+      "gradient_observations": 192,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 176.68476229696535,
+        "peak_allocated_gib": 11.333202362060547,
+        "peak_reserved_gib": 12.21484375,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "491e62cc06faf68f468989cbe7084fbd3e4a96dbfd5ae456026617ddca4da2ad",
+        "adapter_sha256": "cfd8340d028cd87e60238d44b7202a0985a2eda5114faaaa9e3122b03394db69",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          3.056914806365967,
+          2.5397531986236572,
+          2.942998170852661,
+          3.7606961727142334,
+          3.0833563804626465,
+          2.3749780654907227,
+          3.1491599082946777,
+          2.4922211170196533,
+          0.9074817895889282,
+          0.5785940289497375,
+          1.8963136672973633,
+          0.9438900947570801,
+          1.4694867134094238,
+          0.7462915778160095,
+          1.4362605810165405,
+          0.9135057330131531,
+          0.4748232662677765,
+          1.5422286987304688,
+          1.417807936668396,
+          0.18295998871326447,
+          0.8577615022659302,
+          0.6645440459251404,
+          0.27196598052978516,
+          1.413328766822815
+        ]
+      },
+      "observer_identity_rng_checks": true,
+      "reload_status": "VERIFIED_WITH_64_PREDICTIONS",
+      "source_scope": "Direct DataFlex CLI; no platform SSH acceptance",
+      "limitations": [
+        "Single run, 24 updates maximum, engineering evidence only",
+        "Original document IDs unavailable in released SciRIFF export; different-context paper overlap unresolved"
+      ],
+      "scoring_seconds": 0,
+      "observation_sha256": {
+        "backward-input.jsonl": "4541eb6dea94f02418aa2261780350e8443999935f9bedf8c0dc714aa1d4f967",
+        "strategy.jsonl": "027f09f850209dc1dfa2209feee8df13d1605c57e2dd7d8b7746bc05706b5015",
+        "events.jsonl": "42cc3b1e793f54a2b20c84dc30977beed87bfe41ad8f775bc7fd8467ca9d8145",
+        "backward.jsonl": "c78a215430251084b6059c0341fbe2cedcf44be235cb6e4f6fec3eb994404e25",
+        "gradient.jsonl": "0dcdb8038dc344b190b98fe91824294813bc979cf57fa496c8bd75e4f60f04a9",
+        "consumption.jsonl": "f36550ca954cc956d8de618ec7cdb284f178d0029e1b0346267a8e7bc07d598e",
+        "loss.jsonl": "3929dc99b9c272680b706e47645be8606003429cce421fd2fe579168637a35d8"
+      },
+      "attempt": "attempt1",
+      "observer_sha256": "eec2afeced2f27bae45762c988179fe9f0017f0c67b93d2486708189ac108bb5",
+      "source_files_sha256": {
+        "__init__.py": "c3b103e7730b4cfcff6b6a3dfe802dfb1fcd89b1ff542cdf2496d4bd415ce27e",
+        "cli.py": "8bb0500d967c1ef72bb884c1a940f668e8e01fc0fe737422e5235f568c522fdf",
+        "configs/components.yaml": "af70d83669b88cd9737207ec1e02f3d7d64fc5f2ae354147b2fdffe6cdf00b93",
+        "core/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "core/registry.py": "c6e841aff445d6df84c8b394b0b52f26837a83096d0d7e8a305d075ace4ab3e8",
+        "launcher.py": "a3abf5fa39984196a93c6af18fef7dbc4e4cbac6aa31dff11aa9443bcd50117a",
+        "offline_selector/offline_near_selector.py": "4fe4437c8c29130a33bd5ae88d47cf13007dbcfd3af8b40892822e6317afd532",
+        "offline_selector/offline_presel_selector.py": "be28b784c5c8193c01b383f3296128f0b0adffd012e94de6eb8eaee8b4949cf4",
+        "offline_selector/offline_tsds_selector.py": "d6798d0701fd5562c844c00cdf6930592cb39012f451bfd3ec46ee31df4eafff",
+        "offline_selector/record_presel_pipeline.py": "0016605e7d5200ccb0a3fe1134af010669ee3d6599ab20c0ac15f5521478a36a",
+        "offline_selector/record_presel_selector.py": "dc8196a04ac1e1421ccdc8b90c9bcc3b01f1fcf88f0ad9d6d19b39dba175de94",
+        "train/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/data/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/data/loader.py": "420467600d21a6c3c37fd74234f42bc46e1d29800190266455114306513042f4",
+        "train/dataset/__init__.py": "f752d68e7a23c3c126b94bc91338b1b40b1d265965f81308c47ec2c93ae2092a",
+        "train/dataset/mixed_proportion_manager.py": "ce0aba1948d048101f0a1c576669574ba05f2e66c7783adbc9491140bba6d1ce",
+        "train/hooks.py": "0b967ab8037c6d7f5fd86cd28087facbb4e0442695631eb2a2827c7bd4149fce",
+        "train/hparams/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/hparams/dynamic_data_params.py": "acadb2ec2b529434a6ad066268fadc188352d955c86178be641759fd2dbef8f2",
+        "train/hparams/dynamic_params.py": "8137058e11a95daed0639b4535a97bb07b6a8aa5837ee742416003153dc651c6",
+        "train/lego/__init__.py": "454934739054eb3488db488b8c241859505262242b3644387a5189c9cf881194",
+        "train/lego/context.py": "1f156a4d7ac3e371ad833a27a10b6adb8a628d8e8120370778652399071fce0e",
+        "train/lego/domain_view.py": "f82264b73e0a230f95c2284dcd871fd4df5d18f4f3f428a075573661db74334c",
+        "train/lego/pipeline.py": "2dd996fad1fa6d6b2712507377836f9b3e686aa58c2bf9bd39d708acf1792a9a",
+        "train/lego/plan.py": "25f6fc3d762e03f2d12058a875c66d2b60df24bd23d84e11f1f83134cd974849",
+        "train/lego/scoreboard.py": "9de6d41d91e355c14368deeaef87387d8dd4da31d11a0f8375674ff2c1fc65e8",
+        "train/lego/stages.py": "e87edbd37b3f07c76b34d5ca4b35a5f71369dc01834879ad1ac93624116d6b0a",
+        "train/mixer/__init__.py": "2da764ddb88a85ce9fa4761f6918c77f92f3cf8a26cfcc21606d4de6281f62c4",
+        "train/mixer/base_mixer.py": "b48851df3fc31c8e6b31c28c99cc03b255e5842f591fa171de08b0b7289425bd",
+        "train/mixer/doremi_mixer.py": "22a95013da8a2b415b68872c39fdc3b044041ff57ff9c925dbdd03565856d845",
+        "train/mixer/dynamic_moe_mixer.py": "0f48b0b6f248a7d868b772260b42d9e10203cac6963ebd478c7d1773aa5bda5a",
+        "train/mixer/odm_mixer.py": "9b58a14251eb2a42a1bf7c467063bf76a1c70392cac1f96e8ecbf8c24f0e5170",
+        "train/mixer/random_mixer.py": "7280c9b42ccc0e8dad729745e5a20a85f0553925e3cfaadf0ad49bf3257d9b2a",
+        "train/mixer/static_mixer.py": "6406b5b76e8255a39b501331e43d499987eb754b40f98d59274c652c5008f6b8",
+        "train/reorder/__init__.py": "73491ecc95d6ecf2f835ce71f175a53ef2e1297fa63370fbb5cc825d0b5a69c1",
+        "train/reorder/base_reorder.py": "f78c4249574be521211780b3ac5b92dad728dd36719162a40c32427cb226f74d",
+        "train/reorder/dynamic_reorder.py": "213273a6356a7f6f2dc09619a27782ace06203e07797cbe0f87f2ad1463d3e7c",
+        "train/reorder/patterns.py": "56aaef1df4b79d3793f12ca7f8790a77514dcaa75162bc2268ea4fe0126820f2",
+        "train/reorder/score_provider.py": "ccc2be4d2daa6061b5f5557e2bcca4054b86d0c0ff2dfc0460ce9769e4e6db44",
+        "train/reorder/static_reorder.py": "6ae159f284eecdf85bfe00bfb5dcf14b1dc1488121f2dc9c75c0cdf97097b5cc",
+        "train/selector/__init__.py": "b61d83ce0b3690efa088fd125e170993923603f559e0531ab5e85196824e1bd3",
+        "train/selector/adapt_inf_selector.py": "46a38bc4baed73bb32d0641a87f92a951840981fd104f438d4b16cc1b74edc3a",
+        "train/selector/base_selector.py": "9df44635823a7492162a0788682c92d49f9399aeacdf7e351fcdbc39d87270e6",
+        "train/selector/cluster_less_selector.py": "1c6514012d585713b8965e39efb77be98ec048dbed23fc930a48e5e11e319d1c",
+        "train/selector/coincide_selector.py": "fb0a658ce72093ac260e64ddb339f9d1011597ed777654bde46cc3548459ff26",
+        "train/selector/custom_selector.py": "f7c6338319306a27f49aaf66b43c611bd0a4d8988061dab90cab614976e43b61",
+        "train/selector/delta_loss_selector.py": "703946204c20495033704c69fdf62b6452e895894b01f581945fe3de3c3e891e",
+        "train/selector/icons_selector.py": "42400cec0ce71b15033a869b17b702a0c7b828f833f6577bab49a4931ae06f6f",
+        "train/selector/less_selector.py": "3271c60e7e873f1f26a7bec51b2256ad117de95aa938a1891c523dc581d5b639",
+        "train/selector/loss_selector.py": "1425c520674fbd7907caa5e7260139fc090b02b40344b53f193023820bf21cfc",
+        "train/selector/near_selector.py": "d43bcbe401f76722f929c89e6d2157f4230149ea5fe36065d10e40516746272e",
+        "train/selector/nice_selector.py": "f77d74056579fa3083cd8ae696c378e530d71b31a99e90ebf0f0639eda1c918d",
+        "train/selector/random_selector.py": "7d6e694c2e34e04972a4646cc2c218179c5e4412b2c65263f59cba6b1eb82809",
+        "train/selector/tsds_selector.py": "39798f0719048032252a70d5bed5eb3857c3aa06fab2b7494bc2ec1bbdb66fd4",
+        "train/trainer/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/trainer/lego_trainer.py": "0eb582002488cb777ae005b9c7cb50dc6c57065aa73042f853c43cad1a5ecf70",
+        "train/trainer/mix_trainer.py": "6fc10c9774af26ff11be2d88846f3acf10d8318d6973bf25a053095c9fd854b8",
+        "train/trainer/reorder_trainer.py": "b8e2288ddbc45c3e4dd7c5e0b50cbb792ad9f390f8e710c4f25a337ec9b0a832",
+        "train/trainer/select_trainer.py": "f2c78fbd01c6995ed9eb72fc66188a455ba654d46215f73c1831fc46fe488319",
+        "train/trainer/weight_trainer.py": "fb59888f85d40342e235a176c7ef52af9388cbb15b79f0a41b0d6ba7cd20f97f",
+        "train/weighter/__init__.py": "f9b0e876bc1636c7e4e69e52aa9f241087a308f930583e997804e889a7923814",
+        "train/weighter/adapt_weighter.py": "5408ec3c373dfb10a99ae38847a3b72e9811683af60161d819078e12d1caba11",
+        "train/weighter/base_weighter.py": "4fa18e66fc539591ba4c0a55dc0d49cecef6e824ddb5ce697939cbb395fd0cd6",
+        "train/weighter/custom_weighter.py": "c98c5c13c9468e3eeaaf38f1912f5303a02761cfe87162870b43353fa21a6a39",
+        "train/weighter/joint_update_aware_weighter.py": "258136381afb24710d585bbae4a86a52abd5e2921da122597c930b881b1b787a",
+        "train/weighter/loss_weighter.py": "f52fd76bf3023bb8b0a4e0a0b8d471b88a21526a77a83a686dc942153d8c4cc1",
+        "utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "utils/llava_v1d5_ckpt_merge.py": "cbf61820bae5949e6988490b1178ab533b470ed60d4fd0378b8c5b45bda00301",
+        "utils/load_component.py": "e4b764477e1686be95ccaea1f94f04376906a1b9f9e3a7effc8e22a0105e9e56",
+        "utils/logging.py": "92a3b71473062a28933df6a84fa506bc21bc1faee5d297165e486ea616ed61b6",
+        "utils/loss_utils.py": "25f244454fad6853112c2aea904224c11b3878b886074332c90f26811c535a73",
+        "utils/multimodal_scoring.py": "09149ad4bddfe1285d6199dfd92d7ae6c9f5656be9b795716b016642dd6898a3",
+        "utils/multimodal_selection.py": "09ea3e9d13addd53ee1a90f59e049c7eee71c9f6151fad59de1a8df7179b5fc2",
+        "utils/selector_io.py": "7b7d2a653e27e5a463a76e2b2668e28f4f6eb60fe2f8fa0bc38d248f7d40fce3",
+        "version.py": "44e763cd77d82aea28463d3eda5f7f5ec8b3dd83d31533b846818e354905a67c"
+      },
+      "packages": {
+        "dataflex": "1.1.0+dataflow.20261023.1",
+        "torch": "2.6.0",
+        "transformers": "5.5.4",
+        "peft": "0.18.1",
+        "accelerate": "1.11.0",
+        "bitsandbytes": "0.49.2",
+        "llamafactory": "0.9.6.dev0"
+      },
+      "source_proportions": {
+        "genia_ner": 0.21875,
+        "bioasq_factoid_qa": 0.21875,
+        "scitldr_aic": 0.28125,
+        "scicite_classification": 0.28125
+      },
+      "repetition_fraction": 0.1875,
+      "adapter_sha256": "cfd8340d028cd87e60238d44b7202a0985a2eda5114faaaa9e3122b03394db69",
+      "validation_runs": [
+        {
+          "epoch": 3.0,
+          "eval_loss": 1.1018738746643066,
+          "eval_runtime": 8.7407,
+          "eval_samples_per_second": 3.661,
+          "eval_steps_per_second": 3.661,
+          "step": 12
+        },
+        {
+          "epoch": 6.0,
+          "eval_loss": 0.9668288826942444,
+          "eval_runtime": 9.1372,
+          "eval_samples_per_second": 3.502,
+          "eval_steps_per_second": 3.502,
+          "step": 24
+        }
+      ],
+      "final_cli_validation": {
+        "epoch": 6.0,
+        "eval_loss": 0.9668288826942444,
+        "eval_runtime": 9.2475,
+        "eval_samples_per_second": 3.46,
+        "eval_steps_per_second": 3.46
+      },
+      "validation_complete_loops_including_final": 3,
+      "validation_token_budget_derived": 48249
+    },
+    "G06": {
+      "status": "MECHANISM_OBSERVED",
+      "name": "G06",
+      "optimizer_steps": 24,
+      "sample_presentations": 96,
+      "distinct_samples": 96,
+      "source_counts": {
+        "genia_ner": 18,
+        "bioasq_factoid_qa": 19,
+        "scicite_classification": 30,
+        "scitldr_aic": 29
+      },
+      "effective_tokens": 46963,
+      "supervised_tokens": 3776,
+      "length_min": 79,
+      "length_max": 1024,
+      "supervised_max": 286,
+      "strategy_boundaries": [],
+      "stage_consumption": {},
+      "weight_batches": 40,
+      "gradient_observations": 96,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 173.68426837399602,
+        "peak_allocated_gib": 16.366130352020264,
+        "peak_reserved_gib": 17.572265625,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "e382b1cc5cc33914c344124670d7642bb0ae4747a7830c35ed9ba689bc4e820d",
+        "adapter_sha256": "8edf14d111c3200956e8a960369b4ebb22830aa995088a7033da15885d7dc353",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          1.3173387050628662,
+          1.8167049884796143,
+          2.037081003189087,
+          2.701752185821533,
+          2.720767021179199,
+          2.705953598022461,
+          1.6072111129760742,
+          1.1071507930755615,
+          1.6790876388549805,
+          1.666174292564392,
+          0.7423286437988281,
+          0.5472424626350403,
+          1.0149610042572021,
+          1.5787053108215332,
+          0.3768952190876007,
+          1.0098932981491089,
+          0.9512980580329895,
+          1.1504852771759033,
+          2.2158894538879395,
+          0.8794490098953247,
+          1.0114893913269043,
+          0.44119793176651,
+          0.3612467050552368,
+          0.9146795868873596
+        ]
+      },
+      "observer_identity_rng_checks": true,
+      "reload_status": "VERIFIED_WITH_64_PREDICTIONS",
+      "source_scope": "Direct DataFlex CLI; no platform SSH acceptance",
+      "limitations": [
+        "Single run, 24 updates maximum, engineering evidence only",
+        "Original document IDs unavailable in released SciRIFF export; different-context paper overlap unresolved"
+      ],
+      "paired_control": {
+        "initial_adapter_tensor_sha256": "3bf6a156850eca6cc0a5a0f914ed9eae38002687fc94f6ec585a1dbcd321820f",
+        "snapshot_sha256": "c56d3f34fbb0d1b4001c77fa2eba35eb5ad4f88e91a2e94c5db38e34ba30809a",
+        "micro_rng_seed_base": 420000,
+        "lora_dropout": 0.05,
+        "protocol": "Shared exact LoRA initialization and explicit per-microbatch CPU/CUDA seed control; not a passive observer operation"
+      },
+      "scoring_seconds": 0,
+      "observation_sha256": {
+        "backward-input.jsonl": "1f5a44f34f8af96f1f1e40d7f9b58c4f9fa20be76709a396c7d9b73f4c59f4c2",
+        "weights.jsonl": "a5e41eb1c0636f112e148e7e831bdf5a349a885d7d5c027e0c8299bdbfbb9630",
+        "events.jsonl": "7d627fb6ba8f6e72e202067847a4df89e29269920bde2f6d9901ad8e0dbc6c93",
+        "paired-rng.jsonl": "20cc4e09cb3e321988fa9fd5ce14735aa75ad8c3cf15bc48fd553ef5c9cfea16",
+        "backward.jsonl": "5f3d4a5f22ed2f97b6e6166c497fc604507002718c3bb6e3bfce2eaac87b2317",
+        "weight-gradient.jsonl": "8cce67da68b82248621c40ef9450d37e2fd5d91078b47cb233d87636ce799378",
+        "gradient.jsonl": "7bf1d7eaf35957f18fa39eff3e35ba2099a4b42ac06fc05cda0dc8d02fecb46d",
+        "consumption.jsonl": "26b0ca22aa9c2dc0112a4e32f7992018eca075edf7e740d73dc3405594b41602",
+        "loss.jsonl": "6adda0df68150793e4e0786b50f41e3e95d5698a2543da91619dd1edbc12549b"
+      },
+      "attempt": "attempt4",
+      "observer_sha256": "aefc5971167360a77a9522ebd445dfd7eb81585f9945933f96dd1cd946355227",
+      "source_files_sha256": {
+        "__init__.py": "c3b103e7730b4cfcff6b6a3dfe802dfb1fcd89b1ff542cdf2496d4bd415ce27e",
+        "cli.py": "8bb0500d967c1ef72bb884c1a940f668e8e01fc0fe737422e5235f568c522fdf",
+        "configs/components.yaml": "af70d83669b88cd9737207ec1e02f3d7d64fc5f2ae354147b2fdffe6cdf00b93",
+        "core/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "core/registry.py": "c6e841aff445d6df84c8b394b0b52f26837a83096d0d7e8a305d075ace4ab3e8",
+        "launcher.py": "a3abf5fa39984196a93c6af18fef7dbc4e4cbac6aa31dff11aa9443bcd50117a",
+        "offline_selector/offline_near_selector.py": "4fe4437c8c29130a33bd5ae88d47cf13007dbcfd3af8b40892822e6317afd532",
+        "offline_selector/offline_presel_selector.py": "be28b784c5c8193c01b383f3296128f0b0adffd012e94de6eb8eaee8b4949cf4",
+        "offline_selector/offline_tsds_selector.py": "d6798d0701fd5562c844c00cdf6930592cb39012f451bfd3ec46ee31df4eafff",
+        "offline_selector/record_presel_pipeline.py": "0016605e7d5200ccb0a3fe1134af010669ee3d6599ab20c0ac15f5521478a36a",
+        "offline_selector/record_presel_selector.py": "dc8196a04ac1e1421ccdc8b90c9bcc3b01f1fcf88f0ad9d6d19b39dba175de94",
+        "train/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/data/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/data/loader.py": "420467600d21a6c3c37fd74234f42bc46e1d29800190266455114306513042f4",
+        "train/dataset/__init__.py": "f752d68e7a23c3c126b94bc91338b1b40b1d265965f81308c47ec2c93ae2092a",
+        "train/dataset/mixed_proportion_manager.py": "ce0aba1948d048101f0a1c576669574ba05f2e66c7783adbc9491140bba6d1ce",
+        "train/hooks.py": "0b967ab8037c6d7f5fd86cd28087facbb4e0442695631eb2a2827c7bd4149fce",
+        "train/hparams/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/hparams/dynamic_data_params.py": "acadb2ec2b529434a6ad066268fadc188352d955c86178be641759fd2dbef8f2",
+        "train/hparams/dynamic_params.py": "8137058e11a95daed0639b4535a97bb07b6a8aa5837ee742416003153dc651c6",
+        "train/lego/__init__.py": "454934739054eb3488db488b8c241859505262242b3644387a5189c9cf881194",
+        "train/lego/context.py": "1f156a4d7ac3e371ad833a27a10b6adb8a628d8e8120370778652399071fce0e",
+        "train/lego/domain_view.py": "f82264b73e0a230f95c2284dcd871fd4df5d18f4f3f428a075573661db74334c",
+        "train/lego/pipeline.py": "2dd996fad1fa6d6b2712507377836f9b3e686aa58c2bf9bd39d708acf1792a9a",
+        "train/lego/plan.py": "25f6fc3d762e03f2d12058a875c66d2b60df24bd23d84e11f1f83134cd974849",
+        "train/lego/scoreboard.py": "9de6d41d91e355c14368deeaef87387d8dd4da31d11a0f8375674ff2c1fc65e8",
+        "train/lego/stages.py": "e87edbd37b3f07c76b34d5ca4b35a5f71369dc01834879ad1ac93624116d6b0a",
+        "train/mixer/__init__.py": "2da764ddb88a85ce9fa4761f6918c77f92f3cf8a26cfcc21606d4de6281f62c4",
+        "train/mixer/base_mixer.py": "b48851df3fc31c8e6b31c28c99cc03b255e5842f591fa171de08b0b7289425bd",
+        "train/mixer/doremi_mixer.py": "22a95013da8a2b415b68872c39fdc3b044041ff57ff9c925dbdd03565856d845",
+        "train/mixer/dynamic_moe_mixer.py": "0f48b0b6f248a7d868b772260b42d9e10203cac6963ebd478c7d1773aa5bda5a",
+        "train/mixer/odm_mixer.py": "9b58a14251eb2a42a1bf7c467063bf76a1c70392cac1f96e8ecbf8c24f0e5170",
+        "train/mixer/random_mixer.py": "7280c9b42ccc0e8dad729745e5a20a85f0553925e3cfaadf0ad49bf3257d9b2a",
+        "train/mixer/static_mixer.py": "6406b5b76e8255a39b501331e43d499987eb754b40f98d59274c652c5008f6b8",
+        "train/reorder/__init__.py": "73491ecc95d6ecf2f835ce71f175a53ef2e1297fa63370fbb5cc825d0b5a69c1",
+        "train/reorder/base_reorder.py": "f78c4249574be521211780b3ac5b92dad728dd36719162a40c32427cb226f74d",
+        "train/reorder/dynamic_reorder.py": "213273a6356a7f6f2dc09619a27782ace06203e07797cbe0f87f2ad1463d3e7c",
+        "train/reorder/patterns.py": "56aaef1df4b79d3793f12ca7f8790a77514dcaa75162bc2268ea4fe0126820f2",
+        "train/reorder/score_provider.py": "ccc2be4d2daa6061b5f5557e2bcca4054b86d0c0ff2dfc0460ce9769e4e6db44",
+        "train/reorder/static_reorder.py": "6ae159f284eecdf85bfe00bfb5dcf14b1dc1488121f2dc9c75c0cdf97097b5cc",
+        "train/selector/__init__.py": "b61d83ce0b3690efa088fd125e170993923603f559e0531ab5e85196824e1bd3",
+        "train/selector/adapt_inf_selector.py": "46a38bc4baed73bb32d0641a87f92a951840981fd104f438d4b16cc1b74edc3a",
+        "train/selector/base_selector.py": "9df44635823a7492162a0788682c92d49f9399aeacdf7e351fcdbc39d87270e6",
+        "train/selector/cluster_less_selector.py": "1c6514012d585713b8965e39efb77be98ec048dbed23fc930a48e5e11e319d1c",
+        "train/selector/coincide_selector.py": "fb0a658ce72093ac260e64ddb339f9d1011597ed777654bde46cc3548459ff26",
+        "train/selector/custom_selector.py": "f7c6338319306a27f49aaf66b43c611bd0a4d8988061dab90cab614976e43b61",
+        "train/selector/delta_loss_selector.py": "703946204c20495033704c69fdf62b6452e895894b01f581945fe3de3c3e891e",
+        "train/selector/icons_selector.py": "42400cec0ce71b15033a869b17b702a0c7b828f833f6577bab49a4931ae06f6f",
+        "train/selector/less_selector.py": "3271c60e7e873f1f26a7bec51b2256ad117de95aa938a1891c523dc581d5b639",
+        "train/selector/loss_selector.py": "1425c520674fbd7907caa5e7260139fc090b02b40344b53f193023820bf21cfc",
+        "train/selector/near_selector.py": "d43bcbe401f76722f929c89e6d2157f4230149ea5fe36065d10e40516746272e",
+        "train/selector/nice_selector.py": "f77d74056579fa3083cd8ae696c378e530d71b31a99e90ebf0f0639eda1c918d",
+        "train/selector/random_selector.py": "7d6e694c2e34e04972a4646cc2c218179c5e4412b2c65263f59cba6b1eb82809",
+        "train/selector/tsds_selector.py": "39798f0719048032252a70d5bed5eb3857c3aa06fab2b7494bc2ec1bbdb66fd4",
+        "train/trainer/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/trainer/lego_trainer.py": "0eb582002488cb777ae005b9c7cb50dc6c57065aa73042f853c43cad1a5ecf70",
+        "train/trainer/mix_trainer.py": "6fc10c9774af26ff11be2d88846f3acf10d8318d6973bf25a053095c9fd854b8",
+        "train/trainer/reorder_trainer.py": "b8e2288ddbc45c3e4dd7c5e0b50cbb792ad9f390f8e710c4f25a337ec9b0a832",
+        "train/trainer/select_trainer.py": "f2c78fbd01c6995ed9eb72fc66188a455ba654d46215f73c1831fc46fe488319",
+        "train/trainer/weight_trainer.py": "fb59888f85d40342e235a176c7ef52af9388cbb15b79f0a41b0d6ba7cd20f97f",
+        "train/weighter/__init__.py": "f9b0e876bc1636c7e4e69e52aa9f241087a308f930583e997804e889a7923814",
+        "train/weighter/adapt_weighter.py": "5408ec3c373dfb10a99ae38847a3b72e9811683af60161d819078e12d1caba11",
+        "train/weighter/base_weighter.py": "4fa18e66fc539591ba4c0a55dc0d49cecef6e824ddb5ce697939cbb395fd0cd6",
+        "train/weighter/custom_weighter.py": "c98c5c13c9468e3eeaaf38f1912f5303a02761cfe87162870b43353fa21a6a39",
+        "train/weighter/joint_update_aware_weighter.py": "258136381afb24710d585bbae4a86a52abd5e2921da122597c930b881b1b787a",
+        "train/weighter/loss_weighter.py": "f52fd76bf3023bb8b0a4e0a0b8d471b88a21526a77a83a686dc942153d8c4cc1",
+        "utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "utils/llava_v1d5_ckpt_merge.py": "cbf61820bae5949e6988490b1178ab533b470ed60d4fd0378b8c5b45bda00301",
+        "utils/load_component.py": "e4b764477e1686be95ccaea1f94f04376906a1b9f9e3a7effc8e22a0105e9e56",
+        "utils/logging.py": "92a3b71473062a28933df6a84fa506bc21bc1faee5d297165e486ea616ed61b6",
+        "utils/loss_utils.py": "25f244454fad6853112c2aea904224c11b3878b886074332c90f26811c535a73",
+        "utils/multimodal_scoring.py": "09149ad4bddfe1285d6199dfd92d7ae6c9f5656be9b795716b016642dd6898a3",
+        "utils/multimodal_selection.py": "09ea3e9d13addd53ee1a90f59e049c7eee71c9f6151fad59de1a8df7179b5fc2",
+        "utils/selector_io.py": "7b7d2a653e27e5a463a76e2b2668e28f4f6eb60fe2f8fa0bc38d248f7d40fce3",
+        "version.py": "44e763cd77d82aea28463d3eda5f7f5ec8b3dd83d31533b846818e354905a67c"
+      },
+      "packages": {
+        "dataflex": "1.1.0+dataflow.20261023.1",
+        "torch": "2.6.0",
+        "transformers": "5.5.4",
+        "peft": "0.18.1",
+        "accelerate": "1.11.0",
+        "bitsandbytes": "0.49.2",
+        "llamafactory": "0.9.6.dev0"
+      },
+      "source_proportions": {
+        "genia_ner": 0.1875,
+        "bioasq_factoid_qa": 0.19791666666666666,
+        "scicite_classification": 0.3125,
+        "scitldr_aic": 0.3020833333333333
+      },
+      "repetition_fraction": 0.0,
+      "adapter_sha256": "8edf14d111c3200956e8a960369b4ebb22830aa995088a7033da15885d7dc353",
+      "validation_runs": [
+        {
+          "epoch": 0.1875,
+          "eval_loss": 1.1060538291931152,
+          "eval_runtime": 10.0032,
+          "eval_samples_per_second": 3.199,
+          "eval_steps_per_second": 3.199,
+          "step": 12
+        },
+        {
+          "epoch": 0.375,
+          "eval_loss": 0.9300726652145386,
+          "eval_runtime": 9.391,
+          "eval_samples_per_second": 3.408,
+          "eval_steps_per_second": 3.408,
+          "step": 24
+        }
+      ],
+      "final_cli_validation": {
+        "epoch": 0.375,
+        "eval_loss": 0.9300726652145386,
+        "eval_runtime": 9.5568,
+        "eval_samples_per_second": 3.348,
+        "eval_steps_per_second": 3.348
+      },
+      "validation_complete_loops_including_final": 3,
+      "validation_token_budget_derived": 48249
+    },
+    "G07": {
+      "status": "MECHANISM_OBSERVED",
+      "name": "G07",
+      "optimizer_steps": 24,
+      "sample_presentations": 96,
+      "distinct_samples": 96,
+      "source_counts": {
+        "genia_ner": 18,
+        "bioasq_factoid_qa": 19,
+        "scicite_classification": 30,
+        "scitldr_aic": 29
+      },
+      "effective_tokens": 46963,
+      "supervised_tokens": 3776,
+      "length_min": 79,
+      "length_max": 1024,
+      "supervised_max": 286,
+      "strategy_boundaries": [],
+      "stage_consumption": {},
+      "weight_batches": 40,
+      "gradient_observations": 96,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 178.04525018297136,
+        "peak_allocated_gib": 16.366130352020264,
+        "peak_reserved_gib": 17.572265625,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "4b021d625d73948bc65b6261d7f278226948c6511d8f7436a66b90e5194d7ffa",
+        "adapter_sha256": "e151446a169b72f6fd6bada27886c60fceabce0cead69ac7697234a7044fdca5",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          1.3173387050628662,
+          1.8096349239349365,
+          2.034557580947876,
+          2.7108564376831055,
+          3.262876033782959,
+          2.9524612426757812,
+          1.9304248094558716,
+          1.2096693515777588,
+          1.972048044204712,
+          2.031561851501465,
+          0.9450523853302002,
+          0.5829588770866394,
+          1.416884422302246,
+          1.8432698249816895,
+          0.5120151042938232,
+          1.3484349250793457,
+          1.2042646408081055,
+          1.2258176803588867,
+          2.790299892425537,
+          1.1537326574325562,
+          1.4478360414505005,
+          0.6354670524597168,
+          0.4986007809638977,
+          1.1156752109527588
+        ]
+      },
+      "observer_identity_rng_checks": true,
+      "reload_status": "VERIFIED_WITH_64_PREDICTIONS",
+      "source_scope": "Direct DataFlex CLI; no platform SSH acceptance",
+      "limitations": [
+        "Single run, 24 updates maximum, engineering evidence only",
+        "Original document IDs unavailable in released SciRIFF export; different-context paper overlap unresolved"
+      ],
+      "paired_control": {
+        "initial_adapter_tensor_sha256": "3bf6a156850eca6cc0a5a0f914ed9eae38002687fc94f6ec585a1dbcd321820f",
+        "snapshot_sha256": "c56d3f34fbb0d1b4001c77fa2eba35eb5ad4f88e91a2e94c5db38e34ba30809a",
+        "micro_rng_seed_base": 420000,
+        "lora_dropout": 0.05,
+        "protocol": "Shared exact LoRA initialization and explicit per-microbatch CPU/CUDA seed control; not a passive observer operation",
+        "trajectory_status": "INCONCLUSIVE_WARMUP_MISMATCH",
+        "same_forward_diagnostic": {
+          "status": "SAME_FORWARD_WEIGHT_GRADIENT_VERIFIED",
+          "optimizer_updates": 0,
+          "sample_ids": [
+            "scicite_classification:train:5456",
+            "bioasq_factoid_qa:train:1257"
+          ],
+          "micro": 9,
+          "forward_samples": 2,
+          "model_forward_calls": 1,
+          "effective_tokens": 339,
+          "losses": [
+            3.8045294284820557,
+            5.737917900085449
+          ],
+          "gradient_accumulation": 2,
+          "uniform_coefficients": [
+            0.25,
+            0.25
+          ],
+          "linupper_coefficients": [
+            0.13447071611881256,
+            0.36552926898002625
+          ],
+          "gradient_comparisons": {
+            "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_A.default.weight": {
+              "uniform_norm": 0.0,
+              "linupper_norm": 0.0,
+              "repeat_difference_l2": 0.0,
+              "weight_difference_l2": 0.0,
+              "weight_relative_l2": 0.0
+            },
+            "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_B.default.weight": {
+              "uniform_norm": 7.456930160522461,
+              "linupper_norm": 5.207355499267578,
+              "repeat_difference_l2": 0.0,
+              "weight_difference_l2": 3.2621235847473145,
+              "weight_relative_l2": 0.4374620020389557
+            }
+          },
+          "uniform_repeat_atol": 0.0001,
+          "uniform_repeat_rtol": 0.02,
+          "minimum_weight_relative_l2": 0.02,
+          "initial_snapshot_sha256": "c56d3f34fbb0d1b4001c77fa2eba35eb5ad4f88e91a2e94c5db38e34ba30809a",
+          "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+          "script_sha256": "fa704778419d723027a8d7a2f6fde05c5066460c1938f8ef996dcc2677348de2",
+          "seconds": 128.5963115079794,
+          "peak_allocated_gib": 13.03609323501587,
+          "peak_reserved_gib": 15.302734375,
+          "scope": "Same initial adapter and single actual Qwen loss graph; separate training warmup mismatch remains unresolved"
+        },
+        "cross_run_gradient_attribution": "INCONCLUSIVE; do not attribute separate trajectory differences solely to weights",
+        "warmup_max_gradient_norm_relative_difference": 0.6509601288628571,
+        "first_weighted_gradient_norms": {
+          "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_B.default.weight": {
+            "uniform": 5.966691017150879,
+            "linupper": 4.841522693634033
+          },
+          "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_A.default.weight": {
+            "uniform": 0.9020251035690308,
+            "linupper": 0.716361939907074
+          }
+        }
+      },
+      "scoring_seconds": 0,
+      "observation_sha256": {
+        "backward-input.jsonl": "f98e32c8384ed382ad712e7a14f354e9c31ae7f83dbe423bc856770d6dfb0b3b",
+        "weights.jsonl": "eb457763a3425cd58bc560bb05ba60397be1e44df82bc1b45e89f199b15326c2",
+        "events.jsonl": "152b60de357e61ccb05057a6debf0292e1b7b745e98b1ff86347029de531fc8b",
+        "paired-rng.jsonl": "20cc4e09cb3e321988fa9fd5ce14735aa75ad8c3cf15bc48fd553ef5c9cfea16",
+        "backward.jsonl": "cfc14fbad38c2be4d2ef8750d95626dc3a09cda39a4f268bafcf31722fb1a90f",
+        "weight-gradient.jsonl": "2bcf3b7d5e453036bc422b5f9dbd5054175596ecb9d4a1a657653048dae072db",
+        "gradient.jsonl": "b4e49c96ad99a5ce27d9d1131a0950e8c8aad9e097385ad2d60f13dc94a7d469",
+        "consumption.jsonl": "26b0ca22aa9c2dc0112a4e32f7992018eca075edf7e740d73dc3405594b41602",
+        "loss.jsonl": "3e293fed3ae4afbe8ad4f0a4326fe38ccbf0b8d384bb8f3b15a966e44fdd366e"
+      },
+      "attempt": "attempt2",
+      "observer_sha256": "aefc5971167360a77a9522ebd445dfd7eb81585f9945933f96dd1cd946355227",
+      "source_files_sha256": {
+        "__init__.py": "c3b103e7730b4cfcff6b6a3dfe802dfb1fcd89b1ff542cdf2496d4bd415ce27e",
+        "cli.py": "8bb0500d967c1ef72bb884c1a940f668e8e01fc0fe737422e5235f568c522fdf",
+        "configs/components.yaml": "af70d83669b88cd9737207ec1e02f3d7d64fc5f2ae354147b2fdffe6cdf00b93",
+        "core/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "core/registry.py": "c6e841aff445d6df84c8b394b0b52f26837a83096d0d7e8a305d075ace4ab3e8",
+        "launcher.py": "a3abf5fa39984196a93c6af18fef7dbc4e4cbac6aa31dff11aa9443bcd50117a",
+        "offline_selector/offline_near_selector.py": "4fe4437c8c29130a33bd5ae88d47cf13007dbcfd3af8b40892822e6317afd532",
+        "offline_selector/offline_presel_selector.py": "be28b784c5c8193c01b383f3296128f0b0adffd012e94de6eb8eaee8b4949cf4",
+        "offline_selector/offline_tsds_selector.py": "d6798d0701fd5562c844c00cdf6930592cb39012f451bfd3ec46ee31df4eafff",
+        "offline_selector/record_presel_pipeline.py": "0016605e7d5200ccb0a3fe1134af010669ee3d6599ab20c0ac15f5521478a36a",
+        "offline_selector/record_presel_selector.py": "dc8196a04ac1e1421ccdc8b90c9bcc3b01f1fcf88f0ad9d6d19b39dba175de94",
+        "train/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/data/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/data/loader.py": "420467600d21a6c3c37fd74234f42bc46e1d29800190266455114306513042f4",
+        "train/dataset/__init__.py": "f752d68e7a23c3c126b94bc91338b1b40b1d265965f81308c47ec2c93ae2092a",
+        "train/dataset/mixed_proportion_manager.py": "ce0aba1948d048101f0a1c576669574ba05f2e66c7783adbc9491140bba6d1ce",
+        "train/hooks.py": "0b967ab8037c6d7f5fd86cd28087facbb4e0442695631eb2a2827c7bd4149fce",
+        "train/hparams/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/hparams/dynamic_data_params.py": "acadb2ec2b529434a6ad066268fadc188352d955c86178be641759fd2dbef8f2",
+        "train/hparams/dynamic_params.py": "8137058e11a95daed0639b4535a97bb07b6a8aa5837ee742416003153dc651c6",
+        "train/lego/__init__.py": "454934739054eb3488db488b8c241859505262242b3644387a5189c9cf881194",
+        "train/lego/context.py": "1f156a4d7ac3e371ad833a27a10b6adb8a628d8e8120370778652399071fce0e",
+        "train/lego/domain_view.py": "f82264b73e0a230f95c2284dcd871fd4df5d18f4f3f428a075573661db74334c",
+        "train/lego/pipeline.py": "2dd996fad1fa6d6b2712507377836f9b3e686aa58c2bf9bd39d708acf1792a9a",
+        "train/lego/plan.py": "25f6fc3d762e03f2d12058a875c66d2b60df24bd23d84e11f1f83134cd974849",
+        "train/lego/scoreboard.py": "9de6d41d91e355c14368deeaef87387d8dd4da31d11a0f8375674ff2c1fc65e8",
+        "train/lego/stages.py": "e87edbd37b3f07c76b34d5ca4b35a5f71369dc01834879ad1ac93624116d6b0a",
+        "train/mixer/__init__.py": "2da764ddb88a85ce9fa4761f6918c77f92f3cf8a26cfcc21606d4de6281f62c4",
+        "train/mixer/base_mixer.py": "b48851df3fc31c8e6b31c28c99cc03b255e5842f591fa171de08b0b7289425bd",
+        "train/mixer/doremi_mixer.py": "22a95013da8a2b415b68872c39fdc3b044041ff57ff9c925dbdd03565856d845",
+        "train/mixer/dynamic_moe_mixer.py": "0f48b0b6f248a7d868b772260b42d9e10203cac6963ebd478c7d1773aa5bda5a",
+        "train/mixer/odm_mixer.py": "9b58a14251eb2a42a1bf7c467063bf76a1c70392cac1f96e8ecbf8c24f0e5170",
+        "train/mixer/random_mixer.py": "7280c9b42ccc0e8dad729745e5a20a85f0553925e3cfaadf0ad49bf3257d9b2a",
+        "train/mixer/static_mixer.py": "6406b5b76e8255a39b501331e43d499987eb754b40f98d59274c652c5008f6b8",
+        "train/reorder/__init__.py": "73491ecc95d6ecf2f835ce71f175a53ef2e1297fa63370fbb5cc825d0b5a69c1",
+        "train/reorder/base_reorder.py": "f78c4249574be521211780b3ac5b92dad728dd36719162a40c32427cb226f74d",
+        "train/reorder/dynamic_reorder.py": "213273a6356a7f6f2dc09619a27782ace06203e07797cbe0f87f2ad1463d3e7c",
+        "train/reorder/patterns.py": "56aaef1df4b79d3793f12ca7f8790a77514dcaa75162bc2268ea4fe0126820f2",
+        "train/reorder/score_provider.py": "ccc2be4d2daa6061b5f5557e2bcca4054b86d0c0ff2dfc0460ce9769e4e6db44",
+        "train/reorder/static_reorder.py": "6ae159f284eecdf85bfe00bfb5dcf14b1dc1488121f2dc9c75c0cdf97097b5cc",
+        "train/selector/__init__.py": "b61d83ce0b3690efa088fd125e170993923603f559e0531ab5e85196824e1bd3",
+        "train/selector/adapt_inf_selector.py": "46a38bc4baed73bb32d0641a87f92a951840981fd104f438d4b16cc1b74edc3a",
+        "train/selector/base_selector.py": "9df44635823a7492162a0788682c92d49f9399aeacdf7e351fcdbc39d87270e6",
+        "train/selector/cluster_less_selector.py": "1c6514012d585713b8965e39efb77be98ec048dbed23fc930a48e5e11e319d1c",
+        "train/selector/coincide_selector.py": "fb0a658ce72093ac260e64ddb339f9d1011597ed777654bde46cc3548459ff26",
+        "train/selector/custom_selector.py": "f7c6338319306a27f49aaf66b43c611bd0a4d8988061dab90cab614976e43b61",
+        "train/selector/delta_loss_selector.py": "703946204c20495033704c69fdf62b6452e895894b01f581945fe3de3c3e891e",
+        "train/selector/icons_selector.py": "42400cec0ce71b15033a869b17b702a0c7b828f833f6577bab49a4931ae06f6f",
+        "train/selector/less_selector.py": "3271c60e7e873f1f26a7bec51b2256ad117de95aa938a1891c523dc581d5b639",
+        "train/selector/loss_selector.py": "1425c520674fbd7907caa5e7260139fc090b02b40344b53f193023820bf21cfc",
+        "train/selector/near_selector.py": "d43bcbe401f76722f929c89e6d2157f4230149ea5fe36065d10e40516746272e",
+        "train/selector/nice_selector.py": "f77d74056579fa3083cd8ae696c378e530d71b31a99e90ebf0f0639eda1c918d",
+        "train/selector/random_selector.py": "7d6e694c2e34e04972a4646cc2c218179c5e4412b2c65263f59cba6b1eb82809",
+        "train/selector/tsds_selector.py": "39798f0719048032252a70d5bed5eb3857c3aa06fab2b7494bc2ec1bbdb66fd4",
+        "train/trainer/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "train/trainer/lego_trainer.py": "0eb582002488cb777ae005b9c7cb50dc6c57065aa73042f853c43cad1a5ecf70",
+        "train/trainer/mix_trainer.py": "6fc10c9774af26ff11be2d88846f3acf10d8318d6973bf25a053095c9fd854b8",
+        "train/trainer/reorder_trainer.py": "b8e2288ddbc45c3e4dd7c5e0b50cbb792ad9f390f8e710c4f25a337ec9b0a832",
+        "train/trainer/select_trainer.py": "f2c78fbd01c6995ed9eb72fc66188a455ba654d46215f73c1831fc46fe488319",
+        "train/trainer/weight_trainer.py": "fb59888f85d40342e235a176c7ef52af9388cbb15b79f0a41b0d6ba7cd20f97f",
+        "train/weighter/__init__.py": "f9b0e876bc1636c7e4e69e52aa9f241087a308f930583e997804e889a7923814",
+        "train/weighter/adapt_weighter.py": "5408ec3c373dfb10a99ae38847a3b72e9811683af60161d819078e12d1caba11",
+        "train/weighter/base_weighter.py": "4fa18e66fc539591ba4c0a55dc0d49cecef6e824ddb5ce697939cbb395fd0cd6",
+        "train/weighter/custom_weighter.py": "c98c5c13c9468e3eeaaf38f1912f5303a02761cfe87162870b43353fa21a6a39",
+        "train/weighter/joint_update_aware_weighter.py": "258136381afb24710d585bbae4a86a52abd5e2921da122597c930b881b1b787a",
+        "train/weighter/loss_weighter.py": "f52fd76bf3023bb8b0a4e0a0b8d471b88a21526a77a83a686dc942153d8c4cc1",
+        "utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "utils/llava_v1d5_ckpt_merge.py": "cbf61820bae5949e6988490b1178ab533b470ed60d4fd0378b8c5b45bda00301",
+        "utils/load_component.py": "e4b764477e1686be95ccaea1f94f04376906a1b9f9e3a7effc8e22a0105e9e56",
+        "utils/logging.py": "92a3b71473062a28933df6a84fa506bc21bc1faee5d297165e486ea616ed61b6",
+        "utils/loss_utils.py": "25f244454fad6853112c2aea904224c11b3878b886074332c90f26811c535a73",
+        "utils/multimodal_scoring.py": "09149ad4bddfe1285d6199dfd92d7ae6c9f5656be9b795716b016642dd6898a3",
+        "utils/multimodal_selection.py": "09ea3e9d13addd53ee1a90f59e049c7eee71c9f6151fad59de1a8df7179b5fc2",
+        "utils/selector_io.py": "7b7d2a653e27e5a463a76e2b2668e28f4f6eb60fe2f8fa0bc38d248f7d40fce3",
+        "version.py": "44e763cd77d82aea28463d3eda5f7f5ec8b3dd83d31533b846818e354905a67c"
+      },
+      "packages": {
+        "dataflex": "1.1.0+dataflow.20261023.1",
+        "torch": "2.6.0",
+        "transformers": "5.5.4",
+        "peft": "0.18.1",
+        "accelerate": "1.11.0",
+        "bitsandbytes": "0.49.2",
+        "llamafactory": "0.9.6.dev0"
+      },
+      "source_proportions": {
+        "genia_ner": 0.1875,
+        "bioasq_factoid_qa": 0.19791666666666666,
+        "scicite_classification": 0.3125,
+        "scitldr_aic": 0.3020833333333333
+      },
+      "repetition_fraction": 0.0,
+      "adapter_sha256": "e151446a169b72f6fd6bada27886c60fceabce0cead69ac7697234a7044fdca5",
+      "validation_runs": [
+        {
+          "epoch": 0.1875,
+          "eval_loss": 1.105883240699768,
+          "eval_runtime": 9.9909,
+          "eval_samples_per_second": 3.203,
+          "eval_steps_per_second": 3.203,
+          "step": 12
+        },
+        {
+          "epoch": 0.375,
+          "eval_loss": 0.9239385724067688,
+          "eval_runtime": 9.8331,
+          "eval_samples_per_second": 3.254,
+          "eval_steps_per_second": 3.254,
+          "step": 24
+        }
+      ],
+      "final_cli_validation": {
+        "epoch": 0.375,
+        "eval_loss": 0.9239385724067688,
+        "eval_runtime": 9.8376,
+        "eval_samples_per_second": 3.253,
+        "eval_steps_per_second": 3.253
+      },
+      "validation_complete_loops_including_final": 3,
+      "validation_token_budget_derived": 48249
+    }
+  },
+  "evaluations": {
+    "BASE": {
+      "model": "BASE",
+      "adapter_reloaded": false,
+      "adapter_sha256": null,
+      "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+      "n": 64,
+      "total_seconds": 179.00940048904158,
+      "generation_seconds": 166.47022916004062,
+      "peak_allocated_gib": 7.629862308502197,
+      "peak_reserved_gib": 7.7109375,
+      "prediction_sha256": "53185c0334bc533bea3da586a021ed42795932344413d671be93e2d4287889b0",
+      "evaluation_script_sha256": "457ed4f40004b7ec6743a9e457d05f3230c065548f8508be92d893f4b844dae2",
+      "model_config_sha256": "d0883072e01861ed0b2d47be3c16c36a8e81c224c7ffaa310c6558fb3f932b05",
+      "eos_token_id": 248046,
+      "pad_token_id": 248044,
+      "empty_outputs": 0,
+      "reasoning_tag_outputs": 0,
+      "generation": {
+        "prompt_method": "hf_native_chat_template_enable_thinking_false",
+        "do_sample": false,
+        "max_new_tokens": 256,
+        "template": "qwen3_5_nothink",
+        "enable_thinking": false
+      },
+      "metrics": {
+        "bioasq_factoid_qa": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "em": 0.25,
+          "token_f1": 0.5826392810088462,
+          "reference_scope": "Single SciRIFF released answer; no hidden alternatives"
+        },
+        "genia_ner": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 2,
+          "entity_exact_macro_sample_f1": 0.3801078262015762,
+          "successful_parse_subset_entity_micro_f1": 0.35555555555555557,
+          "entity_exact_micro_f1": 0.29708222811671087,
+          "tp": 56,
+          "fp": 73,
+          "fn": 192,
+          "json_success": 0.875,
+          "per_type": {
+            "Protein": {
+              "tp": 23,
+              "fp": 29,
+              "fn": 83,
+              "f1": 0.2911392405063291
+            },
+            "CellType": {
+              "tp": 18,
+              "fp": 17,
+              "fn": 23,
+              "f1": 0.47368421052631576
+            },
+            "CellLine": {
+              "tp": 1,
+              "fp": 8,
+              "fn": 9,
+              "f1": 0.10526315789473684
+            },
+            "RNA": {
+              "tp": 2,
+              "fp": 4,
+              "fn": 1,
+              "f1": 0.4444444444444444
+            },
+            "DNA": {
+              "tp": 12,
+              "fp": 15,
+              "fn": 76,
+              "f1": 0.20869565217391303
+            }
+          }
+        },
+        "scicite_classification": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "accuracy": 0.75,
+          "macro_f1": 0.7727272727272728,
+          "labels": [
+            "background",
+            "method",
+            "result"
+          ],
+          "invalid_labels": 0
+        },
+        "scitldr_aic": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "rouge_l_f1": 0.22209625317177917,
+          "rouge_tokenizer": "lowercase Unicode word/punctuation regex, no stemming; LCS token F1"
+        }
+      },
+      "prompt_tokens": 29533,
+      "generated_tokens": 3237,
+      "cap_hits": 2
+    },
+    "G00": {
+      "model": "G00",
+      "adapter_reloaded": true,
+      "adapter_sha256": "7255a27735a7321257268147810c268e5a65a99ec58f34eb45eaef2fd0f74b97",
+      "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+      "n": 64,
+      "total_seconds": 198.15075022284873,
+      "generation_seconds": 184.56746310391463,
+      "peak_allocated_gib": 7.791086673736572,
+      "peak_reserved_gib": 7.974609375,
+      "prediction_sha256": "c3d8ea71e386ac96fe0eae27fccedc7f896f7590c56f5c92e4cd0c1c37894418",
+      "evaluation_script_sha256": "457ed4f40004b7ec6743a9e457d05f3230c065548f8508be92d893f4b844dae2",
+      "model_config_sha256": "d0883072e01861ed0b2d47be3c16c36a8e81c224c7ffaa310c6558fb3f932b05",
+      "eos_token_id": 248046,
+      "pad_token_id": 248044,
+      "empty_outputs": 0,
+      "reasoning_tag_outputs": 0,
+      "generation": {
+        "prompt_method": "hf_native_chat_template_enable_thinking_false",
+        "do_sample": false,
+        "max_new_tokens": 256,
+        "template": "qwen3_5_nothink",
+        "enable_thinking": false
+      },
+      "metrics": {
+        "bioasq_factoid_qa": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "em": 0.375,
+          "token_f1": 0.5601190476190476,
+          "reference_scope": "Single SciRIFF released answer; no hidden alternatives"
+        },
+        "genia_ner": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "entity_exact_macro_sample_f1": 0.3375225729718455,
+          "successful_parse_subset_entity_micro_f1": 0.2796208530805687,
+          "entity_exact_micro_f1": 0.2796208530805687,
+          "tp": 59,
+          "fp": 115,
+          "fn": 189,
+          "json_success": 1.0,
+          "per_type": {
+            "CellType": {
+              "tp": 20,
+              "fp": 30,
+              "fn": 21,
+              "f1": 0.43956043956043955
+            },
+            "Protein": {
+              "tp": 21,
+              "fp": 42,
+              "fn": 85,
+              "f1": 0.2485207100591716
+            },
+            "CellLine": {
+              "tp": 2,
+              "fp": 13,
+              "fn": 8,
+              "f1": 0.16
+            },
+            "RNA": {
+              "tp": 1,
+              "fp": 5,
+              "fn": 2,
+              "f1": 0.2222222222222222
+            },
+            "DNA": {
+              "tp": 15,
+              "fp": 25,
+              "fn": 73,
+              "f1": 0.234375
+            }
+          }
+        },
+        "scicite_classification": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "accuracy": 0.8125,
+          "macro_f1": 0.7600000000000001,
+          "labels": [
+            "background",
+            "method",
+            "result"
+          ],
+          "invalid_labels": 0
+        },
+        "scitldr_aic": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "rouge_l_f1": 0.2716770466120256,
+          "rouge_tokenizer": "lowercase Unicode word/punctuation regex, no stemming; LCS token F1"
+        }
+      },
+      "prompt_tokens": 29533,
+      "generated_tokens": 2315,
+      "cap_hits": 0
+    },
+    "G01": {
+      "model": "G01",
+      "adapter_reloaded": true,
+      "adapter_sha256": "29a66d1b9eae36b6dc25c82e3934c46e9f54242a47c16ccba3b3e560b0da111b",
+      "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+      "n": 64,
+      "total_seconds": 197.42248021089472,
+      "generation_seconds": 182.58439593482763,
+      "peak_allocated_gib": 7.791086673736572,
+      "peak_reserved_gib": 7.974609375,
+      "prediction_sha256": "e1671ff9676bafa28eab1f2187b52b3ab73a375b2c0c0253f1f4ebc3e2750900",
+      "evaluation_script_sha256": "457ed4f40004b7ec6743a9e457d05f3230c065548f8508be92d893f4b844dae2",
+      "model_config_sha256": "d0883072e01861ed0b2d47be3c16c36a8e81c224c7ffaa310c6558fb3f932b05",
+      "eos_token_id": 248046,
+      "pad_token_id": 248044,
+      "empty_outputs": 0,
+      "reasoning_tag_outputs": 0,
+      "generation": {
+        "prompt_method": "hf_native_chat_template_enable_thinking_false",
+        "do_sample": false,
+        "max_new_tokens": 256,
+        "template": "qwen3_5_nothink",
+        "enable_thinking": false
+      },
+      "metrics": {
+        "bioasq_factoid_qa": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "em": 0.4375,
+          "token_f1": 0.5636904761904762,
+          "reference_scope": "Single SciRIFF released answer; no hidden alternatives"
+        },
+        "genia_ner": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 1,
+          "entity_exact_macro_sample_f1": 0.38019904256917947,
+          "successful_parse_subset_entity_micro_f1": 0.30939226519337015,
+          "entity_exact_micro_f1": 0.2879177377892031,
+          "tp": 56,
+          "fp": 85,
+          "fn": 192,
+          "json_success": 0.9375,
+          "per_type": {
+            "Protein": {
+              "tp": 20,
+              "fp": 29,
+              "fn": 86,
+              "f1": 0.25806451612903225
+            },
+            "CellLine": {
+              "tp": 1,
+              "fp": 11,
+              "fn": 9,
+              "f1": 0.09090909090909091
+            },
+            "CellType": {
+              "tp": 21,
+              "fp": 24,
+              "fn": 20,
+              "f1": 0.4883720930232558
+            },
+            "RNA": {
+              "tp": 1,
+              "fp": 5,
+              "fn": 2,
+              "f1": 0.2222222222222222
+            },
+            "DNA": {
+              "tp": 13,
+              "fp": 16,
+              "fn": 75,
+              "f1": 0.2222222222222222
+            }
+          }
+        },
+        "scicite_classification": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "accuracy": 0.8125,
+          "macro_f1": 0.7600000000000001,
+          "labels": [
+            "background",
+            "method",
+            "result"
+          ],
+          "invalid_labels": 0
+        },
+        "scitldr_aic": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "rouge_l_f1": 0.2597490839269624,
+          "rouge_tokenizer": "lowercase Unicode word/punctuation regex, no stemming; LCS token F1"
+        }
+      },
+      "prompt_tokens": 29533,
+      "generated_tokens": 2327,
+      "cap_hits": 1
+    },
+    "G02": {
+      "model": "G02",
+      "adapter_reloaded": true,
+      "adapter_sha256": "f01915f1341ace8b51ffc9b6971de5b4ead87068ce77204f4b1755b44ff3a199",
+      "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+      "n": 64,
+      "total_seconds": 214.5319673770573,
+      "generation_seconds": 198.77920898399316,
+      "peak_allocated_gib": 7.791086673736572,
+      "peak_reserved_gib": 7.974609375,
+      "prediction_sha256": "69f8377cf0f1b5cde516596399ccc4abc43b2a978b6849881ead137d700ee7bb",
+      "evaluation_script_sha256": "457ed4f40004b7ec6743a9e457d05f3230c065548f8508be92d893f4b844dae2",
+      "model_config_sha256": "d0883072e01861ed0b2d47be3c16c36a8e81c224c7ffaa310c6558fb3f932b05",
+      "eos_token_id": 248046,
+      "pad_token_id": 248044,
+      "empty_outputs": 0,
+      "reasoning_tag_outputs": 0,
+      "generation": {
+        "prompt_method": "hf_native_chat_template_enable_thinking_false",
+        "do_sample": false,
+        "max_new_tokens": 256,
+        "template": "qwen3_5_nothink",
+        "enable_thinking": false
+      },
+      "metrics": {
+        "bioasq_factoid_qa": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "em": 0.4375,
+          "token_f1": 0.580952380952381,
+          "reference_scope": "Single SciRIFF released answer; no hidden alternatives"
+        },
+        "genia_ner": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "entity_exact_macro_sample_f1": 0.310082831464645,
+          "successful_parse_subset_entity_micro_f1": 0.27817745803357313,
+          "entity_exact_micro_f1": 0.27817745803357313,
+          "tp": 58,
+          "fp": 111,
+          "fn": 190,
+          "json_success": 1.0,
+          "per_type": {
+            "Protein": {
+              "tp": 20,
+              "fp": 40,
+              "fn": 86,
+              "f1": 0.24096385542168675
+            },
+            "CellType": {
+              "tp": 18,
+              "fp": 30,
+              "fn": 23,
+              "f1": 0.4044943820224719
+            },
+            "CellLine": {
+              "tp": 2,
+              "fp": 9,
+              "fn": 8,
+              "f1": 0.19047619047619047
+            },
+            "RNA": {
+              "tp": 1,
+              "fp": 5,
+              "fn": 2,
+              "f1": 0.2222222222222222
+            },
+            "DNA": {
+              "tp": 17,
+              "fp": 27,
+              "fn": 71,
+              "f1": 0.25757575757575757
+            }
+          }
+        },
+        "scicite_classification": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "accuracy": 0.875,
+          "macro_f1": 0.5317460317460317,
+          "labels": [
+            "background",
+            "method",
+            "result"
+          ],
+          "invalid_labels": 0
+        },
+        "scitldr_aic": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "rouge_l_f1": 0.2809675887268777,
+          "rouge_tokenizer": "lowercase Unicode word/punctuation regex, no stemming; LCS token F1"
+        }
+      },
+      "prompt_tokens": 29533,
+      "generated_tokens": 2235,
+      "cap_hits": 0
+    },
+    "G03": {
+      "model": "G03",
+      "adapter_reloaded": true,
+      "adapter_sha256": "05c58682e313b9a0d6a393c006246a7b96e46c3239b21b4b45877a793ffd3059",
+      "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+      "n": 64,
+      "total_seconds": 213.11559961293824,
+      "generation_seconds": 201.64775882987306,
+      "peak_allocated_gib": 7.791086673736572,
+      "peak_reserved_gib": 7.974609375,
+      "prediction_sha256": "4c4ff2df7284a1340850898e388c94f03729f26001dfd599c08e50aa93848e26",
+      "evaluation_script_sha256": "457ed4f40004b7ec6743a9e457d05f3230c065548f8508be92d893f4b844dae2",
+      "model_config_sha256": "d0883072e01861ed0b2d47be3c16c36a8e81c224c7ffaa310c6558fb3f932b05",
+      "eos_token_id": 248046,
+      "pad_token_id": 248044,
+      "empty_outputs": 0,
+      "reasoning_tag_outputs": 0,
+      "generation": {
+        "prompt_method": "hf_native_chat_template_enable_thinking_false",
+        "do_sample": false,
+        "max_new_tokens": 256,
+        "template": "qwen3_5_nothink",
+        "enable_thinking": false
+      },
+      "metrics": {
+        "bioasq_factoid_qa": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "em": 0.4375,
+          "token_f1": 0.580952380952381,
+          "reference_scope": "Single SciRIFF released answer; no hidden alternatives"
+        },
+        "genia_ner": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "entity_exact_macro_sample_f1": 0.3978475624485004,
+          "successful_parse_subset_entity_micro_f1": 0.29453681710213775,
+          "entity_exact_micro_f1": 0.29453681710213775,
+          "tp": 62,
+          "fp": 111,
+          "fn": 186,
+          "json_success": 1.0,
+          "per_type": {
+            "Protein": {
+              "tp": 23,
+              "fp": 56,
+              "fn": 83,
+              "f1": 0.24864864864864866
+            },
+            "CellType": {
+              "tp": 19,
+              "fp": 25,
+              "fn": 22,
+              "f1": 0.4470588235294118
+            },
+            "CellLine": {
+              "tp": 2,
+              "fp": 12,
+              "fn": 8,
+              "f1": 0.16666666666666666
+            },
+            "RNA": {
+              "tp": 2,
+              "fp": 3,
+              "fn": 1,
+              "f1": 0.5
+            },
+            "DNA": {
+              "tp": 16,
+              "fp": 15,
+              "fn": 72,
+              "f1": 0.2689075630252101
+            }
+          }
+        },
+        "scicite_classification": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "accuracy": 0.8125,
+          "macro_f1": 0.7600000000000001,
+          "labels": [
+            "background",
+            "method",
+            "result"
+          ],
+          "invalid_labels": 0
+        },
+        "scitldr_aic": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "rouge_l_f1": 0.2682930473372311,
+          "rouge_tokenizer": "lowercase Unicode word/punctuation regex, no stemming; LCS token F1"
+        }
+      },
+      "prompt_tokens": 29533,
+      "generated_tokens": 2298,
+      "cap_hits": 0
+    },
+    "G04": {
+      "model": "G04",
+      "adapter_reloaded": true,
+      "adapter_sha256": "4b7f3606e6823160c5e03077109dbcd94eaa1fe414825be0f4731ff116290b98",
+      "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+      "n": 64,
+      "total_seconds": 210.67119987099431,
+      "generation_seconds": 198.39916640077718,
+      "peak_allocated_gib": 7.791086673736572,
+      "peak_reserved_gib": 7.974609375,
+      "prediction_sha256": "84b3f308d8126259fe93d2957f38f2d4d2b8fc56af77eb1b0de01a335371100e",
+      "evaluation_script_sha256": "457ed4f40004b7ec6743a9e457d05f3230c065548f8508be92d893f4b844dae2",
+      "model_config_sha256": "d0883072e01861ed0b2d47be3c16c36a8e81c224c7ffaa310c6558fb3f932b05",
+      "eos_token_id": 248046,
+      "pad_token_id": 248044,
+      "empty_outputs": 0,
+      "reasoning_tag_outputs": 0,
+      "generation": {
+        "prompt_method": "hf_native_chat_template_enable_thinking_false",
+        "do_sample": false,
+        "max_new_tokens": 256,
+        "template": "qwen3_5_nothink",
+        "enable_thinking": false
+      },
+      "metrics": {
+        "bioasq_factoid_qa": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "em": 0.4375,
+          "token_f1": 0.5636904761904762,
+          "reference_scope": "Single SciRIFF released answer; no hidden alternatives"
+        },
+        "genia_ner": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "entity_exact_macro_sample_f1": 0.3472750557353228,
+          "successful_parse_subset_entity_micro_f1": 0.2985781990521327,
+          "entity_exact_micro_f1": 0.2985781990521327,
+          "tp": 63,
+          "fp": 111,
+          "fn": 185,
+          "json_success": 1.0,
+          "per_type": {
+            "CellType": {
+              "tp": 20,
+              "fp": 29,
+              "fn": 21,
+              "f1": 0.4444444444444444
+            },
+            "CellLine": {
+              "tp": 2,
+              "fp": 13,
+              "fn": 8,
+              "f1": 0.16
+            },
+            "Protein": {
+              "tp": 23,
+              "fp": 39,
+              "fn": 83,
+              "f1": 0.27380952380952384
+            },
+            "DNA": {
+              "tp": 17,
+              "fp": 25,
+              "fn": 71,
+              "f1": 0.26153846153846155
+            },
+            "RNA": {
+              "tp": 1,
+              "fp": 5,
+              "fn": 2,
+              "f1": 0.2222222222222222
+            }
+          }
+        },
+        "scicite_classification": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "accuracy": 0.8125,
+          "macro_f1": 0.7600000000000001,
+          "labels": [
+            "background",
+            "method",
+            "result"
+          ],
+          "invalid_labels": 0
+        },
+        "scitldr_aic": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "rouge_l_f1": 0.27492660178001455,
+          "rouge_tokenizer": "lowercase Unicode word/punctuation regex, no stemming; LCS token F1"
+        }
+      },
+      "prompt_tokens": 29533,
+      "generated_tokens": 2256,
+      "cap_hits": 0
+    },
+    "G05": {
+      "model": "G05",
+      "adapter_reloaded": true,
+      "adapter_sha256": "cfd8340d028cd87e60238d44b7202a0985a2eda5114faaaa9e3122b03394db69",
+      "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+      "n": 64,
+      "total_seconds": 185.74770053918473,
+      "generation_seconds": 171.1383757130243,
+      "peak_allocated_gib": 7.791086673736572,
+      "peak_reserved_gib": 7.974609375,
+      "prediction_sha256": "3ba903c5904690489f1a7992591e541e1fd542d77841358cfb28a9aa9a8b69a9",
+      "evaluation_script_sha256": "457ed4f40004b7ec6743a9e457d05f3230c065548f8508be92d893f4b844dae2",
+      "model_config_sha256": "d0883072e01861ed0b2d47be3c16c36a8e81c224c7ffaa310c6558fb3f932b05",
+      "eos_token_id": 248046,
+      "pad_token_id": 248044,
+      "empty_outputs": 0,
+      "reasoning_tag_outputs": 0,
+      "generation": {
+        "prompt_method": "hf_native_chat_template_enable_thinking_false",
+        "do_sample": false,
+        "max_new_tokens": 256,
+        "template": "qwen3_5_nothink",
+        "enable_thinking": false
+      },
+      "metrics": {
+        "bioasq_factoid_qa": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "em": 0.4375,
+          "token_f1": 0.580952380952381,
+          "reference_scope": "Single SciRIFF released answer; no hidden alternatives"
+        },
+        "genia_ner": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "entity_exact_macro_sample_f1": 0.3605284586152808,
+          "successful_parse_subset_entity_micro_f1": 0.3113207547169811,
+          "entity_exact_micro_f1": 0.3113207547169811,
+          "tp": 66,
+          "fp": 110,
+          "fn": 182,
+          "json_success": 1.0,
+          "per_type": {
+            "CellLine": {
+              "tp": 2,
+              "fp": 9,
+              "fn": 8,
+              "f1": 0.19047619047619047
+            },
+            "Protein": {
+              "tp": 24,
+              "fp": 39,
+              "fn": 82,
+              "f1": 0.28402366863905326
+            },
+            "CellType": {
+              "tp": 19,
+              "fp": 29,
+              "fn": 22,
+              "f1": 0.42696629213483145
+            },
+            "DNA": {
+              "tp": 20,
+              "fp": 28,
+              "fn": 68,
+              "f1": 0.29411764705882354
+            },
+            "RNA": {
+              "tp": 1,
+              "fp": 5,
+              "fn": 2,
+              "f1": 0.2222222222222222
+            }
+          }
+        },
+        "scicite_classification": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "accuracy": 0.875,
+          "macro_f1": 0.8076923076923078,
+          "labels": [
+            "background",
+            "method",
+            "result"
+          ],
+          "invalid_labels": 0
+        },
+        "scitldr_aic": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "rouge_l_f1": 0.26383770936538065,
+          "rouge_tokenizer": "lowercase Unicode word/punctuation regex, no stemming; LCS token F1"
+        }
+      },
+      "prompt_tokens": 29533,
+      "generated_tokens": 2299,
+      "cap_hits": 0
+    },
+    "G06": {
+      "model": "G06",
+      "adapter_reloaded": true,
+      "adapter_sha256": "8edf14d111c3200956e8a960369b4ebb22830aa995088a7033da15885d7dc353",
+      "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+      "n": 64,
+      "total_seconds": 201.6840364721138,
+      "generation_seconds": 185.31723350915127,
+      "peak_allocated_gib": 7.791086673736572,
+      "peak_reserved_gib": 7.974609375,
+      "prediction_sha256": "1bf5fa91ccfd990e6a105f0f589580c120860ee5a9da9c301aac62dd9f37e554",
+      "evaluation_script_sha256": "457ed4f40004b7ec6743a9e457d05f3230c065548f8508be92d893f4b844dae2",
+      "model_config_sha256": "d0883072e01861ed0b2d47be3c16c36a8e81c224c7ffaa310c6558fb3f932b05",
+      "eos_token_id": 248046,
+      "pad_token_id": 248044,
+      "empty_outputs": 0,
+      "reasoning_tag_outputs": 0,
+      "generation": {
+        "prompt_method": "hf_native_chat_template_enable_thinking_false",
+        "do_sample": false,
+        "max_new_tokens": 256,
+        "template": "qwen3_5_nothink",
+        "enable_thinking": false
+      },
+      "metrics": {
+        "bioasq_factoid_qa": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "em": 0.375,
+          "token_f1": 0.5601190476190476,
+          "reference_scope": "Single SciRIFF released answer; no hidden alternatives"
+        },
+        "genia_ner": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "entity_exact_macro_sample_f1": 0.3639866787425678,
+          "successful_parse_subset_entity_micro_f1": 0.3047619047619048,
+          "entity_exact_micro_f1": 0.3047619047619048,
+          "tp": 64,
+          "fp": 108,
+          "fn": 184,
+          "json_success": 1.0,
+          "per_type": {
+            "Protein": {
+              "tp": 25,
+              "fp": 45,
+              "fn": 81,
+              "f1": 0.2840909090909091
+            },
+            "CellLine": {
+              "tp": 2,
+              "fp": 14,
+              "fn": 8,
+              "f1": 0.15384615384615385
+            },
+            "CellType": {
+              "tp": 18,
+              "fp": 23,
+              "fn": 23,
+              "f1": 0.43902439024390244
+            },
+            "RNA": {
+              "tp": 1,
+              "fp": 4,
+              "fn": 2,
+              "f1": 0.25
+            },
+            "DNA": {
+              "tp": 18,
+              "fp": 22,
+              "fn": 70,
+              "f1": 0.28125
+            }
+          }
+        },
+        "scicite_classification": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "accuracy": 0.8125,
+          "macro_f1": 0.7600000000000001,
+          "labels": [
+            "background",
+            "method",
+            "result"
+          ],
+          "invalid_labels": 0
+        },
+        "scitldr_aic": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "rouge_l_f1": 0.2602324591574908,
+          "rouge_tokenizer": "lowercase Unicode word/punctuation regex, no stemming; LCS token F1"
+        }
+      },
+      "prompt_tokens": 29533,
+      "generated_tokens": 2258,
+      "cap_hits": 0
+    },
+    "G07": {
+      "model": "G07",
+      "adapter_reloaded": true,
+      "adapter_sha256": "e151446a169b72f6fd6bada27886c60fceabce0cead69ac7697234a7044fdca5",
+      "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+      "n": 64,
+      "total_seconds": 188.6879531869199,
+      "generation_seconds": 175.51663920399733,
+      "peak_allocated_gib": 7.791086673736572,
+      "peak_reserved_gib": 7.974609375,
+      "prediction_sha256": "6d3a8d50effef7512ed6d342d5de14aa776ad89833393bc3df403d3c9eeac440",
+      "evaluation_script_sha256": "457ed4f40004b7ec6743a9e457d05f3230c065548f8508be92d893f4b844dae2",
+      "model_config_sha256": "d0883072e01861ed0b2d47be3c16c36a8e81c224c7ffaa310c6558fb3f932b05",
+      "eos_token_id": 248046,
+      "pad_token_id": 248044,
+      "empty_outputs": 0,
+      "reasoning_tag_outputs": 0,
+      "generation": {
+        "prompt_method": "hf_native_chat_template_enable_thinking_false",
+        "do_sample": false,
+        "max_new_tokens": 256,
+        "template": "qwen3_5_nothink",
+        "enable_thinking": false
+      },
+      "metrics": {
+        "bioasq_factoid_qa": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "em": 0.375,
+          "token_f1": 0.5601190476190476,
+          "reference_scope": "Single SciRIFF released answer; no hidden alternatives"
+        },
+        "genia_ner": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 1,
+          "entity_exact_macro_sample_f1": 0.34147564241314243,
+          "successful_parse_subset_entity_micro_f1": 0.3018867924528302,
+          "entity_exact_micro_f1": 0.2814070351758794,
+          "tp": 56,
+          "fp": 94,
+          "fn": 192,
+          "json_success": 0.9375,
+          "per_type": {
+            "CellLine": {
+              "tp": 1,
+              "fp": 15,
+              "fn": 9,
+              "f1": 0.07692307692307693
+            },
+            "Protein": {
+              "tp": 24,
+              "fp": 35,
+              "fn": 82,
+              "f1": 0.2909090909090909
+            },
+            "CellType": {
+              "tp": 16,
+              "fp": 24,
+              "fn": 25,
+              "f1": 0.3950617283950617
+            },
+            "RNA": {
+              "tp": 1,
+              "fp": 4,
+              "fn": 2,
+              "f1": 0.25
+            },
+            "DNA": {
+              "tp": 14,
+              "fp": 16,
+              "fn": 74,
+              "f1": 0.23728813559322035
+            }
+          }
+        },
+        "scicite_classification": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "accuracy": 0.8125,
+          "macro_f1": 0.7600000000000001,
+          "labels": [
+            "background",
+            "method",
+            "result"
+          ],
+          "invalid_labels": 0
+        },
+        "scitldr_aic": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "rouge_l_f1": 0.2679413759670961,
+          "rouge_tokenizer": "lowercase Unicode word/punctuation regex, no stemming; LCS token F1"
+        }
+      },
+      "prompt_tokens": 29533,
+      "generated_tokens": 2345,
+      "cap_hits": 1
+    }
+  },
+  "missing_or_failed": [],
+  "inconclusive": [
+    {
+      "name": "G07",
+      "scope": "Separate G06/G07 trajectory gradient attribution",
+      "reason": "INCONCLUSIVE; do not attribute separate trajectory differences solely to weights",
+      "separate_same_forward_weight_effect_verified": true
+    }
+  ],
+  "artifact_root": "/sharedata/home/huruiqian/DataFlow/runs/qwen35-9b/20261022-smoke/strategy-20261023",
+  "full_artifacts_retained_on_school": true,
+  "completed_core_optimizer_updates": 192,
+  "completed_predictions": 576,
+  "core_cli_seconds": 2019.0721656666137,
+  "scoring_seconds_included_in_cli": 588.6298209843226,
+  "evaluation_seconds": 1789.0210879819933
+}

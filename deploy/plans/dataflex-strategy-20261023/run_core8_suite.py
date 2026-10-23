@@ -40,6 +40,17 @@ def require_mechanism(name, root=None):
     audit = json.loads((folder / 'audit.json').read_text())
     if audit['status'] != 'MECHANISM_OBSERVED' or audit['name'] != name:
         raise ValueError('Mechanism evidence missing for ' + name)
+    if name in ['G06', 'G07']:
+        paired = audit.get('paired_control') or {}
+        if not (paired.get('initial_adapter_tensor_sha256') and paired.get('snapshot_sha256')
+                and paired.get('micro_rng_seed_base') == 420000):
+            raise ValueError('Shared initialization and RNG evidence missing for ' + name)
+        if name == 'G07':
+            if paired.get('trajectory_status') == 'INCONCLUSIVE_WARMUP_MISMATCH':
+                if paired.get('same_forward_diagnostic', {}).get('status') != 'SAME_FORWARD_WEIGHT_GRADIENT_VERIFIED':
+                    raise ValueError('Inconclusive trajectory requires separate same-forward gradient evidence')
+            elif not paired.get('first_weighted_gradient_norms'):
+                raise ValueError('Paired warmup and weighted gradient evidence missing for G07')
     return audit
 
 
@@ -62,6 +73,11 @@ def require_evaluation(name, count, root=None):
     result = json.loads((evaluation_folder(name, root) / 'metrics.json').read_text())
     if result['model'] != name or result['n'] != count:
         raise ValueError('Incomplete evaluation for ' + name)
+    if (result.get('generation', {}).get('prompt_method') != 'hf_native_chat_template_enable_thinking_false'
+            or result.get('reasoning_tag_outputs') != 0):
+        raise ValueError('No-think generation evidence missing: ' + name)
+    if count == 2 and result.get('empty_outputs') != 0:
+        raise ValueError('Empty gate reload output: ' + name)
     expected_data = hashlib.sha256((root / 'data-manifest.json').read_bytes()).hexdigest()
     if result['data_manifest_sha256'] != expected_data:
         raise ValueError('Evaluation data identity changed: ' + name)

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/work/strategy-20261023/audit_observations.py", line 108, in <module>
+    if __name__=='__main__':import sys;main(sys.argv[1])
+                                       ^^^^^^^^^^^^^^^^^
+  File "/work/strategy-20261023/audit_observations.py", line 94, in main
+    warm=[k for k in ga if k[0]<start];assert all(np.isclose(ga[k]['norm'],gb[k]['norm'],atol=1e-4,rtol=.02) for k in warm), 'Warmup gradient control mismatch (predeclared atol=1e-4 rtol=.02)'
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Warmup gradient control mismatch (predeclared atol=1e-4 rtol=.02)

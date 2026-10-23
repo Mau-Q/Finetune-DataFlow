@@ -1,0 +1,27 @@
+test_attempt_caches_and_gate_eval_binding (test_execution_contracts.ConfigContracts.test_attempt_caches_and_gate_eval_binding) ... ok
+test_v2_can_coexist_with_earlier_execution_config (test_execution_contracts.ConfigContracts.test_v2_can_coexist_with_earlier_execution_config) ... ok
+test_negative_delta_empty_window_has_reproducible_uniform_fallback (test_execution_contracts.DeltaContract.test_negative_delta_empty_window_has_reproducible_uniform_fallback) ... ok
+test_missing_native_no_think_prefill_is_rejected (test_execution_contracts.GenerationPromptContract.test_missing_native_no_think_prefill_is_rejected) ... ok
+test_native_no_think_uses_only_user_input (test_execution_contracts.GenerationPromptContract.test_native_no_think_uses_only_user_input) ... ok
+test_classification_invalid_answer_is_counted (test_execution_contracts.MetricContracts.test_classification_invalid_answer_is_counted) ... ok
+test_ner_invalid_json_remains_in_denominator (test_execution_contracts.MetricContracts.test_ner_invalid_json_remains_in_denominator) ... ok
+test_qa_normalization_and_partial_answer (test_execution_contracts.MetricContracts.test_qa_normalization_and_partial_answer) ... ok
+test_rouge_l_is_explicit_lcs_f1 (test_execution_contracts.MetricContracts.test_rouge_l_is_explicit_lcs_f1) ... ok
+test_wrong_entity_type_is_not_a_match (test_execution_contracts.MetricContracts.test_wrong_entity_type_is_not_a_match) ... ok
+test_callback_preserves_trainer_control_and_state_and_restores_all_adapter_tensors (test_execution_contracts.PairedInitializationContracts.test_callback_preserves_trainer_control_and_state_and_restores_all_adapter_tensors) ... Failed to load CPU gemm_4bit_forward from kernels-community: No module named 'kernels'. Please make sure you already `pip install kernels` and the kernels >= 0.11.1
+ok
+test_changed_adapter_invalidates_old_reload (test_execution_contracts.SuiteContracts.test_changed_adapter_invalidates_old_reload) ... ok
+test_changed_frozen_data_invalidates_evaluation (test_execution_contracts.SuiteContracts.test_changed_frozen_data_invalidates_evaluation) ... ok
+test_container_pointer_maps_to_correct_host_attempt (test_execution_contracts.SuiteContracts.test_container_pointer_maps_to_correct_host_attempt) ... ok
+test_core_refuses_to_launch_before_gate_evidence (test_execution_contracts.SuiteContracts.test_core_refuses_to_launch_before_gate_evidence) ... ok
+test_evaluation_attempt_pointer_preserves_prior_outputs (test_execution_contracts.SuiteContracts.test_evaluation_attempt_pointer_preserves_prior_outputs) ... ok
+test_malicious_attempt_path_is_rejected (test_execution_contracts.SuiteContracts.test_malicious_attempt_path_is_rejected) ... ok
+test_nan_missing_or_inconsistent_scores_do_not_pass (test_execution_contracts.SuiteContracts.test_nan_missing_or_inconsistent_scores_do_not_pass) ... ok
+test_old_weight_audit_cannot_substitute_for_paired_control (test_execution_contracts.SuiteContracts.test_old_weight_audit_cannot_substitute_for_paired_control) ... ok
+test_invalid_runtime_root_has_no_filesystem_side_effects (test_materialize_configs.MaterializationTests.test_invalid_runtime_root_has_no_filesystem_side_effects) ... ok
+test_school_paths_and_family_specific_budgets (test_materialize_configs.MaterializationTests.test_school_paths_and_family_specific_budgets) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 7.056s
+
+OK

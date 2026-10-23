@@ -1,0 +1,1152 @@
+{
+  "captured_unix": 1792759411.666788,
+  "attempts": [
+    {
+      "run": "G00",
+      "attempt": "attempt1",
+      "status": "TRAIN_VERIFIED",
+      "optimizer_updates_observed": 24,
+      "sample_presentations": 96,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 176.53121170890518,
+        "peak_allocated_gib": 11.211688041687012,
+        "peak_reserved_gib": 12.076171875,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "d8b1aa925640536cf3f8e9e2495dbbe1a2017f444de4389fef9b849f8c18d9fd",
+        "adapter_sha256": "7255a27735a7321257268147810c268e5a65a99ec58f34eb45eaef2fd0f74b97",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          2.8139803409576416,
+          3.2195611000061035,
+          2.7896995544433594,
+          3.3933005332946777,
+          2.4308152198791504,
+          2.617720365524292,
+          1.6626861095428467,
+          0.9097939729690552,
+          1.540846586227417,
+          1.562060832977295,
+          0.637311577796936,
+          0.5107846260070801,
+          1.0193886756896973,
+          1.6275211572647095,
+          0.3977024555206299,
+          1.0256534814834595,
+          0.9632083177566528,
+          1.1763404607772827,
+          2.254690647125244,
+          0.8503873944282532,
+          1.0219124555587769,
+          0.4594103991985321,
+          0.3703311085700989,
+          0.9092828035354614
+        ]
+      }
+    },
+    {
+      "run": "G01",
+      "attempt": "attempt1",
+      "status": "TRAIN_VERIFIED",
+      "optimizer_updates_observed": 24,
+      "sample_presentations": 96,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 175.09167040302418,
+        "peak_allocated_gib": 11.30893611907959,
+        "peak_reserved_gib": 12.03515625,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "c1b27a7046394b7c30be8e85c03a5c1d578e61366f60470c1c9ce66988cea0af",
+        "adapter_sha256": "29a66d1b9eae36b6dc25c82e3934c46e9f54242a47c16ccba3b3e560b0da111b",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          3.487652540206909,
+          1.705588698387146,
+          0.9080846905708313,
+          2.5422680377960205,
+          2.625244379043579,
+          2.3509507179260254,
+          1.6350443363189697,
+          2.415703296661377,
+          1.4446396827697754,
+          1.5525898933410645,
+          1.6483135223388672,
+          0.9028599858283997,
+          0.4622397720813751,
+          1.0892860889434814,
+          0.6536348462104797,
+          1.5831029415130615,
+          0.7968007326126099,
+          1.1771589517593384,
+          1.0903716087341309,
+          0.6497822999954224,
+          0.7493051290512085,
+          0.5047702789306641,
+          0.7876842617988586,
+          1.1337140798568726
+        ]
+      }
+    },
+    {
+      "run": "G02",
+      "attempt": "attempt1",
+      "status": "TRAIN_VERIFIED",
+      "optimizer_updates_observed": 24,
+      "sample_presentations": 96,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 471.9225401459262,
+        "peak_allocated_gib": 11.335046768188477,
+        "peak_reserved_gib": 12.2109375,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "6fbaf47790ac058d12a127e69e3e566bdc96b72dd25300af31f7a88a702a5774",
+        "adapter_sha256": "f01915f1341ace8b51ffc9b6971de5b4ead87068ce77204f4b1755b44ff3a199",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          3.5116100311279297,
+          1.7069562673568726,
+          0.910115659236908,
+          2.5271427631378174,
+          2.4358768463134766,
+          4.208401203155518,
+          3.557723045349121,
+          2.648660182952881,
+          2.0785040855407715,
+          2.5192651748657227,
+          2.9188590049743652,
+          1.3536884784698486,
+          2.3442978858947754,
+          1.7823102474212646,
+          2.452335834503174,
+          2.2544925212860107,
+          1.0765199661254883,
+          0.7826067805290222,
+          1.2752058506011963,
+          0.7226014733314514,
+          1.6922874450683594,
+          1.444462776184082,
+          1.3262367248535156,
+          1.0603772401809692
+        ]
+      }
+    },
+    {
+      "run": "G03",
+      "attempt": "attempt1",
+      "status": "TRAIN_VERIFIED",
+      "optimizer_updates_observed": 24,
+      "sample_presentations": 96,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 488.29862688085996,
+        "peak_allocated_gib": 11.335058212280273,
+        "peak_reserved_gib": 12.216796875,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "74be48ff3618d50a9c8991c17afceed7bb84f84e67fd476c9a073d4c960c3276",
+        "adapter_sha256": "05c58682e313b9a0d6a393c006246a7b96e46c3239b21b4b45877a793ffd3059",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          3.487652540206909,
+          1.7047215700149536,
+          0.9036261439323425,
+          2.540395736694336,
+          2.4957423210144043,
+          2.494300365447998,
+          1.2754634618759155,
+          2.6827890872955322,
+          1.2855660915374756,
+          0.4436677098274231,
+          0.36964842677116394,
+          1.5997987985610962,
+          1.398783564567566,
+          0.3782699704170227,
+          1.8595454692840576,
+          1.746495008468628,
+          1.0051438808441162,
+          0.535681962966919,
+          0.4949621558189392,
+          0.6280494928359985,
+          0.6601648330688477,
+          0.5970083475112915,
+          0.9587445259094238,
+          0.4756733179092407
+        ]
+      }
+    },
+    {
+      "run": "G04",
+      "attempt": "attempt1",
+      "status": "TRAIN_VERIFIED",
+      "optimizer_updates_observed": 24,
+      "sample_presentations": 96,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 178.8138356739655,
+        "peak_allocated_gib": 11.260290145874023,
+        "peak_reserved_gib": 11.998046875,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "8257004296e83218d6ca6abcb5b11e35d45e3a9926ec964eff35f5b9782b4a05",
+        "adapter_sha256": "4b7f3606e6823160c5e03077109dbcd94eaa1fe414825be0f4731ff116290b98",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          1.950150728225708,
+          4.090291500091553,
+          3.1225333213806152,
+          3.3530845642089844,
+          2.391909122467041,
+          2.4014015197753906,
+          1.3576793670654297,
+          1.1427353620529175,
+          1.346954107284546,
+          2.136932611465454,
+          0.949691653251648,
+          1.4773567914962769,
+          1.5960050821304321,
+          0.7530073523521423,
+          1.3569074869155884,
+          1.5711469650268555,
+          0.41188719868659973,
+          0.3611600399017334,
+          0.4439665675163269,
+          0.5995666980743408,
+          0.26896554231643677,
+          1.1899980306625366,
+          1.6679441928863525,
+          1.326324462890625
+        ]
+      }
+    },
+    {
+      "run": "G05",
+      "attempt": "attempt1",
+      "status": "TRAIN_VERIFIED",
+      "optimizer_updates_observed": 24,
+      "sample_presentations": 96,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 176.68476229696535,
+        "peak_allocated_gib": 11.333202362060547,
+        "peak_reserved_gib": 12.21484375,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "491e62cc06faf68f468989cbe7084fbd3e4a96dbfd5ae456026617ddca4da2ad",
+        "adapter_sha256": "cfd8340d028cd87e60238d44b7202a0985a2eda5114faaaa9e3122b03394db69",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          3.056914806365967,
+          2.5397531986236572,
+          2.942998170852661,
+          3.7606961727142334,
+          3.0833563804626465,
+          2.3749780654907227,
+          3.1491599082946777,
+          2.4922211170196533,
+          0.9074817895889282,
+          0.5785940289497375,
+          1.8963136672973633,
+          0.9438900947570801,
+          1.4694867134094238,
+          0.7462915778160095,
+          1.4362605810165405,
+          0.9135057330131531,
+          0.4748232662677765,
+          1.5422286987304688,
+          1.417807936668396,
+          0.18295998871326447,
+          0.8577615022659302,
+          0.6645440459251404,
+          0.27196598052978516,
+          1.413328766822815
+        ]
+      }
+    },
+    {
+      "run": "G06",
+      "attempt": "attempt1",
+      "status": "TRAIN_VERIFIED",
+      "optimizer_updates_observed": 24,
+      "sample_presentations": 96,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 177.86094103613868,
+        "peak_allocated_gib": 16.366130352020264,
+        "peak_reserved_gib": 17.572265625,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "22c12aa04ed9d5f38f70fcd3a6b1301f197b746f5da98e0a441da190e4756897",
+        "adapter_sha256": "90042e05ae796c36b6456bbb7a1fef73edd46ec666e7fc1e47bad6ae05efa24e",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          1.3211371898651123,
+          1.8132860660552979,
+          2.0536916255950928,
+          2.743584394454956,
+          2.7772586345672607,
+          2.701265335083008,
+          1.6067447662353516,
+          1.1257728338241577,
+          1.6972837448120117,
+          1.6797292232513428,
+          0.7527817487716675,
+          0.5614241361618042,
+          1.0213795900344849,
+          1.5907509326934814,
+          0.3750596046447754,
+          1.015219807624817,
+          0.9576305150985718,
+          1.1535329818725586,
+          2.222907781600952,
+          0.8799041509628296,
+          1.0104854106903076,
+          0.44836506247520447,
+          0.3691446781158447,
+          0.9166640043258667
+        ]
+      }
+    },
+    {
+      "run": "G06",
+      "attempt": "attempt2",
+      "status": "FAIL",
+      "optimizer_updates_observed": 0,
+      "sample_presentations": 0,
+      "resource": {
+        "status": "FAIL",
+        "error": "TypeError(\"'TrainerControl' object is not subscriptable\")",
+        "seconds": 25.936121080070734,
+        "peak_allocated_gib": 7.503036975860596,
+        "peak_reserved_gib": 7.560546875,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "8588ef9aa7875e8c08703e33633e29a491089e0bf12ee01c39fe791e1eaaf637",
+        "adapter_sha256": null,
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e"
+      }
+    },
+    {
+      "run": "G06",
+      "attempt": "attempt3",
+      "status": "FAIL",
+      "optimizer_updates_observed": 0,
+      "sample_presentations": 0,
+      "resource": {
+        "status": "FAIL",
+        "error": "AttributeError(\"'dict' object has no attribute 'max_steps'\")",
+        "seconds": 27.64367085811682,
+        "peak_allocated_gib": 7.503134727478027,
+        "peak_reserved_gib": 7.560546875,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "8b9f9e6046f2678b1a956ec9bccb36eaabf218152e3fc28ca27edcfc67929903",
+        "adapter_sha256": null,
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e"
+      }
+    },
+    {
+      "run": "G06",
+      "attempt": "attempt4",
+      "status": "TRAIN_VERIFIED",
+      "optimizer_updates_observed": 24,
+      "sample_presentations": 96,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 173.68426837399602,
+        "peak_allocated_gib": 16.366130352020264,
+        "peak_reserved_gib": 17.572265625,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "e382b1cc5cc33914c344124670d7642bb0ae4747a7830c35ed9ba689bc4e820d",
+        "adapter_sha256": "8edf14d111c3200956e8a960369b4ebb22830aa995088a7033da15885d7dc353",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          1.3173387050628662,
+          1.8167049884796143,
+          2.037081003189087,
+          2.701752185821533,
+          2.720767021179199,
+          2.705953598022461,
+          1.6072111129760742,
+          1.1071507930755615,
+          1.6790876388549805,
+          1.666174292564392,
+          0.7423286437988281,
+          0.5472424626350403,
+          1.0149610042572021,
+          1.5787053108215332,
+          0.3768952190876007,
+          1.0098932981491089,
+          0.9512980580329895,
+          1.1504852771759033,
+          2.2158894538879395,
+          0.8794490098953247,
+          1.0114893913269043,
+          0.44119793176651,
+          0.3612467050552368,
+          0.9146795868873596
+        ]
+      }
+    },
+    {
+      "run": "G07",
+      "attempt": "attempt1",
+      "status": "TRAIN_VERIFIED",
+      "optimizer_updates_observed": 24,
+      "sample_presentations": 96,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 183.0745829930529,
+        "peak_allocated_gib": 16.366130352020264,
+        "peak_reserved_gib": 17.572265625,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "1e8a7bf8e327e9865be64c02b961c5314c7e235330148654b56d10ae664c94c4",
+        "adapter_sha256": "fe670e5b17165b8e2958c6bf599ee771998fa938fbf75d4d30e34069450c0bb6",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          1.3173387050628662,
+          1.8033676147460938,
+          2.031553268432617,
+          2.7516279220581055,
+          3.342172861099243,
+          3.0418813228607178,
+          1.9982571601867676,
+          1.297379732131958,
+          2.034846305847168,
+          2.0964760780334473,
+          1.0175108909606934,
+          0.5895786285400391,
+          1.4654996395111084,
+          1.8800228834152222,
+          0.5199364423751831,
+          1.3571830987930298,
+          1.2121782302856445,
+          1.2236651182174683,
+          2.8128738403320312,
+          1.1711862087249756,
+          1.4675726890563965,
+          0.6337462663650513,
+          0.5088642835617065,
+          1.1162165403366089
+        ]
+      }
+    },
+    {
+      "run": "G07",
+      "attempt": "attempt2",
+      "status": "TRAIN_VERIFIED",
+      "optimizer_updates_observed": 24,
+      "sample_presentations": 96,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 178.04525018297136,
+        "peak_allocated_gib": 16.366130352020264,
+        "peak_reserved_gib": 17.572265625,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "4b021d625d73948bc65b6261d7f278226948c6511d8f7436a66b90e5194d7ffa",
+        "adapter_sha256": "e151446a169b72f6fd6bada27886c60fceabce0cead69ac7697234a7044fdca5",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          1.3173387050628662,
+          1.8096349239349365,
+          2.034557580947876,
+          2.7108564376831055,
+          3.262876033782959,
+          2.9524612426757812,
+          1.9304248094558716,
+          1.2096693515777588,
+          1.972048044204712,
+          2.031561851501465,
+          0.9450523853302002,
+          0.5829588770866394,
+          1.416884422302246,
+          1.8432698249816895,
+          0.5120151042938232,
+          1.3484349250793457,
+          1.2042646408081055,
+          1.2258176803588867,
+          2.790299892425537,
+          1.1537326574325562,
+          1.4478360414505005,
+          0.6354670524597168,
+          0.4986007809638977,
+          1.1156752109527588
+        ]
+      }
+    },
+    {
+      "run": "GATE-B1",
+      "attempt": "attempt1",
+      "status": "TRAIN_VERIFIED",
+      "optimizer_updates_observed": 2,
+      "sample_presentations": 8,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 183.09914702293463,
+        "peak_allocated_gib": 11.260377883911133,
+        "peak_reserved_gib": 12.044921875,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "98b7cef90db71d7573a002e8a5d83d14ce7771e64fc75147176a43036130ea12",
+        "adapter_sha256": "749716825e4c576c0407e758392b6413335808228c53532f0b8b07c34f2654c9",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 2,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          2.6455657482147217,
+          3.001849889755249
+        ]
+      }
+    },
+    {
+      "run": "GATE-B2",
+      "attempt": "attempt1",
+      "status": "TRAIN_VERIFIED",
+      "optimizer_updates_observed": 2,
+      "sample_presentations": 8,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 111.01166566601023,
+        "peak_allocated_gib": 18.391430854797363,
+        "peak_reserved_gib": 18.609375,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "57d031eddd47321736e279b08e98dec38aaa6727b48f8c24d9db630559a78900",
+        "adapter_sha256": "9f66e37fe3995b6bc2077a32e03500948a0b229bda72c930bbeba317db97f20b",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 2,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          3.0192484855651855,
+          3.061269760131836
+        ]
+      }
+    },
+    {
+      "run": "GATE2-B1",
+      "attempt": "attempt1",
+      "status": "FAIL",
+      "optimizer_updates_observed": 0,
+      "sample_presentations": 0,
+      "resource": {
+        "status": "FAIL",
+        "error": "ValueError('Undefined dataset validation in dataset_info.json.')",
+        "seconds": 11.645296443020925,
+        "peak_allocated_gib": 0.0,
+        "peak_reserved_gib": 0.0,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "32af08af97a9b83b2d270fa86e29ca76bcbaa95f9bc190d1621ce90a0e0d2555",
+        "adapter_sha256": null,
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e"
+      }
+    },
+    {
+      "run": "GATE2-B1",
+      "attempt": "attempt2",
+      "status": "TRAIN_VERIFIED",
+      "optimizer_updates_observed": 2,
+      "sample_presentations": 8,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 65.24792312690988,
+        "peak_allocated_gib": 10.986482620239258,
+        "peak_reserved_gib": 12.044921875,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "bb12fc788b982428cb65ad6c423bcecc8991bc5de86131eae84a7219d2c719b7",
+        "adapter_sha256": "794b0d5710fe71f6809763436df2c520c362b9e19de185268cbfa71f11e04be3",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 2,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          2.7577099800109863,
+          1.9809606075286865
+        ]
+      }
+    },
+    {
+      "run": "GATE2-B2",
+      "attempt": "attempt1",
+      "status": "TRAIN_VERIFIED",
+      "optimizer_updates_observed": 2,
+      "sample_presentations": 8,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 78.40375569602475,
+        "peak_allocated_gib": 16.191567420959473,
+        "peak_reserved_gib": 17.92578125,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "7cc15412e318cc2735e0df22344b266f81dfd942f5171280926a3c94041e9877",
+        "adapter_sha256": "df66c09a90fa4857abc9e9b117b32cdc0c7c28c68844bdf181ecfd6bfd8e02e9",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 2,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          3.229921817779541,
+          2.1460318565368652
+        ]
+      }
+    }
+  ],
+  "evaluation_attempts": [
+    {
+      "path": "evaluation/BASE/predictions.jsonl",
+      "n": 64,
+      "sha256": "53185c0334bc533bea3da586a021ed42795932344413d671be93e2d4287889b0",
+      "metrics_receipt_exists": true,
+      "generated_tokens": 3237,
+      "reasoning_tag_outputs": 0,
+      "reasoning_tag_detection_coverage": 64
+    },
+    {
+      "path": "evaluation/G00/predictions.jsonl",
+      "n": 64,
+      "sha256": "c3d8ea71e386ac96fe0eae27fccedc7f896f7590c56f5c92e4cd0c1c37894418",
+      "metrics_receipt_exists": true,
+      "generated_tokens": 2315,
+      "reasoning_tag_outputs": 0,
+      "reasoning_tag_detection_coverage": 64
+    },
+    {
+      "path": "evaluation/G01/predictions.jsonl",
+      "n": 64,
+      "sha256": "e1671ff9676bafa28eab1f2187b52b3ab73a375b2c0c0253f1f4ebc3e2750900",
+      "metrics_receipt_exists": true,
+      "generated_tokens": 2327,
+      "reasoning_tag_outputs": 0,
+      "reasoning_tag_detection_coverage": 64
+    },
+    {
+      "path": "evaluation/G02/predictions.jsonl",
+      "n": 64,
+      "sha256": "69f8377cf0f1b5cde516596399ccc4abc43b2a978b6849881ead137d700ee7bb",
+      "metrics_receipt_exists": true,
+      "generated_tokens": 2235,
+      "reasoning_tag_outputs": 0,
+      "reasoning_tag_detection_coverage": 64
+    },
+    {
+      "path": "evaluation/G03/predictions.jsonl",
+      "n": 64,
+      "sha256": "4c4ff2df7284a1340850898e388c94f03729f26001dfd599c08e50aa93848e26",
+      "metrics_receipt_exists": true,
+      "generated_tokens": 2298,
+      "reasoning_tag_outputs": 0,
+      "reasoning_tag_detection_coverage": 64
+    },
+    {
+      "path": "evaluation/G04/predictions.jsonl",
+      "n": 64,
+      "sha256": "84b3f308d8126259fe93d2957f38f2d4d2b8fc56af77eb1b0de01a335371100e",
+      "metrics_receipt_exists": true,
+      "generated_tokens": 2256,
+      "reasoning_tag_outputs": 0,
+      "reasoning_tag_detection_coverage": 64
+    },
+    {
+      "path": "evaluation/G05/predictions.jsonl",
+      "n": 64,
+      "sha256": "3ba903c5904690489f1a7992591e541e1fd542d77841358cfb28a9aa9a8b69a9",
+      "metrics_receipt_exists": true,
+      "generated_tokens": 2299,
+      "reasoning_tag_outputs": 0,
+      "reasoning_tag_detection_coverage": 64
+    },
+    {
+      "path": "evaluation/G06/predictions.jsonl",
+      "n": 64,
+      "sha256": "1bf5fa91ccfd990e6a105f0f589580c120860ee5a9da9c301aac62dd9f37e554",
+      "metrics_receipt_exists": true,
+      "generated_tokens": 2258,
+      "reasoning_tag_outputs": 0,
+      "reasoning_tag_detection_coverage": 64
+    },
+    {
+      "path": "evaluation/G07/predictions.jsonl",
+      "n": 64,
+      "sha256": "6d3a8d50effef7512ed6d342d5de14aa776ad89833393bc3df403d3c9eeac440",
+      "metrics_receipt_exists": true,
+      "generated_tokens": 2345,
+      "reasoning_tag_outputs": 0,
+      "reasoning_tag_detection_coverage": 64
+    },
+    {
+      "path": "evaluation/GATE2-B1/attempt3/predictions.jsonl",
+      "n": 2,
+      "sha256": "dde4f644cf1bea04c779c3ba075a3cfebe784de3113846468f03439be0abb14c",
+      "metrics_receipt_exists": true,
+      "generated_tokens": 66,
+      "reasoning_tag_outputs": 0,
+      "reasoning_tag_detection_coverage": 2
+    },
+    {
+      "path": "evaluation/GATE2-B1/predictions.jsonl",
+      "n": 2,
+      "sha256": "36f7b3f5d44930193bfcec0dd8633057408f35d4e3a6f17f9cc8952875dede56",
+      "metrics_receipt_exists": true,
+      "generated_tokens": 512,
+      "reasoning_tag_outputs": null,
+      "reasoning_tag_detection_coverage": 0
+    },
+    {
+      "path": "evaluation/GATE2-B2/attempt2/predictions.jsonl",
+      "n": 2,
+      "sha256": "dde4f644cf1bea04c779c3ba075a3cfebe784de3113846468f03439be0abb14c",
+      "metrics_receipt_exists": true,
+      "generated_tokens": 66,
+      "reasoning_tag_outputs": 0,
+      "reasoning_tag_detection_coverage": 2
+    },
+    {
+      "path": "evaluation/GATE2-B2/predictions.jsonl",
+      "n": 2,
+      "sha256": "a5f20ee5b177cd316746db977a1fb6083815852eb904cd8c171b344b20bd4248",
+      "metrics_receipt_exists": true,
+      "generated_tokens": 512,
+      "reasoning_tag_outputs": null,
+      "reasoning_tag_detection_coverage": 0
+    }
+  ],
+  "all_observed_optimizer_updates": 248,
+  "all_observed_train_presentations": 992,
+  "all_generated_prediction_rows": 584,
+  "sampled_whole_gpu2": {
+    "samples": 1957,
+    "interval_seconds": 5,
+    "peak_used_mib": 43821,
+    "minimum_free_mib": 1553,
+    "scope": "Whole card including other workloads; sampled, not continuous process peak"
+  },
+  "accepted_attempts": {
+    "G00": "attempt1",
+    "G01": "attempt1",
+    "G02": "attempt1",
+    "G03": "attempt1",
+    "G04": "attempt1",
+    "G05": "attempt1",
+    "G06": "attempt4",
+    "G07": "attempt2"
+  },
+  "paired_warmup_diagnostic": {
+    "G06": {
+      "gradients": [
+        {
+          "step": 0,
+          "micro": 1,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_B.default.weight",
+          "norm": 1.8382890224456787,
+          "sum": 0.95710289478302,
+          "finite": true
+        },
+        {
+          "step": 0,
+          "micro": 1,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_A.default.weight",
+          "norm": 0.0,
+          "sum": 0.0,
+          "finite": true
+        },
+        {
+          "step": 0,
+          "micro": 2,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_B.default.weight",
+          "norm": 0.7357115149497986,
+          "sum": -0.40894728899002075,
+          "finite": true
+        },
+        {
+          "step": 0,
+          "micro": 2,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_A.default.weight",
+          "norm": 0.0,
+          "sum": 0.0,
+          "finite": true
+        },
+        {
+          "step": 1,
+          "micro": 3,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_B.default.weight",
+          "norm": 2.940939426422119,
+          "sum": -0.21295833587646484,
+          "finite": true
+        },
+        {
+          "step": 1,
+          "micro": 3,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_A.default.weight",
+          "norm": 0.08062952756881714,
+          "sum": 0.1760271191596985,
+          "finite": true
+        },
+        {
+          "step": 1,
+          "micro": 4,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_B.default.weight",
+          "norm": 0.5013598799705505,
+          "sum": 0.5415116548538208,
+          "finite": true
+        },
+        {
+          "step": 1,
+          "micro": 4,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_A.default.weight",
+          "norm": 0.011809127405285835,
+          "sum": 0.02807922288775444,
+          "finite": true
+        },
+        {
+          "step": 2,
+          "micro": 5,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_B.default.weight",
+          "norm": 4.526727676391602,
+          "sum": -0.42388439178466797,
+          "finite": true
+        },
+        {
+          "step": 2,
+          "micro": 5,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_A.default.weight",
+          "norm": 0.10614104568958282,
+          "sum": 0.2639493942260742,
+          "finite": true
+        },
+        {
+          "step": 2,
+          "micro": 6,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_B.default.weight",
+          "norm": 0.4307456910610199,
+          "sum": -0.32225754857063293,
+          "finite": true
+        },
+        {
+          "step": 2,
+          "micro": 6,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_A.default.weight",
+          "norm": 0.024392155930399895,
+          "sum": 0.057053543627262115,
+          "finite": true
+        },
+        {
+          "step": 3,
+          "micro": 7,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_B.default.weight",
+          "norm": 5.455941200256348,
+          "sum": 0.6848558187484741,
+          "finite": true
+        },
+        {
+          "step": 3,
+          "micro": 7,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_A.default.weight",
+          "norm": 0.5720555782318115,
+          "sum": 1.3387391567230225,
+          "finite": true
+        },
+        {
+          "step": 3,
+          "micro": 8,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_B.default.weight",
+          "norm": 0.6090220212936401,
+          "sum": 0.4238870441913605,
+          "finite": true
+        },
+        {
+          "step": 3,
+          "micro": 8,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_A.default.weight",
+          "norm": 0.03202471137046814,
+          "sum": 0.0735074132680893,
+          "finite": true
+        }
+      ],
+      "losses": [
+        {
+          "step": 0,
+          "micro": 1,
+          "compute_loss": 1.2637743949890137,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 0,
+          "micro": 2,
+          "compute_loss": 1.3709028959274292,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 1,
+          "micro": 3,
+          "compute_loss": 2.736050605773926,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 1,
+          "micro": 4,
+          "compute_loss": 0.8973592519760132,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 2,
+          "micro": 5,
+          "compute_loss": 3.2174265384674072,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 2,
+          "micro": 6,
+          "compute_loss": 0.8567355871200562,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 3,
+          "micro": 7,
+          "compute_loss": 4.238373756408691,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 3,
+          "micro": 8,
+          "compute_loss": 1.1651307344436646,
+          "num_items_in_batch": null
+        }
+      ],
+      "initialization": {
+        "initial_adapter_tensor_sha256": "3bf6a156850eca6cc0a5a0f914ed9eae38002687fc94f6ec585a1dbcd321820f",
+        "snapshot_sha256": "c56d3f34fbb0d1b4001c77fa2eba35eb5ad4f88e91a2e94c5db38e34ba30809a",
+        "micro_rng_seed_base": 420000,
+        "lora_dropout": 0.05,
+        "protocol": "Shared exact LoRA initialization and explicit per-microbatch CPU/CUDA seed control; not a passive observer operation"
+      }
+    },
+    "G07": {
+      "gradients": [
+        {
+          "step": 0,
+          "micro": 1,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_B.default.weight",
+          "norm": 1.8203203678131104,
+          "sum": 0.9465656280517578,
+          "finite": true
+        },
+        {
+          "step": 0,
+          "micro": 1,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_A.default.weight",
+          "norm": 0.0,
+          "sum": 0.0,
+          "finite": true
+        },
+        {
+          "step": 0,
+          "micro": 2,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_B.default.weight",
+          "norm": 0.7376105785369873,
+          "sum": -0.42023417353630066,
+          "finite": true
+        },
+        {
+          "step": 0,
+          "micro": 2,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_A.default.weight",
+          "norm": 0.0,
+          "sum": 0.0,
+          "finite": true
+        },
+        {
+          "step": 1,
+          "micro": 3,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_B.default.weight",
+          "norm": 2.669200897216797,
+          "sum": 0.7750869989395142,
+          "finite": true
+        },
+        {
+          "step": 1,
+          "micro": 3,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_A.default.weight",
+          "norm": 0.08120164275169373,
+          "sum": 0.18777675926685333,
+          "finite": true
+        },
+        {
+          "step": 1,
+          "micro": 4,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_B.default.weight",
+          "norm": 0.8277251720428467,
+          "sum": -0.3669413626194,
+          "finite": true
+        },
+        {
+          "step": 1,
+          "micro": 4,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_A.default.weight",
+          "norm": 0.010542500764131546,
+          "sum": 0.025295069441199303,
+          "finite": true
+        },
+        {
+          "step": 2,
+          "micro": 5,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_B.default.weight",
+          "norm": 2.1171748638153076,
+          "sum": 1.7241730690002441,
+          "finite": true
+        },
+        {
+          "step": 2,
+          "micro": 5,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_A.default.weight",
+          "norm": 0.13730259239673615,
+          "sum": 0.3388586640357971,
+          "finite": true
+        },
+        {
+          "step": 2,
+          "micro": 6,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_B.default.weight",
+          "norm": 0.41773226857185364,
+          "sum": -0.24867767095565796,
+          "finite": true
+        },
+        {
+          "step": 2,
+          "micro": 6,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_A.default.weight",
+          "norm": 0.024688635021448135,
+          "sum": 0.05811755731701851,
+          "finite": true
+        },
+        {
+          "step": 3,
+          "micro": 7,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_B.default.weight",
+          "norm": 5.4864702224731445,
+          "sum": 0.633629322052002,
+          "finite": true
+        },
+        {
+          "step": 3,
+          "micro": 7,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_A.default.weight",
+          "norm": 0.6067137718200684,
+          "sum": 1.4232622385025024,
+          "finite": true
+        },
+        {
+          "step": 3,
+          "micro": 8,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_B.default.weight",
+          "norm": 0.3631823658943176,
+          "sum": 0.010146848857402802,
+          "finite": true
+        },
+        {
+          "step": 3,
+          "micro": 8,
+          "parameter": "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_A.default.weight",
+          "norm": 0.03701118752360344,
+          "sum": 0.0849299430847168,
+          "finite": true
+        }
+      ],
+      "losses": [
+        {
+          "step": 0,
+          "micro": 1,
+          "compute_loss": 1.2637743949890137,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 0,
+          "micro": 2,
+          "compute_loss": 1.3709028959274292,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 1,
+          "micro": 3,
+          "compute_loss": 2.718609094619751,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 1,
+          "micro": 4,
+          "compute_loss": 0.9006608724594116,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 2,
+          "micro": 5,
+          "compute_loss": 3.2108561992645264,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 2,
+          "micro": 6,
+          "compute_loss": 0.8582590818405151,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 3,
+          "micro": 7,
+          "compute_loss": 4.2566237449646,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 3,
+          "micro": 8,
+          "compute_loss": 1.1650891304016113,
+          "num_items_in_batch": null
+        }
+      ],
+      "initialization": {
+        "initial_adapter_tensor_sha256": "3bf6a156850eca6cc0a5a0f914ed9eae38002687fc94f6ec585a1dbcd321820f",
+        "snapshot_sha256": "c56d3f34fbb0d1b4001c77fa2eba35eb5ad4f88e91a2e94c5db38e34ba30809a",
+        "micro_rng_seed_base": 420000,
+        "lora_dropout": 0.05,
+        "protocol": "Shared exact LoRA initialization and explicit per-microbatch CPU/CUDA seed control; not a passive observer operation"
+      }
+    }
+  },
+  "manual_review_scope": "First two frozen SciTLDR test IDs across all nine models; no model calls or test tuning"
+}

@@ -1,0 +1,140 @@
+{
+  "scope": "逐一语义核对给定 SciRIFF 输入与两条固定样本的九组输出；不代表全部 576 条的事实可靠性，不是对原论文全部实验的外部核查。",
+  "selection": "前两个冻结 SciTLDR 测试 ID，按原数据顺序选取；不根据模型输出挑例子。",
+  "examples_sha256": "e526ab70150b5731aa3c9253e6e7258dcf2828e24cb84d19741b414123ae728a",
+  "n": 18,
+  "verdict_counts": {
+    "SUPPORTED": 9,
+    "SUPPORTED_CORE_WITH_CAUTION": 1,
+    "SCOPE_OVERSTATEMENT": 8
+  },
+  "checks": [
+    {
+      "sample_id": "scitldr_aic:test:76",
+      "model": "BASE",
+      "prediction_sha256": "780829865fb5a27cbae9713978409b3f2e593a445d0f759e0a886b8ef56eae1c",
+      "verdict": "SUPPORTED_CORE_WITH_CAUTION",
+      "note": "中间层、编译器、跨硬件/库及 CPU/GPU 加速的主贡献与输入吻合。训练优化属于设计目标；不要把此摘要当作训练加速已有独立测速证据。未捏造加速数字。"
+    },
+    {
+      "sample_id": "scitldr_aic:test:76",
+      "model": "G00",
+      "prediction_sha256": "790f382df86cd509b976e92bafc8a4dbc5fca5f2d35f106ff428993b2ec39c9b",
+      "verdict": "SCOPE_OVERSTATEMENT",
+      "note": "中间层与跨平台主贡献吻合，但结尾将显著加速扩展为 prediction/training 或 training/inference 两者均已取得。给定输入只列 inference/batched-prediction 的测速，未列 training 测速，故该范围扩大缺少支持。未捏造具体倍数。"
+    },
+    {
+      "sample_id": "scitldr_aic:test:76",
+      "model": "G01",
+      "prediction_sha256": "ba10b9d848d2647314bafc25e37d12eeb2d980e20638bb6c46d30ed389a9215a",
+      "verdict": "SCOPE_OVERSTATEMENT",
+      "note": "中间层与跨平台主贡献吻合，但结尾将显著加速扩展为 prediction/training 或 training/inference 两者均已取得。给定输入只列 inference/batched-prediction 的测速，未列 training 测速，故该范围扩大缺少支持。未捏造具体倍数。"
+    },
+    {
+      "sample_id": "scitldr_aic:test:76",
+      "model": "G02",
+      "prediction_sha256": "ba10b9d848d2647314bafc25e37d12eeb2d980e20638bb6c46d30ed389a9215a",
+      "verdict": "SCOPE_OVERSTATEMENT",
+      "note": "中间层与跨平台主贡献吻合，但结尾将显著加速扩展为 prediction/training 或 training/inference 两者均已取得。给定输入只列 inference/batched-prediction 的测速，未列 training 测速，故该范围扩大缺少支持。未捏造具体倍数。"
+    },
+    {
+      "sample_id": "scitldr_aic:test:76",
+      "model": "G03",
+      "prediction_sha256": "ba10b9d848d2647314bafc25e37d12eeb2d980e20638bb6c46d30ed389a9215a",
+      "verdict": "SCOPE_OVERSTATEMENT",
+      "note": "中间层与跨平台主贡献吻合，但结尾将显著加速扩展为 prediction/training 或 training/inference 两者均已取得。给定输入只列 inference/batched-prediction 的测速，未列 training 测速，故该范围扩大缺少支持。未捏造具体倍数。"
+    },
+    {
+      "sample_id": "scitldr_aic:test:76",
+      "model": "G04",
+      "prediction_sha256": "790f382df86cd509b976e92bafc8a4dbc5fca5f2d35f106ff428993b2ec39c9b",
+      "verdict": "SCOPE_OVERSTATEMENT",
+      "note": "中间层与跨平台主贡献吻合，但结尾将显著加速扩展为 prediction/training 或 training/inference 两者均已取得。给定输入只列 inference/batched-prediction 的测速，未列 training 测速，故该范围扩大缺少支持。未捏造具体倍数。"
+    },
+    {
+      "sample_id": "scitldr_aic:test:76",
+      "model": "G05",
+      "prediction_sha256": "ba10b9d848d2647314bafc25e37d12eeb2d980e20638bb6c46d30ed389a9215a",
+      "verdict": "SCOPE_OVERSTATEMENT",
+      "note": "中间层与跨平台主贡献吻合，但结尾将显著加速扩展为 prediction/training 或 training/inference 两者均已取得。给定输入只列 inference/batched-prediction 的测速，未列 training 测速，故该范围扩大缺少支持。未捏造具体倍数。"
+    },
+    {
+      "sample_id": "scitldr_aic:test:76",
+      "model": "G06",
+      "prediction_sha256": "790f382df86cd509b976e92bafc8a4dbc5fca5f2d35f106ff428993b2ec39c9b",
+      "verdict": "SCOPE_OVERSTATEMENT",
+      "note": "中间层与跨平台主贡献吻合，但结尾将显著加速扩展为 prediction/training 或 training/inference 两者均已取得。给定输入只列 inference/batched-prediction 的测速，未列 training 测速，故该范围扩大缺少支持。未捏造具体倍数。"
+    },
+    {
+      "sample_id": "scitldr_aic:test:76",
+      "model": "G07",
+      "prediction_sha256": "790f382df86cd509b976e92bafc8a4dbc5fca5f2d35f106ff428993b2ec39c9b",
+      "verdict": "SCOPE_OVERSTATEMENT",
+      "note": "中间层与跨平台主贡献吻合，但结尾将显著加速扩展为 prediction/training 或 training/inference 两者均已取得。给定输入只列 inference/batched-prediction 的测速，未列 training 测速，故该范围扩大缺少支持。未捏造具体倍数。"
+    },
+    {
+      "sample_id": "scitldr_aic:test:481",
+      "model": "BASE",
+      "prediction_sha256": "a25cb96c1a594e989daddf65609b04fc1913129bf5753e75f2d0b071fb790556",
+      "verdict": "SUPPORTED",
+      "note": "关于 Bayesian network 表达 VAE 潜变量、联合优化网络/变分参数与拓扑、双向推断的陈述均在给定输入中；摘要较长但仍为一句，未增加给定文本外的实证结论。"
+    },
+    {
+      "sample_id": "scitldr_aic:test:481",
+      "model": "G00",
+      "prediction_sha256": "25ed78b5c19dd2cb6f46aea2ceb4ea11cb7203b4dbae499405082d785291d9d0",
+      "verdict": "SUPPORTED",
+      "note": "学习深潜变量模型中的潜变量依赖结构与输入首句及参考主贡献一致；省略 VAE/Bayesian network 细节，但未加入额外实证陈述。"
+    },
+    {
+      "sample_id": "scitldr_aic:test:481",
+      "model": "G01",
+      "prediction_sha256": "25ed78b5c19dd2cb6f46aea2ceb4ea11cb7203b4dbae499405082d785291d9d0",
+      "verdict": "SUPPORTED",
+      "note": "学习深潜变量模型中的潜变量依赖结构与输入首句及参考主贡献一致；省略 VAE/Bayesian network 细节，但未加入额外实证陈述。"
+    },
+    {
+      "sample_id": "scitldr_aic:test:481",
+      "model": "G02",
+      "prediction_sha256": "25ed78b5c19dd2cb6f46aea2ceb4ea11cb7203b4dbae499405082d785291d9d0",
+      "verdict": "SUPPORTED",
+      "note": "学习深潜变量模型中的潜变量依赖结构与输入首句及参考主贡献一致；省略 VAE/Bayesian network 细节，但未加入额外实证陈述。"
+    },
+    {
+      "sample_id": "scitldr_aic:test:481",
+      "model": "G03",
+      "prediction_sha256": "25ed78b5c19dd2cb6f46aea2ceb4ea11cb7203b4dbae499405082d785291d9d0",
+      "verdict": "SUPPORTED",
+      "note": "学习深潜变量模型中的潜变量依赖结构与输入首句及参考主贡献一致；省略 VAE/Bayesian network 细节，但未加入额外实证陈述。"
+    },
+    {
+      "sample_id": "scitldr_aic:test:481",
+      "model": "G04",
+      "prediction_sha256": "25ed78b5c19dd2cb6f46aea2ceb4ea11cb7203b4dbae499405082d785291d9d0",
+      "verdict": "SUPPORTED",
+      "note": "学习深潜变量模型中的潜变量依赖结构与输入首句及参考主贡献一致；省略 VAE/Bayesian network 细节，但未加入额外实证陈述。"
+    },
+    {
+      "sample_id": "scitldr_aic:test:481",
+      "model": "G05",
+      "prediction_sha256": "25ed78b5c19dd2cb6f46aea2ceb4ea11cb7203b4dbae499405082d785291d9d0",
+      "verdict": "SUPPORTED",
+      "note": "学习深潜变量模型中的潜变量依赖结构与输入首句及参考主贡献一致；省略 VAE/Bayesian network 细节，但未加入额外实证陈述。"
+    },
+    {
+      "sample_id": "scitldr_aic:test:481",
+      "model": "G06",
+      "prediction_sha256": "25ed78b5c19dd2cb6f46aea2ceb4ea11cb7203b4dbae499405082d785291d9d0",
+      "verdict": "SUPPORTED",
+      "note": "学习深潜变量模型中的潜变量依赖结构与输入首句及参考主贡献一致；省略 VAE/Bayesian network 细节，但未加入额外实证陈述。"
+    },
+    {
+      "sample_id": "scitldr_aic:test:481",
+      "model": "G07",
+      "prediction_sha256": "25ed78b5c19dd2cb6f46aea2ceb4ea11cb7203b4dbae499405082d785291d9d0",
+      "verdict": "SUPPORTED",
+      "note": "学习深潜变量模型中的潜变量依赖结构与输入首句及参考主贡献一致；省略 VAE/Bayesian network 细节，但未加入额外实证陈述。"
+    }
+  ],
+  "used_for_hyperparameter_or_test_selection": false
+}

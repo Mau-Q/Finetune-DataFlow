@@ -1,149 +1,194 @@
 {
-  "status": "MAC_WORK_COMPLETED_SERVER_RECONCILIATION_PENDING",
-  "evidence_boundary": "Current school status after network loss is unknown; no core8 GPU acceptance or base-versus-adapter metrics claimed.",
-  "recorded_at": "2026-10-23T18:50:10.072711+08:00",
-  "baseline_commit": "72bf9a6",
-  "branch": "codex/personal-api-execution",
+  "status": "CORE8_EXECUTION_AND_FROZEN_EVALUATION_VERIFIED_WITH_LIMITATION",
+  "recorded_at": "2026-10-23T20:43:45.865473+08:00",
+  "evidence_boundary": "Actual direct DataFlex CLI GPU2 execution and frozen generation verified; separate G06/G07 trajectory gradient attribution remains inconclusive. No algorithm ranking, platform SSH, or P2/P3 claim.",
+  "previous_mac_only_snapshot_commit": "4070b69",
+  "deployed_dataflex_source_baseline_commit": "4070b69",
   "data": {
-    "status": "FROZEN_ON_SCHOOL_MAC_COPY_CLEANED",
-    "dataset": "allenai/SciRIFF",
+    "status": "FROZEN_IDENTITY_REVERIFIED",
     "revision": "eddf83df1ab4acf1ead5b81898dd4c7e7450050e",
     "counts": {
       "train": 256,
       "validation": 32,
       "test": 64
     },
-    "manifest": "evidence-20261023/data-manifest.json",
     "manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
-    "max_full_sequence_tokens": 1024,
+    "max_full_training_sequence_tokens": 1024,
     "task_substitution": {
-      "from": "covid_deepset_qa",
-      "to": "bioasq_factoid_qa",
-      "task_family_changed": "extractive QA to abstractive short-answer QA; same planned EM/token-F1 scoring form"
+      "original": "covid_deepset_qa",
+      "replacement": "bioasq_factoid_qa",
+      "reason": "1024-token intact filtering leaves original 1/1/2 rows; qasper_extractive_qa has zero fitting rows. Replacement preserves short-answer QA and EM/token-F1 scoring but is labeled qa.abstractive by SciRIFF, not extractive."
     },
-    "document_disjointness": "Not proven: export lacks original document IDs; known exact input/context repeats excluded."
-  },
-  "gates": "See evidence-20261023/observed-gates.json; representative B2 audit/reload and scoring results require school readback.",
-  "last_observed_background_stage": "gates (GATE2-B1 reload); no automatic transition to core/evaluate",
-  "remote_monitor": {
-    "status": "UNKNOWN_AFTER_NETWORK_LOSS",
-    "second_attempt_pid_at_start": 17225,
-    "bounded_samples": 3600,
-    "interval_seconds": 5
+    "document_disjointness": "Not proven: source export lacks original document IDs"
   },
   "core_runs": [
     {
       "id": "G00",
-      "status": "NOT_RUN",
-      "planned_optimizer_updates": 24
+      "attempt": "attempt1",
+      "optimizer_updates": 24,
+      "sample_presentations": 96,
+      "mechanism_status": "MECHANISM_OBSERVED",
+      "adapter_reload": "VERIFIED_WITH_64_PREDICTIONS",
+      "paired_trajectory_status": null
     },
     {
       "id": "G01",
-      "status": "NOT_RUN",
-      "planned_optimizer_updates": 24
+      "attempt": "attempt1",
+      "optimizer_updates": 24,
+      "sample_presentations": 96,
+      "mechanism_status": "MECHANISM_OBSERVED",
+      "adapter_reload": "VERIFIED_WITH_64_PREDICTIONS",
+      "paired_trajectory_status": null
     },
     {
       "id": "G02",
-      "status": "NOT_RUN",
-      "planned_optimizer_updates": 24
+      "attempt": "attempt1",
+      "optimizer_updates": 24,
+      "sample_presentations": 96,
+      "mechanism_status": "MECHANISM_OBSERVED",
+      "adapter_reload": "VERIFIED_WITH_64_PREDICTIONS",
+      "paired_trajectory_status": null
     },
     {
       "id": "G03",
-      "status": "NOT_RUN",
-      "planned_optimizer_updates": 24
+      "attempt": "attempt1",
+      "optimizer_updates": 24,
+      "sample_presentations": 96,
+      "mechanism_status": "MECHANISM_OBSERVED",
+      "adapter_reload": "VERIFIED_WITH_64_PREDICTIONS",
+      "paired_trajectory_status": null
     },
     {
       "id": "G04",
-      "status": "NOT_RUN",
-      "planned_optimizer_updates": 24
+      "attempt": "attempt1",
+      "optimizer_updates": 24,
+      "sample_presentations": 96,
+      "mechanism_status": "MECHANISM_OBSERVED",
+      "adapter_reload": "VERIFIED_WITH_64_PREDICTIONS",
+      "paired_trajectory_status": null
     },
     {
       "id": "G05",
-      "status": "NOT_RUN",
-      "planned_optimizer_updates": 24
+      "attempt": "attempt1",
+      "optimizer_updates": 24,
+      "sample_presentations": 96,
+      "mechanism_status": "MECHANISM_OBSERVED",
+      "adapter_reload": "VERIFIED_WITH_64_PREDICTIONS",
+      "paired_trajectory_status": null
     },
     {
       "id": "G06",
-      "status": "NOT_RUN",
-      "planned_optimizer_updates": 24
+      "attempt": "attempt4",
+      "optimizer_updates": 24,
+      "sample_presentations": 96,
+      "mechanism_status": "MECHANISM_OBSERVED",
+      "adapter_reload": "VERIFIED_WITH_64_PREDICTIONS",
+      "paired_trajectory_status": null
     },
     {
       "id": "G07",
-      "status": "NOT_RUN",
-      "planned_optimizer_updates": 24
+      "attempt": "attempt2",
+      "optimizer_updates": 24,
+      "sample_presentations": 96,
+      "mechanism_status": "MECHANISM_OBSERVED",
+      "adapter_reload": "VERIFIED_WITH_64_PREDICTIONS",
+      "paired_trajectory_status": "INCONCLUSIVE_WARMUP_MISMATCH"
     }
   ],
+  "gates": {
+    "microbatch1_and2_1024": "TRAINED_SAVED_RELOADED_WITH_NATIVE_NO_THINK",
+    "scoring_batch_consistency": "PASS_AT_PREDECLARED_ATOL_0.03_RTOL_0.01",
+    "evidence_directory": "evidence-20261023/final"
+  },
   "full_model_evaluation": {
-    "status": "NOT_RUN",
-    "planned_sample_predictions": 576,
+    "status": "VERIFIED",
+    "models": 9,
     "per_model_test_count": 64,
-    "models": 9
+    "predictions": 576,
+    "prediction_identity": "Frozen IDs/references and matching adapter SHA-256 verified",
+    "reasoning_tag_outputs": 0,
+    "empty_outputs": 0
   },
-  "extra_training_work": {
-    "completed_gate_optimizer_updates": 8,
-    "core_optimizer_updates": 0,
-    "failed_pretraining_attempts_retained_on_school": true
+  "extra_work": {
+    "core_optimizer_updates": 192,
+    "gate_optimizer_updates": 8,
+    "superseded_pair_optimizer_updates": 48,
+    "all_observed_optimizer_updates": 248,
+    "all_observed_train_presentations": 992,
+    "all_generated_prediction_rows_including_gates": 584,
+    "same_forward_probe_optimizer_updates": 0
   },
-  "local_validation": {
-    "dataflex_unittest": {
+  "inconclusive": [
+    {
+      "name": "G07",
+      "scope": "Separate G06/G07 trajectory gradient attribution",
+      "reason": "INCONCLUSIVE; do not attribute separate trajectory differences solely to weights",
+      "separate_same_forward_weight_effect_verified": true
+    }
+  ],
+  "validation": {
+    "mac_execution_contracts": {
+      "total": 21,
+      "passed": 20,
+      "skipped": 1,
+      "skip_reason": "Actual PEFT unavailable"
+    },
+    "school_execution_contracts": {
+      "total": 21,
+      "passed": 21,
+      "skipped": 0
+    },
+    "mac_dataflex": {
       "total": 16,
       "passed": 11,
       "skipped": 5,
-      "reason": "Actual LLaMA-Factory unavailable on Mac"
+      "skip_reason": "Actual LLaMA-Factory unavailable"
     },
-    "execution_contracts_and_materialization": {
-      "total": 17,
-      "passed": 17
+    "school_dataflex": {
+      "total": 16,
+      "passed": 16,
+      "skipped": 0
     },
     "script_compilation": "PASS",
-    "host_python36_syntax": "PASS",
-    "wheel_source_comparison": {
-      "files": 75,
-      "status": "PASS"
-    },
-    "wheel_isolated_import": "PASS",
-    "full_repository_regression": "NOT_RUN: changes scoped to DataFlex and standalone execution tooling"
+    "host_python36_syntax": "PASS: five host scripts",
+    "full_repository_regression": "NOT_RUN: follow-up changes confined to standalone experiment tools"
   },
-  "school_cpu_validation_before_disconnect": {
-    "total": 16,
-    "passed": 16,
-    "skipped": 0,
-    "cuda_hidden": true,
-    "not_gpu_acceptance": true,
-    "limitation": "School suite predates offline-only weak-reference lifecycle assertion and current runner changes; those have Mac checks only."
+  "school_source": {
+    "dataflex_version": "1.1.0+dataflow.20261023.1",
+    "files_compared": 75,
+    "installed_and_platform_match_run": true,
+    "platform_training_executor_acceptance": "NOT_RUN"
   },
-  "local_offline_wheel": "outputs/dataflex-core8-20261023/offline/dataflex-1.1.0+dataflow.20261023.1-py3-none-any.whl",
-  "local_release_version": "1.1.0+dataflow.20261023.1",
-  "school_last_observed_version": "1.1.0+dataflow.20261023 with graph-release file copied; no final hash readback",
-  "offline_only_changes_not_yet_deployed": [
-    "execution-v2 configuration and attempt cache boundaries",
-    "stricter mask/source manifest observations",
-    "prerequisite and artifact identity enforcement",
-    "evaluation attempt pointer and data binding",
-    "independent delta selection audit",
-    "1.1.0+dataflow.20261023.1 wheel/version"
-  ],
+  "remote_monitor": {
+    "pid": 17225,
+    "action": "STOPPED_OWN_VERIFIED_MONITOR",
+    "command": "python3 /sharedata/home/huruiqian/DataFlow/environments/qwen35-9b/strategy-20261023/driver-monitor.py "
+  },
   "mac_cleanup": {
-    "task_download_transfer_deleted": true,
-    "server_hashes_verified_before_delete": 5,
-    "temporary_build_and_unpack_directories_removed": true,
-    "unuploaded_small_wheel_retained_for_required_transfer": true,
-    "preexisting_data_models_projects_results_deleted": false
+    "temporary_dataset_and_transfer_copies_deleted_after_server_hash_check": true,
+    "temporary_wheel_deleted_after_server_hash_check": true,
+    "preexisting_user_files_deleted": false
   },
   "preserved_user_change": " D pipelines/SFT-PIPELINE-OPERATORS.md",
-  "network_error": "ssh: connect to host 192.168.247.161 port 22: Operation timed out",
-  "source_sha256": {
-    "deploy/plans/dataflex-strategy-20261023/audit_observations.py": "4630ed0955ba494d20e707b19a1d561335b7581219eb24f6abbb9ec0a74fcab4",
-    "deploy/plans/dataflex-strategy-20261023/configure_execution.py": "06f64fe0dd614c683e4900abd94b8e72a16105710ba570e071222fe04b77f0cc",
-    "deploy/plans/dataflex-strategy-20261023/driver_monitor.py": "038dd0e6dd6f3c7fc16aad9c630a42d04f53134519837e67779193dd94d88954",
-    "deploy/plans/dataflex-strategy-20261023/evaluate_frozen.py": "35cfce89f017a0ac157817bd16cbd2a432423a8cf2dd5909abd47bc80892be19",
-    "deploy/plans/dataflex-strategy-20261023/materialize_configs.py": "cb0bb9d80476194d258ab5995aabe5dbe916edc545c51ff676005ebd1a261a52",
-    "deploy/plans/dataflex-strategy-20261023/observed_run.py": "eec2afeced2f27bae45762c988179fe9f0017f0c67b93d2486708189ac108bb5",
-    "deploy/plans/dataflex-strategy-20261023/prepare_gate_representative.py": "92cfd32b93857727c368902c6f28494d761c1b36d65a083bf61db2070ca6f36c",
-    "deploy/plans/dataflex-strategy-20261023/prepare_real_data.py": "3740ce75cf8f938ebbc64d3e0af71d975870dae1a988525829150092c7c7c1e8",
-    "deploy/plans/dataflex-strategy-20261023/run_core8_suite.py": "90477bf216687a1e177a41d1a9c887eaca8f250068619a54e31f43a2cd8a5de9",
-    "deploy/plans/dataflex-strategy-20261023/test_execution_contracts.py": "78b8e4950291d34b27298f8eb90aebd2d3d54c3b1b5478aabf3632fa409ed64f",
-    "deploy/plans/dataflex-strategy-20261023/test_materialize_configs.py": "ae27164c4e12232d941fadb55616dfe69625e96888784f1096011d8d2fdef955"
-  },
-  "report": "../../../docs/training/dataflex-core8-progress-20261023.md"
+  "report": "../../../docs/training/dataflex-core8-results-20261023.md",
+  "results_summary": "evidence-20261023/final/results-summary.json",
+  "final_server_state": "evidence-20261023/final/final-state.json",
+  "source_scripts_sha256": {
+    "audit_observations.py": "01636f1ef493ed67034bfaf10f7f6942c2fa2c03d171005792a2f74f221b22cf",
+    "capture_provenance.py": "26822af251f9f1672c87d06e8d3b5e0ef94115433219e0cb10a253fd5d5857b0",
+    "collect_auxiliary.py": "de21f1da2ad696d6a7331505aab1e29e53c27977e5833a1c36c5e1bbe62b1c00",
+    "configure_execution.py": "06f64fe0dd614c683e4900abd94b8e72a16105710ba570e071222fe04b77f0cc",
+    "driver_monitor.py": "038dd0e6dd6f3c7fc16aad9c630a42d04f53134519837e67779193dd94d88954",
+    "evaluate_frozen.py": "457ed4f40004b7ec6743a9e457d05f3230c065548f8508be92d893f4b844dae2",
+    "finalize_evidence.py": "071ac9b679f70dc13132ea6819edd7bbfb84da0b01049feb467c3e4fb268aad5",
+    "materialize_configs.py": "cb0bb9d80476194d258ab5995aabe5dbe916edc545c51ff676005ebd1a261a52",
+    "observed_run.py": "aefc5971167360a77a9522ebd445dfd7eb81585f9945933f96dd1cd946355227",
+    "prepare_gate_representative.py": "92cfd32b93857727c368902c6f28494d761c1b36d65a083bf61db2070ca6f36c",
+    "prepare_real_data.py": "3740ce75cf8f938ebbc64d3e0af71d975870dae1a988525829150092c7c7c1e8",
+    "probe_paired_forward.py": "fa704778419d723027a8d7a2f6fde05c5066460c1938f8ef996dcc2677348de2",
+    "run_core8_suite.py": "33ed7663dbf21e236c577e7b07967c9947960111bbd43294dc3bc5c6d5483d04",
+    "summarize_results.py": "4781f2877a24f098febc3c0a9a1c325d1f6ef92f1c583a6533914811f860c308",
+    "test_execution_contracts.py": "60cc1a3892452e2a12a6a6fb9270c9cd189cd9c47ddc287b2f12a61136ff95ff",
+    "test_materialize_configs.py": "ae27164c4e12232d941fadb55616dfe69625e96888784f1096011d8d2fdef955"
+  }
 }
