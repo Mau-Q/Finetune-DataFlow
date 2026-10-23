@@ -19,3 +19,7 @@
 暂停证据：`deploy/plans/dataflex-strategy-20261023/evidence-20261023/uniform-core8/pause-receipt.json`，含 G00–G03 原审计和资源记录、进程退出与容器状态。远程运行根目录：`/sharedata/home/huruiqian/DataFlow/runs/qwen35-9b/20261022-smoke/strategy-20261023/uniform-core8-20261023`。
 
 本轮脚本此前完成本机 27 通过 / 1 因缺少实际 PEFT 跳过、学校环境 28 全通过的 CPU 合约检查及语法检查。它们不代表未完成训练或评测通过。原用户改动 `pipelines/SFT-PIPELINE-OPERATORS.md` 的删除保留。
+
+## 后续：共同预热差异已定位并修复
+
+已完成 G01/G02 数值调查，见 [定位与修复报告](dataflex-g01-g02-numerical-resolution-20261023.md)。新增 FLA 配置选择控制后，三个独立进程的 4 步共同预热逐项一致。本文的暂停快照继续保留；旧 cohort 使用较早的协议，尚未恢复整组训练与评测，不能直接与新协议结果拼接作严格比较。

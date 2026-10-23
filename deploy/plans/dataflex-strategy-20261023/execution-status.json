@@ -1,7 +1,7 @@
 {
-  "status": "PAUSED_BY_USER",
-  "recorded_at": "2026-10-23T14:59:17.021473+00:00",
-  "evidence_boundary": "Paused by user during unified rerun. Prior G06/G07 accepted results remain preserved. New G00–G03 completed training audits; G04 interrupted after step 13, checkpoint 12 has adapter only and no optimizer state. No new evaluation or final unified comparison. G01/G02 preselection numerical discrepancy remains unresolved; no unique CUDA-kernel attribution.",
+  "status": "G01_G02_NUMERICAL_WARMUP_RESOLVED_CORE8_RERUN_PENDING",
+  "recorded_at": "2026-10-23T15:51:00.388252+00:00",
+  "evidence_boundary": "FLA process-local autotuning configuration was uncontrolled. Fixed FLA configuration selection verified in three independent 4-step warmup processes; complete strategy training, scoring and evaluation under this extended protocol remain unverified.",
   "report": "../../../docs/training/dataflex-g06-g07-gradient-resolution-20261023.md",
   "gradient_resolution": {
     "status": "PAIR_GRADIENT_MISMATCH_RESOLVED_AND_RELOAD_VERIFIED",
@@ -34,7 +34,7 @@
     "strict_original_gradient_audit_passed": true,
     "individual_cuda_kernel_uniquely_isolated": false
   },
-  "total_observed_optimizer_updates": 476,
+  "total_observed_optimizer_updates": 512,
   "total_generated_rows_including_gates": 712,
   "validation": {
     "mac": {
@@ -283,5 +283,29 @@
     "new_evaluation_predictions": 0,
     "remaining_work": "G04/G05 completion, BASE/G00–G05 evaluation, unified comparison; G01/G02 numerical reproducibility remains unresolved",
     "report": "../../../docs/training/dataflex-uniform-core8-progress-20261023.md"
+  },
+  "preselection_resolution": {
+    "status": "G01_G02_NUMERICAL_WARMUP_RESOLVED",
+    "report": "../../../docs/training/dataflex-g01-g02-numerical-resolution-20261023.md",
+    "verdict": "evidence-20261023/preselection-resolution/resolution-verdict.json",
+    "evidence_bundle": "evidence-20261023/preselection-resolution/evidence-bundle.json",
+    "protocol": "torch-math-cublas4096-v2 plus fla-compile-ordered-config-v3",
+    "previous_total_optimizer_updates": 476,
+    "new_observed_optimizer_updates": 36,
+    "new_predictions": 0,
+    "scope": "4 updates / 16 microbatches per process; G01 repeat and G01/G02 preselection comparison; no full training or evaluation",
+    "validation": {
+      "mac_cpu_contracts": {
+        "total": 7,
+        "passed": 7
+      },
+      "school_cpu_contracts": {
+        "total": 7,
+        "passed": 7
+      },
+      "syntax": "PASS"
+    },
+    "original_uniform_cohort": "Historical incomplete results retained; do not merge into a strict comparison under the extended protocol",
+    "remote_diagnostic_disk_KiB": 152114
   }
 }

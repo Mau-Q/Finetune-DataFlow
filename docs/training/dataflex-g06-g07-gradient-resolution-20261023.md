@@ -1,5 +1,7 @@
 # G06/G07 梯度不一致：定位、修复与完整重跑
 
+> 后续范围说明：本报告验收的是所记录的 G06/G07 配对运行。之后发现 microbatch 1 的新进程仍受 FLA 自动调优配置影响，并已完成独立 4 步修复验收，见 [G01/G02 数值调查](dataflex-g01-g02-numerical-resolution-20261023.md)。原配对证据保留，不扩张为全部八组均已受控。
+
 日期：2026-10-23（Asia/Shanghai）。**当前 node01 / GPU 2 / 固定软件栈中的配对问题已通过完整重跑解决。** 两组各完成 24 次更新，原严格梯度审计直接通过；两个新 adapter 各完成 64 条保存重载预测。没有关闭 dropout，没有放宽容差，也没有用 same-forward 诊断代替独立轨迹。
 
 紧凑机器证据：[resolution-summary.json](../../deploy/plans/dataflex-strategy-20261023/evidence-20261023/gradient-resolution/resolution-summary.json)、[resolution-verdict.json](../../deploy/plans/dataflex-strategy-20261023/evidence-20261023/gradient-resolution/resolution-verdict.json)。[初轮报告](dataflex-core8-results-20261023.md) 与旧 adapter、分数和失败记录保留原样。
