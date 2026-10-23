@@ -1,0 +1,44 @@
+{
+  "status": "PREPARED_NOT_TRAINED",
+  "protocol": "torch-math-cublas4096-v2",
+  "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+  "new_training_runs": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05"
+  ],
+  "new_evaluations": [
+    "BASE",
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05"
+  ],
+  "reused_runs": [
+    "G06",
+    "G07"
+  ],
+  "reused_pair_root": "/runs/strategy-20261023/gradient-resolution-v2-20261023",
+  "reused_pair_verdict_sha256": "f4f28e2a6b9e8421f75562f06f327a4e94977cd4237426e47534ecd5c60a68b1",
+  "reused_pair_summary_sha256": "fe10623f76772a4d26c6bc37c1b5e1f3102a7fb90b31fe45baee1c9ff36d8176",
+  "initial_adapter_tensor_sha256": "3bf6a156850eca6cc0a5a0f914ed9eae38002687fc94f6ec585a1dbcd321820f",
+  "source_config_sha256": {
+    "G00": "d8b1aa925640536cf3f8e9e2495dbbe1a2017f444de4389fef9b849f8c18d9fd",
+    "G01": "c1b27a7046394b7c30be8e85c03a5c1d578e61366f60470c1c9ce66988cea0af",
+    "G02": "6fbaf47790ac058d12a127e69e3e566bdc96b72dd25300af31f7a88a702a5774",
+    "G03": "74be48ff3618d50a9c8991c17afceed7bb84f84e67fd476c9a073d4c960c3276",
+    "G04": "8257004296e83218d6ca6abcb5b11e35d45e3a9926ec964eff35f5b9782b4a05",
+    "G05": "491e62cc06faf68f468989cbe7084fbd3e4a96dbfd5ae456026617ddca4da2ad"
+  },
+  "new_optimizer_updates": 144,
+  "new_predictions": 448,
+  "cohort_updates": 192,
+  "cohort_predictions": 576,
+  "batch_scope": "Effective batch 4 throughout; G00-G05 microbatch1/accumulation4, G06-G07 microbatch2/accumulation2. Required by existing ODM and nonuniform weighting implementations.",
+  "script_sha256": "9cda7b6ab0318dfbbb23b67805a930e42b8632c9eaabc14699eaa22f239195ba"
+}

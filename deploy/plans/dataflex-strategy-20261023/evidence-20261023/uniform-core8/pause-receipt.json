@@ -1,0 +1,690 @@
+{
+  "status": "PAUSED_BY_USER",
+  "recorded_at": "2026-10-23T14:59:17.021473+00:00",
+  "host": "node01",
+  "user": "huruiqian",
+  "controller_pid": 131417,
+  "controller_absent": true,
+  "training_host_pid": 131461,
+  "training_process_absent": true,
+  "signals_sent": "SIGTERM to verified controller and exact G04 runtime process",
+  "container_processes": "PID                 PPID                COMMAND\n2151                2122                /usr/bin/sleep infinity\n",
+  "containers": "/rui-dataflex-strategy-gpu2-20261023 running\n/rui-qwen35-9b-smoke-20261022 running\n",
+  "completed_training": {
+    "G00": {
+      "audit": {
+        "status": "MECHANISM_OBSERVED",
+        "name": "G00",
+        "optimizer_steps": 24,
+        "sample_presentations": 96,
+        "distinct_samples": 96,
+        "source_counts": {
+          "genia_ner": 18,
+          "bioasq_factoid_qa": 19,
+          "scicite_classification": 30,
+          "scitldr_aic": 29
+        },
+        "effective_tokens": 46963,
+        "supervised_tokens": 3776,
+        "length_min": 79,
+        "length_max": 1024,
+        "supervised_max": 286,
+        "strategy_boundaries": [],
+        "stage_consumption": {},
+        "weight_batches": 0,
+        "gradient_observations": 192,
+        "resource": {
+          "status": "TRAIN_VERIFIED",
+          "error": null,
+          "seconds": 223.6297483020462,
+          "peak_allocated_gib": 11.258318901062012,
+          "peak_reserved_gib": 12.390625,
+          "allocator_fraction": 0.42,
+          "gpu_name": "NVIDIA L40",
+          "config_sha256": "035c0a324f42436f545d534a635d8fcd6ee5016f3b5e019d74dd0750b56be469",
+          "adapter_sha256": "8df72c9d770e11dc2de7c99686cd71dfbb76de3ff3dfc6e547f7d8dbaa31bf7d",
+          "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+          "optimizer_steps": 24,
+          "nonzero_lora_b_tensors": 248,
+          "losses": [
+            2.8317983150482178,
+            3.231813907623291,
+            2.789733648300171,
+            3.3728883266448975,
+            2.4453961849212646,
+            2.6179308891296387,
+            1.6782829761505127,
+            0.9344936609268188,
+            1.5578317642211914,
+            1.573819875717163,
+            0.6452638506889343,
+            0.5046974420547485,
+            1.0345431566238403,
+            1.6206754446029663,
+            0.39488685131073,
+            1.0225043296813965,
+            0.9636128544807434,
+            1.1768635511398315,
+            2.256917953491211,
+            0.8622460961341858,
+            1.0238933563232422,
+            0.4540901780128479,
+            0.3717386722564697,
+            0.9096810817718506
+          ]
+        },
+        "observer_identity_rng_checks": true,
+        "reload_status": "NOT_YET_VERIFIED",
+        "source_scope": "Direct DataFlex CLI; no platform SSH acceptance",
+        "limitations": [
+          "Single run, 24 updates maximum, engineering evidence only",
+          "Original document IDs unavailable in released SciRIFF export; different-context paper overlap unresolved"
+        ],
+        "paired_control": null,
+        "scoring_seconds": 0,
+        "observation_sha256": {
+          "diagnostic-attention.jsonl": "d039ba9e2099c9decf475827e3117e23b7e171cb9d488d826c5077be0698bef5",
+          "backward-input.jsonl": "f109f8ad13170e650459c9b53098bbbb406dc4e99c0bf28184e71b4292a55f3a",
+          "diagnostic-runtime.jsonl": "4df384cc60cd433c96f393baec5530ca6a2fa8ba12a41b4dd50171c491722449",
+          "diagnostic-gradient.jsonl": "4d8970ffa84cd29d0c6da948dcceb7bf8c6407a98a66e3c227d7de122d755bea",
+          "diagnostic-dropout.jsonl": "1fe923328dae714b70fbb5c0cfabb6dd1fe73ee45800019c650ce529ab7cf111",
+          "events.jsonl": "2d9cb9f5b4947f65f78cfceaf1b049d9457ee3b5d122bf8ebb2cec499c8a7b68",
+          "paired-rng.jsonl": "b6019820e240ba3dabb5c595bd7a20bbbee08ec338227ea76d9e379ca6d4478f",
+          "optimizer-gradients.jsonl": "48c0e15fd0b8d95b9551d602c1b8590a9210f1de4f092475759775ece16228a1",
+          "backward.jsonl": "a415e641e70b0e18042e8919388930bb1d77af5504d8b31967fe01c4f392899a",
+          "gradient.jsonl": "64476caf7bedf2b02184ffa64b224dc3eb55e827604d55b5afdbb84a2535a683",
+          "consumption.jsonl": "173f33f39320a4a3e4210b799827058d6388a9dfc27d95a3f45fdd1456750ffc",
+          "loss.jsonl": "c68a1f38a1cb5948d451149786ccd299dd901861cef9e8dad15dfea493ebd9b0"
+        }
+      },
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 223.6297483020462,
+        "peak_allocated_gib": 11.258318901062012,
+        "peak_reserved_gib": 12.390625,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "035c0a324f42436f545d534a635d8fcd6ee5016f3b5e019d74dd0750b56be469",
+        "adapter_sha256": "8df72c9d770e11dc2de7c99686cd71dfbb76de3ff3dfc6e547f7d8dbaa31bf7d",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          2.8317983150482178,
+          3.231813907623291,
+          2.789733648300171,
+          3.3728883266448975,
+          2.4453961849212646,
+          2.6179308891296387,
+          1.6782829761505127,
+          0.9344936609268188,
+          1.5578317642211914,
+          1.573819875717163,
+          0.6452638506889343,
+          0.5046974420547485,
+          1.0345431566238403,
+          1.6206754446029663,
+          0.39488685131073,
+          1.0225043296813965,
+          0.9636128544807434,
+          1.1768635511398315,
+          2.256917953491211,
+          0.8622460961341858,
+          1.0238933563232422,
+          0.4540901780128479,
+          0.3717386722564697,
+          0.9096810817718506
+        ]
+      }
+    },
+    "G01": {
+      "audit": {
+        "status": "MECHANISM_OBSERVED",
+        "name": "G01",
+        "optimizer_steps": 24,
+        "sample_presentations": 96,
+        "distinct_samples": 80,
+        "source_counts": {
+          "bioasq_factoid_qa": 27,
+          "scicite_classification": 20,
+          "genia_ner": 29,
+          "scitldr_aic": 20
+        },
+        "effective_tokens": 46919,
+        "supervised_tokens": 4605,
+        "length_min": 114,
+        "length_max": 1021,
+        "supervised_max": 286,
+        "strategy_boundaries": [
+          4,
+          9,
+          14,
+          19
+        ],
+        "stage_consumption": {
+          "4": {
+            "n": 20,
+            "sources": {
+              "genia_ner": 4,
+              "bioasq_factoid_qa": 9,
+              "scitldr_aic": 3,
+              "scicite_classification": 4
+            }
+          },
+          "9": {
+            "n": 20,
+            "sources": {
+              "bioasq_factoid_qa": 4,
+              "scicite_classification": 5,
+              "genia_ner": 6,
+              "scitldr_aic": 5
+            }
+          },
+          "14": {
+            "n": 20,
+            "sources": {
+              "bioasq_factoid_qa": 7,
+              "genia_ner": 6,
+              "scicite_classification": 4,
+              "scitldr_aic": 3
+            }
+          },
+          "19": {
+            "n": 20,
+            "sources": {
+              "bioasq_factoid_qa": 5,
+              "scicite_classification": 5,
+              "scitldr_aic": 6,
+              "genia_ner": 4
+            }
+          }
+        },
+        "weight_batches": 0,
+        "gradient_observations": 192,
+        "resource": {
+          "status": "TRAIN_VERIFIED",
+          "error": null,
+          "seconds": 219.84459635894746,
+          "peak_allocated_gib": 11.35556697845459,
+          "peak_reserved_gib": 12.09375,
+          "allocator_fraction": 0.42,
+          "gpu_name": "NVIDIA L40",
+          "config_sha256": "fe574920199d3238a1926b84ae214eb267009ac45f1a205d193a817774384248",
+          "adapter_sha256": "7f675e28f8576eca309b36a76c082a57b11b24a4eb6b9545a03fe751b26c0354",
+          "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+          "optimizer_steps": 24,
+          "nonzero_lora_b_tensors": 248,
+          "losses": [
+            3.4935951232910156,
+            1.7069693803787231,
+            0.9016841053962708,
+            2.5222558975219727,
+            2.6112804412841797,
+            2.321422576904297,
+            1.62117338180542,
+            2.374533176422119,
+            1.4309260845184326,
+            1.5279868841171265,
+            1.6464836597442627,
+            0.8785445690155029,
+            0.46157896518707275,
+            1.0889610052108765,
+            0.6536130309104919,
+            1.5931446552276611,
+            0.7699790000915527,
+            1.1816555261611938,
+            1.0925798416137695,
+            0.6523862481117249,
+            0.7419082522392273,
+            0.5062761306762695,
+            0.7864903211593628,
+            1.1362526416778564
+          ]
+        },
+        "observer_identity_rng_checks": true,
+        "reload_status": "NOT_YET_VERIFIED",
+        "source_scope": "Direct DataFlex CLI; no platform SSH acceptance",
+        "limitations": [
+          "Single run, 24 updates maximum, engineering evidence only",
+          "Original document IDs unavailable in released SciRIFF export; different-context paper overlap unresolved"
+        ],
+        "paired_control": null,
+        "scoring_seconds": 0,
+        "observation_sha256": {
+          "diagnostic-attention.jsonl": "d039ba9e2099c9decf475827e3117e23b7e171cb9d488d826c5077be0698bef5",
+          "backward-input.jsonl": "b9bdd4783fef26ccf6865d6414dfd981b727101deefc977f0c4b5ee198fed93e",
+          "diagnostic-runtime.jsonl": "481ee6f451a075097c4e113062202e1fa3f530e837dd37a913aa9c02d335a01a",
+          "diagnostic-gradient.jsonl": "6b97b93498aea51d31dcbfcdb8417e19daf1a0fa4ea65d7e1f4423e9c887b42a",
+          "diagnostic-dropout.jsonl": "20c3c465e64a0b502193338da53ecda92d8ba4802d49d8d36348bf4e314e566a",
+          "strategy.jsonl": "a4d7359af935c5454be24674fa8a3dc8ec277d86b4d6583380c71793f2788533",
+          "events.jsonl": "ad77605724b6a4666a6f5d8fe6f7d3e2b01378c58f59f8ec16567cb3ee45b50e",
+          "paired-rng.jsonl": "b6019820e240ba3dabb5c595bd7a20bbbee08ec338227ea76d9e379ca6d4478f",
+          "optimizer-gradients.jsonl": "1f4c0bdf9e29f8966eb8a5ffd9675bebf075d49b5b8ba92eea0183ec30c30fa1",
+          "backward.jsonl": "97fd5742c010a1f472803b450997bf453adc13f371e1110f99833111659e77ee",
+          "gradient.jsonl": "4ba4e0ca53ee1d76035426ab485efd192404b0c0064b86955395b6c9707a2bd2",
+          "consumption.jsonl": "36c69c86c15326779074dd2d0ccc9bd8b944ec4e1c862f34fd1b88d7d1e2633c",
+          "loss.jsonl": "5bd1d75f4424a912c08cced052444a77daa0e07d3a37d5e2df00294f0e87bfe7"
+        }
+      },
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 219.84459635894746,
+        "peak_allocated_gib": 11.35556697845459,
+        "peak_reserved_gib": 12.09375,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "fe574920199d3238a1926b84ae214eb267009ac45f1a205d193a817774384248",
+        "adapter_sha256": "7f675e28f8576eca309b36a76c082a57b11b24a4eb6b9545a03fe751b26c0354",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          3.4935951232910156,
+          1.7069693803787231,
+          0.9016841053962708,
+          2.5222558975219727,
+          2.6112804412841797,
+          2.321422576904297,
+          1.62117338180542,
+          2.374533176422119,
+          1.4309260845184326,
+          1.5279868841171265,
+          1.6464836597442627,
+          0.8785445690155029,
+          0.46157896518707275,
+          1.0889610052108765,
+          0.6536130309104919,
+          1.5931446552276611,
+          0.7699790000915527,
+          1.1816555261611938,
+          1.0925798416137695,
+          0.6523862481117249,
+          0.7419082522392273,
+          0.5062761306762695,
+          0.7864903211593628,
+          1.1362526416778564
+        ]
+      }
+    },
+    "G02": {
+      "audit": {
+        "status": "MECHANISM_OBSERVED",
+        "name": "G02",
+        "optimizer_steps": 24,
+        "sample_presentations": 96,
+        "distinct_samples": 79,
+        "source_counts": {
+          "bioasq_factoid_qa": 28,
+          "scicite_classification": 15,
+          "genia_ner": 17,
+          "scitldr_aic": 36
+        },
+        "effective_tokens": 51626,
+        "supervised_tokens": 3181,
+        "length_min": 114,
+        "length_max": 1024,
+        "supervised_max": 286,
+        "strategy_boundaries": [
+          4,
+          9,
+          14,
+          19
+        ],
+        "stage_consumption": {
+          "4": {
+            "n": 20,
+            "sources": {
+              "scicite_classification": 5,
+              "genia_ner": 3,
+              "bioasq_factoid_qa": 4,
+              "scitldr_aic": 8
+            }
+          },
+          "9": {
+            "n": 20,
+            "sources": {
+              "scitldr_aic": 8,
+              "bioasq_factoid_qa": 6,
+              "scicite_classification": 4,
+              "genia_ner": 2
+            }
+          },
+          "14": {
+            "n": 20,
+            "sources": {
+              "scitldr_aic": 7,
+              "bioasq_factoid_qa": 9,
+              "scicite_classification": 3,
+              "genia_ner": 1
+            }
+          },
+          "19": {
+            "n": 20,
+            "sources": {
+              "bioasq_factoid_qa": 7,
+              "scitldr_aic": 10,
+              "genia_ner": 2,
+              "scicite_classification": 1
+            }
+          }
+        },
+        "weight_batches": 0,
+        "gradient_observations": 192,
+        "resource": {
+          "status": "TRAIN_VERIFIED",
+          "error": null,
+          "seconds": 580.6925365729257,
+          "peak_allocated_gib": 11.381677627563477,
+          "peak_reserved_gib": 12.25,
+          "allocator_fraction": 0.42,
+          "gpu_name": "NVIDIA L40",
+          "config_sha256": "5b27fe921742384ea480490d7cff0e891db2fd7d9da2cf63ca9dbd8d1a24b96a",
+          "adapter_sha256": "377595093dc57a2a28198c4897bce866c7aafc34ce8a5adaa5836541341d8f65",
+          "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+          "optimizer_steps": 24,
+          "nonzero_lora_b_tensors": 248,
+          "losses": [
+            3.495908737182617,
+            1.7099477052688599,
+            0.9067538976669312,
+            2.5235495567321777,
+            2.435784101486206,
+            4.2064104080200195,
+            3.562866687774658,
+            2.6502420902252197,
+            2.0905160903930664,
+            2.502450942993164,
+            2.887336254119873,
+            1.3442277908325195,
+            2.342984437942505,
+            1.775339126586914,
+            2.4527273178100586,
+            2.2730631828308105,
+            1.0700404644012451,
+            0.7813594341278076,
+            1.2666776180267334,
+            0.7291898727416992,
+            1.682807207107544,
+            1.4369432926177979,
+            1.3231639862060547,
+            1.0500282049179077
+          ]
+        },
+        "observer_identity_rng_checks": true,
+        "reload_status": "NOT_YET_VERIFIED",
+        "source_scope": "Direct DataFlex CLI; no platform SSH acceptance",
+        "limitations": [
+          "Single run, 24 updates maximum, engineering evidence only",
+          "Original document IDs unavailable in released SciRIFF export; different-context paper overlap unresolved"
+        ],
+        "paired_control": null,
+        "scoring_seconds": 350.48030226584524,
+        "scoring_effective_tokens": 495828,
+        "observation_sha256": {
+          "diagnostic-attention.jsonl": "d039ba9e2099c9decf475827e3117e23b7e171cb9d488d826c5077be0698bef5",
+          "backward-input.jsonl": "80e6d7d678d40173650380a4d33cf75f3a434b6319eb9dfafc715910fe5279c7",
+          "diagnostic-runtime.jsonl": "e3d1aa2d38895c5157db352d26fe2a57303cf0c52be1e530adb52cf9bab9f863",
+          "diagnostic-gradient.jsonl": "33eb43bd7fc6360ee02639bbd46d010c8682539f6071b31d5af6597928f84daf",
+          "diagnostic-dropout.jsonl": "efdf4b2fb8325e7b525ebfeef5e4676d519fc8c4ff4cbb32f3833bdf4a0efd83",
+          "strategy.jsonl": "a056ee0a9af87dc37e0411481129fcc2e40b8a1752611bceb6afcd2e4f31f171",
+          "events.jsonl": "f3f1b9f6150f8c43e5f84fc30748f0fd9fa3f9dfa6cd676ff0f9b20ac4cddee7",
+          "paired-rng.jsonl": "b6019820e240ba3dabb5c595bd7a20bbbee08ec338227ea76d9e379ca6d4478f",
+          "optimizer-gradients.jsonl": "c451fedcd633f8d7cfb20e9f9b1527f1b982a48a50e059a8e83286b6ddb1dd21",
+          "backward.jsonl": "adcecc0323a8c9ef36f4fd016324dd4cc044777110a3317e343fc8d7ed5c4314",
+          "gradient.jsonl": "d425c6d4132aa11ba43d9f15c993b1f2598c8867d3f594bf514475da93bfe723",
+          "scores.jsonl": "ec313a13f2cb1a6140054b3ae9a3aa8b775b3dce4f3cc110e6e30be5440bc077",
+          "consumption.jsonl": "2bc70ddec44b67135325d496234eacde4dc82004bf8e2f0e2c80c36ad13ac643",
+          "loss.jsonl": "4dfdc8b6f65ba6ec44d5362cb59aa864485150595817f05fd5355f4cb63cd590"
+        }
+      },
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 580.6925365729257,
+        "peak_allocated_gib": 11.381677627563477,
+        "peak_reserved_gib": 12.25,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "5b27fe921742384ea480490d7cff0e891db2fd7d9da2cf63ca9dbd8d1a24b96a",
+        "adapter_sha256": "377595093dc57a2a28198c4897bce866c7aafc34ce8a5adaa5836541341d8f65",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          3.495908737182617,
+          1.7099477052688599,
+          0.9067538976669312,
+          2.5235495567321777,
+          2.435784101486206,
+          4.2064104080200195,
+          3.562866687774658,
+          2.6502420902252197,
+          2.0905160903930664,
+          2.502450942993164,
+          2.887336254119873,
+          1.3442277908325195,
+          2.342984437942505,
+          1.775339126586914,
+          2.4527273178100586,
+          2.2730631828308105,
+          1.0700404644012451,
+          0.7813594341278076,
+          1.2666776180267334,
+          0.7291898727416992,
+          1.682807207107544,
+          1.4369432926177979,
+          1.3231639862060547,
+          1.0500282049179077
+        ]
+      }
+    },
+    "G03": {
+      "audit": {
+        "status": "MECHANISM_OBSERVED",
+        "name": "G03",
+        "optimizer_steps": 24,
+        "sample_presentations": 96,
+        "distinct_samples": 78,
+        "source_counts": {
+          "bioasq_factoid_qa": 15,
+          "scicite_classification": 21,
+          "genia_ner": 45,
+          "scitldr_aic": 15
+        },
+        "effective_tokens": 48567,
+        "supervised_tokens": 6497,
+        "length_min": 118,
+        "length_max": 1024,
+        "supervised_max": 286,
+        "strategy_boundaries": [
+          4,
+          9,
+          14,
+          19
+        ],
+        "stage_consumption": {
+          "4": {
+            "n": 20,
+            "sources": {
+              "bioasq_factoid_qa": 4,
+              "scitldr_aic": 4,
+              "scicite_classification": 6,
+              "genia_ner": 6
+            }
+          },
+          "9": {
+            "n": 20,
+            "sources": {
+              "scicite_classification": 12,
+              "genia_ner": 2,
+              "bioasq_factoid_qa": 5,
+              "scitldr_aic": 1
+            },
+            "delta_window": [
+              32,
+              83
+            ]
+          },
+          "14": {
+            "n": 20,
+            "sources": {
+              "genia_ner": 11,
+              "scitldr_aic": 7,
+              "bioasq_factoid_qa": 2
+            },
+            "delta_window": [
+              172,
+              223
+            ]
+          },
+          "19": {
+            "n": 20,
+            "sources": {
+              "genia_ner": 17,
+              "bioasq_factoid_qa": 2,
+              "scicite_classification": 1
+            },
+            "delta_window": [
+              203,
+              254
+            ]
+          }
+        },
+        "weight_batches": 0,
+        "gradient_observations": 192,
+        "resource": {
+          "status": "TRAIN_VERIFIED",
+          "error": null,
+          "seconds": 629.642934713047,
+          "peak_allocated_gib": 11.381689071655273,
+          "peak_reserved_gib": 12.25390625,
+          "allocator_fraction": 0.42,
+          "gpu_name": "NVIDIA L40",
+          "config_sha256": "2e7629f8c521c161864ae889ca9d11408afcd3597fc2ae3127e23208b08ee820",
+          "adapter_sha256": "5d88a0270ab2bfa8750b8e087574c750ae47b736f98e177c7b75075519630fcd",
+          "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+          "optimizer_steps": 24,
+          "nonzero_lora_b_tensors": 248,
+          "losses": [
+            3.494558334350586,
+            1.709131121635437,
+            0.9053187370300293,
+            2.532618999481201,
+            2.4905309677124023,
+            2.4706132411956787,
+            1.2760907411575317,
+            2.6825175285339355,
+            1.2861840724945068,
+            0.47685304284095764,
+            1.603417992591858,
+            0.9218862056732178,
+            0.2566230893135071,
+            0.7491377592086792,
+            1.8338871002197266,
+            1.0047438144683838,
+            0.48024988174438477,
+            1.0376145839691162,
+            1.1617175340652466,
+            0.6268110275268555,
+            0.6556400060653687,
+            0.5933677554130554,
+            0.9525017738342285,
+            0.4502348005771637
+          ]
+        },
+        "observer_identity_rng_checks": true,
+        "reload_status": "NOT_YET_VERIFIED",
+        "source_scope": "Direct DataFlex CLI; no platform SSH acceptance",
+        "limitations": [
+          "Single run, 24 updates maximum, engineering evidence only",
+          "Original document IDs unavailable in released SciRIFF export; different-context paper overlap unresolved"
+        ],
+        "paired_control": null,
+        "scoring_seconds": 385.6832543509081,
+        "scoring_effective_tokens": 495828,
+        "observation_sha256": {
+          "diagnostic-attention.jsonl": "d039ba9e2099c9decf475827e3117e23b7e171cb9d488d826c5077be0698bef5",
+          "backward-input.jsonl": "af723eaf5f9342d90b025b01dd28dd3370d7971aaffc58322e943aa8b7308e35",
+          "diagnostic-runtime.jsonl": "fc5c12534a71e8002da88dcfb5d382d93874201dd3ed5ea74831a33e1f75104c",
+          "diagnostic-gradient.jsonl": "3bbf90275c7f0cfddc3e9911efc37b2d07d111ff144541296b2ecf9875fa614b",
+          "diagnostic-dropout.jsonl": "22fc7e73a3379658d8281737620a064ba2aaf46f79013e473faa8a558bc76999",
+          "strategy.jsonl": "6f6889b4c77f1671b02f00b1ea08f0263476d84ef9b99d5dc03e7e3075cddd66",
+          "events.jsonl": "9cc54fabab2ad7debbb52fd9c88e7b3798afd5e47d8831d44387b13d6b6b6035",
+          "paired-rng.jsonl": "b6019820e240ba3dabb5c595bd7a20bbbee08ec338227ea76d9e379ca6d4478f",
+          "optimizer-gradients.jsonl": "ea53454fca0a2049f57cdd12d8d4e7da366073e041c329f4c502521bc60c7d58",
+          "backward.jsonl": "1e92ad4a36a9dc712b22fe31fb7e233552aafb8ff75d1f9632574107c93084ef",
+          "gradient.jsonl": "72deea69ba36ba4ad1e3ef344860bf0e5f13194eb7cbd5b3f44ef0903d6a2a9b",
+          "scores.jsonl": "68271d524e2bf4c443e0a5449c6d086bcdf51414b721e343ba89f706179599d9",
+          "consumption.jsonl": "69c76b5f1d89a3063096a8557dbdd181f4b268896aa733036e3db56e25686e82",
+          "loss.jsonl": "54daac8e44204ec63ff501eefba06e7226d4ec478b995cb6a801b63802ee3bdf"
+        }
+      },
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 629.642934713047,
+        "peak_allocated_gib": 11.381689071655273,
+        "peak_reserved_gib": 12.25390625,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "2e7629f8c521c161864ae889ca9d11408afcd3597fc2ae3127e23208b08ee820",
+        "adapter_sha256": "5d88a0270ab2bfa8750b8e087574c750ae47b736f98e177c7b75075519630fcd",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          3.494558334350586,
+          1.709131121635437,
+          0.9053187370300293,
+          2.532618999481201,
+          2.4905309677124023,
+          2.4706132411956787,
+          1.2760907411575317,
+          2.6825175285339355,
+          1.2861840724945068,
+          0.47685304284095764,
+          1.603417992591858,
+          0.9218862056732178,
+          0.2566230893135071,
+          0.7491377592086792,
+          1.8338871002197266,
+          1.0047438144683838,
+          0.48024988174438477,
+          1.0376145839691162,
+          1.1617175340652466,
+          0.6268110275268555,
+          0.6556400060653687,
+          0.5933677554130554,
+          0.9525017738342285,
+          0.4502348005771637
+        ]
+      }
+    }
+  },
+  "G04": {
+    "status": "INTERRUPTED",
+    "last_observed_optimizer_step": 13,
+    "checkpoint_step": 12,
+    "checkpoint_files": [
+      "README.md",
+      "adapter_config.json",
+      "adapter_model.safetensors",
+      "chat_template.jinja",
+      "processor_config.json",
+      "tokenizer.json",
+      "tokenizer_config.json",
+      "trainer_state.json",
+      "training_args.bin"
+    ],
+    "optimizer_state_saved": false,
+    "exact_training_resume_verified": false
+  },
+  "G05": "NOT_STARTED",
+  "new_evaluation_predictions": 0,
+  "prior_G06_G07": "PRESERVED_REUSED",
+  "new_observed_optimizer_updates": 109,
+  "runtime_root": "/sharedata/home/huruiqian/DataFlow/runs/qwen35-9b/20261022-smoke/strategy-20261023/uniform-core8-20261023",
+  "known_limitation": "G01/G02 preselection representative first-micro B gradient relative L2 differs by about 5.01%; numerical root cause not uniquely isolated. No final unified comparison exists."
+}
