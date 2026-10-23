@@ -1,0 +1,362 @@
+{
+  "captured_unix": 1792764542.229553,
+  "hostname": "node01",
+  "account": "huruiqian",
+  "containers": [
+    {
+      "name": "/rui-dataflex-strategy-gpu2-20261023",
+      "id": "7193e0ed5581e740773402a91c74a45a9399a32e0296d10f348eb2ce88399b88",
+      "running": true,
+      "network": "none",
+      "gpu_requests": [
+        {
+          "Driver": "",
+          "Count": 0,
+          "DeviceIDs": [
+            "GPU-1f7d7941-5155-1c90-819d-5bf7dbec5b18"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": {}
+        }
+      ],
+      "writable_bytes": 1689699
+    },
+    {
+      "name": "/rui-qwen35-9b-smoke-20261022",
+      "id": "3c25fe9544f9f3aec5b18ec0e62937ae066e086e174fba8f764124df0e0ed198",
+      "running": true,
+      "network": "none",
+      "gpu_requests": [
+        {
+          "Driver": "",
+          "Count": 0,
+          "DeviceIDs": [
+            "GPU-ff8b5640-bfd0-97ff-2bfc-7486717f66a0"
+          ],
+          "Capabilities": [
+            [
+              "gpu"
+            ]
+          ],
+          "Options": {}
+        }
+      ],
+      "writable_bytes": 2159258487
+    }
+  ],
+  "container_processes": "UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD\nroot                2151                2122                0                   17:39               ?                   00:00:00            /usr/bin/sleep infinity\n",
+  "gpu2": "GPU-1f7d7941-5155-1c90-819d-5bf7dbec5b18, 22931 MiB, 22442 MiB\n",
+  "source_check": {
+    "files": 75,
+    "installed_and_platform_match_initial_baseline": true
+  },
+  "execution_sources": [
+    {
+      "attempt": "gradient-diagnosis-20261023/trace-A/attempt1",
+      "source_hashes": {
+        "observer": "aefc5971167360a77a9522ebd445dfd7eb81585f9945933f96dd1cd946355227"
+      },
+      "retained_exact_source_files": {
+        "observer": [
+          "observed_run-core8-94e1c17.py"
+        ]
+      },
+      "diagnostic_runtime_hash_recorded": false
+    },
+    {
+      "attempt": "gradient-diagnosis-20261023/trace-B/attempt1",
+      "source_hashes": {
+        "observer": "aefc5971167360a77a9522ebd445dfd7eb81585f9945933f96dd1cd946355227"
+      },
+      "retained_exact_source_files": {
+        "observer": [
+          "observed_run-core8-94e1c17.py"
+        ]
+      },
+      "diagnostic_runtime_hash_recorded": false
+    },
+    {
+      "attempt": "gradient-diagnosis-20261023/strict-A/attempt1",
+      "source_hashes": {
+        "observer": "aefc5971167360a77a9522ebd445dfd7eb81585f9945933f96dd1cd946355227",
+        "diagnostic": "f0e3bfa518ced15fad2fd2ce0a490dc488c240d73d70bff46b23d361834dd9ad"
+      },
+      "retained_exact_source_files": {
+        "observer": [
+          "observed_run-core8-94e1c17.py"
+        ],
+        "diagnostic": [
+          "diagnose_pair_runtime-f0e3bfa518ced15fad2fd2ce0a490dc488c240d73d70bff46b23d361834dd9ad.py"
+        ]
+      },
+      "diagnostic_runtime_hash_recorded": true
+    },
+    {
+      "attempt": "gradient-diagnosis-20261023/strict-B/attempt1",
+      "source_hashes": {
+        "observer": "aefc5971167360a77a9522ebd445dfd7eb81585f9945933f96dd1cd946355227",
+        "diagnostic": "f0e3bfa518ced15fad2fd2ce0a490dc488c240d73d70bff46b23d361834dd9ad"
+      },
+      "retained_exact_source_files": {
+        "observer": [
+          "observed_run-core8-94e1c17.py"
+        ],
+        "diagnostic": [
+          "diagnose_pair_runtime-f0e3bfa518ced15fad2fd2ce0a490dc488c240d73d70bff46b23d361834dd9ad.py"
+        ]
+      },
+      "diagnostic_runtime_hash_recorded": true
+    },
+    {
+      "attempt": "gradient-diagnosis-20261023/math-A/attempt1",
+      "source_hashes": {
+        "observer": "aefc5971167360a77a9522ebd445dfd7eb81585f9945933f96dd1cd946355227",
+        "diagnostic": "f0e3bfa518ced15fad2fd2ce0a490dc488c240d73d70bff46b23d361834dd9ad"
+      },
+      "retained_exact_source_files": {
+        "observer": [
+          "observed_run-core8-94e1c17.py"
+        ],
+        "diagnostic": [
+          "diagnose_pair_runtime-f0e3bfa518ced15fad2fd2ce0a490dc488c240d73d70bff46b23d361834dd9ad.py"
+        ]
+      },
+      "diagnostic_runtime_hash_recorded": true
+    },
+    {
+      "attempt": "gradient-diagnosis-20261023/math-B/attempt1",
+      "source_hashes": {
+        "observer": "aefc5971167360a77a9522ebd445dfd7eb81585f9945933f96dd1cd946355227",
+        "diagnostic": "f0e3bfa518ced15fad2fd2ce0a490dc488c240d73d70bff46b23d361834dd9ad"
+      },
+      "retained_exact_source_files": {
+        "observer": [
+          "observed_run-core8-94e1c17.py"
+        ],
+        "diagnostic": [
+          "diagnose_pair_runtime-f0e3bfa518ced15fad2fd2ce0a490dc488c240d73d70bff46b23d361834dd9ad.py"
+        ]
+      },
+      "diagnostic_runtime_hash_recorded": true
+    },
+    {
+      "attempt": "gradient-diagnosis-20261023/native-hash-A/attempt1",
+      "source_hashes": {
+        "observer": "aefc5971167360a77a9522ebd445dfd7eb81585f9945933f96dd1cd946355227",
+        "diagnostic": "f0e3bfa518ced15fad2fd2ce0a490dc488c240d73d70bff46b23d361834dd9ad"
+      },
+      "retained_exact_source_files": {
+        "observer": [
+          "observed_run-core8-94e1c17.py"
+        ],
+        "diagnostic": [
+          "diagnose_pair_runtime-f0e3bfa518ced15fad2fd2ce0a490dc488c240d73d70bff46b23d361834dd9ad.py"
+        ]
+      },
+      "diagnostic_runtime_hash_recorded": true
+    },
+    {
+      "attempt": "gradient-diagnosis-20261023/strict-warmup-A/attempt1",
+      "source_hashes": {
+        "observer": "1d122fceadb07cb45052de989c417f68de9460ef43d4de40e49b077435784e44",
+        "diagnostic": "6307affdefd7952939cc2c6b868e66d40241bbaae5c1a6a40db58c42addaa9fa"
+      },
+      "retained_exact_source_files": {
+        "observer": [
+          "observed_run-hf-full-v1.py"
+        ],
+        "diagnostic": [
+          "diagnose_pair_runtime-pre-layers-v3.py"
+        ]
+      },
+      "diagnostic_runtime_hash_recorded": true
+    },
+    {
+      "attempt": "gradient-diagnosis-20261023/strict-warmup-B/attempt1",
+      "source_hashes": {
+        "observer": "1d122fceadb07cb45052de989c417f68de9460ef43d4de40e49b077435784e44",
+        "diagnostic": "6307affdefd7952939cc2c6b868e66d40241bbaae5c1a6a40db58c42addaa9fa"
+      },
+      "retained_exact_source_files": {
+        "observer": [
+          "observed_run-hf-full-v1.py"
+        ],
+        "diagnostic": [
+          "diagnose_pair_runtime-pre-layers-v3.py"
+        ]
+      },
+      "diagnostic_runtime_hash_recorded": true
+    },
+    {
+      "attempt": "gradient-diagnosis-20261023/strict-math-warmup-A/attempt1",
+      "source_hashes": {
+        "observer": "1d122fceadb07cb45052de989c417f68de9460ef43d4de40e49b077435784e44",
+        "diagnostic": "209a69da3cca8b07c36399adc36255d6e72f169d3eb59965eab6f1eacc7ac640"
+      },
+      "retained_exact_source_files": {
+        "observer": [
+          "observed_run-hf-full-v1.py"
+        ],
+        "diagnostic": [
+          "diagnose_pair_runtime.py"
+        ]
+      },
+      "diagnostic_runtime_hash_recorded": true
+    },
+    {
+      "attempt": "gradient-diagnosis-20261023/strict-math-warmup-B/attempt1",
+      "source_hashes": {
+        "observer": "1d122fceadb07cb45052de989c417f68de9460ef43d4de40e49b077435784e44",
+        "diagnostic": "209a69da3cca8b07c36399adc36255d6e72f169d3eb59965eab6f1eacc7ac640"
+      },
+      "retained_exact_source_files": {
+        "observer": [
+          "observed_run-hf-full-v1.py"
+        ],
+        "diagnostic": [
+          "diagnose_pair_runtime.py"
+        ]
+      },
+      "diagnostic_runtime_hash_recorded": true
+    },
+    {
+      "attempt": "gradient-resolution-20261023/G06/attempt1",
+      "source_hashes": {
+        "observer": "1d122fceadb07cb45052de989c417f68de9460ef43d4de40e49b077435784e44",
+        "diagnostic": "6307affdefd7952939cc2c6b868e66d40241bbaae5c1a6a40db58c42addaa9fa"
+      },
+      "retained_exact_source_files": {
+        "observer": [
+          "observed_run-hf-full-v1.py"
+        ],
+        "diagnostic": [
+          "diagnose_pair_runtime-pre-layers-v3.py"
+        ]
+      },
+      "diagnostic_runtime_hash_recorded": true
+    },
+    {
+      "attempt": "gradient-resolution-20261023/G07/attempt1",
+      "source_hashes": {
+        "observer": "1d122fceadb07cb45052de989c417f68de9460ef43d4de40e49b077435784e44",
+        "diagnostic": "6307affdefd7952939cc2c6b868e66d40241bbaae5c1a6a40db58c42addaa9fa"
+      },
+      "retained_exact_source_files": {
+        "observer": [
+          "observed_run-hf-full-v1.py"
+        ],
+        "diagnostic": [
+          "diagnose_pair_runtime-pre-layers-v3.py"
+        ]
+      },
+      "diagnostic_runtime_hash_recorded": true
+    },
+    {
+      "attempt": "gradient-resolution-v2-20261023/G06/attempt1",
+      "source_hashes": {
+        "observer": "abb1a79a26cc4604bade6eb5585433ee9da921e710c4c1379b1918b963a2e7c9",
+        "diagnostic": "209a69da3cca8b07c36399adc36255d6e72f169d3eb59965eab6f1eacc7ac640"
+      },
+      "retained_exact_source_files": {
+        "observer": [
+          "observed_run.py"
+        ],
+        "diagnostic": [
+          "diagnose_pair_runtime.py"
+        ]
+      },
+      "diagnostic_runtime_hash_recorded": true
+    },
+    {
+      "attempt": "gradient-resolution-v2-20261023/G07/attempt1",
+      "source_hashes": {
+        "observer": "abb1a79a26cc4604bade6eb5585433ee9da921e710c4c1379b1918b963a2e7c9",
+        "diagnostic": "209a69da3cca8b07c36399adc36255d6e72f169d3eb59965eab6f1eacc7ac640"
+      },
+      "retained_exact_source_files": {
+        "observer": [
+          "observed_run.py"
+        ],
+        "diagnostic": [
+          "diagnose_pair_runtime.py"
+        ]
+      },
+      "diagnostic_runtime_hash_recorded": true
+    }
+  ],
+  "task_script_sha256": {
+    "probe_conv_reproducibility.py": "b7fd8d75da758693d00da55115c912b8833e3c9cfbea186f23c4564cca355ebf",
+    "prepare-pair.py": "3d1fd9ab4ac124298f04c6fdc608b34ee556b272de73edf056f9bff3fa353b84",
+    "test_execution_contracts.py": "b28184e401568229507a08e209b92db5c0ecb52860539b1e65d63054eb99933f",
+    "verify_pair_resolution.py": "e92dcc4ac68d0c9122e2ca417c5e5881be75c1903f4c4293593315c6b28b940f",
+    "prepare_gate_representative.py": "92cfd32b93857727c368902c6f28494d761c1b36d65a083bf61db2070ca6f36c",
+    "run-resolution.py": "06c6c1d06d86e2b765766808da599123e165e9dae50919e3d2054230bbff08c6",
+    "check-execution-sources.py": "7c8294df4b11e1af70d905d78b02e48c7216052113b6e995030aa4b605015fff",
+    "verify-strict-math.py": "271d7e87f18adc3d9e32ca2d4d3dda5b9b202637eaf2ffc7b59fbf3cf58252ad",
+    "prepare-strict-math.py": "73ffecaf9e5adf63c25e3f899896576a6b828fdcc11cfc33758a56f2269aec81",
+    "diagnose_pair_runtime-f0e3bfa518ced15fad2fd2ce0a490dc488c240d73d70bff46b23d361834dd9ad.py": "f0e3bfa518ced15fad2fd2ce0a490dc488c240d73d70bff46b23d361834dd9ad",
+    "materialize_configs.py": "7c40eb6c47d2c3134b667f7b6c6bde5419c3e74f0d3f347b6ed399410d7ace9f",
+    "observed_run.py": "abb1a79a26cc4604bade6eb5585433ee9da921e710c4c1379b1918b963a2e7c9",
+    "repair-pair-and-evaluate.py": "a55251f0d96cae04a8199a3fe4fd50d64cdb2125b02c8e3e585cab3a57e9f952",
+    "observed_run-hf-full-v1.py": "1d122fceadb07cb45052de989c417f68de9460ef43d4de40e49b077435784e44",
+    "prepare_real_data.py": "3740ce75cf8f938ebbc64d3e0af71d975870dae1a988525829150092c7c7c1e8",
+    "prepare-gradient-diag-v2.py": "0deec42f1568a4b8949913593698d2cae12f6368d537f5dd1275f58b1746339c",
+    "prepare-gradient-diag-v3.py": "de80ce936c9aaf7ba0b3bda37ab143732acf0b9951aec55947a21daee13048a6",
+    "pair_diagnose.py": "889b3648c565839d39a6d48b7c788bab7d709c58d362acb4998a69821276e77e",
+    "observed_run-core8-94e1c17.py": "aefc5971167360a77a9522ebd445dfd7eb81585f9945933f96dd1cd946355227",
+    "run-resolution-v2.py": "acbd58d73de20b1184ebdaf180ecc3a1a4ca75b422dee73ffb1f27225bd5bc8e",
+    "evaluate_frozen.py": "457ed4f40004b7ec6743a9e457d05f3230c065548f8508be92d893f4b844dae2",
+    "driver_monitor.py": "038dd0e6dd6f3c7fc16aad9c630a42d04f53134519837e67779193dd94d88954",
+    "diagnose_pair_runtime.py": "209a69da3cca8b07c36399adc36255d6e72f169d3eb59965eab6f1eacc7ac640",
+    "core_compact.py": "769357dde2f33978bfaf5e4c1277c02e2919535f0285935525f345527b8e299c",
+    "run-strict-math.py": "38127f58875df22425e44524f187080a9d80bfefe393b8faeadf92cb8450e58c",
+    "progress_probe.py": "84c3575713fad8200fbc430b0b095fe5639d4538b7a5f6f034dcd9edcd1aa7e4",
+    "prepare-resolution.py": "f5bd0f513e90736fa1d52a5e04893e9f078485b6cb2871bf143b3b5867a5625c",
+    "summarize_gradient_diagnosis.py": "eb5fd218a93f41a84ecb377732c627f708ffa8080a2670576ad4d7a681a3e79d",
+    "prepare_pair_resolution.py": "3f5503bf14bb8924509795659133903d7cd6edec2bfd25e9da9884611664d375",
+    "verify-strict-warmup.py": "b042c1b9e08a17e03b7f3b643cc70b9f9ef78de76edc333978897fe600a8718d",
+    "run_core8_suite.py": "33ed7663dbf21e236c577e7b07967c9947960111bbd43294dc3bc5c6d5483d04",
+    "prepare-gradient-diag.py": "dd34e53e65fb470d27eb51b3e8c4923227026efa6e2619186d4fe4aade18c775",
+    "evaluate-after-nothink-fix.py": "7a07a09e7df416b611aefac34b1770853d028d91a6da9016b91646d61e312946",
+    "probe_paired_forward.py": "fa704778419d723027a8d7a2f6fde05c5066460c1938f8ef996dcc2677348de2",
+    "inspect-template.py": "aeac33c932a28df3ec5a7fe454da6b2257a5175876fa0f77c7d9239a386e9a4e",
+    "evaluate_resolved_pair.py": "dda15ee42cf94b2075d73ee3db168d011417da3713dd2d5a177df46bf810b721",
+    "manual-partial.py": "5c29f96a40fe71f5ccbeef051b87e7461507c65fd3c738b2ee28c89e4c9affee",
+    "compare-layer-traces.py": "478b5962b208853d0e5fd91bd2847dbefab8774a1f6b79170a4b98e6295a9d66",
+    "audit_observations.py": "01636f1ef493ed67034bfaf10f7f6942c2fa2c03d171005792a2f74f221b22cf",
+    "summarize_results.py": "4781f2877a24f098febc3c0a9a1c325d1f6ef92f1c583a6533914811f860c308",
+    "diagnose-and-evaluate.py": "714656ff3a6989f09fa8328d3d12b4eb5d87396f45090f7f3042800719439c27",
+    "capture_provenance.py": "26822af251f9f1672c87d06e8d3b5e0ef94115433219e0cb10a253fd5d5857b0",
+    "inspect-sciriff.py": "e0bef39360bce4018f05adfcaf93e173f72e979c9fee2ac9e188e8c1d4463b5a",
+    "inspect-gradient-runtime.py": "cb72c3a6373c4cfb26593030541dbf1d0a747a16fb9ddbedcbda5a2b193fda88",
+    "test_materialize_configs.py": "89b60be566ba8004b3cae864d6359d925105134f8dabf024ab760a9899aa2bdd",
+    "generation-policy-derivation.py": "15664c3ec797ff03b6cc66ec6158f02f8542d88560bee803b0c6eb7f4b54493a",
+    "collect_auxiliary.py": "de21f1da2ad696d6a7331505aab1e29e53c27977e5833a1c36c5e1bbe62b1c00",
+    "run-gradient-diag.py": "3fc47cd1f064cd5b64b3616dccb797a46983b79f687c9bae71647a73f0b95e88",
+    "compare-resolution.py": "de35e54ab18b33ccdc0a2e19badbb45700baf32b5b3c8d65fbba2d56509ec65d",
+    "archive-diagnostic-source.py": "6186072b0e752de6552af462ce15a65ca1b573ac4bc2c672c8ccf3aa06f05f40",
+    "fix-gate-config.py": "19904990370e24dfa2471e7ab1ba1ff9aa2d8ecbf17ca83fea18d57e115ccd8f",
+    "run-gradient-diag-v3.py": "819f0261977916a0ac24e75eed00e30af1706756a48cbc1aa21bd2afb2aaffe9",
+    "diagnose_pair_runtime-trace-v1.py": "695627793927a254142d0bc31df05879128216710db6f90e603e0c5f996b69c8",
+    "verify_pair_resolution-hf-v1.py": "eef242489b1fb8fa9f56de751ec229ec08a463f9492fa06750a7bdfde8e5122a",
+    "diagnose_pair_runtime-pre-layers-v3.py": "6307affdefd7952939cc2c6b868e66d40241bbaae5c1a6a40db58c42addaa9fa",
+    "run-strict-preflight.py": "78a2898fc7b607e4919c88dfb6a2ebeeabaf7b7094bd0427fcc65be11588edd5",
+    "probe_conv_reproducibility-contiguous-v1.py": "a5ae3537866ac3a4b17d91a5404fd401087f9fc75bd0f9f59a37cc281f8321ba",
+    "launch-gate-config.py": "4d295e15f8b0bd193bdcf894c1bac8c13fb65b6ab636d611255dd1773098e908",
+    "probe_sdpa_reproducibility.py": "a3a766b0a59568cfce78f96b1f8694d0bdc4c2443d41235bad21255a7e39c8f7",
+    "driver-monitor.py": "95499fbbabff141afa74ca3fc8cf50202b923c7056a45c13a6c360a3ad8767f6",
+    "resolution-final-state.py": "e63d12f5243297afe0ea1fed09c879e4c6008d8512feb41a7e75404c513461ac",
+    "run-gradient-diag-v2.py": "8b918d3d80ed5474e52f13a1796dd89a375cc2eee44724960240f2e0f01872c1",
+    "compare-grad-diag.py": "102a6270d58ddf756d10f4a301b41a740642fd2c2aa05bc1e85316d1bb7d0697",
+    "finalize_evidence.py": "071ac9b679f70dc13132ea6819edd7bbfb84da0b01049feb467c3e4fb268aad5",
+    "configure_execution.py": "06f64fe0dd614c683e4900abd94b8e72a16105710ba570e071222fe04b77f0cc",
+    "prepare-strict-preflight.py": "2b87f0a570af3b3548e946b0bfe121e32b8bb55b3a9f2d408783e0adb038e0e4"
+  },
+  "summary_sha256": "fe10623f76772a4d26c6bc37c1b5e1f3102a7fb90b31fe45baee1c9ff36d8176",
+  "isolated_directories_disk_usage": "1.1G\t/sharedata/home/huruiqian/DataFlow/runs/qwen35-9b/20261022-smoke/strategy-20261023/gradient-resolution-v2-20261023\n1.1G\t/sharedata/home/huruiqian/DataFlow/runs/qwen35-9b/20261022-smoke/strategy-20261023/gradient-resolution-20261023\n4.0G\t/sharedata/home/huruiqian/DataFlow/runs/qwen35-9b/20261022-smoke/strategy-20261023/gradient-diagnosis-20261023\n",
+  "historical_core8_summary_sha256": "6b9a112484fabe5729b99249600e5a5566a84261ad696a08eda7a6600c030bb6"
+}

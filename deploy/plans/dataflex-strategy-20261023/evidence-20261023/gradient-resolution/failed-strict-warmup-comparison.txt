@@ -1,0 +1,9 @@
+micro1 lengths [720, 165]
+dropout rows 256 256 same keys True
+first micro dropout cross-run differences []
+strict-warmup-A fwd/recompute identical True 16
+strict-warmup-B fwd/recompute identical True 16
+grad 1 A norms 0.0 0.0 maxdiff 0.0 relative_l2 0.0 equal True
+grad 1 B norms 1.27480947971344 1.275527000427246 maxdiff 0.0006103515625 relative_l2 0.020475812256336212 equal False
+grad 2 A norms 0.0 0.0 maxdiff 0.0 relative_l2 0.0 equal True
+grad 2 B norms 0.7344138622283936 0.7366688251495361 maxdiff 0.00030517578125 relative_l2 0.0180021021515131 equal False

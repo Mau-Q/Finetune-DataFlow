@@ -1,6 +1,6 @@
 # DataFlex 小样本微调策略测试方案
 
-日期：2026-10-23（Asia/Shanghai）。最新执行状态：**8 组各 24 步和原模型加 8 个 adapter 的 576 条冻结预测已完成。G06/G07 跨运行梯度归因仍为 INCONCLUSIVE；同一次前向图的独立诊断确认实际权重会改变梯度。** 详见 [完整结果与限制](dataflex-core8-results-20261023.md) 和 [机器状态](../../deploy/plans/dataflex-strategy-20261023/execution-status.json)。以下原方案中的“未执行”保留制定时状态；当前结论以最终报告为准。断网阶段另见 [历史进度](dataflex-core8-progress-20261023.md)，先前学校源码核对见 [对照记录](dataflex-school-reconciliation-20261023.md)。
+日期：2026-10-23（Asia/Shanghai）。最新执行状态：**8 组初轮各 24 步及 576 条预测已完成；G06/G07 后续完整确定性重跑各 24 步、各 64 条预测完成，原严格梯度审计直接通过。** 见 [梯度定位与修复报告](dataflex-g06-g07-gradient-resolution-20261023.md)、[初轮结果与限制](dataflex-core8-results-20261023.md) 和 [机器状态](../../deploy/plans/dataflex-strategy-20261023/execution-status.json)。以下原方案中的“未执行”保留制定时状态。断网阶段另见 [历史进度](dataflex-core8-progress-20261023.md)，先前学校源码核对见 [对照记录](dataflex-school-reconciliation-20261023.md)。
 
 ## 1. 目标与验收层次
 

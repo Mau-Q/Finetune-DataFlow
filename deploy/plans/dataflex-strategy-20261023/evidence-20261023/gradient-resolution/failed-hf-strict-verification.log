@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/work/strategy-20261023/verify_pair_resolution.py", line 66, in <module>
+    verify(parser.parse_args().root)
+  File "/work/strategy-20261023/verify_pair_resolution.py", line 28, in verify
+    assert torch.equal(*tensors),(micro,part,'Warmup tensors differ')
+           ^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (1, 'B', 'Warmup tensors differ')

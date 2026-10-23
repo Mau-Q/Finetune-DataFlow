@@ -9,6 +9,26 @@ def tensor_hash(ids):return hashlib.sha256(json.dumps(ids).encode()).hexdigest()
 def emit(path,record):
  with path.open('a') as f:f.write(json.dumps(record,allow_nan=False)+'\n')
 def scalar(x):return float(x.detach().float().cpu())
+def prepare_reproducibility(config,protocol=None):
+ # Seed alone does not constrain CUDA algorithm choices. Honor the standard HF
+ # opt-in before model loading/allocator setup, rather than after CUDA is live.
+ # The paired protocol additionally fixes SDPA and workspace choices; the generic
+ # HF recipe alone did not reproduce this Qwen/bnb/BF16 stack.
+ if protocol is not None:
+  if protocol!='torch-math-cublas4096-v2':raise ValueError('Unknown deterministic execution protocol')
+  if config.get('full_determinism',False):raise ValueError('HF full_determinism overrides the explicit cuBLAS protocol')
+  os.environ['CUBLAS_WORKSPACE_CONFIG']=':4096:8'
+  os.environ.pop('CUDA_LAUNCH_BLOCKING',None)
+  torch.use_deterministic_algorithms(True)
+  torch.backends.cudnn.deterministic=True
+  torch.backends.cudnn.benchmark=False
+  torch.backends.cuda.enable_flash_sdp(False)
+  torch.backends.cuda.enable_mem_efficient_sdp(False)
+  torch.backends.cuda.enable_cudnn_sdp(False)
+  torch.backends.cuda.enable_math_sdp(True)
+ elif config.get('full_determinism',False):
+  from transformers.trainer_utils import enable_full_determinism
+  enable_full_determinism(int(config.get('seed',42)))
 def install(cls,folder):
  from transformers import TrainerCallback
  records=json.loads((ROOT/'data/token-map.json').read_text());mapping={r['token_sha256']:r for r in records};assert len(mapping)==len(records)
@@ -47,7 +67,13 @@ def install(cls,folder):
     else:
      adapter_state=load_file(str(snapshot));set_peft_model_state_dict(model,adapter_state,adapter_name='default')
      digest=adapter_digest(get_peft_model_state_dict(model));assert digest==json.loads((snapshot.parent/'identity.json').read_text())['tensor_state_sha256']
-    (folder/'paired-control-receipt.json').write_text(json.dumps({'initial_adapter_tensor_sha256':digest,'snapshot_sha256':sha(snapshot),'micro_rng_seed_base':pair_control['micro_rng_seed_base'],'lora_dropout':float(current['trainer'].finetuning_args.lora_dropout),'protocol':'Shared exact LoRA initialization and explicit per-microbatch CPU/CUDA seed control; not a passive observer operation'}))
+    deterministic=torch.are_deterministic_algorithms_enabled()
+    if pair_control.get('deterministic_execution'):
+     assert deterministic and torch.backends.cudnn.deterministic and not torch.backends.cudnn.benchmark
+     assert os.environ.get('CUBLAS_WORKSPACE_CONFIG')==':4096:8' and os.environ.get('CUDA_LAUNCH_BLOCKING') is None
+     assert torch.backends.cuda.math_sdp_enabled() and not any(getattr(torch.backends.cuda,n+'_sdp_enabled')() for n in ['flash','mem_efficient','cudnn'])
+    if getattr(args,'full_determinism',False):assert deterministic and torch.backends.cudnn.deterministic
+    (folder/'paired-control-receipt.json').write_text(json.dumps({'initial_adapter_tensor_sha256':digest,'snapshot_sha256':sha(snapshot),'micro_rng_seed_base':pair_control['micro_rng_seed_base'],'lora_dropout':float(current['trainer'].finetuning_args.lora_dropout),'deterministic_execution_requested':pair_control.get('deterministic_execution'),'full_determinism_requested':getattr(args,'full_determinism',False),'deterministic_algorithms':deterministic,'cudnn_deterministic':torch.backends.cudnn.deterministic,'cudnn_benchmark':torch.backends.cudnn.benchmark,'sdp_backends':{n:getattr(torch.backends.cuda,n+'_sdp_enabled')() for n in ['flash','math','mem_efficient','cudnn']},'cublas_workspace_config':os.environ.get('CUBLAS_WORKSPACE_CONFIG'),'cuda_launch_blocking':os.environ.get('CUDA_LAUNCH_BLOCKING'),'protocol':'Shared exact LoRA initialization and explicit per-microbatch CPU/CUDA seed control; full_determinism is an explicit configuration opt-in, not passive observation'}))
    params=[(n,p) for n,p in model.named_parameters() if p.requires_grad]
    assert params and all('lora_' in n for n,p in params)
    log('events',event='train_begin',max_steps=state.max_steps,args_max_steps=args.max_steps,gradient_accumulation=args.gradient_accumulation_steps,trainable_tensors=len(params),base_frozen=True,remove_unused_columns=args.remove_unused_columns,train_sampling_strategy=getattr(args,'train_sampling_strategy',None),scheduler_state=kw['lr_scheduler'].state_dict())
@@ -62,6 +88,16 @@ def install(cls,folder):
   def on_step_end(self,args,state,control,**kw):
    assert state.global_step<=args.max_steps
    log('events',event='optimizer_step',step=state.global_step,lr=kw['lr_scheduler'].get_last_lr(),max_steps=state.max_steps)
+  def on_pre_optimizer_step(self,args,state,control,**kw):
+   if not pair_control or not pair_control.get('capture_optimizer_gradients') or state.global_step>=5:return
+   tensors={}
+   for name,parameter in kw['model'].named_parameters():
+    if parameter.requires_grad and parameter.grad is not None:
+     value=parameter.grad.detach().cpu().contiguous()
+     assert torch.isfinite(value).all()
+     tensors[name]={'sha256':hashlib.sha256(memoryview(value.reshape(-1).view(torch.uint8).numpy())).hexdigest(),'norm':float(value.float().norm())}
+   assert tensors
+   log('optimizer-gradients',step=state.global_step+1,tensors=tensors,all_finite=True)
   def on_train_end(self,args,state,control,**kw):
    changed={n:scalar((dict(kw['model'].named_parameters())[n].detach().float().cpu()-v).norm()) for n,v in refs.items()}
    log('events',event='train_end',step=state.global_step,representative_parameter_changes=changed)
@@ -150,9 +186,13 @@ def install(cls,folder):
  return current
 
 def train(config,folder):
+ cfg=yaml.safe_load(config.read_text())
+ pair_path=folder.parent/('paired-control-'+folder.name+'.json')
+ protocol=json.loads(pair_path.read_text()).get('deterministic_execution') if pair_path.exists() else None
+ prepare_reproducibility(cfg,protocol) if protocol else prepare_reproducibility(cfg)
  folder.mkdir(parents=True,exist_ok=False)
  torch.cuda.set_per_process_memory_fraction(.42,0);torch.cuda.reset_peak_memory_stats()
- cfg=yaml.safe_load(config.read_text());(folder/'actual-config.yaml').write_text(yaml.safe_dump(cfg,sort_keys=False))
+ (folder/'actual-config.yaml').write_text(yaml.safe_dump(cfg,sort_keys=False))
  if cfg['train_type']=='dynamic_select':
   components=yaml.safe_load(Path(cfg['components_cfg_file']).read_text());cache=Path(components['selectors'][cfg['component_name']]['params']['cache_dir'])
   if folder.resolve() not in cache.resolve().parents:raise ValueError('Selector cache must be inside this attempt')

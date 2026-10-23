@@ -5,6 +5,8 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+import sys
+from types import SimpleNamespace
 from unittest.mock import patch
 
 import yaml
@@ -24,6 +26,50 @@ EVAL = load('evaluate_frozen')
 CONFIG = load('configure_execution')
 MATERIALIZE = load('materialize_configs')
 AUDIT = load('audit_observations')
+
+
+class ReproducibilityContracts(unittest.TestCase):
+    def test_explicit_protocol_rejects_hf_override_and_sets_cuda_policy(self):
+        observer = load('observed_run')
+        with self.assertRaisesRegex(ValueError, 'overrides'):
+            observer.prepare_reproducibility({'full_determinism': True}, 'torch-math-cublas4096-v2')
+        with patch.dict(observer.os.environ, {'CUDA_LAUNCH_BLOCKING':'1'}), observer.torch.backends.cuda.sdp_kernel(enable_flash=True,enable_math=True,enable_mem_efficient=True,enable_cudnn=True), patch.object(observer.torch, 'use_deterministic_algorithms') as enable, patch.object(observer.torch.backends, 'cudnn', SimpleNamespace(deterministic=False,benchmark=True)):
+            observer.prepare_reproducibility({}, 'torch-math-cublas4096-v2')
+            enable.assert_called_once_with(True)
+            self.assertEqual(observer.os.environ['CUBLAS_WORKSPACE_CONFIG'], ':4096:8')
+            self.assertNotIn('CUDA_LAUNCH_BLOCKING', observer.os.environ)
+            self.assertTrue(observer.torch.backends.cudnn.deterministic)
+            self.assertFalse(observer.torch.backends.cudnn.benchmark)
+            self.assertTrue(observer.torch.backends.cuda.math_sdp_enabled())
+            self.assertFalse(observer.torch.backends.cuda.flash_sdp_enabled())
+            self.assertFalse(observer.torch.backends.cuda.mem_efficient_sdp_enabled())
+            self.assertFalse(observer.torch.backends.cuda.cudnn_sdp_enabled())
+
+    def test_full_determinism_is_explicit_and_uses_configured_seed(self):
+        from unittest.mock import Mock
+        observer = load('observed_run')
+        helper = Mock()
+        with patch.dict(sys.modules, {'transformers.trainer_utils': SimpleNamespace(enable_full_determinism=helper)}):
+            observer.prepare_reproducibility({'seed': 17})
+            helper.assert_not_called()
+            observer.prepare_reproducibility({'seed': 17, 'full_determinism': True})
+            helper.assert_called_once_with(17)
+
+    def test_reproducibility_is_prepared_before_cuda_allocator(self):
+        observer = load('observed_run')
+        order = []
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            config = root/'config.yaml'
+            config.write_text('full_determinism: false\nseed: 17\n')
+            (root/'paired-control-attempt1.json').write_text(json.dumps({'deterministic_execution':'torch-math-cublas4096-v2'}))
+            def allocator(*args):
+                order.append('cuda')
+                raise RuntimeError('Intentional CPU-only stop before CUDA initialization')
+            with patch.object(observer, 'prepare_reproducibility', side_effect=lambda cfg,protocol=None: order.append(('prepare',cfg['seed'],protocol))), patch.object(observer.torch.cuda, 'set_per_process_memory_fraction', side_effect=allocator):
+                with self.assertRaisesRegex(RuntimeError, 'Intentional CPU-only'):
+                    observer.train(config,root/'attempt1')
+        self.assertEqual(order,[('prepare',17,'torch-math-cublas4096-v2'),'cuda'])
 
 
 class ConfigContracts(unittest.TestCase):

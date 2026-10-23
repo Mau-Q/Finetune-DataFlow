@@ -1,0 +1,8 @@
+{
+  "role": "restore",
+  "initial_adapter": "/runs/strategy-20261023/paired-initialization-v2/adapter_init.safetensors",
+  "micro_rng_seed_base": 420000,
+  "lora_dropout": 0.05,
+  "capture_optimizer_gradients": true,
+  "deterministic_execution": "torch-math-cublas4096-v2"
+}

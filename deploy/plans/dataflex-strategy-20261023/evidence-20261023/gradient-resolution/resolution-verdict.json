@@ -1,0 +1,161 @@
+{
+  "status": "PAIR_GRADIENT_MISMATCH_RESOLVED",
+  "scope": "Isolated rerun; historical attempts and evaluations unchanged",
+  "optimizer_updates": 48,
+  "per_run_updates": 24,
+  "same_initial_model_tensor_hashes": 3049,
+  "warmup_representative_tensor_comparisons": [
+    {
+      "micro": 1,
+      "part": "A",
+      "bitwise_equal": true
+    },
+    {
+      "micro": 1,
+      "part": "B",
+      "bitwise_equal": true
+    },
+    {
+      "micro": 2,
+      "part": "A",
+      "bitwise_equal": true
+    },
+    {
+      "micro": 2,
+      "part": "B",
+      "bitwise_equal": true
+    },
+    {
+      "micro": 3,
+      "part": "A",
+      "bitwise_equal": true
+    },
+    {
+      "micro": 3,
+      "part": "B",
+      "bitwise_equal": true
+    },
+    {
+      "micro": 4,
+      "part": "A",
+      "bitwise_equal": true
+    },
+    {
+      "micro": 4,
+      "part": "B",
+      "bitwise_equal": true
+    },
+    {
+      "micro": 5,
+      "part": "A",
+      "bitwise_equal": true
+    },
+    {
+      "micro": 5,
+      "part": "B",
+      "bitwise_equal": true
+    },
+    {
+      "micro": 6,
+      "part": "A",
+      "bitwise_equal": true
+    },
+    {
+      "micro": 6,
+      "part": "B",
+      "bitwise_equal": true
+    },
+    {
+      "micro": 7,
+      "part": "A",
+      "bitwise_equal": true
+    },
+    {
+      "micro": 7,
+      "part": "B",
+      "bitwise_equal": true
+    },
+    {
+      "micro": 8,
+      "part": "A",
+      "bitwise_equal": true
+    },
+    {
+      "micro": 8,
+      "part": "B",
+      "bitwise_equal": true
+    }
+  ],
+  "warmup_optimizer_input_parameter_counts": [
+    496,
+    496,
+    496,
+    496
+  ],
+  "warmup_optimizer_input_parameter_hashes_equal": true,
+  "first_weighted_optimizer_inputs_differ": true,
+  "strict_original_gradient_audit_passed": true,
+  "first_weighted_sample_losses_equal": true,
+  "first_weighted_sample_losses": [
+    2.376037359237671,
+    5.18017578125
+  ],
+  "warmup_max_gradient_norm_relative_difference": 0.0,
+  "first_weighted_gradient_norms": {
+    "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_B.default.weight": {
+      "uniform": 5.750201225280762,
+      "linupper": 4.782527923583984
+    },
+    "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_A.default.weight": {
+      "uniform": 0.9910407066345215,
+      "linupper": 0.7668048739433289
+    }
+  },
+  "original_tolerance": {
+    "atol": 0.0001,
+    "rtol": 0.02
+  },
+  "protocols": {
+    "G06": {
+      "initial_adapter_tensor_sha256": "3bf6a156850eca6cc0a5a0f914ed9eae38002687fc94f6ec585a1dbcd321820f",
+      "snapshot_sha256": "c56d3f34fbb0d1b4001c77fa2eba35eb5ad4f88e91a2e94c5db38e34ba30809a",
+      "micro_rng_seed_base": 420000,
+      "lora_dropout": 0.05,
+      "deterministic_execution_requested": "torch-math-cublas4096-v2",
+      "full_determinism_requested": false,
+      "deterministic_algorithms": true,
+      "cudnn_deterministic": true,
+      "cudnn_benchmark": false,
+      "sdp_backends": {
+        "flash": false,
+        "math": true,
+        "mem_efficient": false,
+        "cudnn": false
+      },
+      "cublas_workspace_config": ":4096:8",
+      "cuda_launch_blocking": null,
+      "protocol": "Shared exact LoRA initialization and explicit per-microbatch CPU/CUDA seed control; full_determinism is an explicit configuration opt-in, not passive observation"
+    },
+    "G07": {
+      "initial_adapter_tensor_sha256": "3bf6a156850eca6cc0a5a0f914ed9eae38002687fc94f6ec585a1dbcd321820f",
+      "snapshot_sha256": "c56d3f34fbb0d1b4001c77fa2eba35eb5ad4f88e91a2e94c5db38e34ba30809a",
+      "micro_rng_seed_base": 420000,
+      "lora_dropout": 0.05,
+      "deterministic_execution_requested": "torch-math-cublas4096-v2",
+      "full_determinism_requested": false,
+      "deterministic_algorithms": true,
+      "cudnn_deterministic": true,
+      "cudnn_benchmark": false,
+      "sdp_backends": {
+        "flash": false,
+        "math": true,
+        "mem_efficient": false,
+        "cudnn": false
+      },
+      "cublas_workspace_config": ":4096:8",
+      "cuda_launch_blocking": null,
+      "protocol": "Shared exact LoRA initialization and explicit per-microbatch CPU/CUDA seed control; full_determinism is an explicit configuration opt-in, not passive observation"
+    }
+  },
+  "script_sha256": "e92dcc4ac68d0c9122e2ca417c5e5881be75c1903f4c4293593315c6b28b940f"
+}

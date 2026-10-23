@@ -1,0 +1,51 @@
+1718-                do_sync_step = (step + 1) % self.args.gradient_accumulation_steps == 0 or (step + 1) == steps_in_epoch
+1719-                # Since we perform prefetching, we need to manually set sync_gradients
+1720-                self.accelerator.gradient_state._set_sync_gradients(do_sync_step)
+1721-
+1722-                if step % self.args.gradient_accumulation_steps == 0:
+1723-                    self.control = self.callback_handler.on_step_begin(self.args, self.state, self.control)
+1724-
+1725-                # We sync the gradients in the following cases: 1. sync_each_batch set to True 2. Using deepspeed 3. when we are at the last batch sample
+1726-                if (
+1727-                    self.accelerator.gradient_state.plugin_kwargs.get("sync_each_batch", False)
+1728-                    or self.accelerator.distributed_type == DistributedType.DEEPSPEED
+1729-                    or i == len(batch_samples) - 1
+1730-                ):
+1731-                    sync_context = contextlib.nullcontext
+1732-                else:
+1733-                    sync_context = functools.partial(self.accelerator.no_sync, model=model)
+1734-                with sync_context():
+1735-                    tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+1736-
+1737-                if (
+1738-                    self.args.logging_nan_inf_filter
+1739-                    and not is_torch_xla_available()
+1740-                    and (torch.isnan(tr_loss_step) or torch.isinf(tr_loss_step))
+1741-                ):
+1742-                    # if loss is nan or inf simply add the average of previous logged losses
+1743-                    self._tr_loss += self._tr_loss / (1 + self.state.global_step - self._globalstep_last_logged)
+1744-                else:
+1745-                    if self._tr_loss.device != tr_loss_step.device:
+1746-                        raise ValueError(
+1747-                            f"Calculated loss must be on the original device: {self._tr_loss.device} but device in use is {tr_loss_step.device}"
+1748-                        )
+1749-                    self._tr_loss += tr_loss_step
+1750-
+1751-                self.current_flos += float(self.floating_point_ops(inputs))
+1752-                self._track_num_input_tokens(inputs)
+1753-
+1754-                if do_sync_step:
+1755-                    grad_norm = None
+1756-                    if self.args.max_grad_norm > 0:
+1757-                        grad_norm = self._clip_grad_norm(model)
+1758-                    grad_norm = self._get_grad_norm(model, grad_norm=grad_norm)
+1759-
+1760:                    self.control = self.callback_handler.on_pre_optimizer_step(self.args, self.state, self.control)
+1761-                    self.optimizer.step()
+1762-                    self.control = self.callback_handler.on_optimizer_step(self.args, self.state, self.control)
+1763-
+1764-                    # get leaning rate before update
+1765-                    learning_rate = self._get_learning_rate()
+1766-
+1767-                    if not self.accelerator.optimizer_step_was_skipped:
+1768-                        # Delay optimizer scheduling until metrics are generated

@@ -1,0 +1,1862 @@
+{
+  "status": "PAIR_GRADIENT_MISMATCH_RESOLVED_AND_RELOAD_VERIFIED",
+  "cases": {
+    "trace-A": {
+      "optimizer_updates": 1,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 71.51413811207749,
+        "peak_allocated_gib": 14.33661699295044,
+        "peak_reserved_gib": 15.908203125,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "ab515d48d9e10f08b874cf31b9d652baa02c50e76e40ce6f2f7a29ba70445a71",
+        "adapter_sha256": "bf4a9c5ab340ba58f69a891ec35ad19e9b32ba89d6223f2f5d1c65b802328f5f",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 1,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          1.3211371898651123
+        ]
+      },
+      "runtime": {
+        "checkpoints": [
+          {
+            "module": "base_model.model.model.visual",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f88c7f10e00>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f89d7e0f1a0>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          },
+          {
+            "module": "base_model.model.model.visual.blocks.0",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f88c7f10e00>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f89d7e0f1a0>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          },
+          {
+            "module": "base_model.model.model.visual.blocks.1",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f88c7f10e00>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f89d7e0f1a0>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          }
+        ],
+        "deterministic": false,
+        "allow_tf32_matmul": false,
+        "allow_tf32_cudnn": true
+      },
+      "losses": [
+        {
+          "step": 0,
+          "micro": 1,
+          "compute_loss": 1.2713713645935059,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 0,
+          "micro": 2,
+          "compute_loss": 1.3709028959274292,
+          "num_items_in_batch": null
+        }
+      ],
+      "initial_model_hashes_count": null,
+      "consumption_sha256": "65c7072d9808cf6d15019c4a507ddbc13ca09ceeac31b9d2d7f11daa272b8b69"
+    },
+    "trace-B": {
+      "optimizer_updates": 1,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 65.6133720248472,
+        "peak_allocated_gib": 14.33661699295044,
+        "peak_reserved_gib": 15.908203125,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "b0df5e81284100a1e1b40fc15a5f856ff0b6bc35729fa07232888e76040d6b53",
+        "adapter_sha256": "9ffc07e110c2d946670b505f3d2e661706bad60287e1b4a1f2feb77db66a5adf",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 1,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          1.3173387050628662
+        ]
+      },
+      "runtime": {
+        "checkpoints": [
+          {
+            "module": "base_model.model.model.visual",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7fbdb979cae0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7fbec97131a0>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          },
+          {
+            "module": "base_model.model.model.visual.blocks.0",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7fbdb979cae0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7fbec97131a0>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          },
+          {
+            "module": "base_model.model.model.visual.blocks.1",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7fbdb979cae0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7fbec97131a0>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          }
+        ],
+        "deterministic": false,
+        "allow_tf32_matmul": false,
+        "allow_tf32_cudnn": true
+      },
+      "losses": [
+        {
+          "step": 0,
+          "micro": 1,
+          "compute_loss": 1.2637743949890137,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 0,
+          "micro": 2,
+          "compute_loss": 1.3709028959274292,
+          "num_items_in_batch": null
+        }
+      ],
+      "initial_model_hashes_count": null,
+      "consumption_sha256": "65c7072d9808cf6d15019c4a507ddbc13ca09ceeac31b9d2d7f11daa272b8b69"
+    },
+    "strict-A": {
+      "optimizer_updates": 1,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 72.67859371495433,
+        "peak_allocated_gib": 14.38324785232544,
+        "peak_reserved_gib": 16.513671875,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "2d3d97ed146cc6c1e17c5a79aba8cf977fda727e628d6590900a47f5dd22f020",
+        "adapter_sha256": "d52fa3a6ed8ce1b8132e90b217fddbdc1198b1868c93d355e38dcbee7172b1ef",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 1,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          1.3211371898651123
+        ]
+      },
+      "runtime": {
+        "checkpoints": [
+          {
+            "module": "base_model.model.model.visual",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f61f8e25e40>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f6308c4f420>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          },
+          {
+            "module": "base_model.model.model.visual.blocks.0",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f61f8e25e40>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f6308c4f420>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          },
+          {
+            "module": "base_model.model.model.visual.blocks.1",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f61f8e25e40>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f6308c4f420>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          }
+        ],
+        "deterministic": true,
+        "allow_tf32_matmul": false,
+        "allow_tf32_cudnn": true,
+        "script_sha256": "f0e3bfa518ced15fad2fd2ce0a490dc488c240d73d70bff46b23d361834dd9ad",
+        "sdp_backends": {
+          "flash": true,
+          "math": true,
+          "mem_efficient": true,
+          "cudnn": true
+        }
+      },
+      "losses": [
+        {
+          "step": 0,
+          "micro": 1,
+          "compute_loss": 1.2713713645935059,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 0,
+          "micro": 2,
+          "compute_loss": 1.3709028959274292,
+          "num_items_in_batch": null
+        }
+      ],
+      "initial_model_hashes_count": 3046,
+      "consumption_sha256": "65c7072d9808cf6d15019c4a507ddbc13ca09ceeac31b9d2d7f11daa272b8b69"
+    },
+    "strict-B": {
+      "optimizer_updates": 1,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 76.63029387895949,
+        "peak_allocated_gib": 14.38324785232544,
+        "peak_reserved_gib": 16.513671875,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "f58cd917f2e96aea0dc1b6dbd2ada44bfa4fe2cbfb93af0a8d7040b2eeb211a1",
+        "adapter_sha256": "d52fa3a6ed8ce1b8132e90b217fddbdc1198b1868c93d355e38dcbee7172b1ef",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 1,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          1.3211371898651123
+        ]
+      },
+      "runtime": {
+        "checkpoints": [
+          {
+            "module": "base_model.model.model.visual",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f4209547ec0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f431834f420>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          },
+          {
+            "module": "base_model.model.model.visual.blocks.0",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f4209547ec0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f431834f420>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          },
+          {
+            "module": "base_model.model.model.visual.blocks.1",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f4209547ec0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f431834f420>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          }
+        ],
+        "deterministic": true,
+        "allow_tf32_matmul": false,
+        "allow_tf32_cudnn": true,
+        "script_sha256": "f0e3bfa518ced15fad2fd2ce0a490dc488c240d73d70bff46b23d361834dd9ad",
+        "sdp_backends": {
+          "flash": true,
+          "math": true,
+          "mem_efficient": true,
+          "cudnn": true
+        }
+      },
+      "losses": [
+        {
+          "step": 0,
+          "micro": 1,
+          "compute_loss": 1.2713713645935059,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 0,
+          "micro": 2,
+          "compute_loss": 1.3709028959274292,
+          "num_items_in_batch": null
+        }
+      ],
+      "initial_model_hashes_count": 3046,
+      "consumption_sha256": "65c7072d9808cf6d15019c4a507ddbc13ca09ceeac31b9d2d7f11daa272b8b69"
+    },
+    "math-A": {
+      "optimizer_updates": 1,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 76.17882954119705,
+        "peak_allocated_gib": 14.33661699295044,
+        "peak_reserved_gib": 15.91015625,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "13fef3b4c7cb6db398097ab147f41e99b049fa0fbf0d0f22d002f4b5a2df4b9f",
+        "adapter_sha256": "5768c0e78db77f179099bfe2878707b4aa8965dbd043ff6dabd75974de1493c5",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 1,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          1.321407675743103
+        ]
+      },
+      "runtime": {
+        "checkpoints": [
+          {
+            "module": "base_model.model.model.visual",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f8428887ec0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f853764f420>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          },
+          {
+            "module": "base_model.model.model.visual.blocks.0",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f8428887ec0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f853764f420>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          },
+          {
+            "module": "base_model.model.model.visual.blocks.1",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f8428887ec0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f853764f420>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          }
+        ],
+        "deterministic": false,
+        "allow_tf32_matmul": false,
+        "allow_tf32_cudnn": true,
+        "script_sha256": "f0e3bfa518ced15fad2fd2ce0a490dc488c240d73d70bff46b23d361834dd9ad",
+        "sdp_backends": {
+          "flash": false,
+          "math": true,
+          "mem_efficient": false,
+          "cudnn": false
+        }
+      },
+      "losses": [
+        {
+          "step": 0,
+          "micro": 1,
+          "compute_loss": 1.274867057800293,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 0,
+          "micro": 2,
+          "compute_loss": 1.367948293685913,
+          "num_items_in_batch": null
+        }
+      ],
+      "initial_model_hashes_count": 3046,
+      "consumption_sha256": "65c7072d9808cf6d15019c4a507ddbc13ca09ceeac31b9d2d7f11daa272b8b69"
+    },
+    "math-B": {
+      "optimizer_updates": 1,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 70.23952912306413,
+        "peak_allocated_gib": 14.33661699295044,
+        "peak_reserved_gib": 15.91015625,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "b9772c510d4123b833b3b68ffe372bbbcceb9e1f67642787d086722a83844890",
+        "adapter_sha256": "ea26ac10559b85fa49d3f111b9d6644822122f2e8720cfe5b0b57575a688b366",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 1,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          1.3194398880004883
+        ]
+      },
+      "runtime": {
+        "checkpoints": [
+          {
+            "module": "base_model.model.model.visual",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f0a249b3ec0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f0b337db420>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          },
+          {
+            "module": "base_model.model.model.visual.blocks.0",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f0a249b3ec0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f0b337db420>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          },
+          {
+            "module": "base_model.model.model.visual.blocks.1",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f0a249b3ec0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f0b337db420>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          }
+        ],
+        "deterministic": false,
+        "allow_tf32_matmul": false,
+        "allow_tf32_cudnn": true,
+        "script_sha256": "f0e3bfa518ced15fad2fd2ce0a490dc488c240d73d70bff46b23d361834dd9ad",
+        "sdp_backends": {
+          "flash": false,
+          "math": true,
+          "mem_efficient": false,
+          "cudnn": false
+        }
+      },
+      "losses": [
+        {
+          "step": 0,
+          "micro": 1,
+          "compute_loss": 1.270931601524353,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 0,
+          "micro": 2,
+          "compute_loss": 1.367948293685913,
+          "num_items_in_batch": null
+        }
+      ],
+      "initial_model_hashes_count": 3046,
+      "consumption_sha256": "65c7072d9808cf6d15019c4a507ddbc13ca09ceeac31b9d2d7f11daa272b8b69"
+    },
+    "native-hash-A": {
+      "optimizer_updates": 1,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 76.02796395402402,
+        "peak_allocated_gib": 14.33661699295044,
+        "peak_reserved_gib": 15.908203125,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "fc4aa5d5326698b013746ffcb178bbbcf0e3305b37a0cad827f30c9b0116bd9f",
+        "adapter_sha256": "41375004d2cbff9879f316a0ff1324a2441c90b48c4f0c795a2d0940c2d36339",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 1,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          1.3211371898651123
+        ]
+      },
+      "runtime": {
+        "checkpoints": [
+          {
+            "module": "base_model.model.model.visual",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f5dd08c3ec0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f5edf64b420>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          },
+          {
+            "module": "base_model.model.model.visual.blocks.0",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f5dd08c3ec0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f5edf64b420>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          },
+          {
+            "module": "base_model.model.model.visual.blocks.1",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f5dd08c3ec0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f5edf64b420>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          }
+        ],
+        "deterministic": false,
+        "allow_tf32_matmul": false,
+        "allow_tf32_cudnn": true,
+        "script_sha256": "f0e3bfa518ced15fad2fd2ce0a490dc488c240d73d70bff46b23d361834dd9ad",
+        "sdp_backends": {
+          "flash": true,
+          "math": true,
+          "mem_efficient": true,
+          "cudnn": true
+        }
+      },
+      "losses": [
+        {
+          "step": 0,
+          "micro": 1,
+          "compute_loss": 1.2713713645935059,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 0,
+          "micro": 2,
+          "compute_loss": 1.3709028959274292,
+          "num_items_in_batch": null
+        }
+      ],
+      "initial_model_hashes_count": 3046,
+      "consumption_sha256": "65c7072d9808cf6d15019c4a507ddbc13ca09ceeac31b9d2d7f11daa272b8b69"
+    },
+    "strict-warmup-A": {
+      "optimizer_updates": 4,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 86.82393194292672,
+        "peak_allocated_gib": 14.38324785232544,
+        "peak_reserved_gib": 16.51953125,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "b86e8c885b3934e1f3a794f360158c111b5d39fc0c87c0e17bfb8803db4b9a47",
+        "adapter_sha256": "09ea7eed5419251fc5ec059f8bf13c0b5b092bb5b53d1916c2dfaceaeb12c09e",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 4,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          1.3211371898651123,
+          1.813388705253601,
+          2.044365882873535,
+          2.703665256500244
+        ]
+      },
+      "runtime": {
+        "checkpoints": [
+          {
+            "module": "base_model.model.model.visual",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f1b042739c0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f1c1304b420>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          },
+          {
+            "module": "base_model.model.model.visual.blocks.0",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f1b042739c0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f1c1304b420>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          },
+          {
+            "module": "base_model.model.model.visual.blocks.1",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f1b042739c0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f1c1304b420>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          }
+        ],
+        "deterministic": true,
+        "allow_tf32_matmul": false,
+        "allow_tf32_cudnn": true,
+        "script_sha256": "6307affdefd7952939cc2c6b868e66d40241bbaae5c1a6a40db58c42addaa9fa",
+        "sdp_backends": {
+          "flash": true,
+          "math": true,
+          "mem_efficient": true,
+          "cudnn": true
+        }
+      },
+      "losses": [
+        {
+          "step": 0,
+          "micro": 1,
+          "compute_loss": 1.2713713645935059,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 0,
+          "micro": 2,
+          "compute_loss": 1.3709028959274292,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 1,
+          "micro": 3,
+          "compute_loss": 2.7257518768310547,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 1,
+          "micro": 4,
+          "compute_loss": 0.9010255932807922,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 2,
+          "micro": 5,
+          "compute_loss": 3.2301411628723145,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 2,
+          "micro": 6,
+          "compute_loss": 0.8585906028747559,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 3,
+          "micro": 7,
+          "compute_loss": 4.244126319885254,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 3,
+          "micro": 8,
+          "compute_loss": 1.1632041931152344,
+          "num_items_in_batch": null
+        }
+      ],
+      "initial_model_hashes_count": 3049,
+      "consumption_sha256": "298de29ca770aa7cd12783c9bf030ea9a2e5573fb02ca692ac62de0489584fff"
+    },
+    "strict-warmup-B": {
+      "optimizer_updates": 4,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 94.68581319786608,
+        "peak_allocated_gib": 14.38324785232544,
+        "peak_reserved_gib": 16.51953125,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "104dac9173eece93faccabe0a6be9f8db36a70558df967074698826153fb587b",
+        "adapter_sha256": "87dfacd93588bf937faabe806b7afd963650093fd11bc05384d05823d432f128",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 4,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          1.3211371898651123,
+          1.8081226348876953,
+          2.038971424102783,
+          2.7653050422668457
+        ]
+      },
+      "runtime": {
+        "checkpoints": [
+          {
+            "module": "base_model.model.model.visual",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f871a0c39c0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f8828e4b420>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          },
+          {
+            "module": "base_model.model.model.visual.blocks.0",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f871a0c39c0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f8828e4b420>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          },
+          {
+            "module": "base_model.model.model.visual.blocks.1",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f871a0c39c0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f8828e4b420>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          }
+        ],
+        "deterministic": true,
+        "allow_tf32_matmul": false,
+        "allow_tf32_cudnn": true,
+        "script_sha256": "6307affdefd7952939cc2c6b868e66d40241bbaae5c1a6a40db58c42addaa9fa",
+        "sdp_backends": {
+          "flash": true,
+          "math": true,
+          "mem_efficient": true,
+          "cudnn": true
+        }
+      },
+      "losses": [
+        {
+          "step": 0,
+          "micro": 1,
+          "compute_loss": 1.2713713645935059,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 0,
+          "micro": 2,
+          "compute_loss": 1.3709028959274292,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 1,
+          "micro": 3,
+          "compute_loss": 2.712092399597168,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 1,
+          "micro": 4,
+          "compute_loss": 0.9041527509689331,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 2,
+          "micro": 5,
+          "compute_loss": 3.221614360809326,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 2,
+          "micro": 6,
+          "compute_loss": 0.8563284277915955,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 3,
+          "micro": 7,
+          "compute_loss": 4.362597942352295,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 3,
+          "micro": 8,
+          "compute_loss": 1.168012261390686,
+          "num_items_in_batch": null
+        }
+      ],
+      "initial_model_hashes_count": 3049,
+      "consumption_sha256": "298de29ca770aa7cd12783c9bf030ea9a2e5573fb02ca692ac62de0489584fff"
+    },
+    "strict-math-warmup-A": {
+      "optimizer_updates": 4,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 99.35257149697281,
+        "peak_allocated_gib": 14.38324785232544,
+        "peak_reserved_gib": 16.521484375,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "2e3741988ab9b50ab5935ccd8184fac0bf1068255e4e86ec582437f2e89fb122",
+        "adapter_sha256": "79cbfb866d27f10dabee4ff817a7c22a120a2d87ba2ea13d51e733e3a77b8119",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 4,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          1.3219256401062012,
+          1.8166050910949707,
+          2.037198066711426,
+          2.749721050262451
+        ]
+      },
+      "runtime": {
+        "checkpoints": [
+          {
+            "module": "base_model.model.model.visual",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f73010dfa60>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f740fe834c0>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          },
+          {
+            "module": "base_model.model.model.visual.blocks.0",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f73010dfa60>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f740fe834c0>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          },
+          {
+            "module": "base_model.model.model.visual.blocks.1",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7f73010dfa60>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7f740fe834c0>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          }
+        ],
+        "deterministic": true,
+        "allow_tf32_matmul": false,
+        "allow_tf32_cudnn": true,
+        "script_sha256": "209a69da3cca8b07c36399adc36255d6e72f169d3eb59965eab6f1eacc7ac640",
+        "sdp_backends": {
+          "flash": false,
+          "math": true,
+          "mem_efficient": false,
+          "cudnn": false
+        }
+      },
+      "losses": [
+        {
+          "step": 0,
+          "micro": 1,
+          "compute_loss": 1.274867057800293,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 0,
+          "micro": 2,
+          "compute_loss": 1.368984341621399,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 1,
+          "micro": 3,
+          "compute_loss": 2.7338714599609375,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 1,
+          "micro": 4,
+          "compute_loss": 0.8993386626243591,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 2,
+          "micro": 5,
+          "compute_loss": 3.2186779975891113,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 2,
+          "micro": 6,
+          "compute_loss": 0.8557183742523193,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 3,
+          "micro": 7,
+          "compute_loss": 4.331719398498535,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 3,
+          "micro": 8,
+          "compute_loss": 1.1677227020263672,
+          "num_items_in_batch": null
+        }
+      ],
+      "initial_model_hashes_count": 3049,
+      "consumption_sha256": "298de29ca770aa7cd12783c9bf030ea9a2e5573fb02ca692ac62de0489584fff"
+    },
+    "strict-math-warmup-B": {
+      "optimizer_updates": 4,
+      "resource": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 102.47335290303454,
+        "peak_allocated_gib": 14.38324785232544,
+        "peak_reserved_gib": 16.521484375,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "d284bef1a645e627a9f787bf76e727c29fa9d85ec9a9861f43e5453f2764d2de",
+        "adapter_sha256": "79cbfb866d27f10dabee4ff817a7c22a120a2d87ba2ea13d51e733e3a77b8119",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 4,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          1.3219256401062012,
+          1.8166050910949707,
+          2.037198066711426,
+          2.749721050262451
+        ]
+      },
+      "runtime": {
+        "checkpoints": [
+          {
+            "module": "base_model.model.model.visual",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7fbe50a5fce0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7fbf5f8974c0>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          },
+          {
+            "module": "base_model.model.model.visual.blocks.0",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7fbe50a5fce0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7fbf5f8974c0>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          },
+          {
+            "module": "base_model.model.model.visual.blocks.1",
+            "function": "<function get_custom_gradient_checkpointing_func.<locals>.custom_gradient_checkpointing_func at 0x7fbe50a5fce0>",
+            "wrapped": "functools.partial(<function checkpoint at 0x7fbf5f8974c0>, use_reentrant=True)",
+            "wrapped_keywords": "{'use_reentrant': True}"
+          }
+        ],
+        "deterministic": true,
+        "allow_tf32_matmul": false,
+        "allow_tf32_cudnn": true,
+        "script_sha256": "209a69da3cca8b07c36399adc36255d6e72f169d3eb59965eab6f1eacc7ac640",
+        "sdp_backends": {
+          "flash": false,
+          "math": true,
+          "mem_efficient": false,
+          "cudnn": false
+        }
+      },
+      "losses": [
+        {
+          "step": 0,
+          "micro": 1,
+          "compute_loss": 1.274867057800293,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 0,
+          "micro": 2,
+          "compute_loss": 1.368984341621399,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 1,
+          "micro": 3,
+          "compute_loss": 2.7338714599609375,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 1,
+          "micro": 4,
+          "compute_loss": 0.8993386626243591,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 2,
+          "micro": 5,
+          "compute_loss": 3.2186779975891113,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 2,
+          "micro": 6,
+          "compute_loss": 0.8557183742523193,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 3,
+          "micro": 7,
+          "compute_loss": 4.331719398498535,
+          "num_items_in_batch": null
+        },
+        {
+          "step": 3,
+          "micro": 8,
+          "compute_loss": 1.1677227020263672,
+          "num_items_in_batch": null
+        }
+      ],
+      "initial_model_hashes_count": 3049,
+      "consumption_sha256": "298de29ca770aa7cd12783c9bf030ea9a2e5573fb02ca692ac62de0489584fff"
+    }
+  },
+  "comparisons": [
+    {
+      "runs": [
+        "trace-A",
+        "trace-B"
+      ],
+      "first_micro_layer0_dropout_rng_and_prefix_signatures_equal": true,
+      "dropout_scope": "All eight LoRA dropout modules in layer0; prefix up to 65536 elements, not all layers",
+      "gradients": [
+        {
+          "micro": 1,
+          "part": "A",
+          "bitwise_equal": true,
+          "norm_first": 0.0,
+          "norm_second": 0.0,
+          "maximum_absolute_difference": 0.0,
+          "relative_l2_difference": 0.0
+        },
+        {
+          "micro": 1,
+          "part": "B",
+          "bitwise_equal": false,
+          "norm_first": 1.2772166728973389,
+          "norm_second": 1.8232139348983765,
+          "maximum_absolute_difference": 0.03521728515625,
+          "relative_l2_difference": 0.9611377120018005
+        },
+        {
+          "micro": 2,
+          "part": "A",
+          "bitwise_equal": true,
+          "norm_first": 0.0,
+          "norm_second": 0.0,
+          "maximum_absolute_difference": 0.0,
+          "relative_l2_difference": 0.0
+        },
+        {
+          "micro": 2,
+          "part": "B",
+          "bitwise_equal": false,
+          "norm_first": 0.7364846467971802,
+          "norm_second": 0.7356688976287842,
+          "maximum_absolute_difference": 0.00042724609375,
+          "relative_l2_difference": 0.01841379515826702
+        }
+      ]
+    },
+    {
+      "runs": [
+        "strict-A",
+        "strict-B"
+      ],
+      "first_micro_layer0_dropout_rng_and_prefix_signatures_equal": true,
+      "dropout_scope": "All eight LoRA dropout modules in layer0; prefix up to 65536 elements, not all layers",
+      "gradients": [
+        {
+          "micro": 1,
+          "part": "A",
+          "bitwise_equal": true,
+          "norm_first": 0.0,
+          "norm_second": 0.0,
+          "maximum_absolute_difference": 0.0,
+          "relative_l2_difference": 0.0
+        },
+        {
+          "micro": 1,
+          "part": "B",
+          "bitwise_equal": true,
+          "norm_first": 1.275527000427246,
+          "norm_second": 1.275527000427246,
+          "maximum_absolute_difference": 0.0,
+          "relative_l2_difference": 0.0
+        },
+        {
+          "micro": 2,
+          "part": "A",
+          "bitwise_equal": true,
+          "norm_first": 0.0,
+          "norm_second": 0.0,
+          "maximum_absolute_difference": 0.0,
+          "relative_l2_difference": 0.0
+        },
+        {
+          "micro": 2,
+          "part": "B",
+          "bitwise_equal": true,
+          "norm_first": 0.7366688251495361,
+          "norm_second": 0.7366688251495361,
+          "maximum_absolute_difference": 0.0,
+          "relative_l2_difference": 0.0
+        }
+      ]
+    },
+    {
+      "runs": [
+        "math-A",
+        "math-B"
+      ],
+      "first_micro_layer0_dropout_rng_and_prefix_signatures_equal": true,
+      "dropout_scope": "All eight LoRA dropout modules in layer0; prefix up to 65536 elements, not all layers",
+      "gradients": [
+        {
+          "micro": 1,
+          "part": "A",
+          "bitwise_equal": true,
+          "norm_first": 0.0,
+          "norm_second": 0.0,
+          "maximum_absolute_difference": 0.0,
+          "relative_l2_difference": 0.0
+        },
+        {
+          "micro": 1,
+          "part": "B",
+          "bitwise_equal": false,
+          "norm_first": 1.282294750213623,
+          "norm_second": 1.3587976694107056,
+          "maximum_absolute_difference": 0.008056640625,
+          "relative_l2_difference": 0.22615507245063782
+        },
+        {
+          "micro": 2,
+          "part": "A",
+          "bitwise_equal": true,
+          "norm_first": 0.0,
+          "norm_second": 0.0,
+          "maximum_absolute_difference": 0.0,
+          "relative_l2_difference": 0.0
+        },
+        {
+          "micro": 2,
+          "part": "B",
+          "bitwise_equal": false,
+          "norm_first": 0.7386797070503235,
+          "norm_second": 0.7383577227592468,
+          "maximum_absolute_difference": 0.00030517578125,
+          "relative_l2_difference": 0.01769336499273777
+        }
+      ]
+    },
+    {
+      "runs": [
+        "strict-warmup-A",
+        "strict-warmup-B"
+      ],
+      "first_micro_layer0_dropout_rng_and_prefix_signatures_equal": true,
+      "dropout_scope": "All eight LoRA dropout modules in layer0; prefix up to 65536 elements, not all layers",
+      "gradients": [
+        {
+          "micro": 1,
+          "part": "A",
+          "bitwise_equal": true,
+          "norm_first": 0.0,
+          "norm_second": 0.0,
+          "maximum_absolute_difference": 0.0,
+          "relative_l2_difference": 0.0
+        },
+        {
+          "micro": 1,
+          "part": "B",
+          "bitwise_equal": false,
+          "norm_first": 1.27480947971344,
+          "norm_second": 1.275527000427246,
+          "maximum_absolute_difference": 0.0006103515625,
+          "relative_l2_difference": 0.020475812256336212
+        },
+        {
+          "micro": 2,
+          "part": "A",
+          "bitwise_equal": true,
+          "norm_first": 0.0,
+          "norm_second": 0.0,
+          "maximum_absolute_difference": 0.0,
+          "relative_l2_difference": 0.0
+        },
+        {
+          "micro": 2,
+          "part": "B",
+          "bitwise_equal": false,
+          "norm_first": 0.7344138622283936,
+          "norm_second": 0.7366688251495361,
+          "maximum_absolute_difference": 0.00030517578125,
+          "relative_l2_difference": 0.0180021021515131
+        }
+      ]
+    },
+    {
+      "runs": [
+        "strict-math-warmup-A",
+        "strict-math-warmup-B"
+      ],
+      "first_micro_layer0_dropout_rng_and_prefix_signatures_equal": true,
+      "dropout_scope": "All eight LoRA dropout modules in layer0; prefix up to 65536 elements, not all layers",
+      "gradients": [
+        {
+          "micro": 1,
+          "part": "A",
+          "bitwise_equal": true,
+          "norm_first": 0.0,
+          "norm_second": 0.0,
+          "maximum_absolute_difference": 0.0,
+          "relative_l2_difference": 0.0
+        },
+        {
+          "micro": 1,
+          "part": "B",
+          "bitwise_equal": true,
+          "norm_first": 1.2825678586959839,
+          "norm_second": 1.2825678586959839,
+          "maximum_absolute_difference": 0.0,
+          "relative_l2_difference": 0.0
+        },
+        {
+          "micro": 2,
+          "part": "A",
+          "bitwise_equal": true,
+          "norm_first": 0.0,
+          "norm_second": 0.0,
+          "maximum_absolute_difference": 0.0,
+          "relative_l2_difference": 0.0
+        },
+        {
+          "micro": 2,
+          "part": "B",
+          "bitwise_equal": true,
+          "norm_first": 0.723788321018219,
+          "norm_second": 0.723788321018219,
+          "maximum_absolute_difference": 0.0,
+          "relative_l2_difference": 0.0
+        }
+      ]
+    }
+  ],
+  "model_parameter_and_quantization_hashes_equal": {
+    "runs": [
+      "strict-A",
+      "strict-B",
+      "math-A",
+      "math-B",
+      "native-hash-A"
+    ],
+    "count": 3046
+  },
+  "convolution_primitives": {
+    "conv-primitive": {
+      "scope": "Synthetic isolated convolution diagnostic; no optimizer/model updates",
+      "shape": [
+        2,
+        8192,
+        720
+      ],
+      "dtype": "torch.bfloat16",
+      "kernel": 4,
+      "groups": 8192,
+      "torch": "2.6.0+cu124",
+      "cudnn_version": 90100,
+      "cudnn_benchmark": false,
+      "tests": [
+        {
+          "cudnn_deterministic": false,
+          "repeat_bitwise_equal": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "max_absolute_differences": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "relative_l2_differences": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "cudnn_deterministic": true,
+          "repeat_bitwise_equal": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "max_absolute_differences": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "relative_l2_differences": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    "conv-layout-primitive": {
+      "scope": "Synthetic isolated convolution diagnostic; no optimizer/model updates",
+      "shape": [
+        2,
+        8192,
+        720
+      ],
+      "stride": [
+        5898240,
+        1,
+        8192
+      ],
+      "dtype": "torch.bfloat16",
+      "kernel": 4,
+      "groups": 8192,
+      "torch": "2.6.0+cu124",
+      "cudnn_version": 90100,
+      "cudnn_benchmark": false,
+      "tests": [
+        {
+          "cudnn_deterministic": false,
+          "repeat_bitwise_equal": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "max_absolute_differences": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "relative_l2_differences": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "cudnn_deterministic": true,
+          "repeat_bitwise_equal": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "max_absolute_differences": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "relative_l2_differences": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    }
+  },
+  "resolution": {
+    "status": "PAIR_GRADIENT_MISMATCH_RESOLVED",
+    "scope": "Isolated rerun; historical attempts and evaluations unchanged",
+    "optimizer_updates": 48,
+    "per_run_updates": 24,
+    "same_initial_model_tensor_hashes": 3049,
+    "warmup_representative_tensor_comparisons": [
+      {
+        "micro": 1,
+        "part": "A",
+        "bitwise_equal": true
+      },
+      {
+        "micro": 1,
+        "part": "B",
+        "bitwise_equal": true
+      },
+      {
+        "micro": 2,
+        "part": "A",
+        "bitwise_equal": true
+      },
+      {
+        "micro": 2,
+        "part": "B",
+        "bitwise_equal": true
+      },
+      {
+        "micro": 3,
+        "part": "A",
+        "bitwise_equal": true
+      },
+      {
+        "micro": 3,
+        "part": "B",
+        "bitwise_equal": true
+      },
+      {
+        "micro": 4,
+        "part": "A",
+        "bitwise_equal": true
+      },
+      {
+        "micro": 4,
+        "part": "B",
+        "bitwise_equal": true
+      },
+      {
+        "micro": 5,
+        "part": "A",
+        "bitwise_equal": true
+      },
+      {
+        "micro": 5,
+        "part": "B",
+        "bitwise_equal": true
+      },
+      {
+        "micro": 6,
+        "part": "A",
+        "bitwise_equal": true
+      },
+      {
+        "micro": 6,
+        "part": "B",
+        "bitwise_equal": true
+      },
+      {
+        "micro": 7,
+        "part": "A",
+        "bitwise_equal": true
+      },
+      {
+        "micro": 7,
+        "part": "B",
+        "bitwise_equal": true
+      },
+      {
+        "micro": 8,
+        "part": "A",
+        "bitwise_equal": true
+      },
+      {
+        "micro": 8,
+        "part": "B",
+        "bitwise_equal": true
+      }
+    ],
+    "warmup_optimizer_input_parameter_counts": [
+      496,
+      496,
+      496,
+      496
+    ],
+    "warmup_optimizer_input_parameter_hashes_equal": true,
+    "first_weighted_optimizer_inputs_differ": true,
+    "strict_original_gradient_audit_passed": true,
+    "first_weighted_sample_losses_equal": true,
+    "first_weighted_sample_losses": [
+      2.376037359237671,
+      5.18017578125
+    ],
+    "warmup_max_gradient_norm_relative_difference": 0.0,
+    "first_weighted_gradient_norms": {
+      "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_B.default.weight": {
+        "uniform": 5.750201225280762,
+        "linupper": 4.782527923583984
+      },
+      "base_model.model.model.language_model.layers.0.linear_attn.out_proj.lora_A.default.weight": {
+        "uniform": 0.9910407066345215,
+        "linupper": 0.7668048739433289
+      }
+    },
+    "original_tolerance": {
+      "atol": 0.0001,
+      "rtol": 0.02
+    },
+    "protocols": {
+      "G06": {
+        "initial_adapter_tensor_sha256": "3bf6a156850eca6cc0a5a0f914ed9eae38002687fc94f6ec585a1dbcd321820f",
+        "snapshot_sha256": "c56d3f34fbb0d1b4001c77fa2eba35eb5ad4f88e91a2e94c5db38e34ba30809a",
+        "micro_rng_seed_base": 420000,
+        "lora_dropout": 0.05,
+        "deterministic_execution_requested": "torch-math-cublas4096-v2",
+        "full_determinism_requested": false,
+        "deterministic_algorithms": true,
+        "cudnn_deterministic": true,
+        "cudnn_benchmark": false,
+        "sdp_backends": {
+          "flash": false,
+          "math": true,
+          "mem_efficient": false,
+          "cudnn": false
+        },
+        "cublas_workspace_config": ":4096:8",
+        "cuda_launch_blocking": null,
+        "protocol": "Shared exact LoRA initialization and explicit per-microbatch CPU/CUDA seed control; full_determinism is an explicit configuration opt-in, not passive observation"
+      },
+      "G07": {
+        "initial_adapter_tensor_sha256": "3bf6a156850eca6cc0a5a0f914ed9eae38002687fc94f6ec585a1dbcd321820f",
+        "snapshot_sha256": "c56d3f34fbb0d1b4001c77fa2eba35eb5ad4f88e91a2e94c5db38e34ba30809a",
+        "micro_rng_seed_base": 420000,
+        "lora_dropout": 0.05,
+        "deterministic_execution_requested": "torch-math-cublas4096-v2",
+        "full_determinism_requested": false,
+        "deterministic_algorithms": true,
+        "cudnn_deterministic": true,
+        "cudnn_benchmark": false,
+        "sdp_backends": {
+          "flash": false,
+          "math": true,
+          "mem_efficient": false,
+          "cudnn": false
+        },
+        "cublas_workspace_config": ":4096:8",
+        "cuda_launch_blocking": null,
+        "protocol": "Shared exact LoRA initialization and explicit per-microbatch CPU/CUDA seed control; full_determinism is an explicit configuration opt-in, not passive observation"
+      }
+    },
+    "script_sha256": "e92dcc4ac68d0c9122e2ca417c5e5881be75c1903f4c4293593315c6b28b940f"
+  },
+  "resolved_resources": {
+    "G06": {
+      "status": "TRAIN_VERIFIED",
+      "error": null,
+      "seconds": 208.46762729110196,
+      "peak_allocated_gib": 16.412761211395264,
+      "peak_reserved_gib": 17.947265625,
+      "allocator_fraction": 0.42,
+      "gpu_name": "NVIDIA L40",
+      "config_sha256": "141fc59abaa01422fbd2555c69cef8e5fb9d0e7c966a5701153d5dafc0e64b89",
+      "adapter_sha256": "d43730331dd6a19b8d21ed1ccdca135f6ccb3ade46189c8bc5bbcc09676a94ca",
+      "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+      "optimizer_steps": 24,
+      "nonzero_lora_b_tensors": 248,
+      "losses": [
+        1.321407675743103,
+        1.8154127597808838,
+        2.0386037826538086,
+        2.7036988735198975,
+        2.687140703201294,
+        2.6748898029327393,
+        1.5809102058410645,
+        1.0574170351028442,
+        1.6476296186447144,
+        1.6530687808990479,
+        0.722947359085083,
+        0.5537316799163818,
+        1.0110845565795898,
+        1.5642352104187012,
+        0.37307989597320557,
+        1.002045750617981,
+        0.9432669878005981,
+        1.1402292251586914,
+        2.1913461685180664,
+        0.8618413805961609,
+        1.0030784606933594,
+        0.4476223289966583,
+        0.36294490098953247,
+        0.9163634181022644
+      ]
+    },
+    "G07": {
+      "status": "TRAIN_VERIFIED",
+      "error": null,
+      "seconds": 209.63171863695607,
+      "peak_allocated_gib": 16.412761211395264,
+      "peak_reserved_gib": 17.947265625,
+      "allocator_fraction": 0.42,
+      "gpu_name": "NVIDIA L40",
+      "config_sha256": "f600bd69b305bcbbe44391420b7b8193c7a899ade6ee52ee13b686331add9677",
+      "adapter_sha256": "aea6ab073ede0925a7824a343c5d3411664d32e4e2c8b3828bd234d378b4ba1e",
+      "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+      "optimizer_steps": 24,
+      "nonzero_lora_b_tensors": 248,
+      "losses": [
+        1.321407675743103,
+        1.8154127597808838,
+        2.0386037826538086,
+        2.7036988735198975,
+        3.239447593688965,
+        2.9310362339019775,
+        1.9355276823043823,
+        1.188035488128662,
+        1.9644644260406494,
+        2.0299339294433594,
+        0.9315705299377441,
+        0.5804033875465393,
+        1.4188580513000488,
+        1.8475093841552734,
+        0.5115148425102234,
+        1.3355029821395874,
+        1.1930382251739502,
+        1.2182443141937256,
+        2.771080493927002,
+        1.14793062210083,
+        1.4492716789245605,
+        0.6402426958084106,
+        0.5037380456924438,
+        1.1060229539871216
+      ]
+    }
+  },
+  "resolved_evaluations": {
+    "G06": {
+      "model": "G06",
+      "adapter_reloaded": true,
+      "adapter_sha256": "d43730331dd6a19b8d21ed1ccdca135f6ccb3ade46189c8bc5bbcc09676a94ca",
+      "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+      "n": 64,
+      "total_seconds": 325.9241841000039,
+      "generation_seconds": 304.6676903839689,
+      "peak_allocated_gib": 7.83649206161499,
+      "peak_reserved_gib": 7.994140625,
+      "prediction_sha256": "4041c98cbf01f9d8f422bdbb47761e6041b2fd9fc57c6948e369607e37b024e3",
+      "evaluation_script_sha256": "457ed4f40004b7ec6743a9e457d05f3230c065548f8508be92d893f4b844dae2",
+      "model_config_sha256": "d0883072e01861ed0b2d47be3c16c36a8e81c224c7ffaa310c6558fb3f932b05",
+      "eos_token_id": 248046,
+      "pad_token_id": 248044,
+      "empty_outputs": 0,
+      "reasoning_tag_outputs": 0,
+      "generation": {
+        "prompt_method": "hf_native_chat_template_enable_thinking_false",
+        "do_sample": false,
+        "max_new_tokens": 256,
+        "template": "qwen3_5_nothink",
+        "enable_thinking": false
+      },
+      "metrics": {
+        "bioasq_factoid_qa": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "em": 0.375,
+          "token_f1": 0.5601190476190476,
+          "reference_scope": "Single SciRIFF released answer; no hidden alternatives"
+        },
+        "genia_ner": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 1,
+          "entity_exact_macro_sample_f1": 0.31516094009037554,
+          "successful_parse_subset_entity_micro_f1": 0.2887700534759358,
+          "entity_exact_micro_f1": 0.26932668329177056,
+          "tp": 54,
+          "fp": 99,
+          "fn": 194,
+          "json_success": 0.9375,
+          "per_type": {
+            "CellLine": {
+              "tp": 1,
+              "fp": 14,
+              "fn": 9,
+              "f1": 0.08
+            },
+            "CellType": {
+              "tp": 15,
+              "fp": 26,
+              "fn": 26,
+              "f1": 0.36585365853658536
+            },
+            "Protein": {
+              "tp": 23,
+              "fp": 40,
+              "fn": 83,
+              "f1": 0.27218934911242604
+            },
+            "RNA": {
+              "tp": 1,
+              "fp": 4,
+              "fn": 2,
+              "f1": 0.25
+            },
+            "DNA": {
+              "tp": 14,
+              "fp": 15,
+              "fn": 74,
+              "f1": 0.23931623931623933
+            }
+          }
+        },
+        "scicite_classification": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "accuracy": 0.8125,
+          "macro_f1": 0.7600000000000001,
+          "labels": [
+            "background",
+            "method",
+            "result"
+          ],
+          "invalid_labels": 0
+        },
+        "scitldr_aic": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "rouge_l_f1": 0.2650527663516028,
+          "rouge_tokenizer": "lowercase Unicode word/punctuation regex, no stemming; LCS token F1"
+        }
+      },
+      "execution_protocol": {
+        "deterministic_execution": "torch-math-cublas4096-v2",
+        "full_determinism": false,
+        "deterministic_algorithms": true,
+        "cublas_workspace_config": ":4096:8",
+        "wrapper_sha256": "dda15ee42cf94b2075d73ee3db168d011417da3713dd2d5a177df46bf810b721",
+        "scope": "Resolved pair reload/generation; old non-deterministic evaluation remains historical"
+      },
+      "generated_tokens": 2346,
+      "cap_hits": 1
+    },
+    "G07": {
+      "model": "G07",
+      "adapter_reloaded": true,
+      "adapter_sha256": "aea6ab073ede0925a7824a343c5d3411664d32e4e2c8b3828bd234d378b4ba1e",
+      "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+      "n": 64,
+      "total_seconds": 341.8392816109117,
+      "generation_seconds": 324.00201583397575,
+      "peak_allocated_gib": 7.83649206161499,
+      "peak_reserved_gib": 7.994140625,
+      "prediction_sha256": "4b7422a720fed89a3702c47310ae3209b015c6f16c8b4d5dcb59225aebe2b008",
+      "evaluation_script_sha256": "457ed4f40004b7ec6743a9e457d05f3230c065548f8508be92d893f4b844dae2",
+      "model_config_sha256": "d0883072e01861ed0b2d47be3c16c36a8e81c224c7ffaa310c6558fb3f932b05",
+      "eos_token_id": 248046,
+      "pad_token_id": 248044,
+      "empty_outputs": 0,
+      "reasoning_tag_outputs": 0,
+      "generation": {
+        "prompt_method": "hf_native_chat_template_enable_thinking_false",
+        "do_sample": false,
+        "max_new_tokens": 256,
+        "template": "qwen3_5_nothink",
+        "enable_thinking": false
+      },
+      "metrics": {
+        "bioasq_factoid_qa": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "em": 0.375,
+          "token_f1": 0.5851190476190476,
+          "reference_scope": "Single SciRIFF released answer; no hidden alternatives"
+        },
+        "genia_ner": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "entity_exact_macro_sample_f1": 0.3462557779522065,
+          "successful_parse_subset_entity_micro_f1": 0.29906542056074764,
+          "entity_exact_micro_f1": 0.29906542056074764,
+          "tp": 64,
+          "fp": 116,
+          "fn": 184,
+          "json_success": 1.0,
+          "per_type": {
+            "CellLine": {
+              "tp": 2,
+              "fp": 13,
+              "fn": 8,
+              "f1": 0.16
+            },
+            "Protein": {
+              "tp": 23,
+              "fp": 43,
+              "fn": 83,
+              "f1": 0.26744186046511625
+            },
+            "CellType": {
+              "tp": 19,
+              "fp": 28,
+              "fn": 22,
+              "f1": 0.4318181818181818
+            },
+            "DNA": {
+              "tp": 19,
+              "fp": 27,
+              "fn": 69,
+              "f1": 0.2835820895522388
+            },
+            "RNA": {
+              "tp": 1,
+              "fp": 5,
+              "fn": 2,
+              "f1": 0.2222222222222222
+            }
+          }
+        },
+        "scicite_classification": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "accuracy": 0.8125,
+          "macro_f1": 0.7600000000000001,
+          "labels": [
+            "background",
+            "method",
+            "result"
+          ],
+          "invalid_labels": 0
+        },
+        "scitldr_aic": {
+          "n": 16,
+          "empty": 0,
+          "generation_cap_hits": 0,
+          "rouge_l_f1": 0.280211653539677,
+          "rouge_tokenizer": "lowercase Unicode word/punctuation regex, no stemming; LCS token F1"
+        }
+      },
+      "execution_protocol": {
+        "deterministic_execution": "torch-math-cublas4096-v2",
+        "full_determinism": false,
+        "deterministic_algorithms": true,
+        "cublas_workspace_config": ":4096:8",
+        "wrapper_sha256": "dda15ee42cf94b2075d73ee3db168d011417da3713dd2d5a177df46bf810b721",
+        "scope": "Resolved pair reload/generation; old non-deterministic evaluation remains historical"
+      },
+      "generated_tokens": 2281,
+      "cap_hits": 0
+    }
+  },
+  "failed_generic_full_determinism_pair": {
+    "resources": {
+      "G06": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 599.1702205231413,
+        "peak_allocated_gib": 16.350505352020264,
+        "peak_reserved_gib": 17.591796875,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "2e743f9191bdd51f6ee5c8d081faf89e54b6a9da6479614e93672949f552db66",
+        "adapter_sha256": "2195296662f0ef27798e0c9a207e54b5806167bbb2770eeff95e562146b78671",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          1.3167204856872559,
+          1.812356948852539,
+          2.040701389312744,
+          2.747985363006592,
+          2.7117602825164795,
+          2.6974291801452637,
+          1.5957187414169312,
+          1.0888924598693848,
+          1.6991455554962158,
+          1.6689834594726562,
+          0.7439851760864258,
+          0.5591380000114441,
+          1.0097981691360474,
+          1.587672233581543,
+          0.3752589821815491,
+          1.0053377151489258,
+          0.9508163332939148,
+          1.1386942863464355,
+          2.2147440910339355,
+          0.8775992393493652,
+          1.0065280199050903,
+          0.44428157806396484,
+          0.3670564293861389,
+          0.9155082702636719
+        ]
+      },
+      "G07": {
+        "status": "TRAIN_VERIFIED",
+        "error": null,
+        "seconds": 650.0609685471281,
+        "peak_allocated_gib": 16.350505352020264,
+        "peak_reserved_gib": 17.591796875,
+        "allocator_fraction": 0.42,
+        "gpu_name": "NVIDIA L40",
+        "config_sha256": "973a5272db12e39f38f839dec00a6082f7d0c5f47d5e790167e4f5917a66f750",
+        "adapter_sha256": "e2c511903dec207a1db3cce6efbca04154e36a4425a932c76b786bd68ddaf3e4",
+        "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+        "optimizer_steps": 24,
+        "nonzero_lora_b_tensors": 248,
+        "losses": [
+          1.3198761940002441,
+          1.815580129623413,
+          2.034158945083618,
+          2.7237131595611572,
+          3.2384495735168457,
+          2.9415109157562256,
+          1.9282424449920654,
+          1.2048665285110474,
+          1.965503454208374,
+          2.0364181995391846,
+          0.9324622750282288,
+          0.5770060420036316,
+          1.4162366390228271,
+          1.8354524374008179,
+          0.5112064480781555,
+          1.3468376398086548,
+          1.2036991119384766,
+          1.213678002357483,
+          2.778404712677002,
+          1.1613988876342773,
+          1.4493443965911865,
+          0.6348230838775635,
+          0.504207968711853,
+          1.1095638275146484
+        ]
+      }
+    },
+    "status": "STRICT_GRADIENT_AUDIT_FAILED_NO_EVALUATIONS",
+    "protocol": "Transformers full_determinism=True; cuBLAS :16:8 and CUDA_LAUNCH_BLOCKING=1",
+    "first_micro_B_relative_l2": 0.019817790016531944,
+    "optimizer_updates": 48,
+    "generated_predictions": 0
+  },
+  "four_step_strict_math_repeat_warmup_exact": true,
+  "strict_math_first_micro_full_layer_outputs": {
+    "decoder_layers": 32,
+    "module_phase_records": 136,
+    "cross_run_and_checkpoint_recompute_equal": true,
+    "scope": "Full decoder outputs and all leaf submodules of layer0, first microbatch only"
+  },
+  "new_optimizer_updates": 119,
+  "new_predictions": 128,
+  "all_campaign_optimizer_updates_including_prior_248": 367,
+  "all_campaign_generated_rows_including_prior_584": 712,
+  "historical_core8_artifacts_unchanged": true,
+  "causal_scope": "Seed/RNG identity was insufficient. The explicit torch-math-cublas4096-v2 protocol resolves this current stack; the generic HF full_determinism recipe did not. Individual CUDA kernel has not been uniquely isolated; math-SDPA alone did not resolve it.",
+  "script_sha256": "eb5fd218a93f41a84ecb377732c627f708ffa8080a2670576ad4d7a681a3e79d"
+}

@@ -50,6 +50,10 @@ def materialize(destination: Path, runtime_root='/runs/strategy-20261023'):
             output_dir=str(run_root/'output'), overwrite_output_dir=False,
             train_type=run['train_type'], components_cfg_file=str(run_root/'components.yaml'),
         )
+        # The paired sidecar selects the validated cuBLAS protocol. HF's generic
+        # full_determinism helper overwrites it with a different workspace.
+        if run['id'] in ['G06', 'G07']:
+            config['full_determinism'] = False
         components = {k: {} for k in ['selectors','mixers','weighters','reorders','pipelines']}
         family = {'dynamic_select':'selectors','dynamic_mix':'mixers','dynamic_weight':'weighters'}.get(run['train_type'])
         if family:

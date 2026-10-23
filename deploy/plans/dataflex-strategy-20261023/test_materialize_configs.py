@@ -22,6 +22,8 @@ class MaterializationTests(unittest.TestCase):
                 self.assertTrue(cfg['output_dir'].startswith('/runs/strategy-20261023/'))
                 self.assertEqual(cfg['max_steps'], 24)
                 self.assertEqual(cfg['per_device_train_batch_size']*cfg['gradient_accumulation_steps'], 4)
+                if row['run_id'] in ['G06', 'G07']:
+                    self.assertFalse(cfg['full_determinism'])
                 if cfg['train_type'] in ['dynamic_mix','dynamic_select']:
                     self.assertEqual(cfg['train_step'], 24)
                 if row['run_id']=='G05':
