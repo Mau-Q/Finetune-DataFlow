@@ -1,0 +1,702 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-23",
+  "timezone": "Asia/Shanghai",
+  "kind": "test_specification_not_executable_config",
+  "status": "PLANNED_NOT_RUN",
+  "authority": "User requested analysis and formulation of DataFlex strategy tests; this artifact does not initiate training.",
+  "data": {
+    "dataset": "allenai/SciRIFF",
+    "configuration": "4096",
+    "revision": null,
+    "revision_status": "TO_FREEZE_BEFORE_DOWNLOAD",
+    "training_rows": 256,
+    "validation_rows": 32,
+    "test_rows": 64,
+    "total_unique_real_rows": 352,
+    "tasks_proposed": [
+      "scicite_classification",
+      "genia_ner",
+      "covid_deepset_qa",
+      "scitldr_aic"
+    ],
+    "per_task": {
+      "train": 64,
+      "validation": 8,
+      "test": 16
+    },
+    "grouping": "Source document grouping plus official split checks; preserve and report unavailable document identities.",
+    "availability_status": "NOT_VERIFIED",
+    "max_full_training_sequence_tokens": 1024,
+    "tokenizer": "Qwen3.5-9B",
+    "template": "qwen3_5_nothink",
+    "translate": false,
+    "truncate_to_fit": false
+  },
+  "model": {
+    "name": "Qwen/Qwen3.5-9B",
+    "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+    "route": "NF4 QLoRA BF16 SDPA gradient checkpointing",
+    "lora_rank": 16,
+    "lora_alpha": 32,
+    "learning_rate": 2e-05,
+    "packing": false,
+    "lr_scheduler_type": "constant",
+    "lr_warmup_steps": 0,
+    "seed": 42,
+    "data_seed": 42,
+    "environment_status": "MUST_REVERIFY_BEFORE_GPU_RUN"
+  },
+  "gate": {
+    "id": "GATE",
+    "status": "NOT_RUN",
+    "train_rows_subset": 32,
+    "optimizer_updates": 2,
+    "microbatch1_and2_memory_probes_required": true,
+    "description": "Verify static import/training/labels/save/reload; memory probes and diagnostics have separately reported budgets."
+  },
+  "p0_projects": [
+    {
+      "id": "P00",
+      "title": "Data/source/template/model identity and split freeze",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "P01",
+      "title": "Compiler/registry/constructor parameter propagation",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "P02",
+      "title": "Actual optimizer schedule and scheduler horizon",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "P03",
+      "title": "Random/loss/delta selection semantics",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "P04",
+      "title": "Scoring batch invariance and label masking",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "P05",
+      "title": "Domain mapping, deterministic quota rounding, replacement",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "P06",
+      "title": "ODM reward and policy math with controlled batches",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "P07",
+      "title": "Weight math, reduction and gradient accumulation",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "P08",
+      "title": "Cache isolation, tokenized signatures, resume state",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "P09",
+      "title": "Observation and evaluation artifact identity",
+      "status": "NOT_RUN"
+    }
+  ],
+  "core_runs": [
+    {
+      "id": "G00",
+      "status": "NOT_RUN",
+      "train_type": "static",
+      "component_name": null,
+      "optimizer_updates": 24,
+      "per_device_train_batch_size": 1,
+      "gradient_accumulation_steps": 4,
+      "world_size": 1,
+      "effective_batch": 4,
+      "sample_presentations": 96,
+      "max_steps": 24,
+      "component_overrides": {},
+      "acceptance": [
+        "24 finite optimizer updates",
+        "LoRA changed; frozen base unchanged",
+        "checkpoint12 and final adapter reload"
+      ],
+      "prerequisites": [
+        "P00",
+        "P01",
+        "P02",
+        "P09",
+        "GATE",
+        "P08"
+      ],
+      "artifacts": [
+        "manifest.json",
+        "train.yaml",
+        "components.yaml",
+        "environment.json",
+        "strategy-events.jsonl",
+        "consumption.jsonl",
+        "loss-diagnostics.jsonl",
+        "resource.json",
+        "adapter",
+        "reload-receipt.json",
+        "predictions.jsonl",
+        "metrics.json",
+        "verdict.json"
+      ]
+    },
+    {
+      "id": "G01",
+      "status": "NOT_RUN",
+      "train_type": "dynamic_select",
+      "component_name": "random",
+      "optimizer_updates": 24,
+      "per_device_train_batch_size": 1,
+      "gradient_accumulation_steps": 4,
+      "world_size": 1,
+      "effective_batch": 4,
+      "sample_presentations": 96,
+      "max_steps": 24,
+      "component_overrides": {
+        "seed": 42,
+        "replacement": false
+      },
+      "acceptance": [
+        "4 rounds with 20 indices each",
+        "seed+step output matches independent draw",
+        "actual consumed IDs match stage plan"
+      ],
+      "prerequisites": [
+        "P00",
+        "P01",
+        "P02",
+        "P09",
+        "GATE",
+        "P03",
+        "G00",
+        "P08"
+      ],
+      "artifacts": [
+        "manifest.json",
+        "train.yaml",
+        "components.yaml",
+        "environment.json",
+        "strategy-events.jsonl",
+        "consumption.jsonl",
+        "loss-diagnostics.jsonl",
+        "resource.json",
+        "adapter",
+        "reload-receipt.json",
+        "predictions.jsonl",
+        "metrics.json",
+        "verdict.json"
+      ],
+      "train_step": 24,
+      "warmup_step": 4,
+      "update_step": 5,
+      "update_times": 4,
+      "expected_schedule_boundaries": [
+        4,
+        9,
+        14,
+        19
+      ]
+    },
+    {
+      "id": "G02",
+      "status": "NOT_RUN",
+      "train_type": "dynamic_select",
+      "component_name": "loss",
+      "optimizer_updates": 24,
+      "per_device_train_batch_size": 1,
+      "gradient_accumulation_steps": 4,
+      "world_size": 1,
+      "effective_batch": 4,
+      "sample_presentations": 96,
+      "max_steps": 24,
+      "component_overrides": {
+        "focus": "high",
+        "focus_weight": 5.0,
+        "replacement": false,
+        "temperature": 1.0,
+        "score_batch_size": 1,
+        "score_num_workers": 0
+      },
+      "acceptance": [
+        "4 scoring/selection rounds",
+        "probability-based high-loss preference; not top-k",
+        "scores aligned with actual consumed IDs"
+      ],
+      "prerequisites": [
+        "P00",
+        "P01",
+        "P02",
+        "P09",
+        "GATE",
+        "P03",
+        "P04",
+        "G01",
+        "P08"
+      ],
+      "artifacts": [
+        "manifest.json",
+        "train.yaml",
+        "components.yaml",
+        "environment.json",
+        "strategy-events.jsonl",
+        "consumption.jsonl",
+        "loss-diagnostics.jsonl",
+        "resource.json",
+        "adapter",
+        "reload-receipt.json",
+        "predictions.jsonl",
+        "metrics.json",
+        "verdict.json"
+      ],
+      "train_step": 24,
+      "warmup_step": 4,
+      "update_step": 5,
+      "update_times": 4,
+      "expected_schedule_boundaries": [
+        4,
+        9,
+        14,
+        19
+      ]
+    },
+    {
+      "id": "G03",
+      "status": "NOT_RUN",
+      "train_type": "dynamic_select",
+      "component_name": "delta_loss",
+      "optimizer_updates": 24,
+      "per_device_train_batch_size": 1,
+      "gradient_accumulation_steps": 4,
+      "world_size": 1,
+      "effective_batch": 4,
+      "sample_presentations": 96,
+      "max_steps": 24,
+      "component_overrides": {
+        "window_size": 0.2,
+        "score_batch_size": 1,
+        "score_num_workers": 0
+      },
+      "acceptance": [
+        "baseline plus 3 subsequent delta rounds",
+        "delta direction and windows traceable",
+        "no empty interval failure"
+      ],
+      "prerequisites": [
+        "P00",
+        "P01",
+        "P02",
+        "P09",
+        "GATE",
+        "P03",
+        "P04",
+        "G01",
+        "P08"
+      ],
+      "artifacts": [
+        "manifest.json",
+        "train.yaml",
+        "components.yaml",
+        "environment.json",
+        "strategy-events.jsonl",
+        "consumption.jsonl",
+        "loss-diagnostics.jsonl",
+        "resource.json",
+        "adapter",
+        "reload-receipt.json",
+        "predictions.jsonl",
+        "metrics.json",
+        "verdict.json"
+      ],
+      "train_step": 24,
+      "warmup_step": 4,
+      "update_step": 5,
+      "update_times": 4,
+      "expected_schedule_boundaries": [
+        4,
+        9,
+        14,
+        19
+      ]
+    },
+    {
+      "id": "G04",
+      "status": "NOT_RUN",
+      "train_type": "dynamic_mix",
+      "component_name": "static",
+      "optimizer_updates": 24,
+      "per_device_train_batch_size": 1,
+      "gradient_accumulation_steps": 4,
+      "world_size": 1,
+      "effective_batch": 4,
+      "sample_presentations": 96,
+      "max_steps": 24,
+      "component_overrides": {},
+      "acceptance": [
+        "96 sample presentations; 24 per domain",
+        "domain mapping intact",
+        "no dynamic remix"
+      ],
+      "prerequisites": [
+        "P00",
+        "P01",
+        "P02",
+        "P09",
+        "GATE",
+        "P05",
+        "G00",
+        "P08"
+      ],
+      "artifacts": [
+        "manifest.json",
+        "train.yaml",
+        "components.yaml",
+        "environment.json",
+        "strategy-events.jsonl",
+        "consumption.jsonl",
+        "loss-diagnostics.jsonl",
+        "resource.json",
+        "adapter",
+        "reload-receipt.json",
+        "predictions.jsonl",
+        "metrics.json",
+        "verdict.json"
+      ],
+      "train_step": 24,
+      "warmup_step": 4,
+      "update_step": 5,
+      "update_times": 4,
+      "expected_schedule_boundaries": [],
+      "static_mix": true,
+      "mixture_sample_rule": "mixture",
+      "init_mixture_proportions": [
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ],
+      "source_order": [
+        "scicite_classification",
+        "genia_ner",
+        "covid_deepset_qa",
+        "scitldr_aic"
+      ]
+    },
+    {
+      "id": "G05",
+      "status": "NOT_RUN",
+      "train_type": "dynamic_mix",
+      "component_name": "odm",
+      "optimizer_updates": 24,
+      "per_device_train_batch_size": 1,
+      "gradient_accumulation_steps": 4,
+      "world_size": 1,
+      "effective_batch": 4,
+      "sample_presentations": 96,
+      "max_steps": 24,
+      "component_overrides": {
+        "warmup_steps": 0,
+        "alpha": 0.9,
+        "initial_proportions": [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ]
+      },
+      "acceptance": [
+        "4 non-warmup mixer calls",
+        "reward domain matches microbatch domain",
+        "updated proportions applied to actual subsequent consumption",
+        "probability finite nonnegative normalized"
+      ],
+      "prerequisites": [
+        "P00",
+        "P01",
+        "P02",
+        "P09",
+        "GATE",
+        "P05",
+        "P06",
+        "G04",
+        "P08"
+      ],
+      "artifacts": [
+        "manifest.json",
+        "train.yaml",
+        "components.yaml",
+        "environment.json",
+        "strategy-events.jsonl",
+        "consumption.jsonl",
+        "loss-diagnostics.jsonl",
+        "resource.json",
+        "adapter",
+        "reload-receipt.json",
+        "predictions.jsonl",
+        "metrics.json",
+        "verdict.json"
+      ],
+      "train_step": 24,
+      "warmup_step": 4,
+      "update_step": 5,
+      "update_times": 4,
+      "expected_schedule_boundaries": [
+        4,
+        9,
+        14,
+        19
+      ],
+      "static_mix": false,
+      "mixture_sample_rule": "mixture",
+      "init_mixture_proportions": [
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ],
+      "source_order": [
+        "scicite_classification",
+        "genia_ner",
+        "covid_deepset_qa",
+        "scitldr_aic"
+      ],
+      "observed_instance_defaults_to_verify": {
+        "reward_scale": 15.0,
+        "min_exploration_rate": 0.03
+      }
+    },
+    {
+      "id": "G06",
+      "status": "NOT_RUN",
+      "train_type": "dynamic_weight",
+      "component_name": "custom",
+      "optimizer_updates": 24,
+      "per_device_train_batch_size": 2,
+      "gradient_accumulation_steps": 2,
+      "world_size": 1,
+      "effective_batch": 4,
+      "sample_presentations": 96,
+      "max_steps": 24,
+      "component_overrides": {
+        "strategy": "uniform"
+      },
+      "acceptance": [
+        "uniform sample-mean control",
+        "same actual microbatch sequence as G07",
+        "accumulation scaling correct"
+      ],
+      "prerequisites": [
+        "P00",
+        "P01",
+        "P02",
+        "P09",
+        "GATE",
+        "P07",
+        "G00",
+        "P08"
+      ],
+      "artifacts": [
+        "manifest.json",
+        "train.yaml",
+        "components.yaml",
+        "environment.json",
+        "strategy-events.jsonl",
+        "consumption.jsonl",
+        "loss-diagnostics.jsonl",
+        "resource.json",
+        "adapter",
+        "reload-receipt.json",
+        "predictions.jsonl",
+        "metrics.json",
+        "verdict.json"
+      ],
+      "warmup_step": 4
+    },
+    {
+      "id": "G07",
+      "status": "NOT_RUN",
+      "train_type": "dynamic_weight",
+      "component_name": "loss",
+      "optimizer_updates": 24,
+      "per_device_train_batch_size": 2,
+      "gradient_accumulation_steps": 2,
+      "world_size": 1,
+      "effective_batch": 4,
+      "sample_presentations": 96,
+      "max_steps": 24,
+      "component_overrides": {
+        "strategy": "linupper",
+        "delta": 1.0
+      },
+      "acceptance": [
+        "nonuniform weights for unequal per-sample losses after warmup",
+        "actual backward loss/gradient match intended weighting",
+        "no scalar fallback",
+        "same actual microbatch sequence as G06"
+      ],
+      "prerequisites": [
+        "P00",
+        "P01",
+        "P02",
+        "P09",
+        "GATE",
+        "P07",
+        "G06",
+        "P08"
+      ],
+      "artifacts": [
+        "manifest.json",
+        "train.yaml",
+        "components.yaml",
+        "environment.json",
+        "strategy-events.jsonl",
+        "consumption.jsonl",
+        "loss-diagnostics.jsonl",
+        "resource.json",
+        "adapter",
+        "reload-receipt.json",
+        "predictions.jsonl",
+        "metrics.json",
+        "verdict.json"
+      ],
+      "warmup_step": 4
+    }
+  ],
+  "core_total_optimizer_updates": 192,
+  "core_total_sample_presentations": 768,
+  "evaluation": {
+    "status": "NOT_RUN",
+    "test_rows_per_model": 64,
+    "models": 9,
+    "total_sample_predictions": 576,
+    "generation": {
+      "do_sample": false,
+      "max_new_tokens": 256,
+      "enable_thinking": false
+    },
+    "metrics_by_task": {
+      "scicite_classification": [
+        "accuracy",
+        "macro_f1"
+      ],
+      "genia_ner": [
+        "typed_entity_exact_match_f1",
+        "json_parse_rate"
+      ],
+      "covid_deepset_qa": [
+        "exact_match",
+        "token_f1"
+      ],
+      "scitldr_aic": [
+        "rouge_l",
+        "manual_factual_spotcheck"
+      ]
+    },
+    "claim_scope": "Custom small in-task test, not official complete SciRIFF score or strategy ranking."
+  },
+  "p2_projects": [
+    {
+      "id": "X00",
+      "title": "Static sorting/shuffle order",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "X01",
+      "title": "Dynamic reorder scoring/consumption",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "X02",
+      "title": "Lego select_only parity",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "X03",
+      "title": "Lego filter then reorder",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "X04",
+      "title": "Lego mixture plus weighting, ODM mixed-domain attribution gate",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "X05",
+      "title": "Continuous versus checkpoint12 resumed training to24",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "X06",
+      "title": "Platform compile/bundle/CLI/results/evaluation readback",
+      "status": "NOT_RUN"
+    }
+  ],
+  "extended_algorithms": [
+    {
+      "name": "less",
+      "status": "NOT_RUN",
+      "requires_separate_preconditions": true
+    },
+    {
+      "name": "icons",
+      "status": "NOT_RUN",
+      "requires_separate_preconditions": true
+    },
+    {
+      "name": "cluster_less",
+      "status": "NOT_RUN",
+      "requires_separate_preconditions": true
+    },
+    {
+      "name": "nice",
+      "status": "NOT_RUN",
+      "requires_separate_preconditions": true
+    },
+    {
+      "name": "near",
+      "status": "NOT_RUN",
+      "requires_separate_preconditions": true
+    },
+    {
+      "name": "tsds",
+      "status": "NOT_RUN",
+      "requires_separate_preconditions": true
+    },
+    {
+      "name": "doremi",
+      "status": "NOT_RUN",
+      "requires_separate_preconditions": true
+    },
+    {
+      "name": "adapt",
+      "status": "NOT_RUN",
+      "requires_separate_preconditions": true
+    },
+    {
+      "name": "joint_update_aware",
+      "status": "NOT_RUN",
+      "requires_separate_preconditions": true
+    },
+    {
+      "name": "dynamic_moe",
+      "status": "NOT_APPLICABLE",
+      "reason": "This plan uses Qwen3.5-9B and does not introduce an MoE gate model."
+    }
+  ],
+  "observer_runner_status": "NOT_IMPLEMENTED",
+  "verification_boundaries": [
+    "No data downloaded",
+    "No server connection",
+    "No algorithm CPU tests or GPU training performed",
+    "Plan validation and source inspection do not establish runtime success"
+  ]
+}

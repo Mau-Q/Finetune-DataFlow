@@ -1,0 +1,388 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-23",
+  "classification": "SOURCE_OBSERVED_AND_INFERRED_ONLY",
+  "git_head_at_inspection": "60e752f7951a8a4a4cd27ba3722434b0b0e696aa",
+  "source_files": [
+    {
+      "path": "repos/dataflex/src/dataflex/cli.py",
+      "sha256": "8bb0500d967c1ef72bb884c1a940f668e8e01fc0fe737422e5235f568c522fdf",
+      "definitions": []
+    },
+    {
+      "path": "repos/dataflex/src/dataflex/core/registry.py",
+      "sha256": "61939d77417e650fea905f36cec4c1052c8c05b7896cd5d9a5388e53071438cc",
+      "definitions": [
+        {
+          "name": "Registry",
+          "line": 4
+        },
+        {
+          "name": "build",
+          "line": 20
+        }
+      ]
+    },
+    {
+      "path": "repos/dataflex/src/dataflex/configs/components.yaml",
+      "sha256": "af70d83669b88cd9737207ec1e02f3d7d64fc5f2ae354147b2fdffe6cdf00b93"
+    },
+    {
+      "path": "repos/dataflex/src/dataflex/train/hooks.py",
+      "sha256": "0b967ab8037c6d7f5fd86cd28087facbb4e0442695631eb2a2827c7bd4149fce",
+      "definitions": [
+        {
+          "name": "_StageIterator",
+          "line": 64
+        },
+        {
+          "name": "DataflexTrainerMixin",
+          "line": 95
+        },
+        {
+          "name": "dataflex_step_budget",
+          "line": 107
+        },
+        {
+          "name": "dataflex_next_indices",
+          "line": 121
+        }
+      ]
+    },
+    {
+      "path": "repos/dataflex/src/dataflex/train/hparams/dynamic_params.py",
+      "sha256": "8137058e11a95daed0639b4535a97bb07b6a8aa5837ee742416003153dc651c6",
+      "definitions": [
+        {
+          "name": "DynamicFinetuningArguments",
+          "line": 30
+        },
+        {
+          "name": "DataFlexEarlyStoppingCallback",
+          "line": 100
+        }
+      ]
+    },
+    {
+      "path": "repos/dataflex/src/dataflex/train/data/loader.py",
+      "sha256": "420467600d21a6c3c37fd74234f42bc46e1d29800190266455114306513042f4",
+      "definitions": [
+        {
+          "name": "DomainLabeledDataset",
+          "line": 499
+        }
+      ]
+    },
+    {
+      "path": "repos/dataflex/src/dataflex/train/dataset/mixed_proportion_manager.py",
+      "sha256": "ce0aba1948d048101f0a1c576669574ba05f2e66c7783adbc9491140bba6d1ce",
+      "definitions": [
+        {
+          "name": "_MixedSnapshot",
+          "line": 7
+        },
+        {
+          "name": "MixedProportionManager",
+          "line": 24
+        }
+      ]
+    },
+    {
+      "path": "repos/dataflex/src/dataflex/train/trainer/select_trainer.py",
+      "sha256": "f2c78fbd01c6995ed9eb72fc66188a455ba654d46215f73c1831fc46fe488319",
+      "definitions": [
+        {
+          "name": "SelectTrainer",
+          "line": 51
+        },
+        {
+          "name": "dataflex_step_budget",
+          "line": 100
+        },
+        {
+          "name": "dataflex_next_indices",
+          "line": 139
+        }
+      ]
+    },
+    {
+      "path": "repos/dataflex/src/dataflex/train/trainer/mix_trainer.py",
+      "sha256": "59541a7d0c8142c921de402027406a9715ff374db1479b3b6c3e05749d1a2899",
+      "definitions": [
+        {
+          "name": "MixTrainer",
+          "line": 47
+        },
+        {
+          "name": "dataflex_step_budget",
+          "line": 132
+        },
+        {
+          "name": "dataflex_next_indices",
+          "line": 147
+        },
+        {
+          "name": "training_step",
+          "line": 200
+        },
+        {
+          "name": "compute_loss",
+          "line": 222
+        }
+      ]
+    },
+    {
+      "path": "repos/dataflex/src/dataflex/train/trainer/weight_trainer.py",
+      "sha256": "fb59888f85d40342e235a176c7ef52af9388cbb15b79f0a41b0d6ba7cd20f97f",
+      "definitions": [
+        {
+          "name": "WeightTrainer",
+          "line": 33
+        },
+        {
+          "name": "training_step",
+          "line": 58
+        }
+      ]
+    },
+    {
+      "path": "repos/dataflex/src/dataflex/train/trainer/reorder_trainer.py",
+      "sha256": "b8e2288ddbc45c3e4dd7c5e0b50cbb792ad9f390f8e710c4f25a337ec9b0a832",
+      "definitions": [
+        {
+          "name": "_ReorderAsSelector",
+          "line": 15
+        },
+        {
+          "name": "ReorderTrainer",
+          "line": 52
+        }
+      ]
+    },
+    {
+      "path": "repos/dataflex/src/dataflex/train/trainer/lego_trainer.py",
+      "sha256": "9f36a9f1a3d47536066ead12c28a9972f17bc81f48686d98c5f6ce77692a1684",
+      "definitions": [
+        {
+          "name": "_PipelineAsSelector",
+          "line": 16
+        },
+        {
+          "name": "LegoTrainer",
+          "line": 46
+        },
+        {
+          "name": "compute_loss",
+          "line": 192
+        },
+        {
+          "name": "training_step",
+          "line": 260
+        }
+      ]
+    },
+    {
+      "path": "repos/dataflex/src/dataflex/train/selector/loss_selector.py",
+      "sha256": "1425c520674fbd7907caa5e7260139fc090b02b40344b53f193023820bf21cfc",
+      "definitions": [
+        {
+          "name": "IndexedDataset",
+          "line": 15
+        },
+        {
+          "name": "LossSelector",
+          "line": 29
+        }
+      ]
+    },
+    {
+      "path": "repos/dataflex/src/dataflex/train/selector/delta_loss_selector.py",
+      "sha256": "703946204c20495033704c69fdf62b6452e895894b01f581945fe3de3c3e891e",
+      "definitions": [
+        {
+          "name": "IndexedDataset",
+          "line": 30
+        },
+        {
+          "name": "DeltaLossSelector",
+          "line": 44
+        }
+      ]
+    },
+    {
+      "path": "repos/dataflex/src/dataflex/train/selector/random_selector.py",
+      "sha256": "7d6e694c2e34e04972a4646cc2c218179c5e4412b2c65263f59cba6b1eb82809",
+      "definitions": [
+        {
+          "name": "RandomSelector",
+          "line": 10
+        }
+      ]
+    },
+    {
+      "path": "repos/dataflex/src/dataflex/train/mixer/odm_mixer.py",
+      "sha256": "ad3ecbd0949d8fafa03d52d8d1629258dee6f93f9e4646dda2fa53d39f8bccf2",
+      "definitions": [
+        {
+          "name": "ODMMixer",
+          "line": 10
+        }
+      ]
+    },
+    {
+      "path": "repos/dataflex/src/dataflex/train/mixer/doremi_mixer.py",
+      "sha256": "22a95013da8a2b415b68872c39fdc3b044041ff57ff9c925dbdd03565856d845",
+      "definitions": [
+        {
+          "name": "DoremiMixer",
+          "line": 10
+        }
+      ]
+    },
+    {
+      "path": "repos/dataflex/src/dataflex/train/weighter/loss_weighter.py",
+      "sha256": "f52fd76bf3023bb8b0a4e0a0b8d471b88a21526a77a83a686dc942153d8c4cc1",
+      "definitions": [
+        {
+          "name": "LossWeighter",
+          "line": 16
+        },
+        {
+          "name": "get_weighted_loss",
+          "line": 71
+        }
+      ]
+    },
+    {
+      "path": "repos/dataflex/src/dataflex/train/weighter/base_weighter.py",
+      "sha256": "6b022d10dc48f5535a435fe7220d1467a1ae5e87c334aeb003ac3d672e328b5e",
+      "definitions": [
+        {
+          "name": "Weighter",
+          "line": 7
+        },
+        {
+          "name": "get_weighted_loss",
+          "line": 45
+        },
+        {
+          "name": "training_step",
+          "line": 67
+        }
+      ]
+    },
+    {
+      "path": "repos/dataflex/src/dataflex/train/weighter/custom_weighter.py",
+      "sha256": "c98c5c13c9468e3eeaaf38f1912f5303a02761cfe87162870b43353fa21a6a39",
+      "definitions": [
+        {
+          "name": "CustomWeighter",
+          "line": 9
+        },
+        {
+          "name": "get_weighted_loss",
+          "line": 22
+        }
+      ]
+    },
+    {
+      "path": "repos/dataflex/src/dataflex/train/lego/pipeline.py",
+      "sha256": "2dd996fad1fa6d6b2712507377836f9b3e686aa58c2bf9bd39d708acf1792a9a",
+      "definitions": [
+        {
+          "name": "SchedulePipeline",
+          "line": 42
+        },
+        {
+          "name": "_UniformTakeStage",
+          "line": 423
+        }
+      ]
+    },
+    {
+      "path": "repos/dataflow-webui/backend/app/services/training_compiler.py",
+      "sha256": "9285fda5adcff1d577137ccee87e4f502a4ea8032cb0a4cb38c901bf3eedca7a",
+      "definitions": [
+        {
+          "name": "compile_plan",
+          "line": 42
+        }
+      ]
+    },
+    {
+      "path": "repos/dataflow-webui/backend/tests/test_model_training.py",
+      "sha256": "da349ef63d20839acec8fe7f5c2b4ae1234c5e2037f2a82e98b0e9882ac07acd",
+      "definitions": []
+    }
+  ],
+  "findings": [
+    {
+      "id": "R01",
+      "runtime_status": "NOT_RUN",
+      "description": "Single-card microbatch1 loss weighting degenerates to weight1."
+    },
+    {
+      "id": "R02",
+      "runtime_status": "NOT_RUN",
+      "description": "Dynamic mixin can override max_steps based on its schedule."
+    },
+    {
+      "id": "R03",
+      "runtime_status": "NOT_RUN",
+      "description": "ODM internal warmup default2000 differs from trainer warmup."
+    },
+    {
+      "id": "R04",
+      "runtime_status": "NOT_RUN",
+      "description": "ODM standalone and Lego batch feedback use first domain_id."
+    },
+    {
+      "id": "R05",
+      "runtime_status": "NOT_RUN",
+      "description": "DoReMi compute_loss has an unweighted labels-is-None return path."
+    },
+    {
+      "id": "R06",
+      "runtime_status": "NOT_RUN",
+      "description": "Registry filters constructor kwargs, including ODM kwargs-only options."
+    },
+    {
+      "id": "R07",
+      "runtime_status": "NOT_RUN",
+      "description": "Loss selector samples by quantile-weighted probabilities, not top-k."
+    },
+    {
+      "id": "R08",
+      "runtime_status": "NOT_RUN",
+      "description": "Selection caches and ordinary strategy state need explicit identity/resume checks."
+    },
+    {
+      "id": "R09",
+      "runtime_status": "NOT_RUN",
+      "description": "Mixture uses floor quotas then residual last domain and replacement within domains."
+    },
+    {
+      "id": "R10",
+      "runtime_status": "NOT_RUN",
+      "description": "Compiler max_steps and dynamic budget/mixture-data args must be checked end-to-end."
+    },
+    {
+      "id": "R11",
+      "runtime_status": "NOT_RUN",
+      "description": "Reorder trainer forces sequential sampling."
+    },
+    {
+      "id": "R12",
+      "runtime_status": "NOT_RUN",
+      "description": "README-referenced skills and examples are absent in current vendored tree."
+    }
+  ],
+  "not_run": [
+    "training environment imports",
+    "real dataset preparation",
+    "algorithm numerical tests",
+    "CUDA training",
+    "evaluation",
+    "server connection"
+  ]
+}

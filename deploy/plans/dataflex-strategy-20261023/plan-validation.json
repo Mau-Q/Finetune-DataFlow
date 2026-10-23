@@ -1,0 +1,19 @@
+{
+  "status": "PLAN_INTEGRITY_CHECK_PASSED",
+  "checks": [
+    "352-row quotas",
+    "8 core runs and 192 optimizer updates",
+    "768 sample presentations",
+    "effective batch 4 for every run",
+    "dynamic boundaries at4/9/14/19",
+    "all dependencies exist",
+    "ODM B1 and weighter B2 separation",
+    "576 predictions planned",
+    "quota rounding examples",
+    "23 source hashes unchanged",
+    "local Markdown references resolve"
+  ],
+  "runtime_tests_executed": false,
+  "server_connected": false,
+  "data_downloaded": false
+}
