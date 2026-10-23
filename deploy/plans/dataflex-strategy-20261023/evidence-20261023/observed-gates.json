@@ -1,0 +1,80 @@
+{
+  "note": "Compact transcription of direct tool observations, not copies of school resource files. Missing fields remain unknown. These are engineering gates, not core8 passes.",
+  "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+  "runs": [
+    {
+      "name": "GATE-B1",
+      "evidence": "TOOL_OBSERVED: exact resource.json readback and audit stdout before network loss",
+      "status": "TRAIN_VERIFIED_AND_OBSERVATIONS_AUDITED",
+      "optimizer_steps": 2,
+      "sample_presentations": 8,
+      "effective_token_range": [
+        983,
+        1024
+      ],
+      "supervised_max": 35,
+      "source_counts": {
+        "bioasq_factoid_qa": 2,
+        "scitldr_aic": 6
+      },
+      "peak_allocated_gib": 11.260377883911133,
+      "peak_reserved_gib": 12.044921875,
+      "seconds": 183.09914702293463,
+      "losses": [
+        2.6455657482147217,
+        3.001849889755249
+      ],
+      "nonzero_lora_b_tensors": 248,
+      "adapter_sha256": "749716825e4c576c0407e758392b6413335808228c53532f0b8b07c34f2654c9",
+      "config_sha256": "98b7cef90db71d7573a002e8a5d83d14ce7771e64fc75147176a43036130ea12"
+    },
+    {
+      "name": "GATE-B2",
+      "evidence": "TOOL_OBSERVED: audit stdout before network loss",
+      "status": "TRAIN_VERIFIED_AND_OBSERVATIONS_AUDITED",
+      "optimizer_steps": 2,
+      "sample_presentations": 8,
+      "effective_token_range": [
+        983,
+        1024
+      ],
+      "supervised_max": 35,
+      "source_counts": {
+        "bioasq_factoid_qa": 2,
+        "scitldr_aic": 6
+      },
+      "peak_allocated_gib": 18.391430854797363,
+      "peak_reserved_gib": 18.609375,
+      "seconds": 111.01166566601023,
+      "losses": [
+        3.0192484855651855,
+        3.061269760131836
+      ],
+      "weight_batches": 4,
+      "gradient_observations": 8,
+      "nonzero_lora_b_tensors": 248,
+      "adapter_sha256": "9f66e37fe3995b6bc2077a32e03500948a0b229bda72c930bbeba317db97f20b",
+      "config_sha256": "57d031eddd47321736e279b08e98dec38aaa6727b48f8c24d9db630559a78900"
+    },
+    {
+      "name": "GATE2-B1",
+      "attempt": "attempt2",
+      "evidence": "TOOL_OBSERVED: training command exit 0, resource print and subsequent audit exit 0; final audit JSON not downloaded",
+      "status": "TRAIN_AND_AUDIT_EXIT_ZERO_RELOAD_UNVERIFIED",
+      "optimizer_steps": 2,
+      "peak_allocated_gib": 10.986482620239258,
+      "peak_reserved_gib": 12.044921875,
+      "seconds": 65.24792312690988,
+      "adapter_sha256": "794b0d5710fe71f6809763436df2c520c362b9e19de185268cbfa71f11e04be3"
+    },
+    {
+      "name": "GATE2-B2",
+      "attempt": "attempt1",
+      "evidence": "TOOL_OBSERVED: suite-events.jsonl training subprocess exit 0 at Unix 1792749360.9622717; final receipt/audit not downloaded",
+      "status": "TRAIN_EXIT_ZERO_AUDIT_AND_RELOAD_UNVERIFIED",
+      "optimizer_steps": 2,
+      "peak_allocated_gib": null,
+      "peak_reserved_gib": null
+    }
+  ]
+}

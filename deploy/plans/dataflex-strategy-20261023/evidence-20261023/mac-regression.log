@@ -1,0 +1,77 @@
+test_default_no_label_smoother_really_weights_gradients (test_strategy_regressions.DoReMiTrainerTests.test_default_no_label_smoother_really_weights_gradients) ... skipped 'Actual LLaMA-Factory is only installed in the school training environment'
+test_invalid_domains_or_unsupervised_rows_fail (test_strategy_regressions.DoReMiTrainerTests.test_invalid_domains_or_unsupervised_rows_fail) ... skipped 'Actual LLaMA-Factory is only installed in the school training environment'
+test_missing_metadata_does_not_silently_disable_weighting (test_strategy_regressions.DoReMiTrainerTests.test_missing_metadata_does_not_silently_disable_weighting) ... skipped 'Actual LLaMA-Factory is only installed in the school training environment'
+test_scalar_model_loss_is_not_a_valid_fallback (test_strategy_regressions.DoReMiTrainerTests.test_scalar_model_loss_is_not_a_valid_fallback) ... skipped 'Actual LLaMA-Factory is only installed in the school training environment'
+test_smoothing_is_applied_per_sample (test_strategy_regressions.DoReMiTrainerTests.test_smoothing_is_applied_per_sample) ... skipped 'Actual LLaMA-Factory is only installed in the school training environment'
+test_batch_invariance_and_mask (test_strategy_regressions.LossTests.test_batch_invariance_and_mask) ... ok
+test_training_loss_keeps_gradient_and_label_smoothing (test_strategy_regressions.LossTests.test_training_loss_keeps_gradient_and_label_smoothing) ... ok
+test_ambiguous_or_invalid_feedback_is_rejected (test_strategy_regressions.ODMTests.test_ambiguous_or_invalid_feedback_is_rejected) ... [ODMMixer] Using initial proportions from mixture_manager: [0.5 0.5]
+INFO:dataflex.utils.logging:[ODMMixer] Using initial proportions from mixture_manager: [0.5 0.5]
+[ODMMixer] Initialized: K=2, alpha=0.9, warmup=0
+INFO:dataflex.utils.logging:[ODMMixer] Initialized: K=2, alpha=0.9, warmup=0
+[ODMMixer] Scaling: reward_scale=2.0, min_eps=0.02
+INFO:dataflex.utils.logging:[ODMMixer] Scaling: reward_scale=2.0, min_eps=0.02
+[ODMMixer] Domain names: ['a', 'b']
+INFO:dataflex.utils.logging:[ODMMixer] Domain names: ['a', 'b']
+ok
+test_nondefault_settings_reach_real_mixer (test_strategy_regressions.ODMTests.test_nondefault_settings_reach_real_mixer) ... [ODMMixer] Using initial proportions from mixture_manager: [0.5 0.5]
+INFO:dataflex.utils.logging:[ODMMixer] Using initial proportions from mixture_manager: [0.5 0.5]
+[ODMMixer] Initialized: K=2, alpha=0.9, warmup=0
+INFO:dataflex.utils.logging:[ODMMixer] Initialized: K=2, alpha=0.9, warmup=0
+[ODMMixer] Scaling: reward_scale=2.0, min_eps=0.02
+INFO:dataflex.utils.logging:[ODMMixer] Scaling: reward_scale=2.0, min_eps=0.02
+[ODMMixer] Domain names: ['a', 'b']
+INFO:dataflex.utils.logging:[ODMMixer] Domain names: ['a', 'b']
+ok
+test_reward_and_normalized_policy (test_strategy_regressions.ODMTests.test_reward_and_normalized_policy) ... [ODMMixer] Using initial proportions from mixture_manager: [0.5 0.5]
+INFO:dataflex.utils.logging:[ODMMixer] Using initial proportions from mixture_manager: [0.5 0.5]
+[ODMMixer] Initialized: K=2, alpha=0.9, warmup=0
+INFO:dataflex.utils.logging:[ODMMixer] Initialized: K=2, alpha=0.9, warmup=0
+[ODMMixer] Scaling: reward_scale=2.0, min_eps=0.02
+INFO:dataflex.utils.logging:[ODMMixer] Scaling: reward_scale=2.0, min_eps=0.02
+[ODMMixer] Domain names: ['a', 'b']
+INFO:dataflex.utils.logging:[ODMMixer] Domain names: ['a', 'b']
+[ODMMixer] Step 20: Updating domain weights with ODM
+INFO:dataflex.utils.logging:[ODMMixer] Step 20: Updating domain weights with ODM
+[ODMMixer] Updated reward for 'a': loss=3.0000, R̂=1.2000
+INFO:dataflex.utils.logging:[ODMMixer] Updated reward for 'a': loss=3.0000, R̂=1.2000
+[ODMMixer] ε_t=0.131638
+INFO:dataflex.utils.logging:[ODMMixer] ε_t=0.131638
+[ODMMixer] Updated domain weights:
+INFO:dataflex.utils.logging:[ODMMixer] Updated domain weights:
+  a: 0.6073 (R̂=1.2000)
+INFO:dataflex.utils.logging:  a: 0.6073 (R̂=1.2000)
+  b: 0.3927 (R̂=0.0000)
+INFO:dataflex.utils.logging:  b: 0.3927 (R̂=0.0000)
+ok
+test_single_or_homogeneous_domain_feedback (test_strategy_regressions.ODMTests.test_single_or_homogeneous_domain_feedback) ... [ODMMixer] Using initial proportions from mixture_manager: [0.5 0.5]
+INFO:dataflex.utils.logging:[ODMMixer] Using initial proportions from mixture_manager: [0.5 0.5]
+[ODMMixer] Initialized: K=2, alpha=0.9, warmup=0
+INFO:dataflex.utils.logging:[ODMMixer] Initialized: K=2, alpha=0.9, warmup=0
+[ODMMixer] Scaling: reward_scale=2.0, min_eps=0.02
+INFO:dataflex.utils.logging:[ODMMixer] Scaling: reward_scale=2.0, min_eps=0.02
+[ODMMixer] Domain names: ['a', 'b']
+INFO:dataflex.utils.logging:[ODMMixer] Domain names: ['a', 'b']
+ok
+test_config_kwargs_propagate_without_leaking_runtime (test_strategy_regressions.RegistryTests.test_config_kwargs_propagate_without_leaking_runtime) ... ok
+test_explicit_constructor_keeps_filtering_runtime (test_strategy_regressions.RegistryTests.test_explicit_constructor_keeps_filtering_runtime) ... ok
+test_actual_training_step_scales_once_by_actual_accumulation (test_weighter_acceptance.WeightMathTests.test_actual_training_step_scales_once_by_actual_accumulation) ... CustomWeighter initialized with strategy: uniform
+INFO:dataflex.utils.logging:CustomWeighter initialized with strategy: uniform
+[Dataflex] Before weighting per-sample (first sample): 1.3142240047454834
+INFO:dataflex.utils.logging:[Dataflex] Before weighting per-sample (first sample): 1.3142240047454834
+[Dataflex] After weighting (first sample): 1.2851917743682861
+INFO:dataflex.utils.logging:[Dataflex] After weighting (first sample): 1.2851917743682861
+[Dataflex] Before weighting per-sample (first sample): 1.3142240047454834
+INFO:dataflex.utils.logging:[Dataflex] Before weighting per-sample (first sample): 1.3142240047454834
+[Dataflex] After weighting (first sample): 1.2986080646514893
+INFO:dataflex.utils.logging:[Dataflex] After weighting (first sample): 1.2986080646514893
+ok
+test_custom_uniform_is_sample_mean_with_equal_derivatives (test_weighter_acceptance.WeightMathTests.test_custom_uniform_is_sample_mean_with_equal_derivatives) ... CustomWeighter initialized with strategy: uniform
+INFO:dataflex.utils.logging:CustomWeighter initialized with strategy: uniform
+ok
+test_linupper_coefficients_and_gradients_are_detached_weights (test_weighter_acceptance.WeightMathTests.test_linupper_coefficients_and_gradients_are_detached_weights) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.067s
+
+OK (skipped=5)

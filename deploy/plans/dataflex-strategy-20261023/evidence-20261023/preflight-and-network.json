@@ -1,0 +1,35 @@
+{
+  "handoff": "/Users/rui/.codex/handoffs/dataflow/20261023-173616-gpu2-dataflex-core8/HANDOFF.md",
+  "handoff_validator": "handoff valid",
+  "fixed_claim_hashes_matched_at_start": true,
+  "instruction_and_evidence_hashes": {
+    "AGENTS.md": "f9455e9aabed3afadfd0468475ff3c3e534b9d8d550da9df13dcea3cdedc6c29",
+    "docs/training/dataflex-strategy-test-plan-20261023.md": "ee2f75b77bcb393dbeae9a18ad4b64634fd86f448e33f3868efecfcb18f421ad",
+    "docs/training/dataflex-school-reconciliation-20261023.md": "32946fac013eaf3cd3371ea8f0dad2005d78a4043969c30ea4e6a4909b66e1d7",
+    "deploy/plans/dataflex-strategy-20261023/test-matrix.json": "acd83f91d25bc5c8c0554a92d800fc05f5d42b8aaa4972f5710351f0ee987f44",
+    "deploy/plans/dataflex-strategy-20261023/school-reconciliation.json": "a404e9cf542490d76e37d741c024bb0e9dd7a4dba0617b5526a07fd84771b4d2",
+    "outputs/dataflex-strategy-school-audit-20261023/postdeploy-verification.json": "df7f0073b6cc92177b180a0750531d534f2f14e5b152123b0970839e7645bde1",
+    "deploy/plans/qwen35-9b-8192/runtime-results.json": "d02969077957d2ce4ff40c5bea945c7555010a7af51d770b6758956446b37b47"
+  },
+  "server_identity_observed": {
+    "jump_host": "mgt01",
+    "target": "node01",
+    "account": "huruiqian"
+  },
+  "container": "rui-dataflex-strategy-gpu2-20261023",
+  "physical_gpu_uuid": "GPU-1f7d7941-5155-1c90-819d-5bf7dbec5b18",
+  "initial_installed_source_file_count": 75,
+  "initial_installed_source_matched_local": true,
+  "network_check": {
+    "checked_at": "2026-10-23T18:38:26+08:00",
+    "command": "ssh -o BatchMode=yes -o ConnectTimeout=5 school1 'hostname; id -un'",
+    "exit_code": 255,
+    "stderr": "ssh: connect to host 192.168.247.161 port 22: Operation timed out"
+  },
+  "graph_release_patch": {
+    "file": "repos/dataflex/src/dataflex/train/weighter/base_weighter.py",
+    "sha256": "4fa18e66fc539591ba4c0a55dc0d49cecef6e824ddb5ce697939cbb395fd0cd6",
+    "school_copy_command_exit": 0,
+    "post_copy_hash_readback": "NOT_RUN_DUE_TO_NETWORK"
+  }
+}

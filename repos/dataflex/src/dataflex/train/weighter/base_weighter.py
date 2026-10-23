@@ -130,6 +130,10 @@ class Weighter(ABC):
                 if ctx.args.local_rank in [-1, 0]:
                     logger.info("[Dataflex] Could not form per-sample losses; fallback to scalar loss (no reweight).")
 
+        # The replaced model loss may retain a separate full-vocabulary CE graph.
+        # Only the weighted graph is needed for backward; release the output
+        # container (and its unused scalar loss) before allocating gradients.
+        del outputs
         del inputs
 
         if ctx.args.torch_empty_cache_steps is not None and ctx.state.global_step % ctx.args.torch_empty_cache_steps == 0:

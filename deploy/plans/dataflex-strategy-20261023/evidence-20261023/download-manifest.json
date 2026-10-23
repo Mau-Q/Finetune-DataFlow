@@ -1,0 +1,32 @@
+{
+  "dataset": "allenai/SciRIFF",
+  "revision": "eddf83df1ab4acf1ead5b81898dd4c7e7450050e",
+  "config": "4096",
+  "files": [
+    {
+      "path": "4096/train-00000-of-00001.parquet",
+      "sha256": "300bca22ad0dddb1b0a1502e37e6bd3124a0a2a613ffc78cb5c6f524e1a69ebc",
+      "bytes": 170925815
+    },
+    {
+      "path": "4096/validation-00000-of-00001.parquet",
+      "sha256": "20682f1832839b5eb66de73fe9fa0af9b8d15828a452cc0366ecced336956b0e",
+      "bytes": 63233119
+    },
+    {
+      "path": "4096/test-00000-of-00001.parquet",
+      "sha256": "c9140b5a8d2e2ccf4ec0b133fabcc1f5d41e64649bd8e0e08b5fd46771065f7e",
+      "bytes": 74656716
+    },
+    {
+      "path": "README.md",
+      "sha256": "bf830d0b1f3295f9e662ccdd3c3ed8130b687e365663930fb32c9161d4bc2626",
+      "bytes": 35716
+    },
+    {
+      "path": "card.md",
+      "sha256": "458ed8b389650c950bad80ef511ae92b3fbf6ac7b07ecfea543771937a79df57",
+      "bytes": 33045
+    }
+  ]
+}

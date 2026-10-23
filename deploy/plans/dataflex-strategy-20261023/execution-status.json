@@ -1,0 +1,149 @@
+{
+  "status": "MAC_WORK_COMPLETED_SERVER_RECONCILIATION_PENDING",
+  "evidence_boundary": "Current school status after network loss is unknown; no core8 GPU acceptance or base-versus-adapter metrics claimed.",
+  "recorded_at": "2026-10-23T18:50:10.072711+08:00",
+  "baseline_commit": "72bf9a6",
+  "branch": "codex/personal-api-execution",
+  "data": {
+    "status": "FROZEN_ON_SCHOOL_MAC_COPY_CLEANED",
+    "dataset": "allenai/SciRIFF",
+    "revision": "eddf83df1ab4acf1ead5b81898dd4c7e7450050e",
+    "counts": {
+      "train": 256,
+      "validation": 32,
+      "test": 64
+    },
+    "manifest": "evidence-20261023/data-manifest.json",
+    "manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+    "max_full_sequence_tokens": 1024,
+    "task_substitution": {
+      "from": "covid_deepset_qa",
+      "to": "bioasq_factoid_qa",
+      "task_family_changed": "extractive QA to abstractive short-answer QA; same planned EM/token-F1 scoring form"
+    },
+    "document_disjointness": "Not proven: export lacks original document IDs; known exact input/context repeats excluded."
+  },
+  "gates": "See evidence-20261023/observed-gates.json; representative B2 audit/reload and scoring results require school readback.",
+  "last_observed_background_stage": "gates (GATE2-B1 reload); no automatic transition to core/evaluate",
+  "remote_monitor": {
+    "status": "UNKNOWN_AFTER_NETWORK_LOSS",
+    "second_attempt_pid_at_start": 17225,
+    "bounded_samples": 3600,
+    "interval_seconds": 5
+  },
+  "core_runs": [
+    {
+      "id": "G00",
+      "status": "NOT_RUN",
+      "planned_optimizer_updates": 24
+    },
+    {
+      "id": "G01",
+      "status": "NOT_RUN",
+      "planned_optimizer_updates": 24
+    },
+    {
+      "id": "G02",
+      "status": "NOT_RUN",
+      "planned_optimizer_updates": 24
+    },
+    {
+      "id": "G03",
+      "status": "NOT_RUN",
+      "planned_optimizer_updates": 24
+    },
+    {
+      "id": "G04",
+      "status": "NOT_RUN",
+      "planned_optimizer_updates": 24
+    },
+    {
+      "id": "G05",
+      "status": "NOT_RUN",
+      "planned_optimizer_updates": 24
+    },
+    {
+      "id": "G06",
+      "status": "NOT_RUN",
+      "planned_optimizer_updates": 24
+    },
+    {
+      "id": "G07",
+      "status": "NOT_RUN",
+      "planned_optimizer_updates": 24
+    }
+  ],
+  "full_model_evaluation": {
+    "status": "NOT_RUN",
+    "planned_sample_predictions": 576,
+    "per_model_test_count": 64,
+    "models": 9
+  },
+  "extra_training_work": {
+    "completed_gate_optimizer_updates": 8,
+    "core_optimizer_updates": 0,
+    "failed_pretraining_attempts_retained_on_school": true
+  },
+  "local_validation": {
+    "dataflex_unittest": {
+      "total": 16,
+      "passed": 11,
+      "skipped": 5,
+      "reason": "Actual LLaMA-Factory unavailable on Mac"
+    },
+    "execution_contracts_and_materialization": {
+      "total": 17,
+      "passed": 17
+    },
+    "script_compilation": "PASS",
+    "host_python36_syntax": "PASS",
+    "wheel_source_comparison": {
+      "files": 75,
+      "status": "PASS"
+    },
+    "wheel_isolated_import": "PASS",
+    "full_repository_regression": "NOT_RUN: changes scoped to DataFlex and standalone execution tooling"
+  },
+  "school_cpu_validation_before_disconnect": {
+    "total": 16,
+    "passed": 16,
+    "skipped": 0,
+    "cuda_hidden": true,
+    "not_gpu_acceptance": true,
+    "limitation": "School suite predates offline-only weak-reference lifecycle assertion and current runner changes; those have Mac checks only."
+  },
+  "local_offline_wheel": "outputs/dataflex-core8-20261023/offline/dataflex-1.1.0+dataflow.20261023.1-py3-none-any.whl",
+  "local_release_version": "1.1.0+dataflow.20261023.1",
+  "school_last_observed_version": "1.1.0+dataflow.20261023 with graph-release file copied; no final hash readback",
+  "offline_only_changes_not_yet_deployed": [
+    "execution-v2 configuration and attempt cache boundaries",
+    "stricter mask/source manifest observations",
+    "prerequisite and artifact identity enforcement",
+    "evaluation attempt pointer and data binding",
+    "independent delta selection audit",
+    "1.1.0+dataflow.20261023.1 wheel/version"
+  ],
+  "mac_cleanup": {
+    "task_download_transfer_deleted": true,
+    "server_hashes_verified_before_delete": 5,
+    "temporary_build_and_unpack_directories_removed": true,
+    "unuploaded_small_wheel_retained_for_required_transfer": true,
+    "preexisting_data_models_projects_results_deleted": false
+  },
+  "preserved_user_change": " D pipelines/SFT-PIPELINE-OPERATORS.md",
+  "network_error": "ssh: connect to host 192.168.247.161 port 22: Operation timed out",
+  "source_sha256": {
+    "deploy/plans/dataflex-strategy-20261023/audit_observations.py": "4630ed0955ba494d20e707b19a1d561335b7581219eb24f6abbb9ec0a74fcab4",
+    "deploy/plans/dataflex-strategy-20261023/configure_execution.py": "06f64fe0dd614c683e4900abd94b8e72a16105710ba570e071222fe04b77f0cc",
+    "deploy/plans/dataflex-strategy-20261023/driver_monitor.py": "038dd0e6dd6f3c7fc16aad9c630a42d04f53134519837e67779193dd94d88954",
+    "deploy/plans/dataflex-strategy-20261023/evaluate_frozen.py": "35cfce89f017a0ac157817bd16cbd2a432423a8cf2dd5909abd47bc80892be19",
+    "deploy/plans/dataflex-strategy-20261023/materialize_configs.py": "cb0bb9d80476194d258ab5995aabe5dbe916edc545c51ff676005ebd1a261a52",
+    "deploy/plans/dataflex-strategy-20261023/observed_run.py": "eec2afeced2f27bae45762c988179fe9f0017f0c67b93d2486708189ac108bb5",
+    "deploy/plans/dataflex-strategy-20261023/prepare_gate_representative.py": "92cfd32b93857727c368902c6f28494d761c1b36d65a083bf61db2070ca6f36c",
+    "deploy/plans/dataflex-strategy-20261023/prepare_real_data.py": "3740ce75cf8f938ebbc64d3e0af71d975870dae1a988525829150092c7c7c1e8",
+    "deploy/plans/dataflex-strategy-20261023/run_core8_suite.py": "90477bf216687a1e177a41d1a9c887eaca8f250068619a54e31f43a2cd8a5de9",
+    "deploy/plans/dataflex-strategy-20261023/test_execution_contracts.py": "78b8e4950291d34b27298f8eb90aebd2d3d54c3b1b5478aabf3632fa409ed64f",
+    "deploy/plans/dataflex-strategy-20261023/test_materialize_configs.py": "ae27164c4e12232d941fadb55616dfe69625e96888784f1096011d8d2fdef955"
+  },
+  "report": "../../../docs/training/dataflex-core8-progress-20261023.md"
+}
