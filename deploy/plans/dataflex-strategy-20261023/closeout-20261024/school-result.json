@@ -1,0 +1,59 @@
+{
+  "status": "CLEANUP_AND_PRESERVATION_VERIFIED",
+  "completed_unix": 1792810563.0656164,
+  "deleted_files": 131,
+  "deleted_bytes": 20236508368,
+  "counts": {
+    "historical_adapter_weight": 99,
+    "superseded_intermediate_checkpoint_weight": 8,
+    "duplicate_checkpoint_tokenizer": 16,
+    "duplicate_final_checkpoint_weight": 8
+  },
+  "preserved_files_verified": 3637,
+  "external_evidence_verified": 69,
+  "final_adapters": [
+    {
+      "path": "strategy-20261023/gpu1-core8-20261024/G00/attempt1/output/adapter_model.safetensors",
+      "bytes": 173188512,
+      "sha256": "2cf070780df525e573ece5c8062eebc1d332f776e607935c6b7a187ca723a42a"
+    },
+    {
+      "path": "strategy-20261023/gpu1-core8-20261024/G01/attempt1/output/adapter_model.safetensors",
+      "bytes": 173188512,
+      "sha256": "40d0458cbe85db3fe0c8782773e143dd0a2465127c23c306be90196f79470a12"
+    },
+    {
+      "path": "strategy-20261023/gpu1-core8-20261024/G02/attempt1/output/adapter_model.safetensors",
+      "bytes": 173188512,
+      "sha256": "ecbec08aa22f60a5a6c81678ab2d70fec31103ae945835aa06ab782515b9bf12"
+    },
+    {
+      "path": "strategy-20261023/gpu1-core8-20261024/G03/attempt1/output/adapter_model.safetensors",
+      "bytes": 173188512,
+      "sha256": "31f5219c921c9a900008ab2d618a81d6308f08bf8b44543a5078a6002eda0b00"
+    },
+    {
+      "path": "strategy-20261023/gpu1-core8-20261024/G04/attempt1/output/adapter_model.safetensors",
+      "bytes": 173188512,
+      "sha256": "102bb9b18e1508fe6c6358086ad27227206f0f224739ba4f7ec4e7ce1cfba019"
+    },
+    {
+      "path": "strategy-20261023/gpu1-core8-20261024/G05/attempt1/output/adapter_model.safetensors",
+      "bytes": 173188512,
+      "sha256": "ddab0f22afa2a589d8b4eb5d8e956d59e98731b6ad7ea419d4b3c2ea778bd316"
+    },
+    {
+      "path": "strategy-20261023/gpu1-core8-20261024/G06/attempt1/output/adapter_model.safetensors",
+      "bytes": 173188512,
+      "sha256": "942f68c370184336cf94f145be3e54c37a34edbe12770548f5cdbd1ca0798c27"
+    },
+    {
+      "path": "strategy-20261023/gpu1-core8-20261024/G07/attempt1/output/adapter_model.safetensors",
+      "bytes": 173188512,
+      "sha256": "08b5ca31c40b47abc63817ed25067e02c50f70b9e62ca8bb99de921abee2049c"
+    }
+  ],
+  "plan_sha256": "abd84e2f4c14f0a439844ca2d880af3619846f50e9fd7325b1a09d4e5c619712",
+  "journal_sha256": "50ca80f67f5138c61929a9cc6bb872b9aad0a52cc81517a1f6cdb379ba29ca08",
+  "scope": "Only adapter weights and duplicate checkpoint tokenizers; all other run files retained."
+}

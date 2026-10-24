@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-24",
+  "scope": "Local regression before main merge and push; no new GPU training",
+  "local_regression": {
+    "core": {
+      "passed": 165,
+      "deselected": 1
+    },
+    "webui_backend": {
+      "passed": 491,
+      "subtests_passed": 7
+    },
+    "paper_extension": {
+      "passed": 54
+    },
+    "dataflex_and_strategy_contracts": {
+      "passed": 48,
+      "skipped": 6,
+      "subtests_passed": 8
+    }
+  },
+  "document_deletion_commit": "5800ad5c150f7cccdb905f1256a9ee5e3cdd6504",
+  "initial_push_head": "5800ad5c150f7cccdb905f1256a9ee5e3cdd6504",
+  "initial_push_remote_main": "5800ad5c150f7cccdb905f1256a9ee5e3cdd6504",
+  "merge_mode": "fast-forward",
+  "force_push": false,
+  "historical_stash_retained": true
+}

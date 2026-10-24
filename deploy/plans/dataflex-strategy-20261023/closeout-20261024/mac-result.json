@@ -1,0 +1,13 @@
+{
+  "status": "CLEANUP_AND_PRESERVATION_VERIFIED",
+  "completed_unix": 1792810549.160455,
+  "deleted_files": 21,
+  "deleted_bytes": 762334582,
+  "preserved_files_verified": 221,
+  "kept_zip_integrity_verified": [
+    "snapshot-20261019T091404983261Z-baseline.zip",
+    "snapshot-20261021T132426270756Z.zip",
+    "snapshot-20261021T142428733618Z.zip",
+    "snapshot-20261022T081948007385Z.zip"
+  ]
+}

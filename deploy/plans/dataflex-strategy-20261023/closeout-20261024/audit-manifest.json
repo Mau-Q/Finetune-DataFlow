@@ -1,0 +1,19 @@
+{
+  "files": {
+    "README.md": "ff61edb6abfdc80d3e580fc59c9a44c6b7a5d4d44fbd629e5e06f64501264f17",
+    "containers-after.json": "878604affaa663a3b039581b3116e7fb1ba07a5e6ab454d8f13f5ef1295c2f2c",
+    "directory-sizes.json": "c806990065b961bb4db93478066f4b59e00f4a6810b508588b7078b44ebb97b0",
+    "mac-deleted.jsonl": "1a5f68994bc181c20d5fb9dd95c7160e0b028b89271c40bb4a386ab4f453689f",
+    "mac-result.json": "11c2fc2401ad7da61e2deaf66ed5b6e04a90a7c0b7477710453de0494f21f9bd",
+    "regression-and-first-push.json": "55ff44088a53d25dc2ff2945a82077f29e5764c281529ca7cc32dc280ddd7db1",
+    "school-deleted.jsonl": "50ca80f67f5138c61929a9cc6bb872b9aad0a52cc81517a1f6cdb379ba29ca08",
+    "school-result.json": "3a4f1ae0af3f08be91cf7e7a40c88719c09a34a868c48a0ea0b5e2c6b887a036",
+    "source-archive/mac_cleanup.py": "f09f50d413eb2095f44c125539a38cc4c3389d2e2f374e52b77a835b22c24a81",
+    "source-archive/school_cleanup.py": "014626bbb2141cc9cf0222036ebdea84725c5fc8c8685eed354a319cd2931186"
+  },
+  "full_plans": {
+    "outputs/closeout-20261024/school-plan.json": "abd84e2f4c14f0a439844ca2d880af3619846f50e9fd7325b1a09d4e5c619712",
+    "outputs/closeout-20261024/mac-plan.json": "f6fe92ce5d76793361e3d7458c8f0f806a8301b4f6f1cc1cfde31b5c0c6a62d7"
+  },
+  "school_full_plan_path": "/sharedata/home/huruiqian/DataFlow/runs/qwen35-9b/20261022-smoke/strategy-20261023/closeout-20261024/school-plan.json"
+}

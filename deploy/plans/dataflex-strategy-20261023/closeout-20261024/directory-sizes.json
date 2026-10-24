@@ -1,0 +1,14 @@
+{
+  "measurement": "Post-cleanup allocated directory sizes; shared-filesystem free space is not attributed to this task",
+  "school_allocated_bytes": {
+    "DataFlow": 27375264256,
+    "runs/qwen35-9b": 6087213568,
+    "latest_gpu1_core8": 1590925824,
+    "models": 19329311232,
+    "environments": 519754240
+  },
+  "mac_allocated_bytes": {
+    ".": 6871089152,
+    "repos/dataflow-webui/backend/backups/datasets": 220221440
+  }
+}
