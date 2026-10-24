@@ -19,3 +19,7 @@
 完整本地回归运行 `./scripts/test-local.sh`，前端另执行 Node 契约测试与构建。安装与端口可访问不证明模型/API、MinerU 或 MM 的真实运行能力。
 
 历史安装记录已移至 [docs/archive](docs/archive/INSTALLATION_STATUS.md)；阶段交付见 [文档索引](docs/README.md)。
+
+## 目录与命名维护
+
+Mac/学校的目录职责、新运行命名和旧路径迁移提案见 [目录约定](docs/workspace-layout.md)。2026-10-24 检查只更新导航、说明和迁移清单，没有搬动原始运行数据、模型、环境或数据库。`output/` 保留为历史兼容目录，新任务统一使用按用途分组的 `outputs/`；应用默认运行路径和容器挂载仍以现有配置为准。

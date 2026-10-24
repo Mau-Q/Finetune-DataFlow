@@ -1,5 +1,7 @@
 # 论文数据准备 Pipeline
 
+> 历史入口：下文主要保存 2026-09-22 以来的本机论文演示和准备记录，不能据其“当前”“尚未调用”等措辞判断今天的执行状态。后续学校论文链路见 [部署说明](../docs/school-server-deployment.md) 与 [论文端到端记录](../docs/school-paper-e2e-20261022.md)；标准流程实现位于 `extensions/paper-dataflow/paper_dataflow/standard_sft.py`。旧绑定、任务 ID 和输出路径保留原状，新目录与命名见 [目录约定](../docs/workspace-layout.md)。
+
 第一轮真实论文 SFT 开发准备当前采用[结构优先递归切分](CHUNKING-POLICY.md)，切分器对照已取消，SFT 生成 A/B 保留。6 篇论文的 12 个目标页已有解析，源文检查后选取 11 条共同输入、准备 22 个请求，尚未调用生成 API。活动入口为 `data/round1/active-preparation.json`；下面的固定 token 窗口流程是原演示流程。生成对照定义与旧准备记录见 [ROUND1-EXPERIMENT.md](ROUND1-EXPERIMENT.md)。
 
 已保存到本机 WebUI：**论文 PDF → 证据分块（演示，无 LLM）**。

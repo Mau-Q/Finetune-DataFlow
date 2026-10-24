@@ -75,6 +75,8 @@ pipelines/           # 论文流程配置及历史实验记录
 locks/               # 组件提交与本机环境快照
   components.json    # 集成源码来源及可选子模块版本
 docs/                # 安装、API、架构、开发及历史交付记录
+deploy/              # 部署入口、固定方案与紧凑验收证据
+tools/               # 个人 API 执行器等独立工具
 ```
 
 Core、WebUI 和 DataFlex 直接纳入本仓库，普通 `git clone` 即包含源码，无需单独克隆 fork 或配置 DataFlex 路径。各目录保留上游许可证及 `UPSTREAM.json` 来源快照；后续修改统一在本仓库提交。只有可选 MM 仍为子模块。环境、模型、原始数据、密钥、SQLite 数据库、缓存和生成输出都不纳入 Git。旧论文实验配置含本机路径，须重新绑定后使用；历史依赖快照不能直接作为跨平台安装清单。
@@ -85,6 +87,8 @@ Core、WebUI 和 DataFlex 直接纳入本仓库，普通 `git clone` 即包含�
 - [架构与组件边界](docs/architecture.md)：向导、画布、任务、数据集和 MM 隔离。
 - [开发与验证](docs/development.md)：版本更新、提交和离线测试。
 - [组件与工作区基线](WORKSPACE_BASELINE.md)：当前固定源码和保留的本地状态。
+- [目录职责与命名](docs/workspace-layout.md)：两端运行数据、环境、历史输出和迁移规则。
+- [学校部署与操作](docs/school-server-deployment.md)：学校目录、平台状态卷和解析/训练入口。
 - [上游与许可](THIRD_PARTY.md)：来源及再分发边界。
 
 ```sh
@@ -99,4 +103,4 @@ Unix 完整本地回归使用 `.venvs/dataflow`；Windows 等效入口为 `.\scr
 
 ## 许可
 
-本仓库使用 [Apache-2.0](LICENSE)。各子模块及引用代码以其各自许可证为准，详见 [THIRD_PARTY.md](THIRD_PARTY.md)。
+本仓库使用 [Apache-2.0](LICENSE)。各集成组件、可选子模块及引用代码以其各自许可证为准，详见 [THIRD_PARTY.md](THIRD_PARTY.md)。

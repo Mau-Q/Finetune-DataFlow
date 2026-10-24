@@ -1,5 +1,7 @@
 # DataFlex B1–B6 离线交付记录
 
+> 历史快照：以下正文保留 2026-10-20 的分仓、验证和未验收状态。当前源码已整合至总仓库；后续的 [直接 GPU 流程验证](training/dataflex-gpu1-unified-core8-results-20261024.md) 与 [收尾记录](training/dataflex-closeout-20261024.md) 另行保存。平台 SSH 执行器仍未完成端到端实机验收，不能用直接容器训练替代。
+
 日期：2026-10-20。主要实现位于 DataFlow-WebUI 的 `codex/dataflex-training` 分支。目标是模型训练，策略调整、比较和评测作为配套；独立训练无需实验组。没有连接真实训练主机、安装训练依赖或下载大模型。
 
 ## 已实现

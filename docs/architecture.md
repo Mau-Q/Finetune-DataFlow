@@ -1,6 +1,6 @@
 # 架构与组件边界
 
-`Finetune-DataFlow` 管理集成入口、脚本、扩展、文档和组件版本。Core 提供算子与执行能力，WebUI 提供交互、任务与数据管理，`paper-dataflow` 提供论文相关扩展。子模块的具体版本由 `locks/components.json` 和 Git gitlink 共同固定。
+`Finetune-DataFlow` 管理集成入口、脚本、扩展、文档和组件版本。Core 提供算子与执行能力，WebUI 提供交互、任务与数据管理，`paper-dataflow` 提供论文相关扩展。Core、WebUI、DataFlex 是总仓库中的普通源码目录，导入来源由 `locks/components.json` 和组件的 `UPSTREAM.json` 记录，后续修改由总仓库 Git 管理。只有可选 MM 使用 Git gitlink 固定子模块版本。
 
 ```mermaid
 flowchart LR
@@ -29,13 +29,13 @@ flowchart LR
 | 用户选定的结果目录 | 各次运行最终文件、清单和错误记录 |
 | `.venvs/`、`models/`、`logs/`、`output/`、`outputs/` | 本机环境、资源与实验产物，不发布 |
 
-表中的 `backend/` 相对于 WebUI 子模块。路径以组件实际配置为准。
+表中的 `backend/` 相对于 `repos/dataflow-webui/`。路径以组件实际配置为准。Mac/学校目录职责、命名和迁移约束见 [目录约定](workspace-layout.md)；学校平台活跃状态位于 node01 本地 Docker 卷，与 NFS 部署目录分开。
 
 任务产物与数据集发布版本独立保存。生成有效结果可自动收录，后续编辑草稿不回写原始运行文件；发布形成固定样本和媒体版本。备份需要数据库一致性镜像及相关文件，不能只复制 SQLite 主文件或只依靠 Git。
 
 ## 验证边界
 
-本地回归验证代码和数据契约。模拟模型响应与历史离线重放不验证远端 API；真实服务运行也不自动证明样本质量、训练收益、吞吐或长期稳定性。团队模式增加本地账号、项目隔离和人工数据评测；训练集成沿用独立 DataFlex 边界。本轮不验证真实 API、SSH/GPU、模型下载或公网能力，不提供产品 Agent、MCP 或外部遥测。
+本地回归验证代码和数据契约。模拟模型响应与历史离线重放不验证远端 API；真实服务运行也不自动证明样本质量、训练收益、吞吐或长期稳定性。团队模式增加本地账号、项目隔离和人工数据评测；训练集成沿用独立 DataFlex 边界。学校的直接 GPU 训练、保存重载和评测另有 [实际运行记录](training/dataflex-gpu1-unified-core8-results-20261024.md)，平台 SSH 执行器仍未完成端到端实机验收。不提供产品 Agent、MCP 或外部遥测。
 
 ## 局域网团队边界
 

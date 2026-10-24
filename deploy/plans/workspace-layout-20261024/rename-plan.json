@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-24",
+  "status": "PROPOSED_NO_PHYSICAL_MIGRATION",
+  "roots": {
+    "mac": "/Users/rui/Documents/DataFlow",
+    "school": "/sharedata/home/huruiqian/DataFlow"
+  },
+  "naming": "purpose-group/YYYY-MM-DD-purpose; preserve framework names, stable IDs and model revisions",
+  "entries": [
+    {
+      "location": "mac",
+      "source": "output",
+      "proposed_target": "outputs/archive/ui/legacy-output",
+      "status": "proposed",
+      "physical_migration_performed": false,
+      "reference_constraints": [
+        "历史 UI 报告与相对链接",
+        "部分验收脚本"
+      ],
+      "compatibility": "迁移前冻结子目录与逐文件清单，旧路径保持兼容。"
+    },
+    {
+      "location": "mac",
+      "source": "outputs/dataflex-core8-20261023",
+      "proposed_target": "outputs/dataflex/2026-10-23-core8-initial-protocol",
+      "status": "proposed",
+      "physical_migration_performed": false,
+      "reference_constraints": [
+        "旧协议报告与固定证据路径"
+      ],
+      "compatibility": "与 10 月 24 日最终八组分开，保留原记录。"
+    },
+    {
+      "location": "mac",
+      "source": "outputs/dataflex-strategy-school-audit-20261023",
+      "proposed_target": "outputs/dataflex/2026-10-23-school-source-audit",
+      "status": "proposed",
+      "physical_migration_performed": false,
+      "reference_constraints": [
+        "学校源码对照报告"
+      ],
+      "compatibility": "保留来源和原路径映射。"
+    },
+    {
+      "location": "mac",
+      "source": "outputs/paper-batch-20261022",
+      "proposed_target": "outputs/paper-sft/2026-10-22-batch",
+      "status": "proposed",
+      "physical_migration_performed": false,
+      "reference_constraints": [
+        "商业调用回执",
+        "原始响应与审核/来源关联"
+      ],
+      "compatibility": "不触发任务重跑，不修改历史 JSON 中的路径。"
+    },
+    {
+      "location": "mac",
+      "source": "outputs/qwen35-9b-8192-env-audit",
+      "proposed_target": "outputs/environment-checks/2026-10-22-qwen35-9b",
+      "status": "proposed",
+      "physical_migration_performed": false,
+      "reference_constraints": [
+        "离线依赖锁文件生成记录",
+        "安装/容量报告中的引用"
+      ],
+      "compatibility": "命名描述环境检查，原始 8192 目标与实际结果仍在报告保留。"
+    },
+    {
+      "location": "mac",
+      "source": "outputs/closeout-20261024",
+      "proposed_target": "outputs/maintenance/2026-10-24-dataflex-closeout",
+      "status": "proposed",
+      "physical_migration_performed": false,
+      "reference_constraints": [
+        "已执行清理脚本固定的 AUDIT 路径",
+        "哈希回执和说明"
+      ],
+      "compatibility": "保留旧入口；不改写已执行脚本。"
+    },
+    {
+      "location": "school",
+      "source": "runs/qwen35-9b/20261022-smoke/strategy-20261023/gpu1-core8-20261024",
+      "proposed_target": "runs/dataflex/2026-10-24-core8-flow-check",
+      "status": "proposed",
+      "physical_migration_performed": false,
+      "reference_constraints": [
+        "三个保留训练容器的 /runs 挂载",
+        "冻结数据符号链接",
+        "原始证据绝对路径"
+      ],
+      "compatibility": "先验证容器内旧新路径，单独的宿主绝对路径软链接不能保证容器可见。"
+    },
+    {
+      "location": "school",
+      "source": "environments/platform/mineru-bridge/jobs",
+      "proposed_target": "runs/mineru/<run-id>/jobs",
+      "status": "proposed",
+      "physical_migration_performed": false,
+      "reference_constraints": [
+        "解析桥 root/owner 标识",
+        "worker engine 与 job 路径",
+        "活跃服务配置"
+      ],
+      "compatibility": "先支持独立新作业根，既有作业不直接移动。"
+    },
+    {
+      "location": "school",
+      "source": "environments/platform/batch-sft-20261022",
+      "proposed_target": "runs/paper-sft/<run-id>",
+      "status": "proposed",
+      "physical_migration_performed": false,
+      "reference_constraints": [
+        "cached_parser 和上下文缓存",
+        "生产停止回执",
+        "平台脚本引用"
+      ],
+      "compatibility": "新批次分开配置、缓存与产物；旧批次保留回执。"
+    }
+  ],
+  "protected": {
+    "mac": [
+      ".venvs",
+      "models",
+      "repos/dataflow-webui/backend/data",
+      "repos/dataflow-webui/backend/cache_local",
+      "repos/dataflow-webui/backend/backups"
+    ],
+    "school": [
+      "models",
+      "offline",
+      "app",
+      "environments/platform-proxy/state"
+    ],
+    "docker_volumes": [
+      "rui-dataflow-platform-state-20261022",
+      "rui-dataflow-platform-legacy-data-20261022"
+    ]
+  },
+  "next_step": "Freeze exact references and per-file identity before migrating one batch. This document is not a move command."
+}

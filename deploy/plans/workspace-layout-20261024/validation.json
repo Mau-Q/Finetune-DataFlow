@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-24",
+  "baseline_commit": "c064f5ff3cc0849cebfb7b372479249e41f9bd77",
+  "scope": "Directory inspection, naming proposals, documentation and navigation only",
+  "workspace_check": "PASS",
+  "local_markdown_link_targets_checked": 108,
+  "local_markdown_missing_targets": 0,
+  "rename_proposals": 9,
+  "physical_migration_performed": false,
+  "server_navigation_files_verified": 4,
+  "mac_navigation_files_created": [
+    "outputs/README.md",
+    "output/README.md"
+  ],
+  "runtime_state_verified": {
+    "platform": "running",
+    "https": "running",
+    "three_training_containers": "exited"
+  },
+  "application_code_changed": false,
+  "gpu_training_started": false,
+  "business_data_migrated": false,
+  "validation_boundary": "No application code or execution paths changed; full regression was not repeated. Prior regression belongs to the preceding closeout record."
+}
