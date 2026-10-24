@@ -1,0 +1,52 @@
+{
+  "status": "TWO_RETIRED_CONTAINERS_REMOVED_PRESERVATION_VERIFIED",
+  "removed": [
+    {
+      "name": "rui-dataflex-strategy-gpu2-20261023",
+      "id": "7193e0ed5581e740773402a91c74a45a9399a32e0296d10f348eb2ce88399b88"
+    },
+    {
+      "name": "rui-qwen35-9b-smoke-20261022",
+      "id": "3c25fe9544f9f3aec5b18ec0e62937ae066e086e174fba8f764124df0e0ed198"
+    }
+  ],
+  "retained_containers": [
+    {
+      "name": "rui-dataflex-strategy-gpu1-20261024",
+      "id": "2c92087740c8c236e2f56b31a3fda243f5e0a08bd6d57872ece12f45a10fdf01",
+      "status": "exited",
+      "image": "sha256:233e1d0e6f88a3422da975d9c18156c6e4a511259e2c5d5415fba9441a3aa4b0"
+    },
+    {
+      "name": "rui-dataflow-platform-20261022",
+      "id": "c8ca13c3af17c2a22cf5806e2e53d0a0d0d177948e10a73e1084b4af43df835f",
+      "status": "running",
+      "image": "sha256:9d8ef5f6f6c5217fd1fe5d584fd441f6505bbcb256c8ceda10c1c8c57eca621e"
+    },
+    {
+      "name": "rui-dataflow-https-20261022",
+      "id": "b8f0ee0dfcd10e8b14a158bc64353e5c27d4f781d183e710170151c8ab9b8bae",
+      "status": "running",
+      "image": "sha256:9d8ef5f6f6c5217fd1fe5d584fd441f6505bbcb256c8ceda10c1c8c57eca621e"
+    }
+  ],
+  "image_references_preserved": 27,
+  "volumes_preserved": 12,
+  "model_files_metadata_unchanged": 14,
+  "final_adapters_sha256_unchanged": {
+    "runs/dataflex/2026-10-24-core8-flow-check/G00/attempt1/output/adapter_model.safetensors": "2cf070780df525e573ece5c8062eebc1d332f776e607935c6b7a187ca723a42a",
+    "runs/dataflex/2026-10-24-core8-flow-check/G01/attempt1/output/adapter_model.safetensors": "40d0458cbe85db3fe0c8782773e143dd0a2465127c23c306be90196f79470a12",
+    "runs/dataflex/2026-10-24-core8-flow-check/G02/attempt1/output/adapter_model.safetensors": "ecbec08aa22f60a5a6c81678ab2d70fec31103ae945835aa06ab782515b9bf12",
+    "runs/dataflex/2026-10-24-core8-flow-check/G03/attempt1/output/adapter_model.safetensors": "31f5219c921c9a900008ab2d618a81d6308f08bf8b44543a5078a6002eda0b00",
+    "runs/dataflex/2026-10-24-core8-flow-check/G04/attempt1/output/adapter_model.safetensors": "102bb9b18e1508fe6c6358086ad27227206f0f224739ba4f7ec4e7ce1cfba019",
+    "runs/dataflex/2026-10-24-core8-flow-check/G05/attempt1/output/adapter_model.safetensors": "ddab0f22afa2a589d8b4eb5d8e956d59e98731b6ad7ea419d4b3c2ea778bd316",
+    "runs/dataflex/2026-10-24-core8-flow-check/G06/attempt1/output/adapter_model.safetensors": "942f68c370184336cf94f145be3e54c37a34edbe12770548f5cdbd1ca0798c27",
+    "runs/dataflex/2026-10-24-core8-flow-check/G07/attempt1/output/adapter_model.safetensors": "08b5ca31c40b47abc63817ed25067e02c50f70b9e62ca8bb99de921abee2049c"
+  },
+  "writable_layer_bytes_removed": 2160952896,
+  "archive_root": "/sharedata/home/huruiqian/DataFlow/runs/maintenance/2026-10-24-retired-containers",
+  "completed_unix": 1792813300.3557146,
+  "gpu_training_started": false,
+  "docker_rm_used_volume_flag": false,
+  "images_deleted": false
+}

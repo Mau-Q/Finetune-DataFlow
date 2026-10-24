@@ -1,0 +1,16 @@
+{
+  "files": {
+    "README.md": "c73c4e403ab136c8d10f83a002aabd30d7cc79a2dbb29edd1baa44e46a9394b3",
+    "archive-summary.json": "89b5b676c39995532a80820a8b3971c55b62ce7ce5439129bc7fb15c07489712",
+    "removal-result.json": "2768c49871a48e93a2ecc144ca4bddb13dd9db35b912b11f631fac58bf0ef99d",
+    "school-navigation-update.json": "637db8891594b5bf0c218b455c180b6148b6f1138d7843d2ce58fb18144ce542",
+    "unique-files-manifest.json": "2ad6f165838a60d3297b790a168990b638d602d79b4cf83dfcceeae4e1b0689c",
+    "validation.json": "a4a32d88709c8d7585adcb8ff904b9ca22ed24151836c04a04d10693fbde8098"
+  },
+  "executed_scripts": {
+    "archive_retired_layer.py": "c813546946f23d7b2fef3e318988f4840afd712eef82ab525f2fc207f3f6e68f",
+    "retire_old_containers.py": "e3011a971cd49eeeeaf57143951a433b095f9f9c4dba68ccc9af6e3e7d4fe41c"
+  },
+  "private_archive_location": "/sharedata/home/huruiqian/DataFlow/runs/maintenance/2026-10-24-retired-containers",
+  "private_inspects_and_logs_remain_server_only": true
+}

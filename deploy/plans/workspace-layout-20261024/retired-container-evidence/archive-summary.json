@@ -1,0 +1,73 @@
+{
+  "status": "BOTH_ARCHIVES_VERIFIED_NO_CONTAINERS_REMOVED",
+  "containers": [
+    {
+      "status": "UNIQUE_FILES_ARCHIVED_AND_READBACK_VERIFIED",
+      "container": "rui-dataflex-strategy-gpu2-20261023",
+      "container_id": "7193e0ed5581e740773402a91c74a45a9399a32e0296d10f348eb2ce88399b88",
+      "reference_image": "sha256:233e1d0e6f88a3422da975d9c18156c6e4a511259e2c5d5415fba9441a3aa4b0",
+      "base_image": "sha256:13cc176de91c68db36680e4236aa548745575acc2be4f8aeb7107b269e4177df",
+      "upper_entries": 208,
+      "counts": {
+        "directory:directory_metadata_recorded": 44,
+        "file:covered_by_retained_image": 163,
+        "special:special_or_whiteout_metadata_recorded": 1
+      },
+      "image_covered_file_bytes": 1694409,
+      "unique_file_bytes": 0,
+      "archive_members_verified": 0,
+      "deleted_paths_recorded": 1,
+      "archive_bytes": 62,
+      "archive_sha256": "a67cbae6053636d7eccd103c54279068daf1137d9c492ee59be6068b54767c86",
+      "filesystem_inventory_bytes": 78549,
+      "filesystem_inventory_sha256": "da1905bf19da1d1cd9c7e600a73c66e915692412925651072356fa6f5561ac75",
+      "gpu_access": "disabled",
+      "network": "none",
+      "source_mount": "read-only",
+      "completed_unix": 1792813204.033574,
+      "writable_layer_bytes": 1694409,
+      "reference_tag": "rui/dataflex-strategy:20261024-gpu1-actual",
+      "archive_directory": "/sharedata/home/huruiqian/DataFlow/runs/maintenance/2026-10-24-retired-containers/rui-dataflex-strategy-gpu2-20261023",
+      "inspect_sha256": "e35f3d9fe75eae6af062a1ed1a2593de74b50ca2921aef7bf2aca0487479dc4b",
+      "log_archive_sha256": "1c006a4b573b03255e24944a689704cfc24de55b1521cbe0ba29b18c358be651",
+      "log_content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_content_bytes": 0
+    },
+    {
+      "status": "UNIQUE_FILES_ARCHIVED_AND_READBACK_VERIFIED",
+      "container": "rui-qwen35-9b-smoke-20261022",
+      "container_id": "3c25fe9544f9f3aec5b18ec0e62937ae066e086e174fba8f764124df0e0ed198",
+      "reference_image": "sha256:9283219ac77ed3a5aed73fa78f1ab47865780576c2c0ab0f34a6f7bddcedc244",
+      "base_image": "sha256:020db949d8ab1065f2a95afb30bcf8743c296cc158069ed6c99d8a8d881a8058",
+      "upper_entries": 43867,
+      "counts": {
+        "directory:directory_metadata_recorded": 5145,
+        "file:covered_by_retained_image": 38505,
+        "symlink:covered_by_retained_image": 9,
+        "special:special_or_whiteout_metadata_recorded": 117,
+        "file:unique_archived": 91
+      },
+      "image_covered_file_bytes": 2158211180,
+      "unique_file_bytes": 1047063,
+      "archive_members_verified": 91,
+      "deleted_paths_recorded": 604,
+      "archive_bytes": 429108,
+      "archive_sha256": "124998cfe14d2912990517b7d8e1befa252406347f76c255c84d7b126b922b6d",
+      "filesystem_inventory_bytes": 17375077,
+      "filesystem_inventory_sha256": "f4c8c637ca6bdc5bf52b3b8013cd1b13d0a66f8eb56586bfbd6c9f0a7381aec5",
+      "gpu_access": "disabled",
+      "network": "none",
+      "source_mount": "read-only",
+      "completed_unix": 1792813227.2871437,
+      "writable_layer_bytes": 2159258487,
+      "reference_tag": "rui/qwen35-training:20261022",
+      "archive_directory": "/sharedata/home/huruiqian/DataFlow/runs/maintenance/2026-10-24-retired-containers/rui-qwen35-9b-smoke-20261022",
+      "inspect_sha256": "3d4d8a524df61ec23f078726678ccac15d6879dbd62ab09c7e9a7006715f72d3",
+      "log_archive_sha256": "6209310c4e46d7495608a00568a447abb2ce19b5e9502b15054036efaacc1bcf",
+      "log_content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log_content_bytes": 0
+    }
+  ],
+  "archive_root": "/sharedata/home/huruiqian/DataFlow/runs/maintenance/2026-10-24-retired-containers",
+  "private_records_not_for_git": true
+}

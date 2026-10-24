@@ -2,6 +2,8 @@
 
 2026-10-24 状态补充：本页下文保留 10 月 22 日的部署操作依据。直接 DataFlex 八组训练与评测已完成，三个试训容器随后停止，镜像、模型和环境保留；产物去留见 [收尾记录](training/dataflex-closeout-20261024.md)。最新结果已完成 [首批目录迁移](maintenance/workspace-migration-stage1-20261024.md)，统一入口为 `runs/dataflex/2026-10-24-core8-flow-check/`，旧入口链接兼容。平台与 HTTPS 服务继续运行，部署和挂载配置未变。目录职责见 [目录约定](workspace-layout.md)，学校根目录 README 提供导航。
 
+后续容器清理：旧 GPU2 和 smoke 已归档独有文件并删除，最新 GPU1 停止保留；镜像、模型和所有数据卷保留。下面列出的早期 smoke 容器只作为历史部署记录，当前操作入口与验证见 [容器删除记录](maintenance/retired-training-containers-20261024.md)。
+
 2026-10-22（Asia/Shanghai）更新。平台已部署到 node01，校内 HTTPS 入口和认证读写检查通过；MinerU advanced 已复用原有模型完成一页解析。Qwen3.5-9B 的训练环境已安装，完整权重已上传校验，构造数据短训、adapter 重载与显存上限测试已完成：优化分配器后 7168 token 通过，8192 token 在当前共享显存预算下 OOM；独占整卡估计约 1 万 token。当前实际配置见 [训练方案及执行状态](training/qwen35-9b-node01-l40-8192.md) 与 [audit.json](../deploy/plans/qwen35-9b-8192/audit.json)。
 
 ## 校内访问

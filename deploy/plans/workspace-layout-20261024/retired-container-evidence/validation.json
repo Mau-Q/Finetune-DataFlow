@@ -1,0 +1,19 @@
+{
+  "status": "ARCHIVE_DELETE_AND_PRESERVATION_VERIFIED",
+  "date": "2026-10-24",
+  "unique_files_archived": 91,
+  "archive_members_readback_verified": 91,
+  "stopped_layer_regular_files_reverified": 38759,
+  "containers_removed": 2,
+  "protected_containers_preserved": 3,
+  "image_references_preserved": 27,
+  "data_volumes_preserved": 12,
+  "model_file_metadata_records_unchanged": 14,
+  "final_adapter_sha256_records_unchanged": 8,
+  "markdown_link_targets_verified": 65,
+  "workspace_check": "PASS",
+  "script_syntax": "PASS",
+  "private_archive_contents_copied_to_mac": false,
+  "gpu_training_started": false,
+  "verification_boundary": "Actual archive readback, stopped-layer comparison and post-removal checks. No full old-container reconstruction and no new model training or application regression."
+}
