@@ -1,0 +1,24 @@
+{
+  "basis": "Observed host event timestamps; stage elapsed includes process startup, source capture, audits and gaps. CLI timers cover narrower scopes. Shared GPU; no isolated speed benchmark or monetary estimate.",
+  "source_events_sha256": "80f10fe0902254aeb04d5c8c35565a636e49023a862a70d83ae1fd13199eabad",
+  "stages": {
+    "gates": {
+      "start_epoch": 1792802832.102882,
+      "end_epoch": 1792803800.5274198,
+      "elapsed_seconds": 968.42453789711,
+      "elapsed_minutes": 16.140408964951835
+    },
+    "core": {
+      "start_epoch": 1792803810.7127442,
+      "end_epoch": 1792808599.131115,
+      "elapsed_seconds": 4788.418370723724,
+      "elapsed_minutes": 79.8069728453954
+    }
+  },
+  "core_cli_seconds": 1914.875398770906,
+  "evaluation_seconds": 2566.7271358033177,
+  "gate_train_seconds": 665.9940862355288,
+  "gate_reload_seconds": 64.78374084015377,
+  "total_stage_elapsed_seconds": 5756.842908620834,
+  "zero_update_bootstrap_checks": 2
+}

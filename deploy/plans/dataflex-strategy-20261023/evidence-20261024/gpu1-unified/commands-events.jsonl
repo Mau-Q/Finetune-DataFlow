@@ -1,0 +1,115 @@
+{"timestamp": 1792802832.102882, "event": "start", "label": "gates-prepare", "command": ["docker", "exec", "-e", "CUDA_VISIBLE_DEVICES=", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/prepare_gpu1_cohort.py", "--root", "/runs/strategy-20261023/gpu1-gates-20261024", "--gates"]}
+{"timestamp": 1792802837.7214582, "event": "exit", "label": "gates-prepare", "returncode": 1}
+{"timestamp": 1792802838.2246776, "event": "stopped", "stage": "gates", "error": "RuntimeError('Failed gates-prepare; preserved /sharedata/home/huruiqian/DataFlow/environments/qwen35-9b/gpu1-unified-20261024/gpu1-logs/gates-prepare.log',)"}
+{"timestamp": 1792802849.5511403, "event": "start", "label": "gates-prepare", "command": ["docker", "exec", "-e", "CUDA_VISIBLE_DEVICES=", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/prepare_gpu1_cohort.py", "--root", "/runs/strategy-20261023/gpu1-gates-20261024", "--gates"]}
+{"timestamp": 1792802853.6713583, "event": "exit", "label": "gates-prepare", "returncode": 1}
+{"timestamp": 1792802853.6904352, "event": "stopped", "stage": "gates", "error": "RuntimeError('Failed gates-prepare; preserved /sharedata/home/huruiqian/DataFlow/environments/qwen35-9b/gpu1-unified-20261024/gpu1-logs/gates-prepare.log',)"}
+{"timestamp": 1792802890.7596323, "event": "start", "label": "gates-prepare", "command": ["docker", "exec", "-e", "CUDA_VISIBLE_DEVICES=", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/prepare_gpu1_cohort.py", "--root", "/runs/strategy-20261023/gpu1-gates-20261024", "--gates"]}
+{"timestamp": 1792802900.3205621, "event": "exit", "label": "gates-prepare", "returncode": 0}
+{"timestamp": 1792802900.914155, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 16000, "microbatch": 1, "evaluation": false}
+{"timestamp": 1792802900.9205012, "event": "start", "label": "GATE2-B1-train", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "train", "--root", "/runs/strategy-20261023/gpu1-gates-20261024", "--name", "GATE2-B1"]}
+{"timestamp": 1792803084.2834907, "event": "exit", "label": "GATE2-B1-train", "returncode": 0}
+{"timestamp": 1792803084.2899408, "event": "start", "label": "GATE2-B1-audit", "command": ["docker", "exec", "-e", "CUDA_VISIBLE_DEVICES=", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "audit", "--root", "/runs/strategy-20261023/gpu1-gates-20261024", "--name", "GATE2-B1"]}
+{"timestamp": 1792803087.4784768, "event": "exit", "label": "GATE2-B1-audit", "returncode": 0}
+{"timestamp": 1792803087.5551794, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 12000, "microbatch": 1, "evaluation": true}
+{"timestamp": 1792803087.5621383, "event": "start", "label": "GATE2-B1-reload", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "evaluate", "--root", "/runs/strategy-20261023/gpu1-gates-20261024", "--name", "GATE2-B1"]}
+{"timestamp": 1792803142.5009031, "event": "exit", "label": "GATE2-B1-reload", "returncode": 0}
+{"timestamp": 1792803143.080104, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 21000, "microbatch": 2, "evaluation": false}
+{"timestamp": 1792803143.1008096, "event": "start", "label": "GATE2-B2-train", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "train", "--root", "/runs/strategy-20261023/gpu1-gates-20261024", "--name", "GATE2-B2"]}
+{"timestamp": 1792803250.8842466, "event": "exit", "label": "GATE2-B2-train", "returncode": 0}
+{"timestamp": 1792803250.8925886, "event": "start", "label": "GATE2-B2-audit", "command": ["docker", "exec", "-e", "CUDA_VISIBLE_DEVICES=", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "audit", "--root", "/runs/strategy-20261023/gpu1-gates-20261024", "--name", "GATE2-B2"]}
+{"timestamp": 1792803254.7101555, "event": "exit", "label": "GATE2-B2-audit", "returncode": 0}
+{"timestamp": 1792803254.7694604, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 12000, "microbatch": 2, "evaluation": true}
+{"timestamp": 1792803254.7757123, "event": "start", "label": "GATE2-B2-reload", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "evaluate", "--root", "/runs/strategy-20261023/gpu1-gates-20261024", "--name", "GATE2-B2"]}
+{"timestamp": 1792803296.4993675, "event": "exit", "label": "GATE2-B2-reload", "returncode": 0}
+{"timestamp": 1792803297.0921206, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 16000, "microbatch": 1, "evaluation": false}
+{"timestamp": 1792803297.0975704, "event": "start", "label": "P-G01-A", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "probe", "--root", "/runs/strategy-20261023/gpu1-gates-20261024", "--name", "P-G01-A"]}
+{"timestamp": 1792803382.0963466, "event": "exit", "label": "P-G01-A", "returncode": 0}
+{"timestamp": 1792803382.6710007, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 16000, "microbatch": 1, "evaluation": false}
+{"timestamp": 1792803382.676459, "event": "start", "label": "P-G01-B", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "probe", "--root", "/runs/strategy-20261023/gpu1-gates-20261024", "--name", "P-G01-B"]}
+{"timestamp": 1792803463.3082771, "event": "exit", "label": "P-G01-B", "returncode": 0}
+{"timestamp": 1792803463.3845558, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 16000, "microbatch": 1, "evaluation": false}
+{"timestamp": 1792803463.3882601, "event": "start", "label": "P-G02-A", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "probe", "--root", "/runs/strategy-20261023/gpu1-gates-20261024", "--name", "P-G02-A"]}
+{"timestamp": 1792803547.3452578, "event": "exit", "label": "P-G02-A", "returncode": 0}
+{"timestamp": 1792803547.463886, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 21448, "microbatch": 2, "evaluation": false}
+{"timestamp": 1792803547.4692416, "event": "start", "label": "P-G06-A", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "probe", "--root", "/runs/strategy-20261023/gpu1-gates-20261024", "--name", "P-G06-A"]}
+{"timestamp": 1792803631.3462608, "event": "exit", "label": "P-G06-A", "returncode": 0}
+{"timestamp": 1792803631.412646, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 21448, "microbatch": 2, "evaluation": false}
+{"timestamp": 1792803631.4458256, "event": "start", "label": "P-G06-B", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "probe", "--root", "/runs/strategy-20261023/gpu1-gates-20261024", "--name", "P-G06-B"]}
+{"timestamp": 1792803712.4095435, "event": "exit", "label": "P-G06-B", "returncode": 0}
+{"timestamp": 1792803712.5024636, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 21448, "microbatch": 2, "evaluation": false}
+{"timestamp": 1792803712.5092828, "event": "start", "label": "P-G07-A", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "probe", "--root", "/runs/strategy-20261023/gpu1-gates-20261024", "--name", "P-G07-A"]}
+{"timestamp": 1792803793.9773707, "event": "exit", "label": "P-G07-A", "returncode": 0}
+{"timestamp": 1792803793.987446, "event": "start", "label": "gates-verify", "command": ["docker", "exec", "-e", "CUDA_VISIBLE_DEVICES=", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/verify_gpu1_gates.py", "--root", "/runs/strategy-20261023/gpu1-gates-20261024"]}
+{"timestamp": 1792803800.5204618, "event": "exit", "label": "gates-verify", "returncode": 0}
+{"timestamp": 1792803800.5274198, "event": "stage_completed", "stage": "gates"}
+{"timestamp": 1792803810.7127442, "event": "start", "label": "core-prepare", "command": ["docker", "exec", "-e", "CUDA_VISIBLE_DEVICES=", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/prepare_gpu1_cohort.py", "--root", "/runs/strategy-20261023/gpu1-core8-20261024"]}
+{"timestamp": 1792803815.0595605, "event": "exit", "label": "core-prepare", "returncode": 0}
+{"timestamp": 1792803815.1371865, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 16000, "microbatch": 1, "evaluation": false}
+{"timestamp": 1792803815.275611, "event": "start", "label": "G00-train", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "train", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G00"]}
+{"timestamp": 1792804015.5029533, "event": "exit", "label": "G00-train", "returncode": 0}
+{"timestamp": 1792804015.6999502, "event": "start", "label": "G00-audit", "command": ["docker", "exec", "-e", "CUDA_VISIBLE_DEVICES=", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "audit", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G00"]}
+{"timestamp": 1792804019.5289073, "event": "exit", "label": "G00-audit", "returncode": 0}
+{"timestamp": 1792804019.6000063, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 16000, "microbatch": 1, "evaluation": false}
+{"timestamp": 1792804019.7526407, "event": "start", "label": "G01-train", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "train", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G01"]}
+{"timestamp": 1792804222.8479497, "event": "exit", "label": "G01-train", "returncode": 0}
+{"timestamp": 1792804222.9955437, "event": "start", "label": "G01-audit", "command": ["docker", "exec", "-e", "CUDA_VISIBLE_DEVICES=", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "audit", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G01"]}
+{"timestamp": 1792804226.371561, "event": "exit", "label": "G01-audit", "returncode": 0}
+{"timestamp": 1792804226.4537477, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 16000, "microbatch": 1, "evaluation": false}
+{"timestamp": 1792804226.5916317, "event": "start", "label": "G02-train", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "train", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G02"]}
+{"timestamp": 1792804681.6283724, "event": "exit", "label": "G02-train", "returncode": 0}
+{"timestamp": 1792804681.7823226, "event": "start", "label": "G02-audit", "command": ["docker", "exec", "-e", "CUDA_VISIBLE_DEVICES=", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "audit", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G02"]}
+{"timestamp": 1792804686.082912, "event": "exit", "label": "G02-audit", "returncode": 0}
+{"timestamp": 1792804686.1717288, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 16000, "microbatch": 1, "evaluation": false}
+{"timestamp": 1792804686.7660148, "event": "start", "label": "G03-train", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "train", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G03"]}
+{"timestamp": 1792805139.621664, "event": "exit", "label": "G03-train", "returncode": 0}
+{"timestamp": 1792805140.201102, "event": "start", "label": "G03-audit", "command": ["docker", "exec", "-e", "CUDA_VISIBLE_DEVICES=", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "audit", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G03"]}
+{"timestamp": 1792805144.2025409, "event": "exit", "label": "G03-audit", "returncode": 0}
+{"timestamp": 1792805144.8595335, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 16000, "microbatch": 1, "evaluation": false}
+{"timestamp": 1792805144.9993773, "event": "start", "label": "G04-train", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "train", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G04"]}
+{"timestamp": 1792805339.8525798, "event": "exit", "label": "G04-train", "returncode": 0}
+{"timestamp": 1792805340.4533617, "event": "start", "label": "G04-audit", "command": ["docker", "exec", "-e", "CUDA_VISIBLE_DEVICES=", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "audit", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G04"]}
+{"timestamp": 1792805344.4150522, "event": "exit", "label": "G04-audit", "returncode": 0}
+{"timestamp": 1792805344.5200722, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 16000, "microbatch": 1, "evaluation": false}
+{"timestamp": 1792805344.665427, "event": "start", "label": "G05-train", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "train", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G05"]}
+{"timestamp": 1792805549.5809302, "event": "exit", "label": "G05-train", "returncode": 0}
+{"timestamp": 1792805549.68674, "event": "start", "label": "G05-audit", "command": ["docker", "exec", "-e", "CUDA_VISIBLE_DEVICES=", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "audit", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G05"]}
+{"timestamp": 1792805553.0453658, "event": "exit", "label": "G05-audit", "returncode": 0}
+{"timestamp": 1792805553.1132302, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 21448, "microbatch": 2, "evaluation": false}
+{"timestamp": 1792805553.2527537, "event": "start", "label": "G06-train", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "train", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G06"]}
+{"timestamp": 1792805716.4962635, "event": "exit", "label": "G06-train", "returncode": 0}
+{"timestamp": 1792805716.6551857, "event": "start", "label": "G06-audit", "command": ["docker", "exec", "-e", "CUDA_VISIBLE_DEVICES=", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "audit", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G06"]}
+{"timestamp": 1792805720.9417431, "event": "exit", "label": "G06-audit", "returncode": 0}
+{"timestamp": 1792805721.5140853, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 21448, "microbatch": 2, "evaluation": false}
+{"timestamp": 1792805721.6540008, "event": "start", "label": "G07-train", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "train", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G07"]}
+{"timestamp": 1792805882.8371487, "event": "exit", "label": "G07-train", "returncode": 0}
+{"timestamp": 1792805882.9302993, "event": "start", "label": "G07-audit", "command": ["docker", "exec", "-e", "CUDA_VISIBLE_DEVICES=", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "audit", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G07"]}
+{"timestamp": 1792805886.9719834, "event": "exit", "label": "G07-audit", "returncode": 0}
+{"timestamp": 1792805887.0347989, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 12000, "microbatch": 1, "evaluation": true}
+{"timestamp": 1792805887.1780927, "event": "start", "label": "BASE-evaluate", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "evaluate", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "BASE"]}
+{"timestamp": 1792806092.17009, "event": "exit", "label": "BASE-evaluate", "returncode": 0}
+{"timestamp": 1792806092.2492688, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 12000, "microbatch": 1, "evaluation": true}
+{"timestamp": 1792806092.3954306, "event": "start", "label": "G00-evaluate", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "evaluate", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G00"]}
+{"timestamp": 1792806434.9947014, "event": "exit", "label": "G00-evaluate", "returncode": 0}
+{"timestamp": 1792806435.5777109, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 12000, "microbatch": 1, "evaluation": true}
+{"timestamp": 1792806435.718475, "event": "start", "label": "G01-evaluate", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "evaluate", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G01"]}
+{"timestamp": 1792806725.3672528, "event": "exit", "label": "G01-evaluate", "returncode": 0}
+{"timestamp": 1792806725.434434, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 12000, "microbatch": 1, "evaluation": true}
+{"timestamp": 1792806725.528616, "event": "start", "label": "G02-evaluate", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "evaluate", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G02"]}
+{"timestamp": 1792807042.5301287, "event": "exit", "label": "G02-evaluate", "returncode": 0}
+{"timestamp": 1792807043.0705576, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 12000, "microbatch": 1, "evaluation": true}
+{"timestamp": 1792807043.2359183, "event": "start", "label": "G03-evaluate", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "evaluate", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G03"]}
+{"timestamp": 1792807380.0986848, "event": "exit", "label": "G03-evaluate", "returncode": 0}
+{"timestamp": 1792807380.2023342, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 12000, "microbatch": 1, "evaluation": true}
+{"timestamp": 1792807380.3466687, "event": "start", "label": "G04-evaluate", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "evaluate", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G04"]}
+{"timestamp": 1792807660.8749952, "event": "exit", "label": "G04-evaluate", "returncode": 0}
+{"timestamp": 1792807661.0034382, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 12000, "microbatch": 1, "evaluation": true}
+{"timestamp": 1792807661.142474, "event": "start", "label": "G05-evaluate", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "evaluate", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G05"]}
+{"timestamp": 1792807992.4125888, "event": "exit", "label": "G05-evaluate", "returncode": 0}
+{"timestamp": 1792807992.4949267, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 12000, "microbatch": 1, "evaluation": true}
+{"timestamp": 1792807992.6393, "event": "start", "label": "G06-evaluate", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "evaluate", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G06"]}
+{"timestamp": 1792808276.0443566, "event": "exit", "label": "G06-evaluate", "returncode": 0}
+{"timestamp": 1792808276.116814, "event": "resource_check", "free_mib": 25183, "minimum_free_mib": 12000, "microbatch": 1, "evaluation": true}
+{"timestamp": 1792808276.7308238, "event": "start", "label": "G07-evaluate", "command": ["docker", "exec", "rui-dataflex-strategy-gpu1-20261024", "python", "/work/strategy-20261023/gpu1_entry.py", "evaluate", "--root", "/runs/strategy-20261023/gpu1-core8-20261024", "--name", "G07"]}
+{"timestamp": 1792808598.6519992, "event": "exit", "label": "G07-evaluate", "returncode": 0}
+{"timestamp": 1792808599.131115, "event": "stage_completed", "stage": "core"}

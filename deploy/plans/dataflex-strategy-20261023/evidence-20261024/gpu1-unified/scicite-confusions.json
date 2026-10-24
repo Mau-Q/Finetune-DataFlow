@@ -1,0 +1,168 @@
+{
+  "BASE": {
+    "truth_counts": {
+      "background": 13,
+      "result": 2,
+      "method": 1
+    },
+    "prediction_counts": {
+      "background": 9,
+      "result": 6,
+      "method": 1
+    },
+    "confusion": {
+      "background -> background": 9,
+      "background -> result": 4,
+      "result -> result": 2,
+      "method -> method": 1
+    }
+  },
+  "G00": {
+    "truth_counts": {
+      "background": 13,
+      "result": 2,
+      "method": 1
+    },
+    "prediction_counts": {
+      "background": 12,
+      "result": 3,
+      "method": 1
+    },
+    "confusion": {
+      "background -> background": 11,
+      "result -> result": 1,
+      "background -> result": 2,
+      "result -> background": 1,
+      "method -> method": 1
+    }
+  },
+  "G01": {
+    "truth_counts": {
+      "background": 13,
+      "result": 2,
+      "method": 1
+    },
+    "prediction_counts": {
+      "background": 12,
+      "result": 3,
+      "method": 1
+    },
+    "confusion": {
+      "background -> background": 11,
+      "result -> result": 1,
+      "background -> result": 2,
+      "result -> background": 1,
+      "method -> method": 1
+    }
+  },
+  "G02": {
+    "truth_counts": {
+      "background": 13,
+      "result": 2,
+      "method": 1
+    },
+    "prediction_counts": {
+      "background": 14,
+      "result": 2
+    },
+    "confusion": {
+      "background -> background": 12,
+      "result -> result": 1,
+      "background -> result": 1,
+      "result -> background": 1,
+      "method -> background": 1
+    }
+  },
+  "G03": {
+    "truth_counts": {
+      "background": 13,
+      "result": 2,
+      "method": 1
+    },
+    "prediction_counts": {
+      "background": 15,
+      "result": 1
+    },
+    "confusion": {
+      "background -> background": 13,
+      "result -> result": 1,
+      "result -> background": 1,
+      "method -> background": 1
+    }
+  },
+  "G04": {
+    "truth_counts": {
+      "background": 13,
+      "result": 2,
+      "method": 1
+    },
+    "prediction_counts": {
+      "background": 12,
+      "result": 3,
+      "method": 1
+    },
+    "confusion": {
+      "background -> background": 11,
+      "result -> result": 1,
+      "background -> result": 2,
+      "result -> background": 1,
+      "method -> method": 1
+    }
+  },
+  "G05": {
+    "truth_counts": {
+      "background": 13,
+      "result": 2,
+      "method": 1
+    },
+    "prediction_counts": {
+      "background": 14,
+      "result": 2
+    },
+    "confusion": {
+      "background -> background": 12,
+      "result -> result": 1,
+      "background -> result": 1,
+      "result -> background": 1,
+      "method -> background": 1
+    }
+  },
+  "G06": {
+    "truth_counts": {
+      "background": 13,
+      "result": 2,
+      "method": 1
+    },
+    "prediction_counts": {
+      "background": 12,
+      "result": 3,
+      "method": 1
+    },
+    "confusion": {
+      "background -> background": 11,
+      "result -> result": 1,
+      "background -> result": 2,
+      "result -> background": 1,
+      "method -> method": 1
+    }
+  },
+  "G07": {
+    "truth_counts": {
+      "background": 13,
+      "result": 2,
+      "method": 1
+    },
+    "prediction_counts": {
+      "background": 12,
+      "result": 3,
+      "method": 1
+    },
+    "confusion": {
+      "background -> background": 11,
+      "result -> result": 1,
+      "background -> result": 2,
+      "result -> background": 1,
+      "method -> method": 1
+    }
+  }
+}

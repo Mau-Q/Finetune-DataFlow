@@ -1,0 +1,9 @@
+{
+  "role": "Reviewed report and derived addenda; original machine report and evidence manifest retained unchanged",
+  "school_directory": "/sharedata/home/huruiqian/DataFlow/runs/qwen35-9b/20261022-smoke/strategy-20261023/gpu1-core8-20261024",
+  "files": {
+    "reviewed-report.md": "2d620478f6063a4f922604a41cfc5d6f8804beda44059250c71eb58987d77eb1",
+    "execution-accounting.json": "1ad83507d404333f3420ecb8ad08f07504d4a1b67c84b6bcf6d6e7cc17b112ed",
+    "validation.json": "997fccfdc3de95eefe46d046618d533d464d0be26305ac35e67292f5c7aa70d6"
+  }
+}

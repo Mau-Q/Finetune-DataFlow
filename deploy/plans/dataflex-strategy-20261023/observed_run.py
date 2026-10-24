@@ -15,7 +15,8 @@ def prepare_reproducibility(config,protocol=None):
  # The paired protocol additionally fixes SDPA and workspace choices; the generic
  # HF recipe alone did not reproduce this Qwen/bnb/BF16 stack.
  if protocol is not None:
-  if protocol!='torch-math-cublas4096-v2':raise ValueError('Unknown deterministic execution protocol')
+  from extended_execution_policy import PROTOCOL
+  if protocol not in ['torch-math-cublas4096-v2',PROTOCOL]:raise ValueError('Unknown deterministic execution protocol')
   if config.get('full_determinism',False):raise ValueError('HF full_determinism overrides the explicit cuBLAS protocol')
   os.environ['CUBLAS_WORKSPACE_CONFIG']=':4096:8'
   os.environ.pop('CUDA_LAUNCH_BLOCKING',None)
@@ -26,6 +27,9 @@ def prepare_reproducibility(config,protocol=None):
   torch.backends.cuda.enable_mem_efficient_sdp(False)
   torch.backends.cuda.enable_cudnn_sdp(False)
   torch.backends.cuda.enable_math_sdp(True)
+  if protocol==PROTOCOL:
+   from extended_execution_policy import install as install_extended
+   install_extended()
  elif config.get('full_determinism',False):
   from transformers.trainer_utils import enable_full_determinism
   enable_full_determinism(int(config.get('seed',42)))
@@ -191,6 +195,8 @@ def train(config,folder):
  protocol=json.loads(pair_path.read_text()).get('deterministic_execution') if pair_path.exists() else None
  prepare_reproducibility(cfg,protocol) if protocol else prepare_reproducibility(cfg)
  folder.mkdir(parents=True,exist_ok=False)
+ from extended_execution_policy import persist as persist_extended
+ persist_extended(folder)
  torch.cuda.set_per_process_memory_fraction(.42,0);torch.cuda.reset_peak_memory_stats()
  (folder/'actual-config.yaml').write_text(yaml.safe_dump(cfg,sort_keys=False))
  if cfg['train_type']=='dynamic_select':
@@ -213,6 +219,7 @@ def train(config,folder):
   sys.argv=['dataflex-cli','train',str(config)];cli.main();status='TRAIN_FINISHED'
  except Exception as e:error=repr(e);raise
  finally:
+  persist_extended(folder)
   output=Path(cfg['output_dir']);adapter=output/'adapter_model.safetensors'
   receipt={'status':status,'error':error,'seconds':time.monotonic()-t,'peak_allocated_gib':torch.cuda.max_memory_allocated()/2**30,'peak_reserved_gib':torch.cuda.max_memory_reserved()/2**30,'allocator_fraction':.42,'gpu_name':torch.cuda.get_device_name(0),'config_sha256':sha(config),'adapter_sha256':sha(adapter) if adapter.exists() else None,'data_manifest_sha256':sha(ROOT/'data-manifest.json')}
   (folder/'resource.json').write_text(json.dumps(receipt,indent=2));print(json.dumps(receipt),flush=True)

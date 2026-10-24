@@ -1,0 +1,9 @@
+{
+  "fixed_handoff_claims": "ALL_MATCH",
+  "live": {
+    "AGENTS.md": "f9455e9aabed3afadfd0468475ff3c3e534b9d8d550da9df13dcea3cdedc6c29",
+    "deploy/plans/dataflex-strategy-20261023/execution-status.json": "b027d28fbc26aac7125ad58d1eaa29929e71b5cb38707746015a5ee0392678a5",
+    "/Users/rui/.codex/handoffs/dataflow/20261024-gpu1-unified-core8/HANDOFF.md": "575e939b12e96031d4250297048deba3f89ce776f6a2a008ee440a8894ab84cc",
+    "/Users/rui/.codex/server-connections.md": "e48d41e7b73f5d23039bf04e7d660f61580de4d1da6a1f6908f76164cf892bd5"
+  }
+}

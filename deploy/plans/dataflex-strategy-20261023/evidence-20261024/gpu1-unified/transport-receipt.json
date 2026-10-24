@@ -1,0 +1,7 @@
+{
+  "archive_sha256": "5e4f66edb8ded48c2c91e53cdb2b757a4311a922c6158e979a52f7963d208709",
+  "manifest_sha256": "89dea005b8ff5a2bdace7f92d84f0accb1c185868c449202d92f3d1f7c05db35",
+  "compact_files_verified": 18,
+  "full_school_files_hashed": 926,
+  "all_compact_contents_match_school_manifest": true
+}

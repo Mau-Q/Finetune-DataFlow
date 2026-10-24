@@ -1,0 +1,20 @@
+{
+  "school_cpu_contracts": {
+    "run": 38,
+    "passed": 38,
+    "gpu_visible": false
+  },
+  "mac_policy_contracts": {
+    "run": 7,
+    "passed": 7
+  },
+  "mac_gpu1_entry_contracts": {
+    "status": "IMPORT_FAILED_MISSING_TORCH",
+    "completed_tests": 0,
+    "school_fallback": "All three new entry contracts actually passed within school 38-test suite"
+  },
+  "experiment_scripts_syntax": "PASS",
+  "git_diff_whitespace": "PASS",
+  "whole_repository_regression": "NOT_RUN: standalone experiment tooling only",
+  "final_gpu_acceptance": "8 fresh 24-update actual runs, 9 fresh 64-prediction evaluations; capacity/repeatability/reload gates PASS"
+}

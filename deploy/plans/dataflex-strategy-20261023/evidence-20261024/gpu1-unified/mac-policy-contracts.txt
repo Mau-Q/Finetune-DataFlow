@@ -1,0 +1,12 @@
+test_fla_candidates_are_compiled_without_timed_execution (test_fla_compile_policy.CompilePolicyContracts.test_fla_candidates_are_compiled_without_timed_execution) ... ok
+test_non_fla_autotuner_keeps_original_behavior (test_fla_compile_policy.CompilePolicyContracts.test_non_fla_autotuner_keeps_original_behavior) ... ok
+test_unsupported_candidate_retains_infinite_rank (test_fla_compile_policy.CompilePolicyContracts.test_unsupported_candidate_retains_infinite_rank) ... ok
+test_ambiguous_candidate_is_rejected (test_preselection_policy.PolicyContracts.test_ambiguous_candidate_is_rejected) ... ok
+test_changed_source_is_rejected_before_mutation (test_preselection_policy.PolicyContracts.test_changed_source_is_rejected_before_mutation) ... ok
+test_combined_policy_pins_gated_norm_forward_and_backward (test_preselection_policy.PolicyContracts.test_combined_policy_pins_gated_norm_forward_and_backward) ... ok
+test_selects_single_candidate_and_clears_only_in_memory_cache (test_preselection_policy.PolicyContracts.test_selects_single_candidate_and_clears_only_in_memory_cache) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.003s
+
+OK

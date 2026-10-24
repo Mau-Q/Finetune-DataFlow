@@ -1,0 +1,9 @@
+{
+  "temporary_upload_archive_removed": "/tmp/dataflow-gpu1-scripts-20261024.tar",
+  "temporary_download_archive_removed": "/tmp/dataflow-gpu1-evidence-20261024.tar.gz",
+  "temporary_report_preview_removed": "/tmp/dataflow-gpu1-report-preview.md",
+  "all_removed_paths_created_for_this_task": true,
+  "existing_models_data_or_old_runs_deleted": false,
+  "weights_downloaded_to_mac": false,
+  "small_scripts_and_hash_records_retained": true
+}

@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/work/strategy-20261023/prepare_gpu1_cohort.py", line 79, in <module>
+    args = parser.parse_args(); prepare(args.root, args.source_root, args.gates)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/strategy-20261023/prepare_gpu1_cohort.py", line 40, in prepare
+    assert sha(components_path) == json.loads((old/'manifest.json').read_text())['components_sha256']
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/runs/strategy-20261023/GATE2-B1/attempt2/manifest.json'

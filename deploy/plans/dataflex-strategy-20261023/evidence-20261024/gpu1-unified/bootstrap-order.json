@@ -1,0 +1,7 @@
+{
+  "cuda_initialized_before": false,
+  "cuda_initialized_after_policy": true,
+  "model_loaded": false,
+  "optimizer_updates": 0,
+  "predictions": 0
+}

@@ -1,0 +1,33 @@
+{
+  "status": "PREPARED_NOT_TRAINED",
+  "protocol": "torch-math-cublas4096-v2+fla-compile-ordered-config-v3",
+  "gates": false,
+  "data_manifest_sha256": "f2e723257b323c022729a01207b45c036d3c98d61debdc71087a252e58c66b7e",
+  "initial_adapter_tensor_sha256": "3bf6a156850eca6cc0a5a0f914ed9eae38002687fc94f6ec585a1dbcd321820f",
+  "snapshot_sha256": "c56d3f34fbb0d1b4001c77fa2eba35eb5ad4f88e91a2e94c5db38e34ba30809a",
+  "runs": [
+    "G00",
+    "G01",
+    "G02",
+    "G03",
+    "G04",
+    "G05",
+    "G06",
+    "G07"
+  ],
+  "reused_runs": [],
+  "source_configs": {
+    "G00": "035c0a324f42436f545d534a635d8fcd6ee5016f3b5e019d74dd0750b56be469",
+    "G01": "fe574920199d3238a1926b84ae214eb267009ac45f1a205d193a817774384248",
+    "G02": "5b27fe921742384ea480490d7cff0e891db2fd7d9da2cf63ca9dbd8d1a24b96a",
+    "G03": "2e7629f8c521c161864ae889ca9d11408afcd3597fc2ae3127e23208b08ee820",
+    "G04": "e3ebb32bdb3c6b042df3b00f3276ddab4758ff77d33592291dbbae834388b5d8",
+    "G05": "491e62cc06faf68f468989cbe7084fbd3e4a96dbfd5ae456026617ddca4da2ad",
+    "G06": "141fc59abaa01422fbd2555c69cef8e5fb9d0e7c966a5701153d5dafc0e64b89",
+    "G07": "f600bd69b305bcbbe44391420b7b8193c7a899ade6ee52ee13b686331add9677"
+  },
+  "script_sha256": "9450bd7174b2e88324d7ab640f2ebf2d45f8b53e950ee48e5461122c0f5b25b8",
+  "new_optimizer_updates": 192,
+  "new_predictions": 576,
+  "batch_scope": "G00-G05 MB1/acc4, G06-G07 MB2/acc2; effective batch4; microbatches are not bitwise equivalent"
+}
