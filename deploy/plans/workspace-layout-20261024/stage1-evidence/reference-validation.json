@@ -1,0 +1,21 @@
+{
+  "status": "STAGE1_FILES_COMPATIBILITY_AND_REGRESSION_VERIFIED",
+  "mac_original_files": 1428,
+  "mac_postmigration_navigation_file_updates": 1,
+  "mac_previous_valid_path_references": 110,
+  "mac_new_missing_previous_valid_references": 0,
+  "lexical_candidates_already_nonexistent_before": 16,
+  "school_regular_files": 619,
+  "school_frozen_links_resolved_in_container": 3,
+  "existing_application_containers_unchanged": 5,
+  "local_regression": {
+    "core_passed": 165,
+    "core_deselected": 1,
+    "backend_passed": 491,
+    "backend_subtests_passed": 7,
+    "paper_extension_passed": 54
+  },
+  "application_runtime_data_migrated": false,
+  "gpu_training_started": false,
+  "containers_deleted": false
+}

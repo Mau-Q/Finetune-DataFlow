@@ -1,0 +1,56 @@
+{
+  "status": "STAGE1_RENAME_AND_COMPATIBILITY_VERIFIED",
+  "location": "mac",
+  "entries": [
+    {
+      "source": "output",
+      "physical_target": "outputs/archive/ui/legacy-output",
+      "root_mode": 493,
+      "files": 413,
+      "bytes": 45612474,
+      "status": "RENAMED_AND_COMPATIBILITY_VERIFIED",
+      "old_link_target": "outputs/archive/ui/legacy-output"
+    },
+    {
+      "source": "outputs/dataflex-core8-20261023",
+      "physical_target": "outputs/dataflex/2026-10-23-core8-initial-protocol",
+      "root_mode": 493,
+      "files": 25,
+      "bytes": 100432,
+      "status": "RENAMED_AND_COMPATIBILITY_VERIFIED",
+      "old_link_target": "dataflex/2026-10-23-core8-initial-protocol"
+    },
+    {
+      "source": "outputs/dataflex-strategy-school-audit-20261023",
+      "physical_target": "outputs/dataflex/2026-10-23-school-source-audit",
+      "root_mode": 493,
+      "files": 28,
+      "bytes": 129156,
+      "status": "RENAMED_AND_COMPATIBILITY_VERIFIED",
+      "old_link_target": "dataflex/2026-10-23-school-source-audit"
+    },
+    {
+      "source": "outputs/qwen35-9b-8192-env-audit",
+      "physical_target": "outputs/environment-checks/2026-10-22-qwen35-9b",
+      "root_mode": 493,
+      "files": 949,
+      "bytes": 13186168,
+      "status": "RENAMED_AND_COMPATIBILITY_VERIFIED",
+      "old_link_target": "environment-checks/2026-10-22-qwen35-9b"
+    },
+    {
+      "source": "outputs/closeout-20261024",
+      "physical_target": "outputs/maintenance/2026-10-24-dataflex-closeout",
+      "root_mode": 493,
+      "files": 13,
+      "bytes": 931865,
+      "status": "RENAMED_AND_COMPATIBILITY_VERIFIED",
+      "old_link_target": "maintenance/2026-10-24-dataflex-closeout"
+    }
+  ],
+  "files_verified": 1428,
+  "bytes_verified": 59960095,
+  "plan_sha256": "2731fb328830c35108b4862360f10997712ee9bfed0059bb5e1d7bea8cfac677",
+  "completed_unix": 1792811943.5590909,
+  "file_verification": "All regular file SHA-256, sizes, modes, symlink text and directory entries match before navigation updates."
+}

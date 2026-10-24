@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-24",
+  "scope": "Instantaneous docker stats and inspect --size; no containers deleted",
+  "platform": {
+    "cpu_percent": 7.99,
+    "memory_GiB": 5.793,
+    "writable_layer_bytes": 157131722,
+    "running": true,
+    "gpu_device_request": null
+  },
+  "https": {
+    "cpu_percent": 0,
+    "memory_MiB": 14.74,
+    "writable_layer_bytes": 0,
+    "running": true,
+    "gpu_device_request": null
+  },
+  "training_gpu1": {
+    "running": false,
+    "runtime_memory_bytes": 0,
+    "writable_layer_bytes": 77999
+  },
+  "training_gpu2": {
+    "running": false,
+    "runtime_memory_bytes": 0,
+    "writable_layer_bytes": 1694409
+  },
+  "training_smoke": {
+    "running": false,
+    "runtime_memory_bytes": 0,
+    "writable_layer_bytes": 2159258487
+  },
+  "interpretation": "Images have shared layers; these values do not establish uniquely reclaimable disk space. Keep latest GPU1; older GPU2/smoke require writable-layer audit before deletion."
+}

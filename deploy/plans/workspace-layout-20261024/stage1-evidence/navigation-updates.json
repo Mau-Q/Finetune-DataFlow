@@ -1,0 +1,8 @@
+[
+  {
+    "path": "outputs/archive/ui/legacy-output/README.md",
+    "reason": "Update mutable navigation after move; absolute local links work through both aliases.",
+    "before_sha256": "de55d3ed58bf627cbb098e6b5548115c521b10b6d00bc8f58c40c750b86a5aff",
+    "after_sha256": "86cd56f6d1c53e5f2609b1aa99f5f6c4c8581aca08f1c00d93c84dcbe383650d"
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "status": "STAGE1_RENAME_AND_COMPATIBILITY_VERIFIED",
+  "location": "school",
+  "entries": [
+    {
+      "source": "runs/qwen35-9b/20261022-smoke/strategy-20261023/gpu1-core8-20261024",
+      "physical_target": "runs/qwen35-9b/20261022-smoke/dataflex/2026-10-24-core8-flow-check",
+      "canonical_entry": "runs/dataflex/2026-10-24-core8-flow-check",
+      "root_mode": 493,
+      "files": 619,
+      "bytes": 1590698639,
+      "status": "RENAMED_AND_COMPATIBILITY_VERIFIED",
+      "old_link_target": "../dataflex/2026-10-24-core8-flow-check"
+    }
+  ],
+  "files_verified": 619,
+  "bytes_verified": 1590698639,
+  "plan_sha256": "23002371469517d73f448b4a146f9f1d5cef7b7493133dcf1d05d883cabff25c",
+  "completed_unix": 1792811999.4676232,
+  "file_verification": "All regular file SHA-256, sizes, modes, symlink text and directory entries match before navigation updates."
+}

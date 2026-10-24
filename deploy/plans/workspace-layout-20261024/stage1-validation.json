@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-24",
+  "status": "STAGE1_MIGRATION_COMPLETE",
+  "baseline_commit": "b5bd26be8f26f20e6c0d6a37d610821824cd1b94",
+  "completed_entries": 6,
+  "deferred_entries": 3,
+  "mac_files_verified": 1428,
+  "school_files_verified": 619,
+  "navigation_file_updated_after_initial_hash_verification": 1,
+  "existing_valid_references_preserved": 110,
+  "new_missing_existing_references": 0,
+  "current_documentation_link_targets_verified": 74,
+  "workspace_check": "PASS",
+  "diff_whitespace_check": "PASS",
+  "local_regression_total_passed": 710,
+  "school_container_paths_verified_without_gpu": true,
+  "five_existing_containers_unchanged": true,
+  "containers_deleted": false,
+  "school_audit_copy_files_verified": 13,
+  "payload_details": "stage1-evidence/reference-validation.json",
+  "scope_limit": "Paused batches, parser jobs, databases, models, environments and container configurations were not migrated."
+}

@@ -1,7 +1,7 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "date": "2026-10-24",
-  "status": "PROPOSED_NO_PHYSICAL_MIGRATION",
+  "status": "STAGE1_COMPLETED_WITH_COMPATIBILITY_LINKS",
   "roots": {
     "mac": "/Users/rui/Documents/DataFlow",
     "school": "/sharedata/home/huruiqian/DataFlow"
@@ -12,41 +12,50 @@
       "location": "mac",
       "source": "output",
       "proposed_target": "outputs/archive/ui/legacy-output",
-      "status": "proposed",
-      "physical_migration_performed": false,
+      "status": "migrated_with_compatibility_symlink",
+      "physical_migration_performed": true,
       "reference_constraints": [
         "历史 UI 报告与相对链接",
         "部分验收脚本"
       ],
-      "compatibility": "迁移前冻结子目录与逐文件清单，旧路径保持兼容。"
+      "compatibility": "迁移前冻结子目录与逐文件清单，旧路径保持兼容。",
+      "physical_target": "outputs/archive/ui/legacy-output",
+      "old_path_type": "relative_symlink",
+      "validation_record": "stage1-validation.json"
     },
     {
       "location": "mac",
       "source": "outputs/dataflex-core8-20261023",
       "proposed_target": "outputs/dataflex/2026-10-23-core8-initial-protocol",
-      "status": "proposed",
-      "physical_migration_performed": false,
+      "status": "migrated_with_compatibility_symlink",
+      "physical_migration_performed": true,
       "reference_constraints": [
         "旧协议报告与固定证据路径"
       ],
-      "compatibility": "与 10 月 24 日最终八组分开，保留原记录。"
+      "compatibility": "与 10 月 24 日最终八组分开，保留原记录。",
+      "physical_target": "outputs/dataflex/2026-10-23-core8-initial-protocol",
+      "old_path_type": "relative_symlink",
+      "validation_record": "stage1-validation.json"
     },
     {
       "location": "mac",
       "source": "outputs/dataflex-strategy-school-audit-20261023",
       "proposed_target": "outputs/dataflex/2026-10-23-school-source-audit",
-      "status": "proposed",
-      "physical_migration_performed": false,
+      "status": "migrated_with_compatibility_symlink",
+      "physical_migration_performed": true,
       "reference_constraints": [
         "学校源码对照报告"
       ],
-      "compatibility": "保留来源和原路径映射。"
+      "compatibility": "保留来源和原路径映射。",
+      "physical_target": "outputs/dataflex/2026-10-23-school-source-audit",
+      "old_path_type": "relative_symlink",
+      "validation_record": "stage1-validation.json"
     },
     {
       "location": "mac",
       "source": "outputs/paper-batch-20261022",
       "proposed_target": "outputs/paper-sft/2026-10-22-batch",
-      "status": "proposed",
+      "status": "deferred_paused_or_unfinished_batch",
       "physical_migration_performed": false,
       "reference_constraints": [
         "商业调用回执",
@@ -58,44 +67,55 @@
       "location": "mac",
       "source": "outputs/qwen35-9b-8192-env-audit",
       "proposed_target": "outputs/environment-checks/2026-10-22-qwen35-9b",
-      "status": "proposed",
-      "physical_migration_performed": false,
+      "status": "migrated_with_compatibility_symlink",
+      "physical_migration_performed": true,
       "reference_constraints": [
         "离线依赖锁文件生成记录",
         "安装/容量报告中的引用"
       ],
-      "compatibility": "命名描述环境检查，原始 8192 目标与实际结果仍在报告保留。"
+      "compatibility": "命名描述环境检查，原始 8192 目标与实际结果仍在报告保留。",
+      "physical_target": "outputs/environment-checks/2026-10-22-qwen35-9b",
+      "old_path_type": "relative_symlink",
+      "validation_record": "stage1-validation.json"
     },
     {
       "location": "mac",
       "source": "outputs/closeout-20261024",
       "proposed_target": "outputs/maintenance/2026-10-24-dataflex-closeout",
-      "status": "proposed",
-      "physical_migration_performed": false,
+      "status": "migrated_with_compatibility_symlink",
+      "physical_migration_performed": true,
       "reference_constraints": [
         "已执行清理脚本固定的 AUDIT 路径",
         "哈希回执和说明"
       ],
-      "compatibility": "保留旧入口；不改写已执行脚本。"
+      "compatibility": "保留旧入口；不改写已执行脚本。",
+      "physical_target": "outputs/maintenance/2026-10-24-dataflex-closeout",
+      "old_path_type": "relative_symlink",
+      "validation_record": "stage1-validation.json"
     },
     {
       "location": "school",
       "source": "runs/qwen35-9b/20261022-smoke/strategy-20261023/gpu1-core8-20261024",
       "proposed_target": "runs/dataflex/2026-10-24-core8-flow-check",
-      "status": "proposed",
-      "physical_migration_performed": false,
+      "status": "migrated_with_mount_compatible_entry",
+      "physical_migration_performed": true,
       "reference_constraints": [
         "三个保留训练容器的 /runs 挂载",
         "冻结数据符号链接",
         "原始证据绝对路径"
       ],
-      "compatibility": "先验证容器内旧新路径，单独的宿主绝对路径软链接不能保证容器可见。"
+      "compatibility": "先验证容器内旧新路径，单独的宿主绝对路径软链接不能保证容器可见。",
+      "physical_target": "runs/qwen35-9b/20261022-smoke/dataflex/2026-10-24-core8-flow-check",
+      "canonical_entry": "runs/dataflex/2026-10-24-core8-flow-check",
+      "canonical_entry_type": "relative_symlink",
+      "old_path_type": "relative_symlink",
+      "validation_record": "stage1-validation.json"
     },
     {
       "location": "school",
       "source": "environments/platform/mineru-bridge/jobs",
       "proposed_target": "runs/mineru/<run-id>/jobs",
-      "status": "proposed",
+      "status": "deferred_runtime_identity_dependencies",
       "physical_migration_performed": false,
       "reference_constraints": [
         "解析桥 root/owner 标识",
@@ -108,7 +128,7 @@
       "location": "school",
       "source": "environments/platform/batch-sft-20261022",
       "proposed_target": "runs/paper-sft/<run-id>",
-      "status": "proposed",
+      "status": "deferred_paused_or_unfinished_batch",
       "physical_migration_performed": false,
       "reference_constraints": [
         "cached_parser 和上下文缓存",
@@ -137,5 +157,7 @@
       "rui-dataflow-platform-legacy-data-20261022"
     ]
   },
-  "next_step": "Freeze exact references and per-file identity before migrating one batch. This document is not a move command."
+  "next_step": "Remaining paused batches and parser runtime paths need a separate migration; do not execute the historical proposal as a whole.",
+  "stage1_completed_entries": 6,
+  "deferred_entries": 3
 }

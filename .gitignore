@@ -4,6 +4,8 @@ models/
 logs/
 outputs/
 output/
+# Keep the root historical output directory symlink out of Git as well.
+/output
 .playwright-cli/
 node_modules/
 .venv/

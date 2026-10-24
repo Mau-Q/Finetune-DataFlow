@@ -1,0 +1,22 @@
+{
+  "files": {
+    "README.md": "f3d57ca0633ab54e434e8c229ba586b3d254a7bc2964487d11b361bcb8956383",
+    "container-resource-snapshot.json": "dd1d98d14c1c12ba64a2c80d13070ea0e3467be7098587c74f590e3ed5c3d538",
+    "mac-migration-result.json": "faf8fd5e75f286c68017165eb240875b2250b47e50110b2b75acab8ca5dd61a3",
+    "navigation-updates.json": "428d1ba5fecb3c2e14ff13365a871f22b2467d198a99dd4f744dfd3ed4972b19",
+    "reference-validation.json": "1571f3fbf8aec8f741e6c632ddc794a50fa7397751c028cb752c697dd69874b7",
+    "school-container-path-check.json": "25fdbf84ff9e44808d13fa9876d23a8797a404d2d9be84390d49e08dfb4ecc26",
+    "school-migration-result.json": "269746a63dcaadbbf3e4defb7fcce01927a4175049e5a06da4865685c4a2847b",
+    "school-navigation-update.json": "56c72932d2519ccff680955c7e930817c32f6e31de6fc567e6365c516a925b8e"
+  },
+  "executed_script": {
+    "path": "deploy/plans/workspace-layout-20261024/migrate_stage1.py",
+    "sha256": "211470451a3f401e6302dafa9598c8d16cc2be297e84299b7ce879113cc72f7b"
+  },
+  "full_local_evidence": {
+    "outputs/maintenance/2026-10-24-directory-migration/mac-migration-plan.json": "2731fb328830c35108b4862360f10997712ee9bfed0059bb5e1d7bea8cfac677",
+    "outputs/maintenance/2026-10-24-directory-migration/school-migration-plan.json": "23002371469517d73f448b4a146f9f1d5cef7b7493133dcf1d05d883cabff25c",
+    "outputs/maintenance/2026-10-24-directory-migration/mac-reference-baseline.json": "0bb75281c63cfb43b474c08567b9b7d5c2ccd42685a479d0738feb2b2dc0854c",
+    "outputs/maintenance/2026-10-24-directory-migration/regression.log": "58b3e893e9d979aa14ffb81e4d6a786881a2ee6f21766b5eb26485114898b4d9"
+  }
+}

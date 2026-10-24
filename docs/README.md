@@ -47,4 +47,5 @@ DataFlex 与最新主线的关系和验证边界见 [整合记录](dataflex-main
 ## 目录维护
 
 - [2026-10-24 目录检查](maintenance/workspace-directory-audit-20261024.md)：实际结构、命名问题、依赖约束与本轮文档补充。
-- [旧新路径提案](../deploy/plans/workspace-layout-20261024/rename-plan.json)：全部标为 proposed，尚未执行实体移动；实际迁移应逐项冻结引用、兼容方式和校验。
+- [首批实际迁移](maintenance/workspace-migration-stage1-20261024.md)：Mac 五项、学校八组结果的实际新实体、旧入口兼容及校验。
+- [旧新路径与状态](../deploy/plans/workspace-layout-20261024/rename-plan.json)：六项已迁移、三项延期，明确区分实体目录与入口链接。

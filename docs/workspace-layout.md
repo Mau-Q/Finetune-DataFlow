@@ -1,6 +1,6 @@
 # 目录职责与命名约定
 
-更新：2026-10-24。适用于 Mac 开发目录与学校 DataFlow 部署。已有环境、运行目录、任务 ID 和证据路径保持原状；本约定用于新目录和后续分批迁移。
+更新：2026-10-24。适用于 Mac 开发目录与学校 DataFlow 部署。首批已迁移历史 UI 和已结束记录，旧入口以相对符号链接兼容；环境、任务 ID 和证据内容保留。实际范围见 [首批迁移记录](maintenance/workspace-migration-stage1-20261024.md)。
 
 ## 先按用途找内容
 
@@ -16,7 +16,7 @@ Mac 根目录为 `/Users/rui/Documents/DataFlow`。Core、WebUI、DataFlex 已�
 | `docs/` | 当前指南、设计和按日期保留的验收报告 | 当前入口见 `docs/README.md`；历史报告保留当时状态 |
 | `data/` | 本机输入、冻结数据及原始材料关联 | 不入 Git；不与生成结果混放或自动合并 |
 | `outputs/` | 本机运行、研究、验收和维护产物 | 新任务统一使用此入口，再按用途和运行分组 |
-| `output/` | 早期 UI 验收产物 | 历史兼容目录，不再作为新任务输出根目录 |
+| `output/` | 早期 UI 验收产物的旧入口 | 已链接至 `outputs/archive/ui/legacy-output/`，不再作为新任务输出根目录 |
 | `.venvs/`、`models/` | Mac Python 环境、模型与 tokenizer | 保留现有环境名和来源标识，不随实验改名 |
 | `logs/`、`.playwright-cli/` | 本机服务日志、浏览器工具记录 | 与应用业务数据、运行证据分别管理 |
 
@@ -42,7 +42,7 @@ WebUI 当前默认把运行状态放在源码树下面。`repos/dataflow-webui/b
 ## 新名称怎么写
 
 1. 人工建立的目录用小写英文和连字符，运行目录用 `YYYY-MM-DD-用途`。同一天有独立重跑时加 `-r02`；算法版本、代码提交、GPU UUID 和完整参数写进清单。
-2. 先按用途分组，再按日期组织运行。例如 `outputs/paper-sft/2026-10-22-batch/`、`outputs/dataflex/2026-10-24-core8-flow-check/`、学校的 `runs/dataflex/2026-10-24-core8-flow-check/`。这些是新路径约定，不表示现有文件已经迁入。
+2. 先按用途分组，再按日期组织运行。Mac 的 `outputs/dataflex/2026-10-23-core8-initial-protocol/` 已是实际新目录；学校的 `runs/dataflex/2026-10-24-core8-flow-check/` 是指向挂载内新实体的统一入口。暂停批次的 `outputs/paper-sft/2026-10-22-batch/` 仍是提案，不能仅凭示例判断迁移状态。
 3. 使用 `flow-check`、`capacity-check`、`source-audit`、`evaluation` 等具体用途。通过一次 24 步流程检查的运行，不命名为 `best`、`production` 或算法效果基准。
 4. 阶段结构优先用 `config/`、`inputs/`、`logs/`、`outputs/`、`evaluation/`、`evidence/`；仅在自己控制的新运行包中采用。不要改写第三方工具要求的固定布局。
 5. 模型名和 revision、`G00`—`G07`、`sample_id`、任务 UUID、`attempt1`、框架 checkpoint 名、自动生成备份名等原有身份保持不变。它们不参加一般文件名美化。
@@ -51,19 +51,19 @@ WebUI 当前默认把运行状态放在源码树下面。`repos/dataflow-webui/b
 
 ## 旧名称到新名称的迁移清单
 
-以下均为**提案，未执行实体移动或改名**。详细条目及状态见 [rename-plan.json](../deploy/plans/workspace-layout-20261024/rename-plan.json)。
+以下为当前映射。Mac 五项及学校八组运行已完成实体迁移，其余三项延期；详细状态、实际实体及入口类型见 [rename-plan.json](../deploy/plans/workspace-layout-20261024/rename-plan.json)。
 
-| 当前位置 | 建议的新位置 | 执行前的主要条件 |
+| 旧位置 | 新位置 | 当前状态 |
 | --- | --- | --- |
-| Mac `output/` | `outputs/archive/ui/legacy-output/` | 查清旧报告和脚本引用，保留旧路径兼容入口 |
-| Mac `outputs/dataflex-core8-20261023/` | `outputs/dataflex/2026-10-23-core8-initial-protocol/` | 标明旧协议，与最终八组分开 |
-| Mac `outputs/dataflex-strategy-school-audit-20261023/` | `outputs/dataflex/2026-10-23-school-source-audit/` | 核对代码对照报告中的原始路径 |
-| Mac `outputs/paper-batch-20261022/` | `outputs/paper-sft/2026-10-22-batch/` | 保留原始响应、审核记录和来源关联 |
-| Mac `outputs/qwen35-9b-8192-env-audit/` | `outputs/environment-checks/2026-10-22-qwen35-9b/` | 保留历史目标 8192 与实际容量结果的区别 |
-| Mac `outputs/closeout-20261024/` | `outputs/maintenance/2026-10-24-dataflex-closeout/` | 原清理脚本和回执引用旧路径，需要兼容及映射记录 |
-| 学校最新 `gpu1-core8-20261024/` | `runs/dataflex/2026-10-24-core8-flow-check/` | 容器路径、冻结数据链接和证据路径全部核对 |
-| 学校 `environments/platform/mineru-bridge/jobs/` | 新解析作业写入 `runs/mineru/<运行>/jobs/` | 先支持独立作业根；既有 worker 路径和归属标识保持有效 |
-| 学校 `environments/platform/batch-sft-20261022/` | 新批次使用 `runs/paper-sft/<运行>/` | 分开工作脚本、上下文、缓存和运行状态，核对平台引用 |
+| Mac `output/` | `outputs/archive/ui/legacy-output/` | 已迁移，旧路径链接兼容 |
+| Mac `outputs/dataflex-core8-20261023/` | `outputs/dataflex/2026-10-23-core8-initial-protocol/` | 已迁移，旧协议与最终结果分开 |
+| Mac `outputs/dataflex-strategy-school-audit-20261023/` | `outputs/dataflex/2026-10-23-school-source-audit/` | 已迁移，旧引用兼容 |
+| Mac `outputs/paper-batch-20261022/` | `outputs/paper-sft/2026-10-22-batch/` | 未迁移，暂停/未完成批次另行处理 |
+| Mac `outputs/qwen35-9b-8192-env-audit/` | `outputs/environment-checks/2026-10-22-qwen35-9b/` | 已迁移，历史容量结果不改写 |
+| Mac `outputs/closeout-20261024/` | `outputs/maintenance/2026-10-24-dataflex-closeout/` | 已迁移，原回执通过旧路径仍可读 |
+| 学校最新 `gpu1-core8-20261024/` | `runs/dataflex/2026-10-24-core8-flow-check/` | 已实际改名至挂载内新实体，统一入口与旧入口均为兼容链接 |
+| 学校 `environments/platform/mineru-bridge/jobs/` | 新解析作业写入 `runs/mineru/<运行>/jobs/` | 未迁移，先处理 root/owner 与 worker 路径依赖 |
+| 学校 `environments/platform/batch-sft-20261022/` | 新批次使用 `runs/paper-sft/<运行>/` | 未迁移，暂停批次和运行配置另行处理 |
 
 `outputs/` 根下零散的 `platform-m*` 文件，适合按历史平台阶段收拢。但实际迁移前必须冻结逐文件映射，不能用一个通配符直接移动或覆盖同名文件。
 
@@ -83,7 +83,7 @@ WebUI 当前默认把运行状态放在源码树下面。`repos/dataflow-webui/b
 
 ## 分批规整顺序
 
-1. 当前阶段：补当前/历史文档入口、目录说明和命名映射，保持服务、挂载、业务数据和证据实体不变。
+1. 文档入口与首批已结束运行迁移已完成；服务、挂载、业务数据及模型环境保持不变，旧路径继续兼容。
 2. 冻结迁移清单：记录每个实体的旧路径、新路径、引用者、兼容方式和校验方法；优先处理不再运行的 UI 验收产物。
 3. 单批迁移：复制并校验，建立兼容入口，再切换少量使用者；同时核对宿主和容器视角。清理旧副本前确认没有独有文件或仍在写入的进程。
 4. 应用运行数据和解析桥单独迁移，验证数据库一致性、材料定位、任务重开和缓存可读；不与普通归档改名混做。
